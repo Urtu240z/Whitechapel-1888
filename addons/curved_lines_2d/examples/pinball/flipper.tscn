@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://c4qvvoxq5w28e"]
+
+[ext_resource type="Script" uid="uid://dl0gawkliv8ak" path="res://addons/curved_lines_2d/examples/pinball/flipper.gd" id="1_k5dyu"]
+[ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="1_mhtlv"]
+[ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="2_k5dyu"]
+[ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="3_muof8"]
+
+[sub_resource type="Curve2D" id="Curve2D_0bqc8"]
+_data = {
+"points": PackedVector2Array(0, 0, 24, 24, 192, -31.5, 40, 0.5, -17.6736, 0, 0, 32.5, 0, 17.6736, 0, -17.6736, -32, 0, -17.6736, 0, 0, 0, 0, -31.5, 0, 0, 0, 0, 192, -31.5)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_r6cs1"]
+script = ExtResource("3_muof8")
+
+[node name="Flipper" type="Node2D" unique_id=1190287537]
+script = ExtResource("1_k5dyu")
+metadata/_edit_horizontal_guides_ = [-33.0]
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=1193509280]
+position = Vector2(0, -0.5)
+rotation = 0.785398
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatableBody2D" unique_id=956295920]
+polygon = PackedVector2Array(192, -31.5, 192.9798, -30.363134, 193.67432, -29.203415, 194.09125, -28.022158, 194.23828, -26.820679, 194.12311, -25.600294, 193.75342, -24.36232, 193.1369, -23.108072, 192.28125, -21.838867, 191.19415, -20.55602, 189.8833, -19.260849, 186.6211, -16.638794, 182.55615, -13.983231, 177.75, -11.3046875, 152.34375, -0.57128906, 120, 9.6875, 50.25, 26.085938, 20.71875, 30.87793, 0, 32.5, -3.2718945, 32.329178, -6.449256, 31.82841, -9.516003, 31.015242, -12.45605, 29.907225, -15.253317, 28.521904, -17.891718, 26.876827, -20.355175, 24.989544, -22.6276, 22.8776, -24.692913, 20.558544, -26.53503, 18.049921, -28.13787, 15.369283, -29.48535, 12.534175, -30.561386, 9.562144, -31.349894, 6.4707403, -31.834793, 3.2775097, -32, 0, -31.834793, -3.2662792, -31.349894, -6.4277716, -30.561384, -9.46986, -29.48535, -12.377925, -28.13787, -15.13735, -26.53503, -17.733515, -24.692913, -20.151806, -22.6276, -22.3776, -20.355175, -24.396282, -17.891718, -26.193233, -15.253316, -27.753838, -12.45605, -29.063475, -9.516002, -30.107529, -6.449256, -30.871378, -3.2718945, -31.340408, 0, -31.5)
+metadata/_edit_lock_ = true
+
+[node name="Circle" type="Node2D" parent="AnimatableBody2D" unique_id=1759152247 node_paths=PackedStringArray("polygon", "collision_object")]
+script = ExtResource("1_mhtlv")
+polygon = NodePath("Fill")
+collision_object = NodePath("..")
+curve = SubResource("Curve2D_0bqc8")
+arc_list = SubResource("Resource_r6cs1")
+
+[node name="Fill" type="Polygon2D" parent="AnimatableBody2D/Circle" unique_id=758030268]
+polygon = PackedVector2Array(192, -31.5, 192.9798, -30.363134, 193.67432, -29.203415, 194.09125, -28.022158, 194.23828, -26.820679, 194.12311, -25.600294, 193.75342, -24.36232, 193.1369, -23.108072, 192.28125, -21.838867, 191.19415, -20.55602, 189.8833, -19.260849, 186.6211, -16.638794, 182.55615, -13.983231, 177.75, -11.3046875, 152.34375, -0.57128906, 120, 9.6875, 50.25, 26.085938, 20.71875, 30.87793, 0, 32.5, -3.2718945, 32.329178, -6.449256, 31.82841, -9.516003, 31.015242, -12.45605, 29.907225, -15.253317, 28.521904, -17.891718, 26.876827, -20.355175, 24.989544, -22.6276, 22.8776, -24.692913, 20.558544, -26.53503, 18.049921, -28.13787, 15.369283, -29.48535, 12.534175, -30.561386, 9.562144, -31.349894, 6.4707403, -31.834793, 3.2775097, -32, 0, -31.834793, -3.2662792, -31.349894, -6.4277716, -30.561384, -9.46986, -29.48535, -12.377925, -28.13787, -15.13735, -26.53503, -17.733515, -24.692913, -20.151806, -22.6276, -22.3776, -20.355175, -24.396282, -17.891718, -26.193233, -15.253316, -27.753838, -12.45605, -29.063475, -9.516002, -30.107529, -6.449256, -30.871378, -3.2718945, -31.340408, 0, -31.5)
+metadata/_edit_lock_ = true

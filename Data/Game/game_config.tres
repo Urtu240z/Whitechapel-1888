@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="GameConfig" format=3 uid="uid://b42fv2bl1671l"]
+
+[ext_resource type="Script" uid="uid://f0avsa5ntqpx" path="res://Scripts/Data/game_config.gd" id="1_rsnob"]
+
+[resource]
+script = ExtResource("1_rsnob")
+horas_max_calle = 24.0

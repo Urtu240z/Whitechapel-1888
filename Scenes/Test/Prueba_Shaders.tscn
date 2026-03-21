@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://xrn3pyomcu05"]
+
+[ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="1_56wsx"]
+[ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="2_ibj0y"]
+[ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="3_5rdfj"]
+[ext_resource type="Shader" uid="uid://c7fk4rtwtpgtg" path="res://Assets/Shaders/Painting_Animated_Border.gdshader" id="4_nxjul"]
+[ext_resource type="Texture2D" uid="uid://2nhlnbhlxper" path="res://Assets/Tilesets/ColorCloud.png" id="5_oomfg"]
+
+[sub_resource type="Curve2D" id="Curve2D_ioa5b"]
+_data = {
+"points": PackedVector2Array(0, 0, 79.36792, -87.72217, 73.68506, -768.03345, -79.367676, 37.595215, 79.367676, -37.595215, 712.8042, -801.4514, 0, 0, 0, 0, 1051.1616, -859.933, 108.6084, -187.97632, -108.6084, 187.97632, 1172.3018, -734.6155, 405.56885, 198.56067, -58.48169, -33.41809, 178.11646, -617.65247, -79.36792, 87.72217, 0, 0, 73.68506, -768.03345)
+}
+point_count = 6
+
+[sub_resource type="Resource" id="Resource_mdxxk"]
+script = ExtResource("3_5rdfj")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xyre5"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tco1m"]
+noise = SubResource("FastNoiseLite_xyre5")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hlqdy"]
+shader = ExtResource("4_nxjul")
+shader_parameter/main_tex = ExtResource("5_oomfg")
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_tco1m")
+shader_parameter/iterations = 7.0
+shader_parameter/shift = 0.999999977648
+shader_parameter/rotation_speed = 3.0
+shader_parameter/smoothness = 3.0
+shader_parameter/smooth_enabled = true
+shader_parameter/rotation_min = 0.01
+shader_parameter/rotation_max = 0.2
+shader_parameter/sharpness = 2.0
+shader_parameter/hue_shift = 0.0
+shader_parameter/saturation = 1.0
+shader_parameter/brightness = 0.0
+shader_parameter/contrast = 1.0
+shader_parameter/shadows_color = Color(1, 1, 1, 1)
+shader_parameter/midtones_color = Color(1, 1, 1, 1)
+shader_parameter/highlights_color = Color(1, 1, 1, 1)
+shader_parameter/feather_strength = 0.5
+shader_parameter/feather_softness = 0.15
+shader_parameter/feather_blur_radius = 1.0
+
+[sub_resource type="Gradient" id="Gradient_6mwwm"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xxms2"]
+gradient = SubResource("Gradient_6mwwm")
+width = 1153
+height = 352
+fill_from = Vector2(0, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Animation" id="Animation_ymeb8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(138, 195)]
+}
+
+[sub_resource type="Animation" id="Animation_k5ysn"]
+resource_name = "up_down"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(138, 195), Vector2(138, 270)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jgyu5"]
+_data = {
+&"RESET": SubResource("Animation_ymeb8"),
+&"up_down": SubResource("Animation_k5ysn")
+}
+
+[node name="Node2D" type="Node2D" unique_id=184878358]
+
+[node name="Platform1" type="Node2D" parent="." unique_id=1465397018 node_paths=PackedStringArray("polygon", "collision_object", "collision_polygon")]
+position = Vector2(138, 195)
+rotation = 0.0104719745
+script = ExtResource("1_56wsx")
+polygon = NodePath("Polygon2D")
+collision_object = NodePath("StaticBody2D")
+collision_polygon = NodePath("StaticBody2D/CollisionPolygon2D")
+curve = SubResource("Curve2D_ioa5b")
+arc_list = SubResource("Resource_mdxxk")
+metadata/_custom_type_script = "uid://de3jpss66xjfh"
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform1" unique_id=1099811826]
+material = SubResource("ShaderMaterial_hlqdy")
+texture = SubResource("GradientTexture2D_xxms2")
+texture_offset = Vector2(-48.14127, 869.8459)
+polygon = PackedVector2Array(73.68506, -768.03345, 77.69608, -772.0151, 82.27617, -775.7406, 87.40698, -779.2171, 93.070145, -782.4519, 105.92009, -788.22394, 120.67917, -793.11316, 155.3373, -800.4704, 195.86969, -804.976, 393.24472, -803.54004, 590.6197, -792.7053, 665.8102, -792.8195, 693.4192, -795.84436, 704.21313, -798.2968, 708.79315, -799.78284, 712.8042, -801.4514, 729.68353, -808.3037, 750.13025, -814.75824, 799.1557, -826.44965, 911.7458, -844.7904, 1051.1616, -859.933, 1085.3629, -866.7864, 1118.128, -869.8459, 1135.5143, -869.6775, 1152.4598, -867.7654, 1160.5073, -866.0119, 1168.1327, -863.6503, 1175.2317, -860.6233, 1181.7007, -856.87354, 1184.666, -854.70966, 1187.435, -852.34357, 1189.9944, -849.76807, 1192.3313, -846.976, 1194.4326, -843.96027, 1196.2853, -840.7135, 1197.8763, -837.2288, 1199.1929, -833.49884, 1200.2217, -829.5165, 1200.95, -825.27454, 1201.3647, -820.76575, 1201.4528, -815.98315, 1200.5972, -805.5674, 1198.279, -793.97, 1194.3945, -781.1334, 1188.8395, -767.0004, 1172.3018, -734.6155, 1161.0453, -717.17786, 1147.6942, -700.143, 1132.3302, -683.5593, 1115.035, -667.4759, 1074.9773, -637.0035, 1028.1742, -609.1149, 975.2788, -584.19934, 916.94415, -562.646, 853.8233, -544.84406, 786.5692, -531.1826, 715.8353, -522.0509, 642.2744, -517.83813, 566.5397, -518.9334, 489.28424, -525.726, 411.16107, -538.605, 332.82336, -557.9596, 254.9241, -584.1791, 178.11646, -617.65247, 98.446655, -656.7898, 85.71806, -664.36206, 74.20715, -672.4789, 64.31166, -681.2322, 60.094, -685.87616, 56.429348, -690.7136, 53.367416, -695.75604, 50.957924, -701.01495, 49.25059, -706.50183, 48.295135, -712.228, 48.14127, -718.2052, 48.83872, -724.44464, 50.43719, -730.95795, 52.98641, -737.7566, 56.536087, -744.8519, 61.135944, -752.2556)
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Platform1" unique_id=1069332832]
+metadata/_edit_lock_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platform1/StaticBody2D" unique_id=1396964605]
+build_mode = 1
+polygon = PackedVector2Array(73.68506, -768.03345, 77.69608, -772.0151, 82.27617, -775.7406, 87.40698, -779.2171, 93.070145, -782.4519, 105.92009, -788.22394, 120.67917, -793.11316, 155.3373, -800.4704, 195.86969, -804.976, 393.24472, -803.54004, 590.6197, -792.7053, 665.8102, -792.8195, 693.4192, -795.84436, 704.21313, -798.2968, 708.79315, -799.78284, 712.8042, -801.4514, 729.68353, -808.3037, 750.13025, -814.75824, 799.1557, -826.44965, 911.7458, -844.7904, 1051.1616, -859.933, 1085.3629, -866.7864, 1118.128, -869.8459, 1135.5143, -869.6775, 1152.4598, -867.7654, 1160.5073, -866.0119, 1168.1327, -863.6503, 1175.2317, -860.6233, 1181.7007, -856.87354, 1184.666, -854.70966, 1187.435, -852.34357, 1189.9944, -849.76807, 1192.3313, -846.976, 1194.4326, -843.96027, 1196.2853, -840.7135, 1197.8763, -837.2288, 1199.1929, -833.49884, 1200.2217, -829.5165, 1200.95, -825.27454, 1201.3647, -820.76575, 1201.4528, -815.98315, 1200.5972, -805.5674, 1198.279, -793.97, 1194.3945, -781.1334, 1188.8395, -767.0004, 1172.3018, -734.6155, 1161.0453, -717.17786, 1147.6942, -700.143, 1132.3302, -683.5593, 1115.035, -667.4759, 1074.9773, -637.0035, 1028.1742, -609.1149, 975.2788, -584.19934, 916.94415, -562.646, 853.8233, -544.84406, 786.5692, -531.1826, 715.8353, -522.0509, 642.2744, -517.83813, 566.5397, -518.9334, 489.28424, -525.726, 411.16107, -538.605, 332.82336, -557.9596, 254.9241, -584.1791, 178.11646, -617.65247, 98.446655, -656.7898, 85.71806, -664.36206, 74.20715, -672.4789, 64.31166, -681.2322, 60.094, -685.87616, 56.429348, -690.7136, 53.367416, -695.75604, 50.957924, -701.01495, 49.25059, -706.50183, 48.295135, -712.228, 48.14127, -718.2052, 48.83872, -724.44464, 50.43719, -730.95795, 52.98641, -737.7566, 56.536087, -744.8519, 61.135944, -752.2556)
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Platform1" unique_id=714123633]
+libraries/ = SubResource("AnimationLibrary_jgyu5")
+autoplay = &"up_down"

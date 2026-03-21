@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://varywclromyc"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_mm521"]
+
+[resource]
+script = ExtResource("1_mm521")
+name = "drink-whisky"
+display_name = "Whisky"
+cost = 3.0
+effects = {
+"alcohol": 20.0,
+"estres": -12.0,
+"felicidad": 8.0,
+"hambre": -3.0,
+"higiene": -8.0,
+"miedo": -3.0,
+"nervios": -10.0,
+"sueno": -5.0
+}

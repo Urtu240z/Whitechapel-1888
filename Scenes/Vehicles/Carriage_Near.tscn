@@ -1,0 +1,1212 @@
+[gd_scene format=3 uid="uid://bs3vq4jfrv3g7"]
+
+[ext_resource type="Script" uid="uid://dtq1ko5us020r" path="res://Scripts/Vehicles/carriage_movement.gd" id="1_k0eno"]
+[ext_resource type="Texture2D" uid="uid://ooo7m06oaxwd" path="res://Assets/Sprites/Vehicles/Car_Wheel.png" id="2_j7hd7"]
+[ext_resource type="Texture2D" uid="uid://dwywfejoku10k" path="res://Assets/Sprites/Vehicles/Car_Body.png" id="3_2s10h"]
+[ext_resource type="Texture2D" uid="uid://cvqtkubjt5h4v" path="res://Assets/Sprites/Vehicles/Car_Body_Curtain.png" id="3_ueq7b"]
+[ext_resource type="Texture2D" uid="uid://coun5beihv762" path="res://Assets/Sprites/NPC/Man Poor/MP1Shoulder L.png" id="5_ueq7b"]
+[ext_resource type="Texture2D" uid="uid://4lreba0hq48o" path="res://Assets/Sprites/NPC/Man Poor/MP1Arm L.png" id="6_mcif2"]
+[ext_resource type="Texture2D" uid="uid://00v4kfou0lfs" path="res://Assets/Sprites/NPC/Man Poor/MP1Torso.png" id="7_mb04j"]
+[ext_resource type="Texture2D" uid="uid://comcic7qaaw7e" path="res://Assets/Sprites/NPC/Driver/UltraBlur/MP1Hip.png" id="9_211a7"]
+[ext_resource type="Texture2D" uid="uid://bbi3ixdye215v" path="res://Assets/Sprites/NPC/Man Poor/MP1Knee L.png" id="9_nc7rm"]
+[ext_resource type="Texture2D" uid="uid://b6r3bsn7d41vw" path="res://Assets/Sprites/NPC/Man Poor/MP1Leg L.png" id="10_67ewy"]
+[ext_resource type="Texture2D" uid="uid://c06cak6anwq2r" path="res://Assets/Sprites/NPC/Man Poor/MP1Foot L.png" id="11_211a7"]
+[ext_resource type="Texture2D" uid="uid://ba2acwkhyixxd" path="res://Assets/Sprites/NPC/Man Poor/MP1Knee R.png" id="12_7pwf2"]
+[ext_resource type="Texture2D" uid="uid://dhxrn8gf863w6" path="res://Assets/Sprites/NPC/Man Poor/MP1Leg R.png" id="13_agc6m"]
+[ext_resource type="Texture2D" uid="uid://bmqv8thqguowq" path="res://Assets/Sprites/NPC/Man Poor/MP1Foot R.png" id="14_35pob"]
+[ext_resource type="Texture2D" uid="uid://brx0awa7yi7wo" path="res://Assets/Sprites/NPC/Man Poor/MP1Shoulder R.png" id="15_57kqc"]
+[ext_resource type="Texture2D" uid="uid://cifsa6axc7ygx" path="res://Assets/Sprites/NPC/Man Poor/MP1Arm R.png" id="16_tj3s3"]
+[ext_resource type="Texture2D" uid="uid://b5l5uvw2u6n8l" path="res://Assets/Sprites/NPC/Man Poor/MP1Head Obscure.png" id="17_o51bk"]
+[ext_resource type="Texture2D" uid="uid://ccgvhrmrdkgws" path="res://Assets/Sprites/Vehicles/Car_HorseBody_parts.png" id="19_2s10h"]
+[ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="19_mcif2"]
+[ext_resource type="Script" uid="uid://b4u1tvhlw4d2g" path="res://addons/soupik/modifications/soup_look_at.gd" id="20_j7hd7"]
+[ext_resource type="AudioStream" uid="uid://iku4bk17s826" path="res://Assets/Audio/CarriageHorse.ogg" id="20_p26ru"]
+[ext_resource type="Script" uid="uid://3n2ir7g15yw5" path="res://addons/soupik/modifications/soup_group.gd" id="20_ueq7b"]
+[ext_resource type="Script" uid="uid://bnso0mph1tb11" path="res://addons/soupik/modifications/soup_two_bone_ik.gd" id="21_mcif2"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_730wc"]
+polygon = PackedVector2Array(-7.2018356, 42.76007, -11.397018, -1.0078125, 30.364433, 24.389587)
+
+[sub_resource type="Animation" id="Animation_2s10h"]
+resource_name = "Idle"
+
+[sub_resource type="Animation" id="Animation_mcif2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/Horse/IK Targets/Tail:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(61, 131)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprites/Horse/IK Targets/FrontRight Leg:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(193, 259)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprites/Horse/IK Targets/FrontLeft Leg:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(357, 241)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprites/Horse/IK Targets/RearRight Leg:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(165, 256)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprites/Horse/IK Targets/RearLeft Leg:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(27, 241)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprites/Horse/Bones/Skeleton2D/Back/Chest/Neck:rotation")
+tracks/5/interp = 4
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.12619059]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprites/Horse/Bones/Skeleton2D/Back/Chest/Neck/Nose:rotation")
+tracks/6/interp = 4
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.046889514]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprites/Horse/Bones/Skeleton2D/Back:position")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(89, 55)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Sprites/Carriage/CarBody/Rope:rotation")
+tracks/8/interp = 4
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.19364223]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Sprites/Carriage/CarBody/Rope:position")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(454.55783, 53.108597)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1ArmL:position")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(156.47412, -179.84894)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1ArmR:position")
+tracks/11/interp = 2
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-147, -247.00006)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1ArmR/Mp1ForearmR:rotation")
+tracks/12/interp = 4
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.018696249]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1ArmL/Mp1ForearmL:rotation")
+tracks/13/interp = 4
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.9691432]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1ArmR:rotation")
+tracks/14/interp = 4
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [5.554324]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1ArmL:rotation")
+tracks/15/interp = 4
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [6.467703]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip/Mp1KneeR:rotation")
+tracks/16/interp = 4
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.863048]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip/Mp1KneeL:rotation")
+tracks/17/interp = 4
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.8772473]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Head:rotation")
+tracks/18/interp = 4
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [6.3051543]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Sprites/Carriage/CarBody/Driver:position")
+tracks/19/interp = 2
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(103.63636, -60.363636)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Sprites/Carriage/CarWheel3:rotation")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Sprites/Carriage/CarWheel4:rotation")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Sprites/Carriage/CarWheel:rotation")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Sprites/Carriage/CarWheel2:rotation")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Sprites/Carriage:rotation")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Sprites/Carriage:position")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-28, -11)]
+}
+
+[sub_resource type="Animation" id="Animation_ueq7b"]
+resource_name = "Walk"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/Horse/IK Targets/Tail:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3435479, 0.53635544, 0.7431853),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(73, 139), Vector2(65, 148), Vector2(38.999992, 152), Vector2(68.00001, 161)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprites/Horse/IK Targets/FrontRight Leg:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(193, 259), Vector2(280, 211), Vector2(350, 283), Vector2(223, 259)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprites/Horse/IK Targets/FrontLeft Leg:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(357, 241), Vector2(262, 284), Vector2(128, 378), Vector2(268, 249)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprites/Horse/IK Targets/RearRight Leg:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(165, 256), Vector2(71, 254), Vector2(-42, 258), Vector2(76, 243)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprites/Horse/IK Targets/RearLeft Leg:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(27, 241), Vector2(156, 247), Vector2(189, 259), Vector2(102, 260)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprites/Horse/Bones/Skeleton2D/Back/Chest/Neck/Nose:rotation")
+tracks/5/interp = 4
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.09114537, 0.5012995),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.17012475, 0.046889514]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprites/Horse/Bones/Skeleton2D/Back/Chest/Neck:rotation")
+tracks/6/interp = 4
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.05959505, 0.37860382, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.48171087355043535, 0.12619059, 0.21493784]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sprites/Horse/Bones/Skeleton2D/Back:position")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.3470535),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(89, 55), Vector2(103, 53)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Sprites/Carriage/CarBody/Rope:rotation")
+tracks/8/interp = 4
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.3470535),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.19364223, 0.22761884]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Sprites/Carriage/CarBody/Rope:position")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.4977939),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(452.7273, 59.636364), Vector2(454.54547, 53.272728)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1ArmL:position")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(156.47412, -179.84894)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1ArmR:position")
+tracks/11/interp = 2
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-147, -247.00006)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1ArmR/Mp1ForearmR:rotation")
+tracks/12/interp = 4
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.43469328),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.018696249, -0.018696249]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1ArmL/Mp1ForearmL:rotation")
+tracks/13/interp = 4
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.43469328),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.9691432, -0.684169066781777]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1ArmR:rotation")
+tracks/14/interp = 4
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.43469328),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [5.554324, 5.3460565]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1ArmL:rotation")
+tracks/15/interp = 4
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.43469328),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [6.467703, 6.0007057]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip/Mp1KneeR:rotation")
+tracks/16/interp = 4
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.53333336),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [4.863048, 4.919626]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip/Mp1KneeL:rotation")
+tracks/17/interp = 4
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.2734361),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [4.8772473, 4.823095]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Head:rotation")
+tracks/18/interp = 4
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.6666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [6.3051543, 6.187077]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Sprites/Carriage/CarBody/Driver:position")
+tracks/19/interp = 2
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.40314296),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(103.63636, -60.363636), Vector2(105.455, -64.273)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Sprites/Carriage/CarWheel3:rotation")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.2831855]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Sprites/Carriage/CarWheel4:rotation")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.2831855]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Sprites/Carriage/CarWheel:rotation")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.2831855]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Sprites/Carriage/CarWheel2:rotation")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.2831855]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Sprites/Carriage:rotation")
+tracks/24/interp = 4
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 0.79226357),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.005984767]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Sprites/Carriage:position")
+tracks/25/interp = 2
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.14022364, 0.3540647, 0.51532185, 0.7046238, 0.79576916, 0.84484744, 0.9044425),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-28, -11), Vector2(-28, -13.000001), Vector2(-27.999996, -7.394314), Vector2(-28, -13.000001), Vector2(-28, -11), Vector2(-28, -13.000001), Vector2(-28, -13.000001), Vector2(-27.999996, -7.394314)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mb04j"]
+_data = {
+&"Idle": SubResource("Animation_2s10h"),
+&"RESET": SubResource("Animation_mcif2"),
+&"Walk": SubResource("Animation_ueq7b")
+}
+
+[node name="Car" type="Node2D" unique_id=1156728675]
+script = ExtResource("1_k0eno")
+draw_path_in_editor = false
+
+[node name="Sprites" type="Node2D" parent="." unique_id=461277028]
+
+[node name="Carriage" type="Node2D" parent="Sprites" unique_id=763065380]
+position = Vector2(-28, -11)
+scale = Vector2(1.1, 1.1)
+
+[node name="CarWheel3" type="Sprite2D" parent="Sprites/Carriage" unique_id=86703143]
+modulate = Color(0.35906908, 0.35906908, 0.35906908, 1)
+position = Vector2(-100.5, 160)
+scale = Vector2(0.895, 0.895)
+texture = ExtResource("2_j7hd7")
+
+[node name="CarWheel4" type="Sprite2D" parent="Sprites/Carriage" unique_id=798988394]
+modulate = Color(0.35906908, 0.35906908, 0.35906908, 1)
+position = Vector2(139.5, 170)
+scale = Vector2(0.745, 0.745)
+texture = ExtResource("2_j7hd7")
+
+[node name="CarBody" type="Sprite2D" parent="Sprites/Carriage" unique_id=899309023]
+modulate = Color(0.65012825, 0.6501283, 0.65012825, 1)
+position = Vector2(0, 4)
+texture = ExtResource("3_ueq7b")
+
+[node name="Rope" type="Sprite2D" parent="Sprites/Carriage/CarBody" unique_id=363694595]
+texture_filter = 2
+position = Vector2(454.55783, 53.108597)
+rotation = 0.19364223
+scale = Vector2(1.7605586, 0.79980487)
+texture = ExtResource("19_2s10h")
+offset = Vector2(-96.15193, -24.944138)
+flip_v = true
+region_enabled = true
+region_rect = Rect2(233.09094, 201.8182, 195.45459, 56.363647)
+
+[node name="Driver" type="Node2D" parent="Sprites/Carriage/CarBody" unique_id=347283673]
+modulate = Color(0.32, 0.32, 0.32, 1)
+position = Vector2(103.63636, -60.363636)
+scale = Vector2(0.17, 0.17)
+
+[node name="Mp1ArmL" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver" unique_id=188410379]
+position = Vector2(156.47412, -179.84894)
+rotation = 0.1845177
+scale = Vector2(0.9999994, 0.9999994)
+texture = ExtResource("5_ueq7b")
+offset = Vector2(16.921768, 97.63421)
+
+[node name="Mp1ForearmL" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1ArmL" unique_id=1310171345]
+position = Vector2(38.519775, 202.53693)
+rotation = 5.314042
+scale = Vector2(0.99999976, 0.99999976)
+texture = ExtResource("6_mcif2")
+offset = Vector2(7.7496033, 140.21771)
+
+[node name="Mp1Torso" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver" unique_id=472770252]
+position = Vector2(67, 33.99997)
+rotation = 0.07020219
+scale = Vector2(0.99999976, 0.99999976)
+texture = ExtResource("7_mb04j")
+offset = Vector2(-35, -187)
+
+[node name="Mp1Hip" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso" unique_id=1501040306]
+position = Vector2(-2.3895874, 106.35455)
+rotation = -0.040424347
+scale = Vector2(1.0000001, 1.0000001)
+texture = ExtResource("9_211a7")
+offset = Vector2(-12, 3)
+
+[node name="Mp1KneeL" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip" unique_id=1642952588]
+position = Vector2(-16.527527, 22.295166)
+rotation = 4.8772473
+scale = Vector2(0.9999997, 0.9999997)
+texture = ExtResource("9_nc7rm")
+offset = Vector2(-20.151917, 183.66013)
+
+[node name="Mp1LegL" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip/Mp1KneeL" unique_id=488049978]
+position = Vector2(-31.047194, 358.70554)
+rotation = 1.3443874
+scale = Vector2(0.9999988, 0.9999988)
+texture = ExtResource("10_67ewy")
+offset = Vector2(-14.864853, 105.39819)
+
+[node name="Mp1FootL" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip/Mp1KneeL/Mp1LegL" unique_id=1061743380]
+position = Vector2(-9.517822, 334.01404)
+rotation = -0.053424485
+scale = Vector2(0.9999982, 0.9999982)
+texture = ExtResource("11_211a7")
+offset = Vector2(55.85885, -17.018677)
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip/Mp1KneeL/Mp1LegL/Mp1FootL" unique_id=1352083527]
+position = Vector2(17.152367, -4.841388)
+rotation = 0.025554953
+scale = Vector2(0.999999, 0.999999)
+occluder = SubResource("OccluderPolygon2D_730wc")
+
+[node name="Mp1KneeR" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip" unique_id=711582224]
+position = Vector2(-73.22424, 60.423218)
+rotation = 4.863048
+scale = Vector2(0.99999726, 0.99999726)
+texture = ExtResource("12_7pwf2")
+offset = Vector2(-9.582409, 178.99864)
+
+[node name="Mp1LegR" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip/Mp1KneeR" unique_id=1120586005]
+position = Vector2(-87.38667, 370.42004)
+rotation = 1.3616855
+scale = Vector2(0.999999, 0.999999)
+texture = ExtResource("13_agc6m")
+offset = Vector2(-9.676544, 126.73047)
+
+[node name="Mp1FootR" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip/Mp1KneeR/Mp1LegR" unique_id=1830295048]
+position = Vector2(-12.905029, 355.86014)
+rotation = -0.021226786
+scale = Vector2(0.99999946, 0.99999946)
+texture = ExtResource("14_35pob")
+offset = Vector2(35.293945, 13.78595)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1Hip/Mp1KneeR/Mp1LegR/Mp1FootR" unique_id=495002383]
+occluder = SubResource("OccluderPolygon2D_730wc")
+
+[node name="Mp1ArmR" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso" unique_id=1352096041]
+position = Vector2(-147, -247.00006)
+rotation = 5.554324
+scale = Vector2(0.9999996, 0.9999996)
+texture = ExtResource("15_57kqc")
+offset = Vector2(-23.840683, 116.79205)
+
+[node name="Mp1ForearmR" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso/Mp1ArmR" unique_id=952624107]
+position = Vector2(-42.680847, 222.68213)
+rotation = 6.264489
+scale = Vector2(0.99999946, 0.99999946)
+texture = ExtResource("16_tj3s3")
+offset = Vector2(12.870865, 151.95807)
+
+[node name="Mp1Head" type="Sprite2D" parent="Sprites/Carriage/CarBody/Driver/Mp1Torso" unique_id=683141769]
+position = Vector2(-19.965454, -320.37866)
+rotation = 0.021968992
+scale = Vector2(1.0500002, 1.0500002)
+texture = ExtResource("17_o51bk")
+offset = Vector2(20, -85)
+
+[node name="CarBody2" type="Sprite2D" parent="Sprites/Carriage/CarBody" unique_id=474826139]
+modulate = Color(0.65012825, 0.6501283, 0.65012825, 1)
+texture = ExtResource("3_2s10h")
+
+[node name="CarWheel" type="Sprite2D" parent="Sprites/Carriage" unique_id=146260767]
+modulate = Color(0.67481464, 0.67481464, 0.6748146, 1)
+position = Vector2(-152, 160)
+texture = ExtResource("2_j7hd7")
+
+[node name="CarWheel2" type="Sprite2D" parent="Sprites/Carriage" unique_id=869494431]
+modulate = Color(0.67481464, 0.67481464, 0.6748146, 1)
+position = Vector2(109.00001, 179)
+scale = Vector2(0.825, 0.825)
+texture = ExtResource("2_j7hd7")
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprites/Carriage" unique_id=373793515]
+position = Vector2(92.35645, -84.29922)
+color = Color(0.3698187, 0.85042244, 7.70092e-07, 1)
+energy = 3.31
+texture = ExtResource("19_mcif2")
+
+[node name="Horse" type="Node2D" parent="Sprites" unique_id=1171637315]
+modulate = Color(0.601223, 0.601223, 0.60122293, 1)
+position = Vector2(215, -1)
+
+[node name="Parts" type="Node2D" parent="Sprites/Horse" unique_id=431440447]
+
+[node name="FrontLeg2" type="Polygon2D" parent="Sprites/Horse/Parts" unique_id=222870305]
+modulate = Color(0.5890956, 0.5890956, 0.5890956, 1)
+texture_filter = 1
+position = Vector2(37, -36)
+color = Color(0.32915837, 0.3291584, 0.3291584, 1)
+texture = ExtResource("19_2s10h")
+skeleton = NodePath("../../Bones/Skeleton2D")
+polygon = PackedVector2Array(181.74251, 170.26828, 178.9431, 139.70403, 189.11217, 130.99866, 224.65677, 128.09544, 227.96646, 162.82686, 217.53261, 187.15039, 208.41626, 206.396, 208.41626, 218.2135, 206.05276, 228.34276, 202.00105, 241.5108, 200.65048, 256.36707, 202.67606, 264.47015, 215.50645, 274.93707, 220.57109, 285.404, 214.15588, 291.48154, 194.91028, 289.4557, 186.46922, 283.71576, 175.66466, 277.97583, 174.65173, 263.11957, 180.39165, 248.60097, 181.40459, 234.75763, 180.7293, 222.60251, 180.0538, 198.29192, 182.4173, 186.81207, 202.86655, 166.3923, 201.94571, 178.0563, 194.88591, 216.42476, 195.19286, 228.39572, 189.35945, 264.9232, 193.65671, 273.21075)
+polygons = [PackedInt32Array(15, 29, 11, 12, 13, 14), PackedInt32Array(15, 16, 29), PackedInt32Array(29, 10, 11), PackedInt32Array(29, 28, 10), PackedInt32Array(29, 17, 28), PackedInt32Array(29, 16, 17), PackedInt32Array(28, 18, 17), PackedInt32Array(10, 18, 28), PackedInt32Array(10, 9, 8, 27, 20, 19, 18), PackedInt32Array(27, 21, 20), PackedInt32Array(27, 7, 8), PackedInt32Array(27, 26, 7), PackedInt32Array(27, 21, 26), PackedInt32Array(26, 22, 21), PackedInt32Array(26, 6, 7), PackedInt32Array(6, 22, 26), PackedInt32Array(22, 23, 25, 5, 6), PackedInt32Array(25, 0, 23), PackedInt32Array(25, 4, 5), PackedInt32Array(25, 24, 4), PackedInt32Array(25, 0, 24), PackedInt32Array(0, 1, 2, 3, 4, 24)]
+bones = ["Back", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck/Nose", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR/KneeR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL", PackedFloat32Array(1, 1, 1, 1, 1, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 1, 1, 1, 0, 0, 0, 0), "Back/Chest/LFL/LegL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0.5, 1, 1, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 1, 1, 0.5, 0, 0, 0, 1, 1, 0, 0), "Back/Chest/LFL/LegL/KneeL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 1, 1, 1, 1, 1, 0.5, 1, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1), "Back/LRR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR/KneeRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL/KneeRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/TopTail", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+internal_vertex_count = 6
+
+[node name="RearLeg2" type="Polygon2D" parent="Sprites/Horse/Parts" unique_id=783876062]
+modulate = Color(0.5890956, 0.5890956, 0.5890956, 1)
+texture_filter = 1
+position = Vector2(9, -47)
+color = Color(0.32915837, 0.3291584, 0.3291584, 1)
+texture = ExtResource("19_2s10h")
+skeleton = NodePath("../../Bones/Skeleton2D")
+polygon = PackedVector2Array(157.88376, 156.85718, 142.6041, 174.38387, 128.6726, 185.61893, 110.24714, 200.89859, 99.01208, 211.23483, 92.27105, 217.52646, 85.53002, 229.66031, 82.38421, 250.33281, 84.63124, 265.1632, 97.663895, 278.19586, 103.05672, 285.3863, 95.416885, 292.12732, 77.44081, 289.4309, 74.11443, 283.8296, 74.743385, 276.07257, 65.93811, 269.36377, 64.46871, 252.80173, 67.19416, 229.94995, 64.04871, 211.08054, 82.497856, 187.59981, 86.90049, 177.53664, 86.90043, 162.65051, 82.07849, 148.60402, 76.45955, 127.860855, 86.78433, 112.89952, 126.084045, 108.50382, 166.94316, 122.01492, 116.283195, 156.907, 111.53946, 172.25438, 80.00809, 206.5745, 77.21765, 219.13144, 73.8696, 261.8247, 81.124725, 271.59122)
+polygons = [PackedInt32Array(22, 27, 0, 26, 25, 24, 23), PackedInt32Array(21, 27, 22), PackedInt32Array(21, 20, 28), PackedInt32Array(21, 28, 27), PackedInt32Array(28, 1, 27), PackedInt32Array(27, 1, 0), PackedInt32Array(28, 2, 1), PackedInt32Array(2, 20, 28), PackedInt32Array(2, 3, 4, 29, 19, 20), PackedInt32Array(29, 18, 19), PackedInt32Array(29, 5, 4), PackedInt32Array(30, 29, 5), PackedInt32Array(30, 18, 29), PackedInt32Array(30, 17, 18), PackedInt32Array(30, 6, 5), PackedInt32Array(6, 17, 30), PackedInt32Array(17, 16, 31, 7, 6), PackedInt32Array(31, 15, 16), PackedInt32Array(31, 8, 7), PackedInt32Array(31, 32, 8), PackedInt32Array(14, 32, 31), PackedInt32Array(14, 31, 15), PackedInt32Array(14, 13, 12, 11, 10, 9, 8, 32)]
+bones = ["Back", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck/Nose", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR/KneeR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL/KneeL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR/KneeRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL", PackedFloat32Array(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0), "Back/LRL/LegRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0), "Back/LRL/LegRearL/KneeRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5), "Back/TopTail", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+internal_vertex_count = 6
+
+[node name="FrontLeg1" type="Polygon2D" parent="Sprites/Horse/Parts" unique_id=1444694395]
+modulate = Color(0.5890956, 0.5890956, 0.5890956, 1)
+texture_filter = 1
+position = Vector2(25, -35)
+texture = ExtResource("19_2s10h")
+skeleton = NodePath("../../Bones/Skeleton2D")
+polygon = PackedVector2Array(181.74251, 170.26828, 179.34554, 147.08257, 195.04802, 135.95139, 228.53249, 141.12221, 225.44626, 169.1828, 217.53261, 187.15039, 208.41626, 206.396, 208.41626, 218.2135, 206.05276, 228.34276, 202.00105, 241.5108, 200.65048, 256.36707, 202.67606, 264.47015, 215.50645, 274.93707, 220.57109, 285.404, 214.15588, 291.48154, 194.91028, 289.4557, 186.46922, 283.71576, 175.66466, 277.97583, 174.65173, 263.11957, 180.39165, 248.60097, 181.40459, 234.75763, 180.7293, 222.60251, 180.0538, 198.29192, 182.4173, 186.81207, 202.86655, 166.3923, 201.94571, 178.0563, 194.88591, 216.42476, 195.19286, 228.39572, 189.35945, 264.9232, 193.65671, 273.21075)
+uv = PackedVector2Array(181.74251, 170.26828, 188.83301, 160.47664, 203.01398, 156.0873, 218.20789, 155.07437, 222.93488, 167.22949, 217.53261, 187.15039, 208.41626, 206.396, 208.41626, 218.2135, 206.05276, 228.34276, 202.00105, 241.5108, 200.65048, 256.36707, 202.67606, 264.47015, 215.50645, 274.93707, 220.57109, 285.404, 214.15588, 291.48154, 194.91028, 289.4557, 186.46922, 283.71576, 175.66466, 277.97583, 174.65173, 263.11957, 180.39165, 248.60097, 181.40459, 234.75763, 180.7293, 222.60251, 180.0538, 198.29192, 182.4173, 186.81207, 202.86655, 166.3923, 201.94571, 178.0563, 194.88591, 216.42476, 195.19286, 228.39572, 189.35945, 264.9232, 193.65671, 273.21075)
+polygons = [PackedInt32Array(15, 29, 11, 12, 13, 14), PackedInt32Array(15, 16, 29), PackedInt32Array(29, 10, 11), PackedInt32Array(29, 28, 10), PackedInt32Array(29, 17, 28), PackedInt32Array(29, 16, 17), PackedInt32Array(28, 18, 17), PackedInt32Array(10, 18, 28), PackedInt32Array(10, 9, 8, 27, 20, 19, 18), PackedInt32Array(27, 21, 20), PackedInt32Array(27, 7, 8), PackedInt32Array(27, 26, 7), PackedInt32Array(27, 21, 26), PackedInt32Array(26, 22, 21), PackedInt32Array(26, 6, 7), PackedInt32Array(6, 22, 26), PackedInt32Array(22, 23, 25, 5, 6), PackedInt32Array(25, 0, 23), PackedInt32Array(25, 4, 5), PackedInt32Array(25, 24, 4), PackedInt32Array(25, 0, 24), PackedInt32Array(0, 1, 2, 3, 4, 24)]
+bones = ["Back", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck/Nose", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR", PackedFloat32Array(1, 1, 1, 1, 1, 1, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 1, 1, 1, 0, 0, 0, 0), "Back/Chest/LFR/LegR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0.5, 1, 1, 1, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 1, 1, 0.5, 0, 0, 0, 1, 1, 0, 0), "Back/Chest/LFR/LegR/KneeR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5), "Back/Chest/LFL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL/KneeL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR/KneeRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL/KneeRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/TopTail", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+internal_vertex_count = 6
+
+[node name="RearLeg1" type="Polygon2D" parent="Sprites/Horse/Parts" unique_id=1105149212]
+modulate = Color(0.5890956, 0.5890956, 0.5890956, 1)
+texture_filter = 1
+position = Vector2(-12, -41)
+texture = ExtResource("19_2s10h")
+skeleton = NodePath("../../Bones/Skeleton2D")
+polygon = PackedVector2Array(157.88376, 156.85718, 142.6041, 174.38387, 128.6726, 185.61893, 110.24714, 200.89859, 99.01208, 211.23483, 92.27105, 217.52646, 85.53002, 229.66031, 82.38421, 250.33281, 84.63124, 265.1632, 97.663895, 278.19586, 103.05672, 285.3863, 95.416885, 292.12732, 77.44081, 289.4309, 74.11443, 283.8296, 74.743385, 276.07257, 65.93811, 269.36377, 64.46871, 252.80173, 67.19416, 229.94995, 64.04871, 211.08054, 82.497856, 187.59981, 86.90049, 177.53664, 86.90043, 162.65051, 82.07849, 148.60402, 75.820206, 125.62701, 95.45198, 116.26108, 129.33182, 117.00238, 156.97545, 128.63736, 116.283195, 156.907, 111.53946, 172.25438, 80.00809, 206.5745, 77.21765, 219.13144, 73.8696, 261.8247, 81.124725, 271.59122)
+uv = PackedVector2Array(157.88376, 156.85718, 142.6041, 174.38387, 128.6726, 185.61893, 110.24714, 200.89859, 99.01208, 211.23483, 92.27105, 217.52646, 85.53002, 229.66031, 82.38421, 250.33281, 84.63124, 265.1632, 97.663895, 278.19586, 103.05672, 285.3863, 95.416885, 292.12732, 77.44081, 289.4309, 74.11443, 283.8296, 74.743385, 276.07257, 65.93811, 269.36377, 64.46871, 252.80173, 67.19416, 229.94995, 64.04871, 211.08054, 82.497856, 187.59981, 86.90049, 177.53664, 86.90043, 162.65051, 82.07849, 148.60402, 85.64253, 141.89523, 102.20483, 139.5891, 128.41098, 140.63734, 154.82681, 147.97507, 116.283195, 156.907, 111.53946, 172.25438, 80.00809, 206.5745, 77.21765, 219.13144, 73.8696, 261.8247, 81.124725, 271.59122)
+polygons = [PackedInt32Array(22, 27, 0, 26, 25, 24, 23), PackedInt32Array(21, 27, 22), PackedInt32Array(21, 20, 28), PackedInt32Array(21, 28, 27), PackedInt32Array(28, 1, 27), PackedInt32Array(27, 1, 0), PackedInt32Array(28, 2, 1), PackedInt32Array(2, 20, 28), PackedInt32Array(2, 3, 4, 29, 19, 20), PackedInt32Array(29, 18, 19), PackedInt32Array(29, 5, 4), PackedInt32Array(30, 29, 5), PackedInt32Array(30, 18, 29), PackedInt32Array(30, 17, 18), PackedInt32Array(30, 6, 5), PackedInt32Array(6, 17, 30), PackedInt32Array(17, 16, 31, 7, 6), PackedInt32Array(31, 15, 16), PackedInt32Array(31, 8, 7), PackedInt32Array(31, 32, 8), PackedInt32Array(14, 32, 31), PackedInt32Array(14, 31, 15), PackedInt32Array(14, 13, 12, 11, 10, 9, 8, 32)]
+bones = ["Back", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck/Nose", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR/KneeR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL/KneeL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR", PackedFloat32Array(0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0), "Back/LRR/LegRearR", PackedFloat32Array(0, 0, 0, 0, 0.5, 0.5, 1, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 1, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0), "Back/LRR/LegRearR/KneeRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5), "Back/LRL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL/KneeRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/TopTail", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+internal_vertex_count = 6
+
+[node name="Body" type="Polygon2D" parent="Sprites/Horse/Parts" unique_id=1015021127]
+modulate = Color(0.5890956, 0.5890956, 0.5890956, 1)
+texture_filter = 1
+texture = ExtResource("19_2s10h")
+skeleton = NodePath("../../Bones/Skeleton2D")
+polygon = PackedVector2Array(71.32864, 58.73797, 78.45672, 49.513397, 87.052345, 41.337074, 98.163765, 34.837944, 110.74273, 31.483551, 122.0638, 30.016006, 136.5296, 30.644953, 149.7375, 33.160744, 162.73576, 37.773033, 175.73402, 38.61163, 179.92702, 37.353737, 183.7007, 33.580048, 184.32965, 26.032667, 192.92528, 23.726524, 197.32791, 29.596706, 202.56915, 32.32215, 212.84196, 28.967758, 223.53448, 20.78927, 232.13011, 12.822596, 240.9354, 2.549776, 246.59592, 0.03398323, 259.59418, 1.0822315, 270.07666, 4.0173206, 282.44595, 13.661192, 290.62228, 24.98226, 293.76703, 31.48139, 293.1449, 48.260307, 291.0484, 55.598038, 283.92032, 67.96735, 283.08173, 74.04718, 286.0168, 81.38491, 285.17822, 92.07703, 279.72733, 94.38318, 275.95383, 110.73233, 273.43805, 118.07005, 267.56784, 125.198135, 257.92398, 131.69727, 252.0538, 137.7771, 240.73273, 138.40604, 222.49323, 136.72885, 202.36688, 135.47095, 183.49355, 131.48567, 169.58633, 128.43532, 155.18147, 123.4536, 148.6909, 121.052986, 141.93361, 119.98604, 131.70898, 115.97627, 121.92868, 113.57565, 108.40871, 109.92717, 98.09494, 107.97111, 86.09185, 106.90417, 75.24461, 106.45961, 70.44338, 107.61546, 69.11364, 103.35234, 68.13561, 96.861786, 66.5352, 84.858696, 66.80238, 73.38634, 69.38082, 63.606045)
+uv = PackedVector2Array(71.32864, 58.73797, 78.45672, 49.513397, 87.052345, 41.337074, 98.163765, 34.837944, 110.74273, 31.483551, 122.0638, 30.016006, 136.5296, 30.644953, 149.7375, 33.160744, 162.73576, 37.773033, 175.73402, 38.61163, 179.92702, 37.353737, 183.7007, 33.580048, 184.32965, 26.032667, 192.92528, 23.726524, 197.32791, 29.596706, 202.56915, 32.32215, 212.84196, 28.967758, 223.53448, 20.78927, 232.13011, 12.822596, 240.9354, 2.549776, 246.59592, 0.03398323, 259.59418, 1.0822315, 270.07666, 4.0173206, 282.44595, 13.661192, 290.62228, 24.98226, 293.76703, 31.48139, 293.1449, 48.260307, 291.0484, 55.598038, 283.92032, 67.96735, 283.08173, 74.04718, 286.0168, 81.38491, 285.17822, 92.07703, 279.72733, 94.38318, 275.95383, 110.73233, 273.43805, 118.07005, 267.56784, 125.198135, 257.92398, 131.69727, 252.0538, 137.7771, 240.73273, 138.40604, 222.49323, 136.72885, 202.36688, 135.47095, 183.49355, 131.48567, 169.58633, 128.43532, 155.18147, 123.4536, 148.6909, 121.052986, 141.93361, 119.98604, 131.70898, 115.97627, 121.92868, 113.57565, 108.40871, 109.92717, 98.09494, 107.97111, 86.09185, 106.90417, 75.24461, 106.45961, 70.44338, 107.61546, 69.11364, 103.35234, 68.13561, 96.861786, 66.5352, 84.858696, 66.80238, 73.38634, 69.38082, 63.606045)
+bones = ["Back", PackedFloat32Array(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0.5, 1, 1, 1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5), "Back/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck/Nose", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR/KneeR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL/KneeL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR/KneeRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL/KneeRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/TopTail", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+
+[node name="Head" type="Polygon2D" parent="Sprites/Horse/Parts" unique_id=1111395909]
+modulate = Color(0.5890956, 0.5890956, 0.5890956, 1)
+texture_filter = 1
+position = Vector2(-61, -68)
+texture = ExtResource("19_2s10h")
+skeleton = NodePath("../../Bones/Skeleton2D")
+polygon = PackedVector2Array(306.2567, 71.90105, 335.91653, 44.488785, 357.93723, 33.703136, 383.55316, 27.411507, 401.97864, 15.277653, 412.76428, 20.670479, 409.61847, 35.950146, 419.9547, 46.735794, 426.69577, 61.566063, 441.97543, 91.676, 443.32364, 107.405075, 435.6838, 115.49431, 425.79697, 119.538925, 407.82086, 113.2473, 392.9906, 97.51823, 382.20496, 89.878395, 375.46393, 99.76524, 356.58902, 131.22339, 341.75876, 136.16681, 322.43448, 131.22339, 304.90778, 119.08952, 298.61615, 96.17002, 322.6826, 117.53533, 334.81644, 98.211044, 387.8459, 51.47323, 396.83392, 64.05649)
+uv = PackedVector2Array(306.2567, 71.90105, 335.91653, 44.488785, 357.93723, 33.703136, 383.55316, 27.411507, 401.97864, 15.277653, 412.76428, 20.670479, 409.61847, 35.950146, 419.9547, 46.735794, 426.69577, 61.566063, 441.97543, 91.676, 443.32364, 107.405075, 435.6838, 115.49431, 425.79697, 119.538925, 407.82086, 113.2473, 392.9906, 97.51823, 382.20496, 89.878395, 375.46393, 99.76524, 356.58902, 131.22339, 341.75876, 136.16681, 322.43448, 131.22339, 304.90778, 119.08952, 298.61615, 96.17002, 322.6826, 117.53533, 334.81644, 98.211044, 387.8459, 51.47323, 396.83392, 64.05649)
+polygons = [PackedInt32Array(22, 17, 18), PackedInt32Array(22, 19, 18), PackedInt32Array(22, 20, 19), PackedInt32Array(22, 21, 20), PackedInt32Array(22, 23, 17), PackedInt32Array(22, 21, 23), PackedInt32Array(23, 0, 21), PackedInt32Array(23, 16, 17), PackedInt32Array(16, 15, 24, 3, 2, 1, 0, 23), PackedInt32Array(24, 4, 3), PackedInt32Array(24, 5, 4), PackedInt32Array(24, 6, 5), PackedInt32Array(24, 25, 6), PackedInt32Array(25, 15, 24), PackedInt32Array(25, 7, 6), PackedInt32Array(25, 14, 15), PackedInt32Array(25, 8, 7), PackedInt32Array(14, 8, 25), PackedInt32Array(14, 13, 12, 11, 10, 9, 8)]
+bones = ["Back", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest", PackedFloat32Array(0.5, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0), "Back/Chest/Neck", PackedFloat32Array(1, 0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 0.5, 0.5, 0), "Back/Chest/Neck/Nose", PackedFloat32Array(0, 0, 0, 0.5, 0.5, 0.5, 1, 0.5, 0.5, 1, 1, 1, 1, 1, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1), "Back/Chest/LFR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR/KneeR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL/KneeL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR/KneeRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL/KneeRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/TopTail", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+internal_vertex_count = 4
+
+[node name="Tail" type="Polygon2D" parent="Sprites/Horse/Parts" unique_id=1860166301]
+modulate = Color(0.5890956, 0.5890956, 0.5890956, 1)
+texture_filter = 1
+position = Vector2(49, 19)
+texture = ExtResource("19_2s10h")
+skeleton = NodePath("../../Bones/Skeleton2D")
+polygon = PackedVector2Array(45.738083, 31.102371, 31.40216, 51.370407, 26.45874, 61.75159, 25.470047, 79.05357, 28.93045, 100.804634, 26.45874, 121.56701, 21.020966, 141.3407, 13.605835, 151.72188, 10.145447, 165.06912, 2.235962, 171.98991, 0.75294495, 156.17096, -0.7300873, 141.83504, -1.3577805, 117.53168, -2.7753944, 90.12447, 0.9731407, 62.497246, 6.3457375, 44.998604, 14.835667, 34.949295, 27.6572, 29.231588, 39.958935, 29.404852)
+uv = PackedVector2Array(45.738083, 31.102371, 31.40216, 51.370407, 26.45874, 61.75159, 25.470047, 79.05357, 28.93045, 100.804634, 26.45874, 121.56701, 21.020966, 141.3407, 13.605835, 151.72188, 10.145447, 165.06912, 2.235962, 171.98991, 0.75294495, 156.17096, -0.7300873, 141.83504, -1.3577805, 117.53168, -2.7753944, 90.12447, 0.9731407, 62.497246, 6.3457375, 44.998604, 14.835667, 34.949295, 27.6572, 29.231588, 39.958935, 29.404852)
+bones = ["Back", PackedFloat32Array(0.5, 0.5, 0.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0.5, 0.5), "Back/Chest", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/Neck/Nose", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFR/LegR/KneeR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/Chest/LFL/LegL/KneeL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRR/LegRearR/KneeRearR", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/LRL/LegRearL/KneeRearL", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "Back/TopTail", PackedFloat32Array(0, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0, 0, 0)]
+
+[node name="Rope" type="Polygon2D" parent="Sprites/Horse/Parts" unique_id=450358108]
+modulate = Color(0.5890956, 0.5890956, 0.5890956, 1)
+texture_filter = 1
+position = Vector2(-219, -108)
+texture = ExtResource("19_2s10h")
+skeleton = NodePath("../../Bones/Skeleton2D")
+polygon = PackedVector2Array(401.9606, 204.34369, 363.1486, 218.64285, 320.65967, 229.67361, 292.4699, 235.80183, 265.09723, 239.47876, 255.2921, 239.47876, 243.85277, 238.66167, 240.99295, 249.2839, 251.61517, 251.32663, 279.3964, 249.69244, 307.58615, 245.19843, 350.07507, 236.21039, 393.3811, 223.13687, 416.6683, 214.55737)
+uv = PackedVector2Array(401.9606, 204.34369, 363.1486, 218.64285, 320.65967, 229.67361, 292.4699, 235.80183, 265.09723, 239.47876, 255.2921, 239.47876, 243.85277, 238.66167, 240.99295, 249.2839, 251.61517, 251.32663, 279.3964, 249.69244, 307.58615, 245.19843, 350.07507, 236.21039, 393.3811, 223.13687, 416.6683, 214.55737)
+
+[node name="Bones" type="Node2D" parent="Sprites/Horse" unique_id=158032163]
+visible = false
+
+[node name="Skeleton2D" type="Skeleton2D" parent="Sprites/Horse/Bones" unique_id=959594555]
+
+[node name="Back" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D" unique_id=1133305743]
+position = Vector2(89, 55)
+rest = Transform2D(1, 0, 0, 1, 89, 55)
+
+[node name="Chest" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back" unique_id=377502151]
+position = Vector2(152, 15)
+rest = Transform2D(1, 0, 0, 1, 152, 15)
+
+[node name="Neck" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest" unique_id=1279465329]
+rotation = 0.12619059
+scale = Vector2(0.9999998, 0.9999998)
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+
+[node name="Nose" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest/Neck" unique_id=876277526]
+position = Vector2(87, -92)
+rotation = 0.046889514
+scale = Vector2(0.99999994, 0.99999994)
+rest = Transform2D(1, 0, 0, 1, 87, -92)
+auto_calculate_length_and_angle = false
+length = 70.0
+bone_angle = 54.99998
+
+[node name="LFR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest" unique_id=283411692]
+rotation = 0.009806168
+scale = Vector2(0.9999997, 0.9999997)
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+
+[node name="LegR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest/LFR" unique_id=1242908154]
+position = Vector2(-8, 101)
+rotation = 0.37641522
+rest = Transform2D(1, 0, 0, 1, -8, 101)
+
+[node name="KneeR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest/LFR/LegR" unique_id=301150670]
+position = Vector2(-10, 56)
+rotation = 0.43227285
+scale = Vector2(0.99999976, 0.99999976)
+rest = Transform2D(1, 0, 0, 1, -10, 56)
+auto_calculate_length_and_angle = false
+length = 25.0
+bone_angle = 30.315998
+
+[node name="LFL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest" unique_id=2021530998]
+rotation = -0.6632628
+scale = Vector2(0.9999998, 0.9999998)
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+
+[node name="LegL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest/LFL" unique_id=1991921919]
+position = Vector2(5, 103)
+rotation = 0.11332028
+scale = Vector2(0.9999999, 0.9999999)
+rest = Transform2D(1, 0, 0, 1, 5, 103)
+
+[node name="KneeL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest/LFL/LegL" unique_id=176911393]
+position = Vector2(-8, 57)
+rotation = 0.8535601
+scale = Vector2(0.9999999, 0.9999999)
+rest = Transform2D(1, 0, 0, 1, -8, 57)
+auto_calculate_length_and_angle = false
+length = 25.0
+bone_angle = 39.999985
+
+[node name="LRR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back" unique_id=1758602567]
+position = Vector2(16, 58)
+rotation = -1.2567565
+scale = Vector2(0.9999999, 0.9999999)
+rest = Transform2D(1, 0, 0, 1, 16, 58)
+
+[node name="LegRearR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/LRR" unique_id=1002151988]
+position = Vector2(-35, 53)
+rotation = 1.0530282
+scale = Vector2(0.99999994, 0.99999994)
+rest = Transform2D(1, 0, 0, 1, -35, 53)
+
+[node name="KneeRearR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/LRR/LegRearR" unique_id=1207585259]
+position = Vector2(-9, 58)
+rotation = 0.5226337
+scale = Vector2(0.9999999, 0.9999999)
+rest = Transform2D(1, 0, 0, 1, -9, 58)
+auto_calculate_length_and_angle = false
+length = 25.0
+bone_angle = 45.0
+
+[node name="LRL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back" unique_id=481061215]
+position = Vector2(27, 63)
+rotation = 0.06422323
+rest = Transform2D(1, 0, 0, 1, 27, 63)
+
+[node name="LegRearL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/LRL" unique_id=475516282]
+position = Vector2(-31, 54)
+rotation = 0.64423794
+scale = Vector2(0.9999999, 0.9999999)
+rest = Transform2D(1, 0, 0, 1, -31, 54)
+
+[node name="KneeRearL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/LRL/LegRearL" unique_id=304520175]
+position = Vector2(-2, 43)
+rotation = 0.64017916
+scale = Vector2(0.9999998, 0.9999998)
+rest = Transform2D(1, 0, 0, 1, -2, 43)
+auto_calculate_length_and_angle = false
+length = 25.0
+bone_angle = 45.0
+
+[node name="TopTail" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back" unique_id=1878627075]
+position = Vector2(-27, 22)
+rotation = -0.016389724
+scale = Vector2(0.99999994, 0.99999994)
+rest = Transform2D(1, 0, 0, 1, -27, 22)
+auto_calculate_length_and_angle = false
+length = 100.0
+bone_angle = 91.99996
+
+[node name="Front" type="Node" parent="Sprites/Horse/Bones/Skeleton2D" unique_id=742743803]
+script = ExtResource("20_ueq7b")
+metadata/_custom_type_script = "uid://3n2ir7g15yw5"
+
+[node name="FR" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Front" unique_id=746739925]
+script = ExtResource("20_ueq7b")
+metadata/_custom_type_script = "uid://3n2ir7g15yw5"
+
+[node name="FR Leg1" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Front/FR" unique_id=516563840 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+script = ExtResource("21_mcif2")
+target_node = NodePath("../../../../../IK Targets/FrontRight Leg")
+enabled = true
+flip_bend_direction = true
+softness = 0.6
+joint_one_bone_node = NodePath("../../../Back/Chest/LFR")
+joint_two_bone_node = NodePath("../../../Back/Chest/LFR/LegR")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="FR Leg2" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Front/FR" unique_id=257575423 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+script = ExtResource("21_mcif2")
+target_node = NodePath("../../../../../IK Targets/FrontRight Leg")
+enabled = true
+softness = 0.6
+joint_one_bone_node = NodePath("../../../Back/Chest/LFR/LegR")
+joint_two_bone_node = NodePath("../../../Back/Chest/LFR/LegR/KneeR")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="SoupLookAt" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Front/FR" unique_id=1997141999 node_paths=PackedStringArray("target_node", "bone_node")]
+script = ExtResource("20_j7hd7")
+target_node = NodePath("../../../../../IK Targets/FrontRight Leg")
+enabled = true
+angle_offset_degrees = -25.0
+bone_node = NodePath("../../../Back/Chest/LFR/LegR/KneeR")
+metadata/_custom_type_script = "uid://b4u1tvhlw4d2g"
+
+[node name="FL" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Front" unique_id=707690285]
+script = ExtResource("20_ueq7b")
+metadata/_custom_type_script = "uid://3n2ir7g15yw5"
+
+[node name="FL Leg1" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Front/FL" unique_id=709706240 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+script = ExtResource("21_mcif2")
+target_node = NodePath("../../../../../IK Targets/FrontLeft Leg")
+enabled = true
+flip_bend_direction = true
+softness = 0.6
+joint_one_bone_node = NodePath("../../../Back/Chest/LFL")
+joint_two_bone_node = NodePath("../../../Back/Chest/LFL/LegL")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="FL Leg2" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Front/FL" unique_id=2135523235 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+script = ExtResource("21_mcif2")
+target_node = NodePath("../../../../../IK Targets/FrontLeft Leg")
+enabled = true
+softness = 0.6
+joint_one_bone_node = NodePath("../../../Back/Chest/LFL/LegL")
+joint_two_bone_node = NodePath("../../../Back/Chest/LFL/LegL/KneeL")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="SoupLookAt" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Front/FL" unique_id=785731089 node_paths=PackedStringArray("target_node", "bone_node")]
+script = ExtResource("20_j7hd7")
+target_node = NodePath("../../../../../IK Targets/FrontLeft Leg")
+enabled = true
+bone_node = NodePath("../../../Back/Chest/LFL/LegL/KneeL")
+look_at_mode = 1
+metadata/_custom_type_script = "uid://b4u1tvhlw4d2g"
+
+[node name="Rear" type="Node" parent="Sprites/Horse/Bones/Skeleton2D" unique_id=1980735579]
+script = ExtResource("20_ueq7b")
+metadata/_custom_type_script = "uid://3n2ir7g15yw5"
+
+[node name="RR" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Rear" unique_id=2110116384]
+script = ExtResource("20_ueq7b")
+metadata/_custom_type_script = "uid://3n2ir7g15yw5"
+
+[node name="RR Leg1" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Rear/RR" unique_id=1342724182 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+script = ExtResource("21_mcif2")
+target_node = NodePath("../../../../../IK Targets/RearRight Leg")
+enabled = true
+flip_bend_direction = true
+softness = 0.6
+joint_one_bone_node = NodePath("../../../Back/LRR")
+joint_two_bone_node = NodePath("../../../Back/LRR/LegRearR")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="RR Leg2" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Rear/RR" unique_id=670398815 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+script = ExtResource("21_mcif2")
+target_node = NodePath("../../../../../IK Targets/RearRight Leg")
+enabled = true
+softness = 0.6
+joint_one_bone_node = NodePath("../../../Back/LRR/LegRearR")
+joint_two_bone_node = NodePath("../../../Back/LRR/LegRearR/KneeRearR")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="SoupLookAt" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Rear/RR" unique_id=1385771357 node_paths=PackedStringArray("target_node", "bone_node")]
+script = ExtResource("20_j7hd7")
+target_node = NodePath("../../../../../IK Targets/RearRight Leg")
+enabled = true
+bone_node = NodePath("../../../Back/LRR/LegRearR/KneeRearR")
+metadata/_custom_type_script = "uid://b4u1tvhlw4d2g"
+
+[node name="RL" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Rear" unique_id=680412267]
+script = ExtResource("20_ueq7b")
+metadata/_custom_type_script = "uid://3n2ir7g15yw5"
+
+[node name="RL Leg1" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Rear/RL" unique_id=1077609273 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+script = ExtResource("21_mcif2")
+target_node = NodePath("../../../../../IK Targets/RearLeft Leg")
+enabled = true
+flip_bend_direction = true
+softness = 0.6
+joint_one_bone_node = NodePath("../../../Back/LRL")
+joint_two_bone_node = NodePath("../../../Back/LRL/LegRearL")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="RL Leg2" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Rear/RL" unique_id=356108798 node_paths=PackedStringArray("target_node", "joint_one_bone_node", "joint_two_bone_node")]
+script = ExtResource("21_mcif2")
+target_node = NodePath("../../../../../IK Targets/RearLeft Leg")
+enabled = true
+softness = 0.6
+joint_one_bone_node = NodePath("../../../Back/LRL/LegRearL")
+joint_two_bone_node = NodePath("../../../Back/LRL/LegRearL/KneeRearL")
+metadata/_custom_type_script = "uid://bnso0mph1tb11"
+
+[node name="SoupLookAt" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Rear/RL" unique_id=1971664706 node_paths=PackedStringArray("target_node", "bone_node")]
+script = ExtResource("20_j7hd7")
+target_node = NodePath("../../../../../IK Targets/RearLeft Leg")
+enabled = true
+bone_node = NodePath("../../../Back/LRL/LegRearL/KneeRearL")
+metadata/_custom_type_script = "uid://b4u1tvhlw4d2g"
+
+[node name="Tail" type="Node" parent="Sprites/Horse/Bones/Skeleton2D/Rear" unique_id=2064128350 node_paths=PackedStringArray("target_node", "bone_node")]
+script = ExtResource("20_j7hd7")
+target_node = NodePath("../../../../IK Targets/Tail")
+enabled = true
+bone_node = NodePath("../../Back/TopTail")
+metadata/_custom_type_script = "uid://b4u1tvhlw4d2g"
+
+[node name="IK Targets" type="Node2D" parent="Sprites/Horse" unique_id=608574992]
+
+[node name="FrontRight Leg" type="Node2D" parent="Sprites/Horse/IK Targets" unique_id=1437634432]
+position = Vector2(193, 259)
+
+[node name="FrontLeft Leg" type="Node2D" parent="Sprites/Horse/IK Targets" unique_id=335067980]
+position = Vector2(357, 241)
+
+[node name="RearRight Leg" type="Node2D" parent="Sprites/Horse/IK Targets" unique_id=657869492]
+position = Vector2(165, 256)
+
+[node name="RearLeft Leg" type="Node2D" parent="Sprites/Horse/IK Targets" unique_id=1820501905]
+position = Vector2(27, 241)
+
+[node name="Tail" type="Node2D" parent="Sprites/Horse/IK Targets" unique_id=1628547327]
+position = Vector2(61, 131)
+
+[node name="CarriageHorse" type="AudioStreamPlayer2D" parent="." unique_id=110528748]
+stream = ExtResource("20_p26ru")
+volume_db = 6.0
+autoplay = true
+max_distance = 2462.0
+attenuation = 1.8025062
+bus = &"Carriage"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1095392680]
+libraries/ = SubResource("AnimationLibrary_mb04j")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1266848865]
+stream = ExtResource("20_p26ru")
+autoplay = true

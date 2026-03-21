@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://deaosjcdgf6g2"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_64x66"]
+
+[resource]
+script = ExtResource("1_64x66")
+name = "pan"
+display_name = "Pan"
+cost = 1.0
+effects = {
+"estres": -2.0,
+"felicidad": 2.0,
+"hambre": -20.0,
+"higiene": -5.0,
+"sueno": -2.0
+}

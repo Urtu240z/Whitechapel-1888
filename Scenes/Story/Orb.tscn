@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://b7bxdhh6ah23f"]
+
+[ext_resource type="Script" uid="uid://bu8bpqnvvtfkp" path="res://Scripts/Story/orb.gd" id="1_monmb"]
+[ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="1_tuxme"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_monmb"]
+radius = 105.23308
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bh84m"]
+radius = 22.090721
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u01ao"]
+radius = 15.033297
+
+[sub_resource type="Gradient" id="Gradient_bh84m"]
+offsets = PackedFloat32Array(0.22818792, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o32kd"]
+gradient = SubResource("Gradient_bh84m")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
+
+[sub_resource type="Animation" id="Animation_tuxme"]
+resource_name = "Orb_Capture"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/PointLight2D:texture_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 50.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/PointLight2D:energy")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4003388),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 16.0]
+}
+
+[sub_resource type="Animation" id="Animation_i4boo"]
+resource_name = "Orb_Idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/PointLight2D:texture_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.49),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -20)]
+}
+
+[sub_resource type="Animation" id="Animation_ovvwi"]
+resource_name = "Orb_Move"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/PointLight2D:texture_scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.49),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 1.4]
+}
+
+[sub_resource type="Animation" id="Animation_twxf2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/PointLight2D:texture_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D/PointLight2D:energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dicwm"]
+_data = {
+&"Orb_Capture": SubResource("Animation_tuxme"),
+&"Orb_Idle": SubResource("Animation_i4boo"),
+&"Orb_Move": SubResource("Animation_ovvwi"),
+&"RESET": SubResource("Animation_twxf2")
+}
+
+[node name="Orb" type="CharacterBody2D" unique_id=554715732]
+collision_layer = 2
+script = ExtResource("1_monmb")
+
+[node name="DetectionArea2D" type="Area2D" parent="." unique_id=1968755562]
+collision_layer = 8
+collision_mask = 8
+
+[node name="Detection" type="CollisionShape2D" parent="DetectionArea2D" unique_id=1354626524]
+shape = SubResource("CircleShape2D_monmb")
+
+[node name="HuntArea2D" type="Area2D" parent="." unique_id=1988488559]
+collision_layer = 8
+collision_mask = 8
+
+[node name="Hunt" type="CollisionShape2D" parent="HuntArea2D" unique_id=903358217]
+shape = SubResource("CircleShape2D_bh84m")
+
+[node name="SelfCollision" type="CollisionShape2D" parent="." unique_id=65336280]
+shape = SubResource("CircleShape2D_u01ao")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=373902510]
+texture_filter = 2
+scale = Vector2(0.2, 0.2)
+texture = SubResource("GradientTexture2D_o32kd")
+
+[node name="PointLight2D" type="PointLight2D" parent="Sprite2D" unique_id=1238984945]
+texture = ExtResource("1_tuxme")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2136447982]
+libraries/ = SubResource("AnimationLibrary_dicwm")

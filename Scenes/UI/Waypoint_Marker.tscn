@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://cfuu5bj4ws38"]
+
+[ext_resource type="Shader" uid="uid://32aoc1nvtfkj" path="res://Assets/Shaders/Glow.gdshader" id="1_14hum"]
+[ext_resource type="Script" uid="uid://bhg6jxbly2ru0" path="res://Scripts/UI/waypoint_marker.gd" id="2_lgew7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lgew7"]
+shader = ExtResource("1_14hum")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/radius = 0.45
+shader_parameter/edge_softness = 0.35
+shader_parameter/pulse_speed = 2.0
+shader_parameter/pulse_strength = 0.15
+
+[sub_resource type="Gradient" id="Gradient_fkkxu"]
+offsets = PackedFloat32Array(0.34136546, 0.686747)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_55n8t"]
+gradient = SubResource("Gradient_fkkxu")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="WaypointMarker" type="Sprite2D" unique_id=1364504721]
+z_index = 4096
+material = SubResource("ShaderMaterial_lgew7")
+scale = Vector2(5, 5)
+texture = SubResource("GradientTexture2D_55n8t")
+script = ExtResource("2_lgew7")
+hide_distance = 580.0

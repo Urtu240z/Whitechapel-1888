@@ -1,0 +1,30 @@
+SISTEMA DE SUEÑO — SleepManager
+================================
+Contexto histórico: Los lodging houses victorianos echaban a los 
+residentes a las 10:00 AM y aceptaban nuevos huéspedes por la noche.
+
+HOSTAL:
+- Horario: 22:00 entrada, 10:00 salida obligatoria
+- Si entras a las 22:00 → recuperación completa de sueño y stats
+- Si entras más tarde → recuperación proporcional a horas restantes
+- Siempre segura, nadie interrumpe el sueño
+- Coste por noche
+
+CALLE:
+- Puedes dormir cuando quieras
+- Recuperación más lenta que hostal
+- Si estás en zona expuesta (sin Area2D de callejón):
+  - De día → policía puede despertar (interrupción total)
+  - De noche → segura de policía
+- Jack the Ripper puede atacar de noche en la calle (% aleatorio)
+- Ruido aleatorio puede interrumpir el sueño
+- 15% curar enfermedad, 15% empeorar (+10), 70% sin cambio
+- Alcohol -10, Laudano -5 al despertar
+
+IMPLEMENTACIÓN:
+- Crear autoload SleepManager
+- Estado: dormida/despierta, hora de inicio, lugar (hostal/calle/callejón)
+- Recuperación progresiva de stats mientras duerme (no de golpe)
+- Señal sleep_interrupted para conectar policía y Jack
+- Area2D en callejones con grupo "safe_sleep_zone"
+- El sueño se integra con DayNightManager para calcular horas dormidas

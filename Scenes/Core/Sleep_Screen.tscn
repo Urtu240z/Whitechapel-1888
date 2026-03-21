@@ -1,0 +1,145 @@
+[gd_scene format=3 uid="uid://cp7m38pxgjanl"]
+
+[ext_resource type="FontFile" uid="uid://d31qwad02oajf" path="res://Assets/Fonts/IMFellEnglish.ttf" id="1_3ulk7"]
+[ext_resource type="Script" uid="uid://bkq1k32cd6l03" path="res://Scripts/Core/sleep_screen.gd" id="1_xc5w1"]
+
+[sub_resource type="Gradient" id="Gradient_xc5w1"]
+offsets = PackedFloat32Array(0.275, 0.54375)
+colors = PackedColorArray(0.8439394, 0.8466836, 0.60038817, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yrtv8"]
+gradient = SubResource("Gradient_xc5w1")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="SleepScreen" type="CanvasLayer" unique_id=1347689957]
+script = ExtResource("1_xc5w1")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1303486457]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.22091639, 0.22091639, 0.3491902, 1)
+
+[node name="CelestialBody" type="Sprite2D" parent="." unique_id=1032793033]
+position = Vector2(200, 200)
+texture = SubResource("GradientTexture2D_yrtv8")
+
+[node name="UI" type="Control" parent="." unique_id=1369622114]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PostSleepPanel" type="PanelContainer" parent="UI" unique_id=626694488]
+visible = false
+custom_minimum_size = Vector2(380, 180)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -130.0
+offset_right = 190.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margins" type="MarginContainer" parent="UI/PostSleepPanel" unique_id=1329279896]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PostSleepPanel/Margins" unique_id=1563534859]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LblPost" type="Label" parent="UI/PostSleepPanel/Margins/VBoxContainer" unique_id=1192768137]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_3ulk7")
+theme_override_font_sizes/font_size = 17
+text = "Puedes estar hasta las 10 a.m.                              ¿Qué quieres hacer?"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Botones" type="HBoxContainer" parent="UI/PostSleepPanel/Margins/VBoxContainer" unique_id=1101804690]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="BtnSeguir" type="Button" parent="UI/PostSleepPanel/Margins/VBoxContainer/Botones" unique_id=916542954]
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_3ulk7")
+text = "Esperar"
+
+[node name="BtnSalir" type="Button" parent="UI/PostSleepPanel/Margins/VBoxContainer/Botones" unique_id=628148068]
+custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_3ulk7")
+text = "Salir"
+
+[node name="LblHora" type="Label" parent="UI" unique_id=1368552440]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -122.5
+offset_top = -346.0
+offset_right = 122.5
+offset_bottom = -203.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_3ulk7")
+theme_override_font_sizes/font_size = 112
+text = "22:00"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="UI" unique_id=23267156]
+custom_minimum_size = Vector2(400, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 223.0
+offset_right = 200.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+value = 0.5
+
+[node name="BtnCancelar" type="Button" parent="UI" unique_id=1297983470]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = 284.0
+offset_right = 43.0
+offset_bottom = 315.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_3ulk7")
+theme_override_font_sizes/font_size = 16
+text = "Despertar"

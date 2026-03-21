@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://cvobjn66c6fxa"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_ano6j"]
+
+[resource]
+script = ExtResource("1_ano6j")
+name = "liquid-leche"
+display_name = "Leche"
+cost = 1.0
+effects = {
+"estres": -3.0,
+"felicidad": 3.0,
+"hambre": 5.0,
+"nervios": -2.0,
+"sueno": 2.0
+}

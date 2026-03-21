@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://due8g0p44jhat"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_dxmgq"]
+
+[resource]
+script = ExtResource("1_dxmgq")
+name = "health-sleep-suelo"
+display_name = "Health Sleep Suelo"
+cost = 0.0
+effects = {}

@@ -1,0 +1,374 @@
+[gd_scene format=3 uid="uid://w2jbko6gsfj8"]
+
+[ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="1_vj6ek"]
+[ext_resource type="Script" uid="uid://b5d8o54cdutgp" path="res://prueba_mecanicas.gd" id="1_wk82u"]
+[ext_resource type="PackedScene" uid="uid://b1nbpmgfq3kvk" path="res://Scenes/Core/UI_Stats.tscn" id="2_m4vru"]
+[ext_resource type="PackedScene" uid="uid://devl1udsex47w" path="res://Scenes/Core/Pickup.tscn" id="3_ju50u"]
+
+[sub_resource type="Gradient" id="Gradient_ju50u"]
+colors = PackedColorArray(0.38170326, 0.38170323, 0.38170323, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xhvna"]
+gradient = SubResource("Gradient_ju50u")
+
+[sub_resource type="Gradient" id="Gradient_vj6ek"]
+colors = PackedColorArray(0.23177361, 0.074526556, 0, 1, 0.45882353, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_m4vru"]
+gradient = SubResource("Gradient_vj6ek")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4vru"]
+size = Vector2(66, 65)
+
+[node name="Node2D" type="Node2D" unique_id=1896704466]
+script = ExtResource("1_wk82u")
+
+[node name="Builds" type="Node2D" parent="." unique_id=1653832861]
+position = Vector2(-9.999999, -65.99999)
+scale = Vector2(0.519, 0.586)
+
+[node name="Build1" type="Sprite2D" parent="Builds" unique_id=1617787713]
+position = Vector2(221, -610)
+scale = Vector2(14.86, 17.73)
+texture = SubResource("GradientTexture2D_xhvna")
+
+[node name="Build2" type="Sprite2D" parent="Builds" unique_id=1370905837]
+position = Vector2(1227, -491)
+scale = Vector2(14.86, 17.73)
+texture = SubResource("GradientTexture2D_m4vru")
+
+[node name="Build8" type="Sprite2D" parent="Builds" unique_id=1643119127]
+position = Vector2(4164.3545, -491)
+scale = Vector2(44.839832, 17.73)
+texture = SubResource("GradientTexture2D_m4vru")
+
+[node name="Build10" type="Sprite2D" parent="Builds" unique_id=1986554550]
+position = Vector2(-557.4741, -491)
+scale = Vector2(7.6873155, 17.73)
+texture = SubResource("GradientTexture2D_m4vru")
+
+[node name="Build12" type="Sprite2D" parent="Builds" unique_id=1063669613]
+position = Vector2(-1075.1445, -491)
+scale = Vector2(7.6873155, 17.73)
+texture = SubResource("GradientTexture2D_m4vru")
+
+[node name="Build11" type="Sprite2D" parent="Builds" unique_id=2037177868]
+position = Vector2(-2873, -491)
+scale = Vector2(14.86, 17.73)
+texture = SubResource("GradientTexture2D_m4vru")
+
+[node name="Build3" type="Sprite2D" parent="Builds" unique_id=45640962]
+position = Vector2(2220, -283.99997)
+scale = Vector2(14.86, 17.73)
+texture = SubResource("GradientTexture2D_xhvna")
+
+[node name="Build4" type="Sprite2D" parent="Builds" unique_id=1405264382]
+position = Vector2(-1847, -610)
+scale = Vector2(14.86, 17.73)
+texture = SubResource("GradientTexture2D_xhvna")
+
+[node name="Build6" type="Sprite2D" parent="Builds" unique_id=878996131]
+position = Vector2(-3951.0005, -610)
+scale = Vector2(14.86, 17.73)
+texture = SubResource("GradientTexture2D_xhvna")
+
+[node name="Build7" type="Sprite2D" parent="Builds" unique_id=505645598]
+position = Vector2(6144, -610)
+scale = Vector2(14.86, 17.73)
+texture = SubResource("GradientTexture2D_xhvna")
+
+[node name="Labels" type="Node2D" parent="." unique_id=286322343]
+position = Vector2(-9.999999, -65.99999)
+scale = Vector2(0.519, 0.586)
+
+[node name="Food" type="Label" parent="Labels" unique_id=387945171]
+offset_left = 115.00001
+offset_top = -392.00003
+offset_right = 161.0
+offset_bottom = -369.00003
+scale = Vector2(3.425, 3.425)
+text = "FOOD"
+
+[node name="Clean" type="Label" parent="Labels" unique_id=473171088]
+offset_left = 1150.0
+offset_top = -392.00003
+offset_right = 1201.0
+offset_bottom = -369.00003
+scale = Vector2(3.425, 3.425)
+text = "CLEAN"
+
+[node name="Client" type="Label" parent="Labels" unique_id=207191737]
+offset_left = 2099.0
+offset_top = -392.00003
+offset_right = 2154.0
+offset_bottom = -343.00003
+scale = Vector2(3.425, 3.425)
+text = "FUCK
+CLIENT"
+
+[node name="Client2" type="Label" parent="Labels" unique_id=336646906]
+offset_left = 1836.2235
+offset_top = -583.6178
+offset_right = 1891.2235
+offset_bottom = -534.6178
+scale = Vector2(3.425, 3.425)
+text = "Poor"
+
+[node name="Client3" type="Label" parent="Labels" unique_id=1034232321]
+offset_left = 2073.2175
+offset_top = -583.6178
+offset_right = 2137.2175
+offset_bottom = -534.6178
+scale = Vector2(3.425, 3.425)
+text = "Medium"
+
+[node name="Client4" type="Label" parent="Labels" unique_id=1095106577]
+offset_left = 2454.7207
+offset_top = -583.6178
+offset_right = 2518.7207
+offset_bottom = -534.6178
+scale = Vector2(3.425, 3.425)
+text = "Rich"
+
+[node name="Cure" type="Label" parent="Labels" unique_id=1921850900]
+offset_left = 4046.2427
+offset_top = -392.00003
+offset_right = 4101.2427
+offset_bottom = -343.00003
+scale = Vector2(3.425, 3.425)
+text = "CURA"
+
+[node name="Cure2" type="Label" parent="Labels" unique_id=690752358]
+offset_left = 2776.4932
+offset_top = -564.8465
+offset_right = 2831.4932
+offset_bottom = -515.8465
+scale = Vector2(3.425, 3.425)
+text = "Doctor
+"
+
+[node name="Cure3" type="Label" parent="Labels" unique_id=650609222]
+offset_left = 3186.898
+offset_top = -564.8465
+offset_right = 3257.898
+offset_bottom = -515.8465
+scale = Vector2(3.425, 3.425)
+text = "Medicina
+"
+
+[node name="Cure4" type="Label" parent="Labels" unique_id=1187804538]
+offset_left = 3701.3489
+offset_top = -564.8465
+offset_right = 3772.3489
+offset_bottom = -515.8465
+scale = Vector2(3.425, 3.425)
+text = "Laudano
+"
+
+[node name="Cure5" type="Label" parent="Labels" unique_id=159801912]
+offset_left = 4263.9697
+offset_top = -564.8465
+offset_right = 4334.9697
+offset_bottom = -515.8465
+scale = Vector2(3.425, 3.425)
+text = "Dormir hostal
+"
+
+[node name="Cure6" type="Label" parent="Labels" unique_id=1329036268]
+offset_left = 5001.927
+offset_top = -564.8465
+offset_right = 5108.927
+offset_bottom = -515.8465
+scale = Vector2(3.425, 3.425)
+text = "Dormir calle
+"
+
+[node name="Scary" type="Label" parent="Labels" unique_id=916797219]
+offset_left = -1181.1176
+offset_top = -380.54608
+offset_right = -1131.1176
+offset_bottom = -357.54608
+scale = Vector2(3.425, 3.425)
+text = "SCARY"
+
+[node name="Hide" type="Label" parent="Labels" unique_id=1651571049]
+offset_left = -612.7168
+offset_top = -383.959
+offset_right = -566.7168
+offset_bottom = -360.959
+scale = Vector2(3.425, 3.425)
+text = "HIDE"
+
+[node name="Drink" type="Label" parent="Labels" unique_id=1376769538]
+offset_left = -1971.0
+offset_top = -388.0
+offset_right = -1921.0
+offset_bottom = -365.0
+scale = Vector2(3.425, 3.425)
+text = "DRINK"
+
+[node name="Sleep" type="Label" parent="Labels" unique_id=816244551]
+offset_left = -2983.0002
+offset_top = -388.0
+offset_right = -2933.0002
+offset_bottom = -365.0
+scale = Vector2(3.425, 3.425)
+text = "SLEEP"
+
+[node name="Sleep+" type="Label" parent="Labels" unique_id=1724886349]
+offset_left = -2672.447
+offset_top = -378.83957
+offset_right = -2622.447
+offset_bottom = -355.83957
+scale = Vector2(3.425, 3.425)
+text = "+"
+
+[node name="Sleep-" type="Label" parent="Labels" unique_id=725829951]
+offset_left = -3246.6282
+offset_top = -387.372
+offset_right = -3196.6282
+offset_bottom = -364.372
+scale = Vector2(3.425, 3.425)
+text = "-"
+
+[node name="Drugs" type="Label" parent="Labels" unique_id=896806406]
+offset_left = -4068.0
+offset_top = -388.0
+offset_right = -4013.0
+offset_bottom = -365.0
+scale = Vector2(3.425, 3.425)
+text = "DRUGS"
+
+[node name="Pickup" parent="Labels" unique_id=1857319667 instance=ExtResource("3_ju50u")]
+position = Vector2(-1115.6069, -426.62115)
+pickup_type = "scare-up"
+disappear_on_pickup = false
+
+[node name="Pickup2" parent="Labels" unique_id=1781983210 instance=ExtResource("3_ju50u")]
+position = Vector2(-568.40076, -423.20816)
+pickup_type = "scare-down"
+disappear_on_pickup = false
+
+[node name="Pickup3" parent="Labels" unique_id=655813595 instance=ExtResource("3_ju50u")]
+position = Vector2(-3231.2139, -459.04434)
+pickup_type = "sueño-down"
+disappear_on_pickup = false
+
+[node name="Pickup4" parent="Labels" unique_id=758704612 instance=ExtResource("3_ju50u")]
+position = Vector2(-2657.0327, -459.04434)
+pickup_type = "sueño-up"
+disappear_on_pickup = false
+
+[node name="Pickup5" parent="Labels" unique_id=1327025623 instance=ExtResource("3_ju50u")]
+position = Vector2(1855.4915, -448.80542)
+pickup_type = "client-poor"
+disappear_on_pickup = false
+
+[node name="Pickup6" parent="Labels" unique_id=595805131 instance=ExtResource("3_ju50u")]
+position = Vector2(2177.264, -440.27304)
+pickup_type = "drink-absenta"
+disappear_on_pickup = false
+
+[node name="Pickup7" parent="Labels" unique_id=2061915409 instance=ExtResource("3_ju50u")]
+position = Vector2(2524.0847, -433.4471)
+pickup_type = "client-rich"
+disappear_on_pickup = false
+
+[node name="Pickup8" parent="Labels" unique_id=1877703676 instance=ExtResource("3_ju50u")]
+position = Vector2(2855.4912, -431.74063)
+pickup_type = "cure-doctor"
+disappear_on_pickup = false
+
+[node name="Pickup9" parent="Labels" unique_id=617363544 instance=ExtResource("3_ju50u")]
+position = Vector2(3300.578, -426.6212)
+pickup_type = "cure-medicine"
+disappear_on_pickup = false
+
+[node name="Pickup10" parent="Labels" unique_id=538977219 instance=ExtResource("3_ju50u")]
+position = Vector2(3805.395, -421.50168)
+pickup_type = "drug-laudano"
+disappear_on_pickup = false
+
+[node name="Pickup11" parent="Labels" unique_id=674213978 instance=ExtResource("3_ju50u")]
+position = Vector2(4443.1597, -418.0887)
+pickup_type = "cure-hostal"
+disappear_on_pickup = false
+
+[node name="Pickup12" parent="Labels" unique_id=713020473 instance=ExtResource("3_ju50u")]
+position = Vector2(5159.923, -426.62115)
+pickup_type = "cure-street"
+disappear_on_pickup = false
+
+[node name="Pickup13" parent="Labels" unique_id=348082681 instance=ExtResource("3_ju50u")]
+position = Vector2(2714.8362, -433.4471)
+pickup_type = "cure-reset"
+disappear_on_pickup = false
+
+[node name="Ground" type="StaticBody2D" parent="." unique_id=3571519]
+scale = Vector2(286.96, 3)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=682330662]
+position = Vector2(0, 0.50000083)
+scale = Vector2(1, 0.99999994)
+shape = SubResource("RectangleShape2D_m4vru")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground" unique_id=1841653187]
+texture = SubResource("GradientTexture2D_xhvna")
+
+[node name="Player" parent="." unique_id=370210788 instance=ExtResource("1_vj6ek")]
+position = Vector2(-2369, -191)
+scale = Vector2(0.17, 0.17)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1605457982]
+position = Vector2(858.8232, -382.35287)
+zoom = Vector2(1.955, 1.955)
+position_smoothing_enabled = true
+
+[node name="UIStats" parent="." unique_id=1543806037 instance=ExtResource("2_m4vru")]
+
+[node name="Laudanum" parent="." unique_id=720660128 instance=ExtResource("3_ju50u")]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(-2231, -315)
+pickup_type = "drug-laudano"
+disappear_on_pickup = false
+
+[node name="Opium" parent="." unique_id=90970568 instance=ExtResource("3_ju50u")]
+modulate = Color(1, 1, 0.27450982, 1)
+position = Vector2(-1966, -309)
+pickup_type = "drug-eter"
+disappear_on_pickup = false
+
+[node name="Wine" parent="." unique_id=1383529166 instance=ExtResource("3_ju50u")]
+position = Vector2(-1172, -304)
+pickup_type = "drink-ginebra"
+disappear_on_pickup = false
+
+[node name="Wine2" parent="." unique_id=840803717 instance=ExtResource("3_ju50u")]
+position = Vector2(-983, -313)
+pickup_type = "drink-whisky"
+disappear_on_pickup = false
+
+[node name="Wine3" parent="." unique_id=81052459 instance=ExtResource("3_ju50u")]
+position = Vector2(-825, -309)
+pickup_type = "drink-ron"
+disappear_on_pickup = false
+
+[node name="Food" parent="." unique_id=1668661142 instance=ExtResource("3_ju50u")]
+modulate = Color(0, 0, 1, 1)
+position = Vector2(-30, -314)
+pickup_type = "food-pan"
+disappear_on_pickup = false
+
+[node name="Food2" parent="." unique_id=533992165 instance=ExtResource("3_ju50u")]
+modulate = Color(0, 0, 1, 1)
+position = Vector2(219, -320)
+pickup_type = "food-tocino"
+disappear_on_pickup = false
+
+[node name="Ducha" parent="." unique_id=2042363160 instance=ExtResource("3_ju50u")]
+modulate = Color(0.23921569, 1, 1, 1)
+position = Vector2(597, -320)
+pickup_type = "health-ducha"
+disappear_on_pickup = false

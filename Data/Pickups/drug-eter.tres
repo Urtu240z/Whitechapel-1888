@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://xxfgvd0oagaq"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_2ulvr"]
+
+[resource]
+script = ExtResource("1_2ulvr")
+name = "drug-eter"
+display_name = "Eter"
+cost = 3.0
+effects = {
+"alcohol": 10.0,
+"estres": -20.0,
+"felicidad": 15.0,
+"hambre": -10.0,
+"higiene": -10.0,
+"laudano": 20.0,
+"miedo": -15.0,
+"nervios": -15.0,
+"sueno": -20.0
+}

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://bdidn17b3aepx"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_ebego"]
+
+[resource]
+script = ExtResource("1_ebego")
+name = "liquid-agua"
+display_name = "Agua"
+cost = 0.0
+effects = {
+"estres": 5.0,
+"hambre": 5.0,
+"higiene": -5.0,
+"miedo": 5.0,
+"nervios": 5.0
+}

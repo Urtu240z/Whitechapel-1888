@@ -1,0 +1,215 @@
+[gd_scene format=3 uid="uid://bn7e1mfmuc7dy"]
+
+[ext_resource type="Script" uid="uid://b4xf7coa4su2x" path="res://Scripts/Story/flashback.gd" id="1_k0uqs"]
+[ext_resource type="VideoStream" uid="uid://k7cgucbcxwwc" path="res://Assets/Videos/Flashback_1/Flashback_1 (1).ogv" id="2_qrf3j"]
+[ext_resource type="VideoStream" uid="uid://d2kg148rgno38" path="res://Assets/Videos/Oniric_1.ogv" id="2_timdj"]
+[ext_resource type="VideoStream" uid="uid://b0g622t1hkssb" path="res://Assets/Videos/Flashback_1/Flashback_1 (2).ogv" id="3_0gdoh"]
+[ext_resource type="VideoStream" uid="uid://dwvb1g6wtiuxy" path="res://Assets/Videos/Flashback_1/Flashback_1 (3).ogv" id="4_qw8c1"]
+[ext_resource type="VideoStream" uid="uid://0pxv2lggui2j" path="res://Assets/Videos/Flashback_1/Flashback_1 (4).ogv" id="5_s765r"]
+[ext_resource type="VideoStream" uid="uid://b4j75qpw5whps" path="res://Assets/Videos/Flashback_1/Flashback_1 (5).ogv" id="6_m5yd6"]
+[ext_resource type="VideoStream" uid="uid://cfjh2tdkfvq80" path="res://Assets/Videos/Flashback_1/Flashback_1 (6).ogv" id="7_no0wj"]
+[ext_resource type="VideoStream" uid="uid://crbsainj3ogkb" path="res://Assets/Videos/Flashback_1/Flashback_1 (7).ogv" id="8_5gbbb"]
+[ext_resource type="PackedScene" uid="uid://w2kyt85wdinj" path="res://Scenes/Story/Dream_Surfer.tscn" id="10_yore3"]
+[ext_resource type="Script" uid="uid://ckkjgc432ihvf" path="res://Scripts/Story/global_flash.gd" id="11_er3pj"]
+[ext_resource type="Script" uid="uid://v0vhjsem6vha" path="res://Scripts/Story/word_spawner.gd" id="12_rgero"]
+[ext_resource type="PackedScene" uid="uid://bbd8sxmdtuub6" path="res://Scenes/Story/Word_Floating.tscn" id="13_bpllw"]
+[ext_resource type="Texture2D" uid="uid://e2tl7fd74etf" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (1).png" id="15_k0uqs"]
+[ext_resource type="Texture2D" uid="uid://ow4mb06dlasf" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (2).png" id="16_timdj"]
+[ext_resource type="Texture2D" uid="uid://luye1ea3j116" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (3).png" id="17_qrf3j"]
+[ext_resource type="Texture2D" uid="uid://dpu7p6bdoa3xr" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (4).png" id="18_k0uqs"]
+[ext_resource type="Texture2D" uid="uid://bmqaodifnamkg" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (5).png" id="19_timdj"]
+[ext_resource type="Texture2D" uid="uid://bfq8i1dfk41si" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (6).png" id="20_qrf3j"]
+[ext_resource type="Texture2D" uid="uid://dvqfgnrg6bn0c" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (7).png" id="21_k0uqs"]
+[ext_resource type="AudioStream" uid="uid://bvvyk61l2p24e" path="res://Assets/Audio/Water_Drop.ogg" id="22_k0uqs"]
+[ext_resource type="AudioStream" uid="uid://cee1i205c37qi" path="res://Assets/Music/Flashback - 1.ogg" id="23_timdj"]
+[ext_resource type="PackedScene" uid="uid://bu4x7otlqo03y" path="res://Scenes/Player/Fairy_Dream_Surfer.tscn" id="24_5m34y"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ecmfk"]
+blend_mode = 1
+
+[node name="Flashback_2" type="Node2D" unique_id=786693181]
+script = ExtResource("1_k0uqs")
+flash_hold_time = 3.0
+fade_in_time = 0.01
+fade_out_time = 2.0
+camera_shake_intensity = 10.0
+camera_shake_duration = 7.0
+ambient_pitch_min = 1.0
+ambient_pitch_max = 1.2
+video_streams = Array[VideoStream]([ExtResource("2_qrf3j"), ExtResource("3_0gdoh"), ExtResource("4_qw8c1"), ExtResource("5_s765r"), ExtResource("6_m5yd6"), ExtResource("7_no0wj"), ExtResource("8_5gbbb")])
+min_speed_scale = 0.1
+max_speed_scale = 4.0
+speed_change_interval_min = 0.3
+speed_change_interval_max = 2.0
+
+[node name="CanvasLayer_Background" type="CanvasLayer" parent="." unique_id=1916789995]
+layer = -10
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer_Background" unique_id=1720453150]
+modulate = Color(0.36659503, 0.36659437, 0.36659467, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.1035156e-05
+offset_top = 3.0517578e-05
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("2_timdj")
+speed_scale = 4.0
+autoplay = true
+loop = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Dream_Surfer" parent="." unique_id=660744031 instance=ExtResource("10_yore3")]
+layer = 3
+texture2_visible = false
+
+[node name="CanvasLayer_Lightning" type="CanvasLayer" parent="." unique_id=1333795612]
+layer = 2
+
+[node name="GlobalFlash" type="ColorRect" parent="CanvasLayer_Lightning" unique_id=793026156]
+z_index = 4096
+material = SubResource("CanvasItemMaterial_ecmfk")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.936358, 0.98377067, 0.99999994, 1)
+script = ExtResource("11_er3pj")
+metadata/_edit_use_anchors_ = true
+
+[node name="WordSpawner" type="Node2D" parent="." unique_id=1699768083]
+texture_filter = 6
+script = ExtResource("12_rgero")
+word_scene = ExtResource("13_bpllw")
+spawn_distance = 1000.0
+distance_to_next_word = 1000.0
+
+[node name="CanvasLayer_Glitch" type="CanvasLayer" parent="." unique_id=2110386228]
+layer = 200
+
+[node name="Control" type="Control" parent="CanvasLayer_Glitch" unique_id=787357737]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Fixed" type="Node2D" parent="." unique_id=469038170]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1443225353]
+layer = 4
+
+[node name="FlashImage1" type="TextureRect" parent="CanvasLayer" unique_id=739847993]
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_k0uqs")
+stretch_mode = 6
+
+[node name="FlashImage2" type="TextureRect" parent="CanvasLayer" unique_id=714864161]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_timdj")
+expand_mode = 1
+stretch_mode = 6
+metadata/fade_in = 0.0
+metadata/fade_out = 5.0
+
+[node name="FlashImage3" type="TextureRect" parent="CanvasLayer" unique_id=1137561627]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_qrf3j")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="FlashImage4" type="TextureRect" parent="CanvasLayer" unique_id=80669174]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_k0uqs")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="FlashImage5" type="TextureRect" parent="CanvasLayer" unique_id=494569043]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("19_timdj")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="FlashImage6" type="TextureRect" parent="CanvasLayer" unique_id=339170602]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_qrf3j")
+expand_mode = 1
+stretch_mode = 6
+metadata/fade_in = 0.0
+metadata/fade_out = 7.0
+
+[node name="FlashImage7" type="TextureRect" parent="CanvasLayer" unique_id=1027503036]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("21_k0uqs")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Scream" type="AudioStreamPlayer" parent="." unique_id=267512644]
+stream = ExtResource("22_k0uqs")
+pitch_scale = 0.58
+bus = &"Dreams"
+
+[node name="Ambient" type="AudioStreamPlayer" parent="." unique_id=1552893723]
+stream = ExtResource("23_timdj")
+volume_db = -6.0
+pitch_scale = 0.9
+max_polyphony = 4
+bus = &"Dreams"
+
+[node name="Fairy" parent="." unique_id=1320431645 instance=ExtResource("24_5m34y")]
+texture_filter = 6
+position = Vector2(495, 339)
+collision_layer = 2
+collision_mask = 2
+
+[node name="Camera2D" type="Camera2D" parent="Fairy" unique_id=448039465 groups=["player_camera"]]
+position = Vector2(23.999512, 3.9999542)
+scale = Vector2(0.17, 0.17)
+zoom = Vector2(1.1, 1.1)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+rotation_smoothing_enabled = true

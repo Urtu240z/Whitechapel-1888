@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://dt7uvasbw8bvm"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_sx7vm"]
+
+[resource]
+script = ExtResource("1_sx7vm")
+name = "tocino"
+display_name = "Tocino"
+cost = 2.0
+effects = {
+"estres": -1.0,
+"felicidad": 4.0,
+"hambre": -25.0,
+"higiene": -5.0
+}

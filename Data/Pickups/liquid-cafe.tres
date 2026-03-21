@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://dojj7xg16ye5w"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_tywsk"]
+
+[resource]
+script = ExtResource("1_tywsk")
+name = "liquid-cafe"
+display_name = "Cafe"
+cost = 1.0
+effects = {
+"estres": -2.0,
+"felicidad": 2.0,
+"hambre": -2.0,
+"nervios": 10.0,
+"sueno": -10.0
+}

@@ -1,0 +1,878 @@
+[gd_scene format=4 uid="uid://c4mvolvhfi8q7"]
+
+[ext_resource type="PackedScene" uid="uid://bu4x7otlqo03y" path="res://Scenes/Player/Fairy_Dream_Surfer.tscn" id="1_bbsc3"]
+[ext_resource type="Script" uid="uid://bw3823fvm57c0" path="res://Scripts/Story/dream_controller.gd" id="1_nj0bl"]
+[ext_resource type="Shader" uid="uid://pvlpdcftha0n" path="res://Assets/Shaders/Oniric_Cloud.gdshader" id="3_bivti"]
+[ext_resource type="Texture2D" uid="uid://df6mtax45u1c5" path="res://Assets/Tilesets/Flashback3.png" id="3_bnyju"]
+[ext_resource type="Texture2D" uid="uid://nb8l2abbacko" path="res://Assets/Tilesets/Flashback4.png" id="4_bivti"]
+[ext_resource type="Script" uid="uid://dccnfydvlruq6" path="res://Scripts/Story/words_collision.gd" id="5_stysp"]
+[ext_resource type="PackedScene" uid="uid://w2kyt85wdinj" path="res://Scenes/Story/Dream_Surfer.tscn" id="6_08ktb"]
+[ext_resource type="FontFile" uid="uid://uu50f1swggxa" path="res://Assets/Fonts/La Belle Aurore Regular.ttf" id="6_stysp"]
+[ext_resource type="Script" uid="uid://ckkjgc432ihvf" path="res://Scripts/Story/global_flash.gd" id="7_8rgp3"]
+[ext_resource type="Texture2D" uid="uid://dbika7xwjl6pn" path="res://Assets/Tilesets/Love.png" id="8_ecjp5"]
+[ext_resource type="Shader" uid="uid://btdr20tniohll" path="res://Assets/Shaders/Oniric_Cloud_Pulsed.gdshader" id="8_gw84w"]
+[ext_resource type="VideoStream" uid="uid://d2kg148rgno38" path="res://Assets/Videos/Oniric_1.ogv" id="9_ecjp5"]
+[ext_resource type="PackedScene" uid="uid://b7bxdhh6ah23f" path="res://Scenes/Story/Orb.tscn" id="9_gw84w"]
+[ext_resource type="Texture2D" uid="uid://e2tl7fd74etf" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (1).png" id="12_ecjp5"]
+[ext_resource type="Texture2D" uid="uid://ow4mb06dlasf" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (2).png" id="13_gw84w"]
+[ext_resource type="Texture2D" uid="uid://luye1ea3j116" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (3).png" id="14_si0ao"]
+[ext_resource type="PackedScene" uid="uid://oenlapb5cnp0" path="res://Scenes/Story/Word_Glitch.tscn" id="15_1viho"]
+[ext_resource type="Texture2D" uid="uid://dpu7p6bdoa3xr" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (4).png" id="15_i1vme"]
+[ext_resource type="Texture2D" uid="uid://bmqaodifnamkg" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (5).png" id="16_tquvq"]
+[ext_resource type="Texture2D" uid="uid://bfq8i1dfk41si" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (6).png" id="17_1viho"]
+[ext_resource type="Texture2D" uid="uid://dvqfgnrg6bn0c" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (7).png" id="18_lbpyh"]
+[ext_resource type="AudioStream" uid="uid://bvvyk61l2p24e" path="res://Assets/Audio/Water_Drop.ogg" id="20_03h47"]
+[ext_resource type="Texture2D" uid="uid://ytpkwna6u4b4" path="res://Assets/Tilesets/Flashback1_plattform (2).png" id="20_ecjp5"]
+[ext_resource type="Texture2D" uid="uid://d16tu1kkmvbr0" path="res://Assets/Tilesets/Flashback1_plattform (4).png" id="21_gw84w"]
+[ext_resource type="AudioStream" uid="uid://cee1i205c37qi" path="res://Assets/Music/Flashback - 1.ogg" id="21_vjsde"]
+[ext_resource type="Texture2D" uid="uid://3818yp7wlyqr" path="res://Assets/Tilesets/Flashback1_plattform (3).png" id="22_si0ao"]
+[ext_resource type="Texture2D" uid="uid://cr5kpp28yhvdh" path="res://Assets/Tilesets/Flashback1_plattform (5).png" id="23_i1vme"]
+[ext_resource type="Texture2D" uid="uid://jdf82nns34q5" path="res://Assets/Tilesets/Flashback1_plattform (1).png" id="24_tquvq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ecjp5"]
+shader = ExtResource("3_bivti")
+shader_parameter/wave_speed = 2.05600009766
+shader_parameter/wave_amplitude = 0.00400000019
+shader_parameter/wave_frequency = 0.0
+shader_parameter/enable_pulse = true
+shader_parameter/pulse_speed = 0.8
+shader_parameter/pulse_intensity = 0.15
+shader_parameter/enable_glow = false
+shader_parameter/glow_speed = 1.2
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(1, 1, 0.9, 1)
+shader_parameter/brightness = 0.0
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 0.534000025365
+shader_parameter/shadows_tint = Color(0, 0, 0, 1)
+shader_parameter/midtones_tint = Color(0, 0.0132519435, 0.07419699, 1)
+shader_parameter/highlights_tint = Color(0, 0, 0, 1)
+shader_parameter/color_balance_strength = 0.5
+shader_parameter/edge_softness = 0.478000022705
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1viho"]
+texture = ExtResource("3_bnyju")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, 32, -8.727272, 2.909092, 2.909092, -8.727272, 32, -8.727272, 32, 32)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8.727272, 32, -8.727272, 32, 32, -32, 32)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8.727272, 32, -8.727272, 32, 32, -32, 32)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8.727272, 32, -8.727272, 32, 32, -32, 32)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8.727272, 32, -8.727272, 32, 32, -32, 32)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8.727272, 32, -8.727272, 32, 32, -32, 32)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8.727272, 32, -8.727272, 32, 32, -32, 32)
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8.727272, -2.90909, -8.727272, 14.545456, 2.909092, 20.36364, 32, -32, 32)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(20.36364, -32, 20.36364, 32, -32, 32, -32, -32)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+5:2/0 = 0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+6:2/0 = 0
+6:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+7:2/0 = 0
+7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(20.36364, -32, 20.36364, 32, -32, 32, -32, -32)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+6:3/0 = 0
+6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+7:3/0 = 0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(20.36364, -32, 20.36364, 32, -32, 32, -32, -32)
+0:4/0 = 0
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:4/0 = 0
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+4:4/0 = 0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+5:4/0 = 0
+5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+6:4/0 = 0
+6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, -32, 32, 32, 32, 32, -32)
+7:4/0 = 0
+7:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(20.36364, -32, 20.36364, 32, -32, 32, -32, -32)
+0:5/0 = 0
+0:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, -2.90909, 2.909092, 14.545456, 32, 14.545456, 32, -32)
+1:5/0 = 0
+1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 14.545456, -32, 14.545456)
+2:5/0 = 0
+2:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 14.545456, -32, 14.545456)
+3:5/0 = 0
+3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 14.545456, -32, 14.545456)
+4:5/0 = 0
+4:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 14.545456, -32, 14.545456)
+5:5/0 = 0
+5:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 14.545456, -32, 14.545456)
+6:5/0 = 0
+6:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 14.545456, -32, 14.545456)
+7:5/0 = 0
+7:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, 14.545456, 2.909092, 8.727272, 20.36364, -32, -32, -32)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lbpyh"]
+texture = ExtResource("4_bivti")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, 32, -12, 12, -4, -4, 12, -8, 32, -8, 32, 32)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8, 32, -8, 32, 32, -32, 32)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8, 32, -8, 32, 32, -32, 32)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8, 32, -8, 32, 32, -32, 32)
+4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8, 32, -8, 32, 32, -32, 32)
+5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8, 32, -8, 32, 32, -32, 32)
+6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8, 32, -8, 32, 32, -32, 32)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:2/0 = 0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+6:2/0 = 0
+6:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+6:3/0 = 0
+6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:4/0 = 0
+0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:4/0 = 0
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:4/0 = 0
+4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:4/0 = 0
+5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+6:4/0 = 0
+6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:5/0 = 0
+0:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:5/0 = 0
+1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+2:5/0 = 0
+2:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:5/0 = 0
+3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:5/0 = 0
+4:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:5/0 = 0
+5:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+6:5/0 = 0
+6:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:6/0 = 0
+0:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:6/0 = 0
+1:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+2:6/0 = 0
+2:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:6/0 = 0
+3:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:6/0 = 0
+4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:6/0 = 0
+5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+6:6/0 = 0
+6:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:7/0 = 0
+0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:7/0 = 0
+1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+2:7/0 = 0
+2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:7/0 = 0
+3:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:7/0 = 0
+4:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:7/0 = 0
+5:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+6:7/0 = 0
+6:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:8/0 = 0
+0:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-14.545454, -32, -14.545454, 32, 32, 32, 32, -32)
+1:8/0 = 0
+1:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+2:8/0 = 0
+2:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+3:8/0 = 0
+3:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+4:8/0 = 0
+4:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+5:8/0 = 0
+5:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+6:8/0 = 0
+6:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+0:9/0 = 0
+0:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, 16, 8, 12, -4, 8, -12, -4, -16, -32, 32, -32)
+1:9/0 = 0
+1:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, -32, 32, 16, -32, 16, -32, -32)
+2:9/0 = 0
+2:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, -32, 32, 16, -32, 16, -32, -32)
+3:9/0 = 0
+3:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, -32, 32, 16, -32, 16, -32, -32)
+4:9/0 = 0
+4:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, -32, 32, 16, -32, 16, -32, -32)
+5:9/0 = 0
+5:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, -32, 32, 16, -32, 16, -32, -32)
+6:9/0 = 0
+6:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(32, -32, 32, 16, -32, 16, -32, -32)
+7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -8, -12, -8, 4, 0, 12, 16, 12, 32, -32, 32)
+7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 12, -32, 12, 32, -32, 32)
+7:2/0 = 0
+7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 12, -32, 12, 32, -32, 32)
+7:3/0 = 0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 12, -32, 12, 32, -32, 32)
+7:4/0 = 0
+7:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 12, -32, 12, 32, -32, 32)
+7:5/0 = 0
+7:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 12, -32, 12, 32, -32, 32)
+7:6/0 = 0
+7:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 12, -32, 12, 32, -32, 32)
+7:7/0 = 0
+7:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 12, -32, 12, 32, -32, 32)
+7:8/0 = 0
+7:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 12, -32, 12, 32, -32, 32)
+7:9/0 = 0
+7:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(12, -32, 8, -4, 0, 8, -12, 12, -32, 16, -32, -32)
+
+[sub_resource type="TileSet" id="TileSet_bnyju"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+sources/3 = SubResource("TileSetAtlasSource_1viho")
+sources/4 = SubResource("TileSetAtlasSource_lbpyh")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3vi4k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_08ktb"]
+line_spacing = 1.0
+font = ExtResource("6_stysp")
+font_size = 128
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lbpyh"]
+shader = ExtResource("3_bivti")
+shader_parameter/wave_speed = 1.50000007125
+shader_parameter/wave_amplitude = 0.0050000002375
+shader_parameter/wave_frequency = 10.0
+shader_parameter/enable_pulse = true
+shader_parameter/pulse_speed = 0.8
+shader_parameter/pulse_intensity = 0.026000001235
+shader_parameter/enable_glow = true
+shader_parameter/glow_speed = 2.000000095
+shader_parameter/glow_intensity = 0.9630000457425
+shader_parameter/glow_color = Color(1, 1, 1, 1)
+shader_parameter/brightness = -0.24999996437500005
+shader_parameter/contrast = 0.800000038
+shader_parameter/saturation = 0.750000035625
+shader_parameter/shadows_tint = Color(0, 0.13333334, 1, 1)
+shader_parameter/midtones_tint = Color(0.2509804, 0.32156864, 0.36078432, 1)
+shader_parameter/highlights_tint = Color(1, 1, 1, 1)
+shader_parameter/color_balance_strength = 0.70000003325
+shader_parameter/edge_softness = 0.5590000265525
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vjsde"]
+shader = ExtResource("8_gw84w")
+shader_parameter/wave_speed = 1.0
+shader_parameter/wave_amplitude = 0.0370000017575
+shader_parameter/wave_frequency = 10.0
+shader_parameter/enable_pulse = true
+shader_parameter/pulse_speed = 0.8
+shader_parameter/pulse_intensity = 0.15
+shader_parameter/enable_glow = false
+shader_parameter/glow_speed = 1.2
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(1, 1, 0.9, 1)
+shader_parameter/brightness = 0.08700005163250002
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 0.7390000351025
+shader_parameter/shadows_tint = Color(0, 0, 0, 1)
+shader_parameter/midtones_tint = Color(0, 0, 0, 1)
+shader_parameter/highlights_tint = Color(0, 0, 0, 1)
+shader_parameter/color_balance_strength = 0.5
+shader_parameter/edge_softness = 0.0
+shader_parameter/hue_shift = 0.4530000215175
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u83ck"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_ecjp5"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gw84w"]
+gradient = SubResource("Gradient_ecjp5")
+
+[sub_resource type="Environment" id="Environment_si0ao"]
+background_mode = 3
+glow_enabled = true
+glow_levels/1 = 16.0
+glow_levels/2 = 16.0
+glow_levels/3 = 16.0
+glow_levels/4 = 3.08
+glow_levels/5 = 1.79
+glow_intensity = 0.35
+glow_strength = 1.16
+fog_enabled = true
+fog_mode = 1
+fog_light_energy = 10.71
+fog_density = 1.0
+fog_height_density = 16.0
+volumetric_fog_density = 0.7686
+volumetric_fog_emission_energy = 712.28
+volumetric_fog_gi_inject = 2.29
+volumetric_fog_anisotropy = 0.33
+adjustment_enabled = true
+adjustment_contrast = 1.43
+adjustment_saturation = 1.38
+adjustment_color_correction = SubResource("GradientTexture2D_gw84w")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_03h47"]
+shader = ExtResource("3_bivti")
+shader_parameter/wave_speed = 0.7830000371925
+shader_parameter/wave_amplitude = 0.0110000005225
+shader_parameter/wave_frequency = 3.0
+shader_parameter/enable_pulse = false
+shader_parameter/pulse_speed = 0.8
+shader_parameter/pulse_intensity = 0.15
+shader_parameter/enable_glow = false
+shader_parameter/glow_speed = 1.2
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(1, 1, 0.9, 1)
+shader_parameter/brightness = -0.24999996437500005
+shader_parameter/contrast = 0.800000038
+shader_parameter/saturation = 0.750000035625
+shader_parameter/shadows_tint = Color(0.054599993, 0.1513199, 0.78, 1)
+shader_parameter/midtones_tint = Color(0.23760001, 0.41904, 0.54, 1)
+shader_parameter/highlights_tint = Color(1, 1, 1, 1)
+shader_parameter/color_balance_strength = 0.5
+shader_parameter/edge_softness = 0.602000028595
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gw84w"]
+shader = ExtResource("3_bivti")
+shader_parameter/wave_speed = 1.0
+shader_parameter/wave_amplitude = 0.00400000019
+shader_parameter/wave_frequency = 10.0
+shader_parameter/enable_pulse = true
+shader_parameter/pulse_speed = 0.8
+shader_parameter/pulse_intensity = 0.15
+shader_parameter/enable_glow = false
+shader_parameter/glow_speed = 1.2
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(1, 1, 0.9, 1)
+shader_parameter/brightness = -0.24999996437500005
+shader_parameter/contrast = 0.800000038
+shader_parameter/saturation = 0.750000035625
+shader_parameter/shadows_tint = Color(0, 0.1333332, 1, 1)
+shader_parameter/midtones_tint = Color(0.252, 0.32220003, 0.36, 1)
+shader_parameter/highlights_tint = Color(1, 1, 1, 1)
+shader_parameter/color_balance_strength = 0.5
+shader_parameter/edge_softness = 0.1930000091675
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_si0ao"]
+shader = ExtResource("3_bivti")
+shader_parameter/wave_speed = 4.386000208335
+shader_parameter/wave_amplitude = 0.002000000095
+shader_parameter/wave_frequency = 1.6770000796575
+shader_parameter/enable_pulse = true
+shader_parameter/pulse_speed = 0.8
+shader_parameter/pulse_intensity = 0.15
+shader_parameter/enable_glow = false
+shader_parameter/glow_speed = 1.2
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(1, 1, 0.9, 1)
+shader_parameter/brightness = -0.4599999743499999
+shader_parameter/contrast = 0.800000038
+shader_parameter/saturation = 0.3030000143925
+shader_parameter/shadows_tint = Color(2.3779876, 2.5426035, 2.9079924, 1)
+shader_parameter/midtones_tint = Color(0.0049752463, 0.008318578, 0.01623744, 1)
+shader_parameter/highlights_tint = Color(0.0427, 0.039, 0.15, 1)
+shader_parameter/color_balance_strength = 0.5
+shader_parameter/edge_softness = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i1vme"]
+shader = ExtResource("3_bivti")
+shader_parameter/wave_speed = 1.0
+shader_parameter/wave_amplitude = 0.02
+shader_parameter/wave_frequency = 3.0
+shader_parameter/enable_pulse = true
+shader_parameter/pulse_speed = 0.8
+shader_parameter/pulse_intensity = 0.15
+shader_parameter/enable_glow = false
+shader_parameter/glow_speed = 1.2
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(1, 1, 0.9, 1)
+shader_parameter/brightness = -0.24999996437500005
+shader_parameter/contrast = 0.800000038
+shader_parameter/saturation = 0.750000035625
+shader_parameter/shadows_tint = Color(0, 0.13333334, 1, 1)
+shader_parameter/midtones_tint = Color(0.2509804, 0.32156864, 0.36078432, 1)
+shader_parameter/highlights_tint = Color(1, 1, 1, 1)
+shader_parameter/color_balance_strength = 0.5
+shader_parameter/edge_softness = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tquvq"]
+shader = ExtResource("3_bivti")
+shader_parameter/wave_speed = 1.0
+shader_parameter/wave_amplitude = 0.0030000001425
+shader_parameter/wave_frequency = 0.0
+shader_parameter/enable_pulse = true
+shader_parameter/pulse_speed = 0.8
+shader_parameter/pulse_intensity = 0.15
+shader_parameter/enable_glow = false
+shader_parameter/glow_speed = 1.2
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(1, 1, 0.9, 1)
+shader_parameter/brightness = -0.24999996437500005
+shader_parameter/contrast = 0.800000038
+shader_parameter/saturation = 0.750000035625
+shader_parameter/shadows_tint = Color(0, 0.13333334, 1, 1)
+shader_parameter/midtones_tint = Color(0.2509804, 0.32156864, 0.36078432, 1)
+shader_parameter/highlights_tint = Color(1, 1, 1, 1)
+shader_parameter/color_balance_strength = 0.5
+shader_parameter/edge_softness = 0.6770000321575
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1viho"]
+shader = ExtResource("3_bivti")
+shader_parameter/wave_speed = 1.0
+shader_parameter/wave_amplitude = 0.02
+shader_parameter/wave_frequency = 3.0
+shader_parameter/enable_pulse = true
+shader_parameter/pulse_speed = 0.8
+shader_parameter/pulse_intensity = 0.15
+shader_parameter/enable_glow = false
+shader_parameter/glow_speed = 1.2
+shader_parameter/glow_intensity = 1.5
+shader_parameter/glow_color = Color(1, 1, 0.9, 1)
+shader_parameter/brightness = -0.24999996437500005
+shader_parameter/contrast = 0.800000038
+shader_parameter/saturation = 0.750000035625
+shader_parameter/shadows_tint = Color(0, 0.13333334, 1, 1)
+shader_parameter/midtones_tint = Color(0.14413217, 0.19169065, 0.21807379, 1)
+shader_parameter/highlights_tint = Color(0, 0, 0, 1)
+shader_parameter/color_balance_strength = 0.5
+shader_parameter/edge_softness = 0.0
+
+[node name="Flashback" type="Node2D" unique_id=1873493476 groups=["dream_controller"]]
+script = ExtResource("1_nj0bl")
+default_hold_time = 2.0
+global_gravity = 100.0
+base_shake_intensity = 1.0
+shake_intensity_multiplier = 2.0
+shake_duration_scale = 0.7
+metadata/_edit_vertical_guides_ = [-603.0]
+
+[node name="Player" type="Node2D" parent="." unique_id=64202911]
+position = Vector2(-464, -2419)
+scale = Vector2(0.5, 0.5)
+
+[node name="Fairy" parent="Player" unique_id=732548586 instance=ExtResource("1_bbsc3")]
+position = Vector2(0, 4850)
+jump_force = 300.0
+soft_landing_distance = 60.0
+soft_landing_strength = 0.025
+raycast_length = 120.0
+
+[node name="Camera2D" type="Camera2D" parent="Player/Fairy" unique_id=1271848603 groups=["player_camera"]]
+position = Vector2(23.999512, 3.9999542)
+scale = Vector2(0.17, 0.17)
+zoom = Vector2(2.275, 2.275)
+limit_left = -560
+limit_right = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+rotation_smoothing_enabled = true
+
+[node name="World" type="Node2D" parent="." unique_id=1145478350]
+
+[node name="Left" type="TileMapLayer" parent="World" unique_id=220290973]
+texture_filter = 1
+material = SubResource("ShaderMaterial_ecjp5")
+scale = Vector2(0.5, 0.5)
+tile_map_data = PackedByteArray("AAD///7/BAAAAAMAAAD/////BAAAAAQAAAD//wAABAAAAAUAAAD//wEABAAAAAYAAAD//wIABAAAAAcAAAD//wMABAAAAAgAAAD//wQAAwAAAAUAAAD//wgABAACAAEAAAD//wkABAAEAAkAAAD7/wgABAAAAAAAAAD8/wgABAABAAAAAAD9/wgABAACAAAAAAD+/wgABAACAAIAAAD7/wkABAAAAAkAAAD8/wkABAABAAkAAAD9/wkABAACAAkAAAD+/wkABAADAAkAAADu//7/BAAHAAQAAADu////BAAHAAUAAADu/wAABAAHAAYAAADu/wEABAAHAAcAAADu/wIABAAHAAgAAADu/wMABAAHAAUAAADu/wQABAAHAAYAAADu/wUABAAHAAcAAADu/wYABAAHAAgAAADu//r/BAAHAAAAAADu//v/BAAHAAEAAADu//z/BAAHAAIAAADu//3/BAAHAAMAAAD///v/AwAAAAAAAAD///z/BAAAAAEAAAD///3/BAAAAAIAAAD+/wUAAwAAAAAAAAD//wUAAwABAAAAAAD+/wYABAAAAAEAAAD+/wcABAAAAAIAAAD//wYABAABAAEAAAD//wcABAABAAIAAAD//xQABAAAAAkAAAD//xMABAAAAAgAAAD//xIABAAAAAcAAAD//xEABAAAAAYAAAD//xAABAAAAAUAAAD//w8ABAAAAAQAAAD//w4AAwAAAAUAAAD//w0AAwAAAAQAAAD//wsAAwAAAAIAAAD//wwAAwAAAAMAAAD//woAAwAAAAEAAAAAAAkAAwAHAAQAAAAAAAoAAwAHAAEAAAAAAAsAAwAHAAIAAAAAAAwAAwAHAAMAAAAAAA0AAwAGAAQAAAAAAA4AAwABAAUAAAAAAAUAAwACAAAAAAABAAUAAwADAAAAAAACAAUAAwAEAAAAAAADAAUAAwAFAAAAAAAEAAUAAwAGAAAAAAAFAAUAAwAHAAAAAAABAA4AAwACAAUAAAACAA4AAwADAAUAAAADAA4AAwAEAAUAAAAEAA4AAwAFAAUAAAAFAA4AAwAGAAUAAAAGAA4AAwAHAAUAAAABAA0AAwACAAAAAAACAA0AAwADAAAAAAADAA0AAwAEAAAAAAAEAA0AAwAFAAAAAAAFAA0AAwAGAAAAAAAGAA0AAwAHAAAAAAAAAAYAAwAGAAQAAAABAAYAAwADAAUAAAACAAYAAwAEAAUAAAADAAYAAwAFAAUAAAAEAAYAAwAGAAUAAAAFAAYAAwAHAAUAAAAAAAcAAwAHAAQAAAAAAAgAAwAHAAQAAAAAAPv/AwABAAAAAAAAAPz/AwABAAEAAAAAAP3/AwABAAIAAAAAAP7/AwABAAMAAAAAAP//AwABAAQAAAABAPv/AwAEAAAAAAAAAAAAAwABAAEAAAAAAAEAAwABAAIAAAAAAAIAAwABAAMAAAAAAAMAAwABAAQAAAAAAAQAAwABAAUAAAABAAQAAwACAAUAAAACAAQAAwAGAAUAAAADAAQAAwAHAAUAAAABAAAAAwACAAEAAAABAAEAAwACAAIAAAABAAIAAwACAAMAAAABAAMAAwACAAQAAAACAAAAAwADAAEAAAACAAEAAwADAAIAAAACAAIAAwADAAMAAAACAAMAAwADAAQAAAABAPz/AwACAAEAAAABAP3/AwACAAIAAAABAP7/AwACAAMAAAABAP//AwACAAQAAAACAPz/AwADAAEAAAACAP3/AwADAAIAAAACAP7/AwADAAMAAAACAP//AwADAAQAAAACAPv/AwAFAAAAAAADAPv/AwAHAAAAAAADAPz/AwAHAAEAAAADAP3/AwAHAAIAAAADAP7/AwAHAAMAAAADAP//AwAHAAQAAAADAAAAAwAHAAEAAAADAAEAAwAHAAIAAAADAAIAAwAHAAMAAAADAAMAAwAHAAQAAAA=")
+tile_set = SubResource("TileSet_bnyju")
+
+[node name="Right" type="TileMapLayer" parent="World" unique_id=1684981628]
+
+[node name="Words" type="Node2D" parent="World" unique_id=1247391963]
+z_index = -1
+
+[node name="Word1" type="Node2D" parent="World/Words" unique_id=1314265726]
+position = Vector2(-207, 132)
+scale = Vector2(0.25, 0.25)
+
+[node name="Orb" parent="World/Words/Word1" unique_id=801843280 instance=ExtResource("9_gw84w")]
+scale = Vector2(3, 3)
+move_speed = 100.0
+detection_radius = 100.0
+direction_change_interval = 0.4
+random_angle_range = 25.0
+bounce_damp = 0.0
+orb_name = "Innocence"
+
+[node name="Word2" type="Node2D" parent="World/Words" unique_id=649094062]
+position = Vector2(-350, 854)
+scale = Vector2(0.25, 0.25)
+
+[node name="Orb" parent="World/Words/Word2" unique_id=630924906 instance=ExtResource("9_gw84w")]
+scale = Vector2(3, 3)
+move_speed = 100.0
+detection_radius = 100.0
+direction_change_interval = 0.4
+random_angle_range = 25.0
+bounce_damp = 0.0
+orb_name = "Innocence"
+
+[node name="Old_Word2" type="Area2D" parent="World/Words" unique_id=1720888765]
+position = Vector2(45, 682)
+scale = Vector2(0.25, 0.25)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("5_stysp")
+word_text = "LOVE"
+memory_index = 1
+custom_font = ExtResource("6_stysp")
+font_size = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Words/Old_Word2" unique_id=1162489430]
+shape = SubResource("RectangleShape2D_3vi4k")
+
+[node name="Label" type="Label" parent="World/Words/Old_Word2" unique_id=165847142]
+visible = false
+offset_right = 47.0
+offset_bottom = 45.0
+size_flags_vertical = 1
+text = "LOVE"
+label_settings = SubResource("LabelSettings_08ktb")
+
+[node name="Love" type="Sprite2D" parent="World/Words/Old_Word2" unique_id=1269551592]
+visible = false
+material = SubResource("ShaderMaterial_lbpyh")
+position = Vector2(0, 4.196167e-05)
+scale = Vector2(0.8536864, 0.85368645)
+texture = ExtResource("8_ecjp5")
+
+[node name="CanvasLayer_UI" type="Node" parent="." unique_id=1272087439]
+
+[node name="CanvasLayer_Background" type="CanvasLayer" parent="CanvasLayer_UI" unique_id=888930643]
+layer = -10
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer_UI/CanvasLayer_Background" unique_id=1108547700]
+modulate = Color(0.36659503, 0.36659437, 0.36659467, 1)
+material = SubResource("ShaderMaterial_vjsde")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.1035156e-05
+offset_top = 3.0517578e-05
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("9_ecjp5")
+speed_scale = 0.452
+autoplay = true
+expand = true
+loop = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Dream_Surfer" parent="CanvasLayer_UI" unique_id=915460681 instance=ExtResource("6_08ktb")]
+layer = 3
+texture1_visible = false
+
+[node name="CanvasLayer_Lightning" type="CanvasLayer" parent="CanvasLayer_UI" unique_id=1401047250]
+layer = 5
+
+[node name="GlobalFlash" type="ColorRect" parent="CanvasLayer_UI/CanvasLayer_Lightning" unique_id=1970239532]
+z_index = 4096
+material = SubResource("CanvasItemMaterial_u83ck")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.936358, 0.98377067, 0.99999994, 1)
+script = ExtResource("7_8rgp3")
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer_Flashbacks" type="CanvasLayer" parent="CanvasLayer_UI" unique_id=1721610714]
+layer = 4
+
+[node name="FlashImage1" type="TextureRect" parent="CanvasLayer_UI/CanvasLayer_Flashbacks" unique_id=1475128805]
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_ecjp5")
+stretch_mode = 6
+
+[node name="FlashImage2" type="TextureRect" parent="CanvasLayer_UI/CanvasLayer_Flashbacks" unique_id=557228384]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_gw84w")
+expand_mode = 1
+stretch_mode = 6
+metadata/fade_in = 0.5
+metadata/fade_out = 5.0
+
+[node name="FlashImage3" type="TextureRect" parent="CanvasLayer_UI/CanvasLayer_Flashbacks" unique_id=1839552713]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_si0ao")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="FlashImage4" type="TextureRect" parent="CanvasLayer_UI/CanvasLayer_Flashbacks" unique_id=927082118]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_i1vme")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="FlashImage5" type="TextureRect" parent="CanvasLayer_UI/CanvasLayer_Flashbacks" unique_id=2113339318]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("16_tquvq")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="FlashImage6" type="TextureRect" parent="CanvasLayer_UI/CanvasLayer_Flashbacks" unique_id=564258562]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("17_1viho")
+expand_mode = 1
+stretch_mode = 6
+metadata/fade_in = 0.0
+metadata/fade_out = 7.0
+
+[node name="FlashImage7" type="TextureRect" parent="CanvasLayer_UI/CanvasLayer_Flashbacks" unique_id=1627330759]
+visible = false
+z_index = 100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_lbpyh")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CanvasLayer_Glitch" type="CanvasLayer" parent="CanvasLayer_UI" unique_id=1907482618]
+layer = 200
+
+[node name="Label" parent="CanvasLayer_UI/CanvasLayer_Glitch" unique_id=985014585 instance=ExtResource("15_1viho")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+pulse_duration = 0.25
+
+[node name="Audio" type="Node2D" parent="." unique_id=262574656]
+
+[node name="SoundFX" type="AudioStreamPlayer" parent="Audio" unique_id=196235301]
+stream = ExtResource("20_03h47")
+pitch_scale = 0.58
+bus = &"Dreams"
+
+[node name="Ambient" type="AudioStreamPlayer" parent="Audio" unique_id=34091548]
+stream = ExtResource("21_vjsde")
+volume_db = -6.0
+pitch_scale = 0.9
+max_polyphony = 4
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=187785768]
+color = Color(0, 0, 0, 1)
+energy = 0.31
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1510361574]
+environment = SubResource("Environment_si0ao")
+
+[node name="Sprites" type="StaticBody2D" parent="." unique_id=2065771661]
+collision_mask = 0
+
+[node name="Flashback1Plattform(4)" type="Sprite2D" parent="Sprites" unique_id=1532500234]
+material = SubResource("ShaderMaterial_03h47")
+position = Vector2(-367.5, 76)
+scale = Vector2(0.51890755, 0.57600003)
+texture = ExtResource("21_gw84w")
+
+[node name="Flashback1Plattform(2)" type="Sprite2D" parent="Sprites" unique_id=618702572]
+material = SubResource("ShaderMaterial_gw84w")
+position = Vector2(-503, 495)
+rotation = 3.1415927
+scale = Vector2(1, -1)
+texture = ExtResource("20_ecjp5")
+
+[node name="Flashback1Plattform(2)2" type="Sprite2D" parent="Sprites" unique_id=2141223162]
+material = SubResource("ShaderMaterial_gw84w")
+position = Vector2(-115, 714)
+rotation = 1.559524
+scale = Vector2(0.88045895, -0.795954)
+texture = ExtResource("20_ecjp5")
+
+[node name="Flashback1Plattform(10)" type="Sprite2D" parent="Sprites" unique_id=1480963725]
+z_index = -1
+material = SubResource("ShaderMaterial_si0ao")
+position = Vector2(-511, 778.00006)
+scale = Vector2(1.4319997, 1.4319998)
+texture = ExtResource("21_gw84w")
+
+[node name="Flashback1Plattform(3)" type="Sprite2D" parent="Sprites" unique_id=288344095]
+material = SubResource("ShaderMaterial_i1vme")
+position = Vector2(-203.00003, 176.00003)
+scale = Vector2(0.39312977, 0.39312977)
+texture = ExtResource("22_si0ao")
+
+[node name="Flashback1Plattform(5)" type="Sprite2D" parent="Sprites" unique_id=950610136]
+material = SubResource("ShaderMaterial_tquvq")
+position = Vector2(-314, 421)
+texture = ExtResource("23_i1vme")
+
+[node name="Flashback1Plattform(5)2" type="Sprite2D" parent="Sprites" unique_id=931120089]
+material = SubResource("ShaderMaterial_tquvq")
+position = Vector2(22.265985, 326.14804)
+rotation = 1.5182512
+scale = Vector2(1.1183072, 1.1738244)
+texture = ExtResource("23_i1vme")
+
+[node name="Flashback1Plattform(1)" type="Sprite2D" parent="Sprites" unique_id=1223486687]
+material = SubResource("ShaderMaterial_1viho")
+position = Vector2(-15.022648, 317.35046)
+rotation = 2.2799506
+scale = Vector2(0.96371824, 0.6932407)
+texture = ExtResource("24_tquvq")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprites" unique_id=182515141]
+build_mode = 1
+polygon = PackedVector2Array(-576, 312, -570, 709, -549, 768, -534, 728, -522, 711, -509, 749, -493, 778, -480, 748, -463, 683, -456, 446, -454, 369, -444, 349, -420, 342, -470, 285, -512, 244, -531, 224, -575, 219)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Sprites" unique_id=641374597]
+build_mode = 1
+polygon = PackedVector2Array(-384, 352, -407, 355, -436, 399, -424, 418, -390, 429, -383, 450, -371, 465, -347, 493, -329, 495, -311, 538, -271, 471, -256, 495, -230, 446, -224, 420, -203, 409, -198, 393, -217, 368, -234, 359, -259, 361, -260, 335, -268, 320, -305, 305, -330, 308, -358, 326)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Sprites" unique_id=1271570598]
+build_mode = 1
+polygon = PackedVector2Array(-481, 49, -440, 52, -410, 50, -346, 52, -252, 49, -249, 56, -263, 73, -274, 70, -292, 81, -305, 76, -320, 74, -345, 97, -364, 90, -377, 75, -400, 81, -410, 91, -418, 83, -445, 95, -467, 92, -480, 84, -482, 68)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Sprites" unique_id=767189003]
+build_mode = 1
+polygon = PackedVector2Array(-259, 161, -248, 154, -232, 155, -182, 157, -146, 161, -148, 170, -155, 176, -176, 176, -185, 178, -198, 189, -207, 185, -217, 187, -222, 191, -253, 193, -257, 184)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Sprites" unique_id=1001968715]
+position = Vector2(-115, 714)
+rotation = 1.559524
+scale = Vector2(0.88045895, -0.79595405)
+build_mode = 1
+polygon = PackedVector2Array(66.486694, -274.7316, 47, -277.4, 26.814026, -266.6983, -72.052124, -159.92505, -75.382385, -152.34494, -54.79895, -138.78082, -43.14746, -110.02814, -38.14917, 157.52992, -27, 257, -15.400002, 274.8, 5.5999985, 257, 12.790894, 140.56108, 34.800003, 256, 51.5, 256, 68.5, 218, 76.600006, 125, 78.3, 125)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Sprites" unique_id=672891214]
+position = Vector2(-511, 778.00006)
+scale = Vector2(1.4319997, 1.4319998)
+build_mode = 1
+polygon = PackedVector2Array(155.02797, -43.296112, -215.0839, -42.59778, -205.30734, 11.173157, 151.53635, -1.3966675)

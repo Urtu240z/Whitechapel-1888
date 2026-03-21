@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bbd8sxmdtuub6"]
+
+[ext_resource type="Script" uid="uid://bqaaqr71x0o2x" path="res://Scripts/Story/word_floating.gd" id="1_cwoia"]
+[ext_resource type="FontFile" uid="uid://c266ye7maf838" path="res://Assets/Fonts/Ser1 Regular.ttf" id="2_ec42g"]
+[ext_resource type="PackedScene" uid="uid://cfuu5bj4ws38" path="res://Scenes/UI/Waypoint_Marker.tscn" id="3_ec42g"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_uu8wy"]
+font = ExtResource("2_ec42g")
+font_size = 128
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+stacked_outline_count = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uu8wy"]
+size = Vector2(144, 44)
+
+[node name="WordFloating" type="Node2D" unique_id=724029785]
+script = ExtResource("1_cwoia")
+fade_out_time = 5.0
+
+[node name="Label" type="Label" parent="." unique_id=836448121]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_uu8wy")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="." unique_id=795821913]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1237928351]
+shape = SubResource("RectangleShape2D_uu8wy")
+
+[node name="WaypointMarker" parent="." unique_id=1847053618 instance=ExtResource("3_ec42g")]
+scale = Vector2(2, 2)
+screen_margin = 8.0
+smoothing_speed = 5.0
+appear_delay = 1.0
+hide_distance = 800.0
+full_visible_distance = 1000.0
+fade_duration = 1.0

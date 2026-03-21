@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://6qctca3dsuhl"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_4ra1y"]
+
+[resource]
+script = ExtResource("1_4ra1y")
+name = "scare-up"
+display_name = "Scare Up"
+cost = 0.0
+effects = {
+"miedo": 40.0
+}

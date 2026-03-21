@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://dgstrxsdm4kem"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_13rf2"]
+
+[resource]
+script = ExtResource("1_13rf2")
+name = "drink-ron"
+display_name = "Ron"
+cost = 4.0
+effects = {
+"alcohol": 30.0,
+"estres": -5.0,
+"felicidad": 15.0,
+"higiene": -10.0,
+"miedo": -10.0,
+"nervios": -10.0,
+"sueno": -5.0
+}

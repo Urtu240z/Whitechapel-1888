@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://b1nbpmgfq3kvk"]
+
+[ext_resource type="Script" uid="uid://bci0mfmwe2mol" path="res://Scripts/UI/ui_stats.gd" id="1_b5itx"]
+[ext_resource type="Script" uid="uid://c6ppr2gjoefvy" path="res://Scripts/UI/stats_panel.gd" id="2_ur5w8"]
+
+[node name="UIStats" type="CanvasLayer" unique_id=607837971]
+layer = 10
+script = ExtResource("1_b5itx")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1027240930]
+visible = false
+offset_right = 346.0
+offset_bottom = 472.0
+script = ExtResource("2_ur5w8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1850771080]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer" unique_id=376371520]
+layout_mode = 2
+text = "Player Stats"
+
+[node name="GridContainer" type="GridContainer" parent="Panel/VBoxContainer" unique_id=1561179809]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_constants/h_separation = 50
+columns = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=1604911573]
+layout_mode = 2
+text = "Miedo"
+
+[node name="BarMiedo" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=1284421991]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=1317332857]
+layout_mode = 2
+text = "Estrés"
+
+[node name="BarEstres" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=2033685258]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=22354537]
+layout_mode = 2
+text = "Felicidad"
+
+[node name="BarFelicidad" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=1507271410]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=1671282003]
+layout_mode = 2
+text = "Nervios"
+
+[node name="BarNervios" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=15929781]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=1415521159]
+layout_mode = 2
+text = "Hambre"
+
+[node name="BarHambre" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=1418018262]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=1864439017]
+layout_mode = 2
+text = "Higiene"
+
+[node name="BarHigiene" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=1502378270]
+layout_mode = 2
+
+[node name="Label7" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=1436273592]
+layout_mode = 2
+text = "Sueño"
+
+[node name="BarSueno" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=1740676454]
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=1790003021]
+layout_mode = 2
+text = "Alcohol"
+
+[node name="BarAlcohol" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=1018968186]
+layout_mode = 2
+
+[node name="Label9" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=2040646696]
+layout_mode = 2
+text = "Láudano"
+
+[node name="BarLaudano" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=1173490604]
+layout_mode = 2
+
+[node name="Label10" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=1262975438]
+layout_mode = 2
+text = "SALUD"
+
+[node name="BarSalud" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=467930508]
+layout_mode = 2
+
+[node name="Label11" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=2028679406]
+layout_mode = 2
+text = "STAMINA"
+
+[node name="BarStamina" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=1228044301]
+layout_mode = 2
+
+[node name="Label12" type="Label" parent="Panel/VBoxContainer/GridContainer" unique_id=97097518]
+layout_mode = 2
+text = "ENFERMEDAD"
+
+[node name="BarEnfermedad" type="ProgressBar" parent="Panel/VBoxContainer/GridContainer" unique_id=1478400246]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Panel/VBoxContainer" unique_id=1052726706]
+layout_mode = 2
+text = "Sex Appeal"
+
+[node name="BarSexAppeal" type="ProgressBar" parent="Panel/VBoxContainer" unique_id=947997880]
+layout_mode = 2
+
+[node name="LabelEstado" type="Label" parent="Panel/VBoxContainer" unique_id=1341717781]
+layout_mode = 2
+text = "Estado"
+
+[node name="LabelDinero" type="Label" parent="Panel/VBoxContainer" unique_id=177672250]
+layout_mode = 2
+text = "Dinero"
+
+[node name="LabelHora" type="Label" parent="Panel/VBoxContainer" unique_id=568560807]
+layout_mode = 2

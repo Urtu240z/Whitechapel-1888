@@ -1,0 +1,565 @@
+[gd_scene format=3 uid="uid://bu4x7otlqo03y"]
+
+[ext_resource type="Script" uid="uid://df26f2iyrivok" path="res://Scripts/Player/Fairy/fairy_controller.gd" id="1_clrex"]
+
+[sub_resource type="Gradient" id="Gradient_6rs3e"]
+offsets = PackedFloat32Array(0, 0.49799198)
+colors = PackedColorArray(1, 1, 1, 1, 0.0004491884, 0.0004491884, 0.0004491884, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u8due"]
+gradient = SubResource("Gradient_6rs3e")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_count = 2
+
+[sub_resource type="Gradient" id="Gradient_u8due"]
+offsets = PackedFloat32Array(0.18181819, 0.4090909)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rnkyb"]
+gradient = SubResource("Gradient_u8due")
+width = 256
+height = 256
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_count = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xwm22"]
+radius = 40.60788
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xmtky"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_5dcil"]
+offsets = PackedFloat32Array(0, 0.10810811, 0.14054054, 0.36216217)
+colors = PackedColorArray(0, 0.9707847, 0.7008858, 1, 0.5764706, 0.95686275, 0.64705884, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y8c4v"]
+gradient = SubResource("Gradient_5dcil")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.508547, 0.5555556)
+
+[sub_resource type="Gradient" id="Gradient_0fnxm"]
+offsets = PackedFloat32Array(0.19963032, 0.30499077)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_363x2"]
+offsets = PackedFloat32Array(0, 0.11275416)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_clrex"]
+resource_name = "Fairy_Fall"
+length = 0.15
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.07555738),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.8, 1.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite2D:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_363x2"]
+resource_name = "Fairy_Fall_Move"
+length = 0.15
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.07555738),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.9, 1.1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite2D:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.17453292]
+}
+
+[sub_resource type="Animation" id="Animation_u8due"]
+resource_name = "Fairy_Idle"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D/PointLight2D:energy")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5718386, 1.2204914, 1.6643064, 2.2617497, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [7.77, 16.0, 4.38, 7.37, 6.86, 16.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite2D:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8876301, 1.0497932, 2.0995865, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1), Vector2(1.1, 1.1), Vector2(1.1, 1), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Sprite2D/PointLight2D:texture_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.75107163, 1.9032837, 2.6031458),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [1.0, 1.2, 1.0, 1.2]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Sprite2D:skew")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_y8c4v"]
+resource_name = "Fairy_Jump"
+length = 0.15
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.8, 1.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite2D:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_0fnxm"]
+resource_name = "Fairy_Jump_Move"
+length = 0.15
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite2D:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1.0000008),
+"update": 0,
+"values": [0.17453292]
+}
+
+[sub_resource type="Animation" id="Animation_xwm22"]
+resource_name = "Fairy_Move"
+length = 0.25
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 0.9)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite2D:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_xmtky"]
+resource_name = "Fairy_Squash"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 10), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite2D:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.2, 0.8), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Sprite2D:skew")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_lx2ai"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Sprite2D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Sprite2D/PointLight2D:energy")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [7.77]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Sprite2D/PointLight2D:texture_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Sprite2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/Sprite2D:skew")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6xq30"]
+_data = {
+&"Fairy_Fall": SubResource("Animation_clrex"),
+&"Fairy_Fall_Move": SubResource("Animation_363x2"),
+&"Fairy_Idle": SubResource("Animation_u8due"),
+&"Fairy_Jump": SubResource("Animation_y8c4v"),
+&"Fairy_Jump_Move": SubResource("Animation_0fnxm"),
+&"Fairy_Move": SubResource("Animation_xwm22"),
+&"Fairy_Squash": SubResource("Animation_xmtky"),
+&"RESET": SubResource("Animation_lx2ai")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_clrex"]
+animation = &"Fairy_Fall"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_xwm22"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xmtky"]
+graph_offset = Vector2(-24, 105.000015)
+nodes/output/position = Vector2(560, 120)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_clrex")
+nodes/Animation/position = Vector2(207.43803, 135.5372)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_xwm22")
+nodes/TimeScale/position = Vector2(380, 140)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c6srh"]
+animation = &"Fairy_Fall_Move"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_xb7mo"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_cjq2i"]
+nodes/output/position = Vector2(420, 200)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_c6srh")
+nodes/Animation/position = Vector2(33, 175)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_xb7mo")
+nodes/TimeScale/position = Vector2(220, 160)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y8c4v"]
+animation = &"Fairy_Idle"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_0fnxm"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_363x2"]
+graph_offset = Vector2(276.76904, 362.37186)
+nodes/output/position = Vector2(960, 160)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_y8c4v")
+nodes/Animation/position = Vector2(611.1886, 237.3892)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_0fnxm")
+nodes/TimeScale/position = Vector2(817.2307, 312.27475)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_363x2"]
+animation = &"Fairy_Jump"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_c6srh"]
+nodes/output/position = Vector2(480, 180)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_363x2")
+nodes/Animation/position = Vector2(240, 160)
+node_connections = [&"output", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fk2ic"]
+animation = &"Fairy_Jump_Move"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pdleq"]
+nodes/output/position = Vector2(500, 180)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_fk2ic")
+nodes/Animation/position = Vector2(120, 180)
+node_connections = [&"output", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s2m6i"]
+animation = &"Fairy_Move"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_c6srh"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xb7mo"]
+nodes/output/position = Vector2(500, 160)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_s2m6i")
+nodes/Animation/position = Vector2(175.20662, 152.89258)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_c6srh")
+nodes/TimeScale/position = Vector2(340, 120)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cjq2i"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pdleq"]
+xfade_time = 0.4
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wc76v"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4hmb2"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_clrex"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xwm22"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xmtky"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hndpk"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0fnxm"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_y8c4v"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_s2m6i"]
+xfade_time = 0.2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_363x2"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c6srh"]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_dl5pq"]
+states/End/position = Vector2(1169, 192)
+states/Fairy_Fall/node = SubResource("AnimationNodeBlendTree_xmtky")
+states/Fairy_Fall/position = Vector2(669, 204)
+states/Fairy_Fall_Move/node = SubResource("AnimationNodeBlendTree_cjq2i")
+states/Fairy_Fall_Move/position = Vector2(669, 282)
+states/Fairy_Idle/node = SubResource("AnimationNodeBlendTree_363x2")
+states/Fairy_Idle/position = Vector2(351, 100)
+states/Fairy_Jump/node = SubResource("AnimationNodeBlendTree_c6srh")
+states/Fairy_Jump/position = Vector2(969, 100)
+states/Fairy_Jump_Move/node = SubResource("AnimationNodeBlendTree_pdleq")
+states/Fairy_Jump_Move/position = Vector2(969, 335)
+states/Fairy_Move/node = SubResource("AnimationNodeBlendTree_xb7mo")
+states/Fairy_Move/position = Vector2(351, 335)
+transitions = ["Start", "Fairy_Idle", SubResource("AnimationNodeStateMachineTransition_cjq2i"), "Fairy_Move", "Fairy_Idle", SubResource("AnimationNodeStateMachineTransition_pdleq"), "Fairy_Idle", "Fairy_Move", SubResource("AnimationNodeStateMachineTransition_wc76v"), "Fairy_Jump", "Fairy_Fall", SubResource("AnimationNodeStateMachineTransition_4hmb2"), "Fairy_Idle", "Fairy_Jump", SubResource("AnimationNodeStateMachineTransition_clrex"), "Fairy_Fall", "Fairy_Fall_Move", SubResource("AnimationNodeStateMachineTransition_xwm22"), "Fairy_Fall_Move", "Fairy_Fall", SubResource("AnimationNodeStateMachineTransition_xmtky"), "Fairy_Jump_Move", "Fairy_Fall_Move", SubResource("AnimationNodeStateMachineTransition_hndpk"), "Fairy_Jump_Move", "Fairy_Jump", SubResource("AnimationNodeStateMachineTransition_0fnxm"), "Fairy_Jump", "Fairy_Jump_Move", SubResource("AnimationNodeStateMachineTransition_y8c4v"), "Fairy_Move", "Fairy_Jump_Move", SubResource("AnimationNodeStateMachineTransition_s2m6i"), "Fairy_Fall", "Fairy_Idle", SubResource("AnimationNodeStateMachineTransition_363x2"), "Fairy_Fall", "Fairy_Move", SubResource("AnimationNodeStateMachineTransition_c6srh")]
+graph_offset = Vector2(107, -47)
+
+[node name="Fairy" type="CharacterBody2D" unique_id=288080732]
+process_mode = 3
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_clrex")
+
+[node name="Visual" type="Node2D" parent="." unique_id=1324289876]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visual" unique_id=114934977]
+modulate = Color(0, 0.87, 0.07249993, 1)
+texture_filter = 6
+texture = SubResource("GradientTexture2D_u8due")
+
+[node name="PointLight2D" type="PointLight2D" parent="Visual/Sprite2D" unique_id=1396720550]
+z_index = 2
+texture_filter = 2
+color = Color(0, 0.78039217, 0.2784314, 1)
+energy = 7.77
+texture = SubResource("GradientTexture2D_rnkyb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=110002392]
+visible = false
+shape = SubResource("CircleShape2D_xwm22")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=787740638]
+material = SubResource("CanvasItemMaterial_xmtky")
+scale = Vector2(0.1, 0.1)
+amount = 58
+texture = SubResource("GradientTexture2D_y8c4v")
+lifetime = 3.0
+preprocess = 3.0
+speed_scale = 1.5
+randomness = 1.0
+lifetime_randomness = 0.1
+fixed_fps = 30
+emission_shape = 1
+emission_sphere_radius = 128.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 271.93
+orbit_velocity_min = 0.01
+orbit_velocity_max = 0.02
+scale_amount_min = 0.0
+scale_amount_max = 0.05
+color_ramp = SubResource("Gradient_0fnxm")
+color_initial_ramp = SubResource("Gradient_363x2")
+hue_variation_min = 1.0
+hue_variation_max = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=141501725]
+libraries/ = SubResource("AnimationLibrary_6xq30")
+autoplay = &"Fairy_Idle"
+speed_scale = 0.4
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=541485018]
+tree_root = SubResource("AnimationNodeStateMachine_dl5pq")
+advance_expression_base_node = NodePath("")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Fairy_Fall/TimeScale/scale = 0.20000000000000284
+parameters/Fairy_Fall_Move/TimeScale/scale = 0.20000000000000284
+parameters/Fairy_Idle/TimeScale/scale = 0.20000000000000284
+parameters/Fairy_Move/TimeScale/scale = 0.20000000000000284
+
+[node name="GroundDetector" type="RayCast2D" parent="." unique_id=8601553]
+target_position = Vector2(0, 200)
+collide_with_areas = true
+
+[node name="JumpDetector" type="RayCast2D" parent="." unique_id=1734267852]
+
+[node name="SlideGroundDetector" type="RayCast2D" parent="." unique_id=1844072492]
+target_position = Vector2(0, 60)
+collision_mask = 3

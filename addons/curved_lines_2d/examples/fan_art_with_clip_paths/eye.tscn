@@ -1,0 +1,180 @@
+[gd_scene format=3 uid="uid://b7d7mk2ioy617"]
+
+[ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="1_l1n7h"]
+[ext_resource type="Script" uid="uid://bjguk7v0cas38" path="res://addons/curved_lines_2d/examples/fan_art_with_clip_paths/eye.gd" id="1_x8diq"]
+[ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="2_x8diq"]
+[ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="3_kjel7"]
+
+[sub_resource type="Curve2D" id="Curve2D_ng2ve"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 3.3138, 6.5, 0, 3.58995, 0, -3.58995, 0, 0, 6, 0, 3.3138, 0, -3.3138, -6.5, 0, -3.58995, 0, 3.58995, 0, 0, -6, 0, -3.3138, 0, 0, 6.5, 0)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_popqj"]
+resource_local_to_scene = true
+script = ExtResource("3_kjel7")
+
+[sub_resource type="Curve2D" id="Curve2D_uahbu"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 4.9572, 0.476006, 0, 0, 0, 0, 0, 10.7101, 0, 0, 0, 0, -5.12222, -1.52588e-05, 0, 0, 0, 0, 0, -10.7101, 0, 0, 0, 0, 4.9572, 0.476006)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_lovsl"]
+script = ExtResource("2_x8diq")
+radius = Vector2(5.12221, 10.7101)
+
+[sub_resource type="Resource" id="Resource_shxx8"]
+script = ExtResource("2_x8diq")
+start_point = 1
+radius = Vector2(5.12221, 10.7101)
+
+[sub_resource type="Resource" id="Resource_jon1a"]
+script = ExtResource("2_x8diq")
+start_point = 2
+radius = Vector2(5.12221, 10.7101)
+
+[sub_resource type="Resource" id="Resource_sm24i"]
+script = ExtResource("2_x8diq")
+start_point = 3
+radius = Vector2(5.12221, 10.7101)
+
+[sub_resource type="Resource" id="Resource_kdkpg"]
+resource_local_to_scene = true
+script = ExtResource("3_kjel7")
+arcs = Array[ExtResource("2_x8diq")]([SubResource("Resource_lovsl"), SubResource("Resource_shxx8"), SubResource("Resource_jon1a"), SubResource("Resource_sm24i")])
+
+[sub_resource type="Curve2D" id="Curve2D_4mfx8"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 1.9288608, 1.629795, 0, 0.90013576, 0, -0.90013576, 0, 0, 3.492415, 0, 1.9288608, 0, -1.9288608, -1.629795, 0, -0.90013576, 0, 0.90013576, 0, 0, -3.492415, 0, -1.9288608, 0, 0, 1.629795, 0)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_hq7x2"]
+resource_local_to_scene = true
+script = ExtResource("3_kjel7")
+
+[sub_resource type="Animation" id="Animation_kjel7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Outline:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(13, 12)]
+}
+
+[sub_resource type="Animation" id="Animation_cko43"]
+resource_name = "close"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Outline:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(13, 12), Vector2(13, 3), Vector2(13, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_x8diq"]
+resource_name = "open"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Outline:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(13, 0), Vector2(13, 12)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ppl4k"]
+_data = {
+&"RESET": SubResource("Animation_kjel7"),
+&"close": SubResource("Animation_cko43"),
+&"open": SubResource("Animation_x8diq")
+}
+
+[node name="Eye" type="Node2D" unique_id=697584275]
+script = ExtResource("1_x8diq")
+
+[node name="Outline" type="Node2D" parent="." unique_id=1076552034 node_paths=PackedStringArray("polygon", "line")]
+script = ExtResource("1_l1n7h")
+polygon = NodePath("Fill")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 1.5
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_ng2ve")
+update_curve_at_runtime = true
+tolerance_degrees = 10.0
+arc_list = SubResource("Resource_popqj")
+use_interect_when_clipping = true
+shape_type = 2
+size = Vector2(13, 12)
+rx = 6.5
+ry = 6.0
+
+[node name="Stroke" type="Line2D" parent="Outline" unique_id=1616276431]
+points = PackedVector2Array(6.5, 0, 6.367947, 1.2092355, 5.9892116, 2.3355093, 5.3899283, 3.3546972, 4.5962315, 4.242675, 3.6342554, 4.9753184, 2.5301352, 5.5285034, 1.3100052, 5.878105, 0, 6, -1.3100052, 5.878105, -2.5301352, 5.528503, -3.6342554, 4.9753184, -4.5962315, 4.242675, -5.3899283, 3.3546972, -5.9892116, 2.3355093, -6.367947, 1.2092355, -6.5, 0, -6.367947, -1.2092355, -5.9892116, -2.3355093, -5.3899283, -3.3546972, -4.5962315, -4.242675, -3.6342554, -4.9753184, -2.5301352, -5.5285034, -1.3100052, -5.878105, 0, -6, 1.3100052, -5.878105, 2.5301352, -5.528503, 3.6342554, -4.9753184, 4.5962315, -4.242675, 5.3899283, -3.3546972, 5.9892116, -2.3355093, 6.367947, -1.2092355)
+closed = true
+width = 1.5
+default_color = Color(0, 0, 0, 1)
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="Polygon2D" parent="Outline" unique_id=1659773073]
+polygon = PackedVector2Array(6.5, 0, 6.367947, 1.2092355, 5.9892116, 2.3355093, 5.3899283, 3.3546972, 4.5962315, 4.242675, 3.6342554, 4.9753184, 2.5301352, 5.5285034, 1.3100052, 5.878105, 0, 6, -1.3100052, 5.878105, -2.5301352, 5.528503, -3.6342554, 4.9753184, -4.5962315, 4.242675, -5.3899283, 3.3546972, -5.9892116, 2.3355093, -6.367947, 1.2092355, -6.5, 0, -6.367947, -1.2092355, -5.9892116, -2.3355093, -5.3899283, -3.3546972, -4.5962315, -4.242675, -3.6342554, -4.9753184, -2.5301352, -5.5285034, -1.3100052, -5.878105, 0, -6, 1.3100052, -5.878105, 2.5301352, -5.528503, 3.6342554, -4.9753184, 4.5962315, -4.242675, 5.3899283, -3.3546972, 5.9892116, -2.3355093, 6.367947, -1.2092355)
+metadata/_edit_lock_ = true
+
+[node name="Iris" type="Node2D" parent="Outline" unique_id=1646456651 node_paths=PackedStringArray("polygon", "clip_paths")]
+position = Vector2(0.145126, -0.35392)
+script = ExtResource("1_l1n7h")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_uahbu")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_kdkpg")
+clip_paths = [NodePath("..")]
+
+[node name="Fill" type="Polygon2D" parent="Outline/Iris" unique_id=51294351]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(1.1648788, -5.524185, 2.3850098, -5.1745834, 3.489128, -4.621399, 4.451103, -3.8887558, 4.6537933, -3.6619797, 4.7586975, -2.9953613, 4.846466, -2.2706833, 4.909851, -1.5349731, 4.9485397, -0.7918091, 4.9623413, -0.044807434, 4.957199, 0.47600555, 4.9290314, 1.2212372, 4.8760605, 1.9605408, 4.798561, 2.6903229, 4.696907, 3.4070206, 4.5715866, 4.107147, 4.4692307, 4.576309, 4.451103, 4.596596, 3.489128, 5.329239, 2.3850098, 5.8824234, 1.1648788, 6.232025, -0.14512634, 6.35392, -1.4551315, 6.232025, -2.6752625, 5.8824234, -3.7793808, 5.329239, -4.601822, 4.702858, -4.603821, 4.695015, -4.749237, 4.0120926, -4.871521, 3.3096237, -4.97007, 2.5910263, -5.044403, 1.8598099, -5.094162, 1.1195297, -5.1191025, 0.37379456, -5.122223, -1.5258789e-05, -5.109741, -0.7471161, -5.0723724, -1.4905701, -5.0102844, -2.2267685, -4.92379, -2.952118, -4.8133087, -3.663086, -4.777519, -3.8482895, -4.741356, -3.8887558, -3.7793808, -4.621399, -2.6752625, -5.1745834, -1.4551315, -5.524185, -0.14512634, -5.64608)
+polygons = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44]]
+metadata/_edit_lock_ = true
+
+[node name="Pupil" type="Node2D" parent="Outline/Iris" unique_id=2142778118 node_paths=PackedStringArray("polygon", "clip_paths")]
+position = Vector2(-0.203896, 0.725998)
+script = ExtResource("1_l1n7h")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_4mfx8")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_hq7x2")
+clip_paths = [NodePath("../..")]
+shape_type = 2
+size = Vector2(3.25959, 6.98483)
+rx = 1.62979
+ry = 3.49242
+
+[node name="Fill" type="Polygon2D" parent="Outline/Iris/Pupil" unique_id=1645161421]
+polygon = PackedVector2Array(0.083869934, -3.4878693, 0.16664124, -3.4743881, 0.24820709, -3.452179, 0.32846832, -3.421463, 0.40731812, -3.3824692, 0.4846573, -3.335411, 0.56038666, -3.2805023, 0.6343994, -3.2179718, 0.7768707, -3.0709076, 0.91124725, -2.8959808, 1.0367126, -2.694931, 1.1524506, -2.4695282, 1.3514557, -1.9526672, 1.5017242, -1.3594284, 1.5966873, -0.7038574, 1.6297913, 0, 1.5966873, 0.7038574, 1.5017242, 1.3594284, 1.3514557, 1.9526672, 1.1524506, 2.4695282, 1.0367126, 2.694931, 0.91124725, 2.8959808, 0.7768707, 3.0709076, 0.6343994, 3.2179718, 0.56038666, 3.2805023, 0.4846573, 3.335411, 0.40731812, 3.3824692, 0.32846832, 3.421463, 0.24820709, 3.452179, 0.16664124, 3.4743881, 0.083869934, 3.4878693, 0, 3.4924164, -0.083869934, 3.4878693, -0.16664124, 3.4743881, -0.24820709, 3.452179, -0.32846832, 3.421463, -0.40731812, 3.3824692, -0.4846573, 3.335411, -0.56038666, 3.2805023, -0.6343994, 3.2179718, -0.7768707, 3.0709076, -0.91124725, 2.8959808, -1.0367126, 2.694931, -1.1524506, 2.4695282, -1.3514557, 1.9526672, -1.5017242, 1.3594284, -1.5966873, 0.7038574, -1.6297913, 0, -1.5966873, -0.7038574, -1.5017242, -1.3594284, -1.3514557, -1.9526672, -1.1524506, -2.4695282, -1.0367126, -2.694931, -0.91124725, -2.8959808, -0.7768707, -3.0709076, -0.6343994, -3.2179718, -0.56038666, -3.2805023, -0.4846573, -3.335411, -0.40731812, -3.3824692, -0.32846832, -3.421463, -0.24820709, -3.452179, -0.16664124, -3.4743881, -0.083869934, -3.4878693, 0, -3.4924164)
+polygons = [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]]
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=913996517]
+libraries/ = SubResource("AnimationLibrary_ppl4k")

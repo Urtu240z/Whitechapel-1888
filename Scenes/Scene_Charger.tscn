@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://b08qcjttirv76"]
+
+[ext_resource type="Shader" uid="uid://dqngrnl2o820o" path="res://Assets/Shaders/CRT.gdshader" id="1_cj7lv"]
+[ext_resource type="PackedScene" uid="uid://bxjhpfh4rly4c" path="res://Scenes/Exteriors/Streets.tscn" id="1_vt05j"]
+[ext_resource type="Script" uid="uid://cpvknmx26eyg8" path="res://Scripts/Core/CRT.gd" id="2_vt05j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yglnd"]
+shader = ExtResource("1_cj7lv")
+shader_parameter/global_brightness = 0.7490000355775
+shader_parameter/global_contrast = 1.4270000677825
+shader_parameter/global_saturation = 0.80800003838
+shader_parameter/screen_size = Vector2(1920, 1200)
+shader_parameter/viewport_size = Vector2(1280, 720)
+shader_parameter/hardScan = -20.0
+shader_parameter/hardPix = -14.0
+shader_parameter/warpX = 0.0
+shader_parameter/warpY = 0.0
+shader_parameter/maskDark = 0.10000000149012
+shader_parameter/maskLight = 2.0
+shader_parameter/scaleInLinearGamma = true
+shader_parameter/shadowMask = 3
+shader_parameter/brightBoost = 1.10000001639132
+shader_parameter/hardBloomPix = -0.5
+shader_parameter/hardBloomScan = -1.4999999627470002
+shader_parameter/bloomAmount = 0.15000000223518
+shader_parameter/shape = 8.35000012442502
+shader_parameter/doBloom = false
+shader_parameter/enable_compression = false
+shader_parameter/compression_intensity = 8.0
+shader_parameter/compression_quantization = 16.0
+shader_parameter/compression_block_size = 8.0
+shader_parameter/compression_blend = 0.7
+shader_parameter/enable_chromatic_aberration = false
+shader_parameter/red_shift = Vector2(0.002, 0)
+shader_parameter/green_shift = Vector2(0, 0)
+shader_parameter/blue_shift = Vector2(-0.002, 0)
+shader_parameter/aberration_bias = 1.0
+shader_parameter/aberration_blend = 0.8
+shader_parameter/enable_lens_distortion = false
+shader_parameter/distortion_intensity = 0.02999995462544014
+shader_parameter/distortion_magnifier = 1.0
+shader_parameter/distortion_invert = false
+shader_parameter/enable_noise = false
+shader_parameter/noise_intensity = 0.08
+shader_parameter/noise_scale = 100.0
+shader_parameter/noise_framerate = 60.0
+shader_parameter/noise_midtones = 0.0
+shader_parameter/noise_shadows = 0.10000000149012
+shader_parameter/noise_highlights = 0.70000001043084
+shader_parameter/enable_halation = true
+shader_parameter/halation_amount = 0.3
+shader_parameter/halation_threshold = 0.8
+shader_parameter/halation_size = 2.0
+shader_parameter/halation_color_filter = Vector3(1, 0.9, 0.8)
+shader_parameter/enable_sharpen = false
+shader_parameter/sharpen_intensity = 0.40000000596048
+shader_parameter/sharpen_offset = 1.80000001937156
+shader_parameter/enable_soften = false
+shader_parameter/soften_strength = 1.0
+shader_parameter/soften_blend = 0.5
+shader_parameter/enable_vignette = true
+shader_parameter/vignette_intensity = 1.45000002160674
+shader_parameter/vignette_size = 0.85000001266602
+shader_parameter/vignette_color = Vector3(0, 0, 0)
+
+[node name="Scene_Charger" type="SubViewportContainer" unique_id=1658470050]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Scene_Below" type="SubViewport" parent="." unique_id=1315235247]
+handle_input_locally = false
+audio_listener_enable_2d = true
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="Streets" parent="Scene_Below" unique_id=89315198 instance=ExtResource("1_vt05j")]
+
+[node name="CRT_Shader" type="CanvasLayer" parent="." unique_id=1796753858]
+layer = 10
+follow_viewport_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="CRT_Shader" unique_id=1352513134]
+z_index = 5
+material = SubResource("ShaderMaterial_yglnd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_vt05j")

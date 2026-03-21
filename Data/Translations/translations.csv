@@ -1,0 +1,11 @@
+keys,es,en
+SLEEP_TITLE_HOSTAL,"Descansar en el hostal","Rest at the inn"
+SLEEP_TITLE_CALLEJON,"Dormir en el callejón","Sleep in the alley"
+SLEEP_TITLE_CALLE,"Dormir en la calle","Sleep on the street"
+SLEEP_HORA,"hora","hour"
+SLEEP_HORAS,"horas","hours"
+SLEEP_POST_TEXTO,"Son las %s. ¿Qué quieres hacer?","It's %s. What do you want to do?"
+SLEEP_DESPERTAR,"Despertar","Wake up"
+SLEEP_SEGUIR,"Seguir durmiendo","Keep sleeping"
+SLEEP_SALIR,"Salir a la calle","Go outside"
+SLEEP_HOSTAL_CERRADO,"El hostal está cerrado","The inn is closed"

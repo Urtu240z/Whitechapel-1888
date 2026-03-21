@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dry7t4iu3xqd1"
+path="res://.godot/imported/Bar - Whispers of the Lamplight.ogg-22426338035c8fcfd8066828bddd8a98.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/Bar - Whispers of the Lamplight.ogg"
+dest_files=["res://.godot/imported/Bar - Whispers of the Lamplight.ogg-22426338035c8fcfd8066828bddd8a98.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

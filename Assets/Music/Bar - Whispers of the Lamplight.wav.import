@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cmci08mvr01u3"
+path="res://.godot/imported/Bar - Whispers of the Lamplight.wav-f9b4eefa44012fff97e26f03e8dac500.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Bar - Whispers of the Lamplight.wav"
+dest_files=["res://.godot/imported/Bar - Whispers of the Lamplight.wav-f9b4eefa44012fff97e26f03e8dac500.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

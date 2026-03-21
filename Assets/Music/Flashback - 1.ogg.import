@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cee1i205c37qi"
+path="res://.godot/imported/Flashback - 1.ogg-a036480e1fdee0ae72593c1c135b0a03.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Music/Flashback - 1.ogg"
+dest_files=["res://.godot/imported/Flashback - 1.ogg-a036480e1fdee0ae72593c1c135b0a03.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

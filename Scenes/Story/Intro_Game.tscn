@@ -1,0 +1,556 @@
+[gd_scene format=3 uid="uid://6bd5td2i3dfp"]
+
+[ext_resource type="Script" uid="uid://bjgcbdy7m5hm1" path="res://Scripts/Story/intro_game.gd" id="1_v63i2"]
+[ext_resource type="Texture2D" uid="uid://cvgtqwbhv7hay" path="res://Assets/Sprites/Background/Intro_Forest_HD.png" id="2_rlxiu"]
+[ext_resource type="Texture2D" uid="uid://ditf5klbhmmbl" path="res://Assets/Sprites/Building/Tunnel 2.png" id="2_thp8f"]
+[ext_resource type="Texture2D" uid="uid://b0bpjdb61m6pp" path="res://Assets/Sprites/Atrezzo/Tree_1_Blur.png" id="3_2p2hw"]
+[ext_resource type="Texture2D" uid="uid://dv21yvxlblt5p" path="res://Assets/Sprites/Building/Player_House_HD.png" id="3_thp8f"]
+[ext_resource type="Texture2D" uid="uid://bem55l83lqsg4" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand2.png" id="4_42g8d"]
+[ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="4_o8wfu"]
+[ext_resource type="Texture2D" uid="uid://chbjuirhckawk" path="res://Assets/Sprites/Background/Forest_Front.png" id="4_thp8f"]
+[ext_resource type="Texture2D" uid="uid://bhcdu34bwng3e" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand2_n.png" id="5_p3t74"]
+[ext_resource type="Texture2D" uid="uid://disfoudflma0w" path="res://Assets/Sprites/Atrezzo/Gate.png" id="5_v7bgm"]
+[ext_resource type="Shader" uid="uid://8fjq57v8eguh" path="res://Assets/Shaders/Tree_Wind.gdshader" id="6_sjfa1"]
+[ext_resource type="Texture2D" uid="uid://554fpcp7fsk1" path="res://Assets/Sprites/Building/Tunnel 2_Front.png" id="6_v63i2"]
+[ext_resource type="PackedScene" uid="uid://5o5jm036m674" path="res://Scenes/Atrezzo/Street_Lamp.tscn" id="7_1562w"]
+[ext_resource type="Texture2D" uid="uid://b0y5oeotay27s" path="res://Assets/Sprites/Lights/180 Light.png" id="7_myhum"]
+[ext_resource type="Texture2D" uid="uid://b38snj6t625s5" path="res://Assets/Sprites/Effects/Fog.png" id="8_xwmy8"]
+[ext_resource type="Texture2D" uid="uid://2oq6p47m64kw" path="res://Assets/Sprites/Atrezzo/Gate_Blur.png" id="9_1562w"]
+[ext_resource type="Texture2D" uid="uid://c4ov4cqtd5of5" path="res://Assets/Sprites/Background/Intro_London.png" id="12_nflx0"]
+[ext_resource type="Texture2D" uid="uid://bd1kxoesbeohu" path="res://Assets/Sprites/Atrezzo/Tree_2.png" id="15_b2s2a"]
+[ext_resource type="Script" uid="uid://crm7wt4vyued" path="res://Scripts/Core/scene_changer.gd" id="15_myhum"]
+[ext_resource type="Script" uid="uid://bd80502uicfmd" path="res://Scripts/Story/zone_controller.gd" id="15_v1xlq"]
+[ext_resource type="Texture2D" uid="uid://dk3j3r010xw6" path="res://Assets/Sprites/Atrezzo/Bush_2_Blur.png" id="16_enrxm"]
+[ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="17_k31m2"]
+[ext_resource type="Texture2D" uid="uid://hu4k7aqfes84" path="res://Assets/Sprites/Atrezzo/Bush_1_Blur.png" id="17_kchec"]
+[ext_resource type="Texture2D" uid="uid://b7xi0oaclbcwb" path="res://Assets/Sprites/Background/Forest_Front_3.png" id="18_0gs8i"]
+[ext_resource type="Script" uid="uid://b1118sf504lh7" path="res://Scripts/UI/fps_counter.gd" id="18_k31m2"]
+[ext_resource type="Script" uid="uid://cxbwqc3wbpdmd" path="res://Scripts/Story/outfit_zone.gd" id="22_0gs8i"]
+[ext_resource type="AudioStream" uid="uid://ciyt77vs6vf83" path="res://Assets/Audio/Ambience/Countryside_ambient_sound_with_birds,_trees,_and_w_variation1.wav" id="23_o8wfu"]
+[ext_resource type="AudioStream" uid="uid://biea8wymmn235" path="res://Assets/Music/El susurro de Jack.wav" id="24_wk07h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mr8ke"]
+size = Vector2(1886, 624)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o8wfu"]
+size = Vector2(2786, 837)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0gs8i"]
+size = Vector2(1320, 640)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wk07h"]
+size = Vector2(2037, 851)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_clpkd"]
+shader = ExtResource("6_sjfa1")
+shader_parameter/speed = 0.72600003122512
+shader_parameter/strength = 0.0010000000475
+shader_parameter/target_color = Color(0.8, 0.6, 0.1, 1)
+shader_parameter/color_threshold = 0.5170000245575
+shader_parameter/modulate_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2p2hw"]
+size = Vector2(110.61974, 238.41864)
+
+[sub_resource type="Shader" id="Shader_jbdmi"]
+code = "shader_type canvas_item;
+
+uniform float speed : hint_range(0.1, 5.0) = 1.5;
+uniform float strength : hint_range(0.0, 0.05) = 0.008;
+uniform vec3 target_color : source_color = vec3(0.8, 0.6, 0.1);
+uniform float color_threshold : hint_range(0.0, 1.0) = 0.3;
+uniform vec4 modulate_color : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+void fragment() {
+    vec2 uv = UV;
+    vec4 original = texture(TEXTURE, uv);
+    
+    // Distancia al color objetivo
+    float dist = distance(original.rgb, target_color);
+    
+    // Si el pixel es parecido al color objetivo, lo movemos
+    if (dist < color_threshold && original.a > 0.1) {
+        float wave = sin(TIME * speed + UV.x * 8.0 + UV.y * 5.0) * strength;
+        uv.x += wave;
+        uv.y += wave * 0.5;
+    }
+    
+    vec4 result = texture(TEXTURE, uv);
+    COLOR = result * modulate_color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sfppk"]
+shader = SubResource("Shader_jbdmi")
+shader_parameter/speed = 0.89800003939512
+shader_parameter/strength = 0.00400000019
+shader_parameter/target_color = Color(0.14509805, 0.22745098, 0.050980393, 1)
+shader_parameter/color_threshold = 0.0950000045125
+shader_parameter/modulate_color = Color(0.601223, 0.601223, 0.60122293, 1)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mr8ke"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_6aydi"]
+offsets = PackedFloat32Array(0, 0.0054054055, 0.74594593)
+colors = PackedColorArray(1.3167266, 1.3167266, 1.3167266, 1, 1.1886126, 1.1886126, 1.1886126, 0.9027027, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_v7bgm"]
+gradient = SubResource("Gradient_6aydi")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.47008547, 0.43589744)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_qffoo"]
+diffuse_texture = ExtResource("4_42g8d")
+normal_texture = ExtResource("5_p3t74")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwmy8"]
+size = Vector2(122.17139, 832.5793)
+
+[sub_resource type="Gradient" id="Gradient_v63i2"]
+offsets = PackedFloat32Array(0.10810811, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.17254902)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_myhum"]
+gradient = SubResource("Gradient_v63i2")
+width = 1592
+height = 797
+fill = 1
+fill_from = Vector2(0.71084344, 0.607978)
+fill_to = Vector2(0.53815264, 0.068642676)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xwmy8"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_p71ns"]
+offsets = PackedFloat32Array(0.09189189, 1)
+colors = PackedColorArray(1, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6cbp7"]
+gradient = SubResource("Gradient_p71ns")
+width = 884
+height = 484
+fill = 1
+fill_from = Vector2(0.50427353, 0.41880342)
+
+[sub_resource type="Curve" id="Curve_v63i2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9275362, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_myhum"]
+offsets = PackedFloat32Array(0.70718235, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_xwmy8"]
+offsets = PackedFloat32Array(0.38121548, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[node name="Intro_Game" type="Node2D" unique_id=1685960519]
+script = ExtResource("1_v63i2")
+
+[node name="ZoneController" type="Area2D" parent="." unique_id=793677248]
+z_index = -3
+script = ExtResource("15_v1xlq")
+player_path = NodePath("../Player")
+light_path = NodePath("../Global Light")
+zone_shape_path = NodePath("CollisionShape2D")
+right_falloff = 100.0
+min_energy = -0.5
+max_energy = 1.0
+player_color_outside = Color(1.6197081, 1.6197081, 1.6197081, 1)
+player_color_inside = Color(0.23753911, 0.23753914, 0.23753911, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneController" unique_id=1982960725]
+position = Vector2(629, -159)
+shape = SubResource("RectangleShape2D_mr8ke")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="ZoneController" unique_id=1018033159]
+
+[node name="OutfitZone_London" type="Area2D" parent="." unique_id=1626944024]
+position = Vector2(-405, 247)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("22_0gs8i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutfitZone_London" unique_id=223252136]
+position = Vector2(1383, -300.5)
+shape = SubResource("RectangleShape2D_o8wfu")
+
+[node name="OutfitZone_Forest" type="Area2D" parent="." unique_id=943630267]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("22_0gs8i")
+target_outfit = "Farm"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutfitZone_Forest" unique_id=525433629]
+position = Vector2(-1143, -153)
+shape = SubResource("RectangleShape2D_0gs8i")
+
+[node name="EchoeBridge" type="Area2D" parent="." unique_id=1369323434]
+audio_bus_override = true
+audio_bus_name = &"ReverbZone"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EchoeBridge" unique_id=1981655474]
+position = Vector2(558.5, -28.5)
+shape = SubResource("RectangleShape2D_wk07h")
+
+[node name="Background" type="Node2D" parent="." unique_id=1586876092]
+modulate = Color(0.47007543, 0.47007596, 0.47007567, 1)
+
+[node name="Forest_Part" type="Node2D" parent="Background" unique_id=466500631]
+
+[node name="IntroForest" type="Sprite2D" parent="Background/Forest_Part" unique_id=1613613382]
+modulate = Color(0.84635025, 0.84635025, 0.84635025, 1)
+position = Vector2(-1101.361, -164.99998)
+scale = Vector2(0.15101177, 0.14430015)
+texture = ExtResource("2_rlxiu")
+
+[node name="House" type="Sprite2D" parent="Background/Forest_Part/IntroForest" unique_id=1349851732]
+position = Vector2(-2619.9224, 187.10991)
+scale = Vector2(3.22, 3.22)
+texture = ExtResource("3_thp8f")
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Forest_Part/IntroForest" unique_id=1926051138]
+modulate = Color(0.8047426, 0.80474263, 0.8047426, 1)
+material = SubResource("ShaderMaterial_clpkd")
+position = Vector2(307.00235, -277.2001)
+scale = Vector2(9.0085, 10.06215)
+texture = ExtResource("4_thp8f")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Background/Forest_Part/IntroForest" unique_id=465206148]
+position = Vector2(-1076.9958, 83.15989)
+scale = Vector2(6.91, 6.91)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/Forest_Part/IntroForest/StaticBody2D" unique_id=2001632497]
+position = Vector2(-430.67865, 109.209335)
+shape = SubResource("RectangleShape2D_2p2hw")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background/Forest_Part/IntroForest/StaticBody2D" unique_id=2049773177]
+modulate = Color(0.728822, 0.728822, 0.7288219, 1)
+material = SubResource("ShaderMaterial_sfppk")
+position = Vector2(-403.39258, -55.7677)
+scale = Vector2(1.0431148, 1.0431148)
+texture = ExtResource("3_2p2hw")
+
+[node name="London_Part" type="Node2D" parent="Background" unique_id=841388785]
+
+[node name="Parallax2D" type="Parallax2D" parent="Background/London_Part" unique_id=1227719802]
+scroll_scale = Vector2(0.95, 1)
+
+[node name="Background" type="Sprite2D" parent="Background/London_Part/Parallax2D" unique_id=94767092]
+modulate = Color(0.21950114, 0.21950099, 0.21950093, 1)
+z_index = -2
+texture_filter = 6
+position = Vector2(437.00003, -88)
+scale = Vector2(1.6456435, 1.6853734)
+texture = ExtResource("12_nflx0")
+
+[node name="PointLight2D" type="PointLight2D" parent="Background/London_Part/Parallax2D/Background" unique_id=1564560730]
+position = Vector2(2.4306335, -112.734665)
+scale = Vector2(0.60766506, 0.59334034)
+color = Color(0.67230505, 1.7688051e-06, 6.256998e-07, 1)
+energy = 11.4
+shadow_enabled = true
+shadow_color = Color(0, 0, 0, 0.9137255)
+shadow_filter = 2
+shadow_item_cull_mask = 7
+texture = ExtResource("4_o8wfu")
+texture_scale = 7.3
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/London_Part/Parallax2D/Background/PointLight2D" unique_id=1516029951]
+material = SubResource("CanvasItemMaterial_mr8ke")
+position = Vector2(7, 55)
+scale = Vector2(2.726, 2.726)
+texture = SubResource("GradientTexture2D_v7bgm")
+
+[node name="Street Lamp" type="Node2D" parent="Background/London_Part" unique_id=942850136]
+position = Vector2(-114.00002, -59.000004)
+scale = Vector2(0.187, 0.187)
+
+[node name="Street_Lamp2" parent="Background/London_Part/Street Lamp" unique_id=559074949 instance=ExtResource("7_1562w")]
+z_index = 0
+position = Vector2(4919.7866, -6.1035156e-05)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/London_Part/Street Lamp/Street_Lamp2" unique_id=480684377]
+z_index = 5
+material = SubResource("CanvasItemMaterial_mr8ke")
+position = Vector2(5.3476563, -449.5107)
+scale = Vector2(0.731, 0.731)
+texture = SubResource("GradientTexture2D_v7bgm")
+
+[node name="Street_Lamp" parent="Background/London_Part/Street Lamp" unique_id=983651121 instance=ExtResource("7_1562w")]
+z_index = 0
+position = Vector2(0.00012207031, -3.0517578e-05)
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Background/London_Part/Street Lamp/Street_Lamp" unique_id=1885293211]
+z_index = 2
+material = SubResource("CanvasItemMaterial_mr8ke")
+position = Vector2(0, -460.20587)
+scale = Vector2(0.731, 0.731)
+texture = SubResource("GradientTexture2D_v7bgm")
+
+[node name="Gate" type="Sprite2D" parent="Background/London_Part" unique_id=579824533]
+modulate = Color(0.427493, 0.42749307, 0.42749307, 1)
+z_index = -1
+position = Vector2(451, 32)
+scale = Vector2(0.6346154, 0.63461536)
+texture = ExtResource("5_v7bgm")
+
+[node name="Cobblestone" type="Sprite2D" parent="Background/London_Part" unique_id=1095126708]
+position = Vector2(1387, 111)
+texture = SubResource("CanvasTexture_qffoo")
+
+[node name="Tunnel2" type="Sprite2D" parent="Background/London_Part" unique_id=969223537]
+position = Vector2(1359.408, -87.72809)
+scale = Vector2(0.356, 0.456)
+texture = ExtResource("2_thp8f")
+
+[node name="Area2D" type="Area2D" parent="Background/London_Part/Tunnel2" unique_id=658349387]
+scale = Vector2(0.99999994, 1)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("15_myhum")
+next_scene_path = "uid://c5eqkxt8vsyw7"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/London_Part/Tunnel2/Area2D" unique_id=1690131183]
+position = Vector2(180.99539, 58.823536)
+shape = SubResource("RectangleShape2D_xwmy8")
+
+[node name="PointLight2D" type="PointLight2D" parent="Background/London_Part/Tunnel2" unique_id=913895856]
+z_index = 2
+position = Vector2(-481.48303, 190.19318)
+color = Color(0.76020277, 3.706068e-06, 4.813075e-07, 1)
+energy = 16.0
+range_item_cull_mask = 11
+texture = SubResource("GradientTexture2D_myhum")
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/London_Part/Tunnel2" unique_id=1760375970]
+z_index = 5
+material = SubResource("CanvasItemMaterial_xwmy8")
+position = Vector2(195.48325, 47.649315)
+texture = SubResource("GradientTexture2D_6cbp7")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Background/London_Part" unique_id=91777755]
+z_index = 5
+position = Vector2(1406, 43)
+amount = 1024
+texture = ExtResource("8_xwmy8")
+lifetime = 5.0
+preprocess = 10.0
+speed_scale = 0.1
+randomness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(100, 80)
+direction = Vector2(0, 0)
+spread = 0.0
+gravity = Vector2(-200, 5)
+initial_velocity_max = 70.17
+scale_amount_min = 0.07
+scale_amount_max = 0.2
+scale_amount_curve = SubResource("Curve_v63i2")
+color = Color(1, 1, 1, 0.5372549)
+color_ramp = SubResource("Gradient_myhum")
+color_initial_ramp = SubResource("Gradient_xwmy8")
+
+[node name="Ground_Farm" type="StaticBody2D" parent="Background" unique_id=2130687291]
+z_index = -3
+collision_layer = 2
+collision_mask = 2
+metadata/surface_type = "dirt"
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Background/Ground_Farm" unique_id=169102013]
+z_index = -3
+position = Vector2(603, 139.5)
+scale = Vector2(100.69999, 3.1499996)
+polygon = PackedVector2Array(-9.712017, 12.222221, -23.843102, 13.492065, -23.843102, -23.333338, -23.336647, -23.015877, -22.641512, -17.619051, -21.97617, -17.619051, -20.893747, -9.682541, -19.344591, -7.1428604, -18.262167, -9.682541, -17.368423, -3.968254, -15.134064, -7.1428604, -14.111223, -7.4603195, -13.515394, -9.365082, -11.539227, -14.126987, -9.642504, -16.349209)
+
+[node name="Ground_London" type="StaticBody2D" parent="Background" unique_id=1469857162]
+collision_layer = 2
+collision_mask = 2
+metadata/surface_type = "stone"
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Background/Ground_London" unique_id=551654874]
+z_index = -3
+position = Vector2(603, 139.5)
+scale = Vector2(100.69999, 3.1499996)
+polygon = PackedVector2Array(0.9334655, -17.936512, 3.6047664, -17.30159, 5.402185, -11.904766, 6.3455815, -14.444447, 7.060577, -20.158733, 7.94439, -26.50794, 9.046675, -31.904766, 9.801392, -29.047623, 9.801392, 15.079365, -9.712017, 7.1428566, -9.642504, -16.349209)
+
+[node name="Player" parent="." unique_id=1458210690 instance=ExtResource("17_k31m2")]
+position = Vector2(-1413, -16)
+scale = Vector2(0.2, 0.2)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=863116853]
+position = Vector2(185, -325)
+scale = Vector2(0.16999999, 0.16999999)
+zoom = Vector2(2.065, 2.065)
+limit_left = -1800
+limit_top = -500
+limit_right = 1545
+limit_bottom = 133
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_horizontal_offset = 0.3
+
+[node name="Label" type="Label" parent="Player" unique_id=739379087]
+offset_left = -2931.6802
+offset_top = -600.86
+offset_right = -2891.6802
+offset_bottom = -577.86
+script = ExtResource("18_k31m2")
+
+[node name="Foreground" type="Node2D" parent="." unique_id=1884329316]
+z_index = 1
+
+[node name="London_Part2" type="Node2D" parent="Foreground" unique_id=1923575272]
+
+[node name="Tunnel2Front" type="Sprite2D" parent="Foreground/London_Part2" unique_id=192649898]
+modulate = Color(0.3403393, 0.34033933, 0.3403393, 1)
+light_mask = 2
+z_index = 6
+position = Vector2(1359.408, -87.72809)
+scale = Vector2(0.356, 0.456)
+texture = ExtResource("6_v63i2")
+
+[node name="PointLight2D" type="PointLight2D" parent="Foreground/London_Part2/Tunnel2Front" unique_id=395212908]
+position = Vector2(392.85712, -172.26892)
+scale = Vector2(2.2134945, 5.4076324)
+energy = 16.0
+range_item_cull_mask = 2
+texture = ExtResource("7_myhum")
+
+[node name="Parallax2D" type="Parallax2D" parent="Foreground/London_Part2" unique_id=853089348]
+scroll_scale = Vector2(1.3, 1)
+scroll_offset = Vector2(-123, -18)
+
+[node name="Gate2" type="Sprite2D" parent="Foreground/London_Part2/Parallax2D" unique_id=1649931047]
+modulate = Color(0.14044744, 0.14044747, 0.14044738, 1)
+light_mask = 4
+z_index = 5
+position = Vector2(2044.9999, 208)
+scale = Vector2(1.8385899, 2.758591)
+texture = ExtResource("9_1562w")
+
+[node name="Forest_Part2" type="Node2D" parent="Foreground" unique_id=1011443320]
+modulate = Color(0.3553136, 0.35531354, 0.35531357, 1)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Foreground/Forest_Part2" unique_id=1012875472]
+modulate = Color(0.7294118, 0.7294118, 0.7294118, 1)
+position = Vector2(-1103.2294, -190.99998)
+scale = Vector2(1.3603896, 1.4519699)
+texture = ExtResource("18_0gs8i")
+
+[node name="Parallax2D" type="Parallax2D" parent="Foreground/Forest_Part2" unique_id=1489794613]
+z_index = 5
+scroll_scale = Vector2(1.3, 1)
+scroll_offset = Vector2(646, -12)
+
+[node name="Tree2" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D" unique_id=1720590077]
+modulate = Color(0.5931336, 0.59313357, 0.59313357, 1)
+light_mask = 8
+position = Vector2(-1452, -165)
+scale = Vector2(1.9303932, 1.8634844)
+texture = ExtResource("15_b2s2a")
+
+[node name="Tree3" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D" unique_id=323163079]
+modulate = Color(0.5211409, 0.52114046, 0.5211405, 1)
+light_mask = 8
+position = Vector2(-1607, 63)
+scale = Vector2(1.104801, 1.0665078)
+texture = ExtResource("15_b2s2a")
+
+[node name="Tree6" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D" unique_id=1860245848]
+modulate = Color(0.42365083, 0.4236506, 0.42365062, 1)
+light_mask = 8
+position = Vector2(-1348, 63)
+scale = Vector2(1.104801, 1.0665078)
+texture = ExtResource("15_b2s2a")
+
+[node name="Tree11" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D" unique_id=340110564]
+modulate = Color(0.42365083, 0.4236506, 0.42365062, 1)
+light_mask = 8
+position = Vector2(-1387, 63)
+scale = Vector2(1.104801, 1.0665078)
+texture = ExtResource("15_b2s2a")
+
+[node name="Tree9" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D" unique_id=591839126]
+modulate = Color(0.42365083, 0.4236506, 0.42365062, 1)
+light_mask = 8
+position = Vector2(-3015.6401, 232.944)
+scale = Vector2(1.104801, 1.0665078)
+texture = ExtResource("15_b2s2a")
+
+[node name="Tree10" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D" unique_id=859952023]
+modulate = Color(0.42365083, 0.4236506, 0.42365062, 1)
+light_mask = 8
+position = Vector2(-2944.6401, 149.944)
+scale = Vector2(1.41, 1.362)
+texture = ExtResource("15_b2s2a")
+
+[node name="Tree4" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D" unique_id=224798230]
+modulate = Color(0.3741394, 0.37413922, 0.37413922, 1)
+light_mask = 8
+position = Vector2(-1209, -78.99999)
+scale = Vector2(1.725887, 1.6660664)
+texture = ExtResource("15_b2s2a")
+
+[node name="Tree5" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D" unique_id=1726072211]
+modulate = Color(0.47397602, 0.4739756, 0.47397572, 1)
+light_mask = 8
+position = Vector2(-1426.9999, -49.000015)
+scale = Vector2(1.1684546, 1.1279551)
+texture = ExtResource("15_b2s2a")
+
+[node name="Tree7" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D" unique_id=73635323]
+modulate = Color(0.47397602, 0.4739756, 0.47397572, 1)
+light_mask = 8
+position = Vector2(-1250, 61.000015)
+scale = Vector2(1.1684546, 1.1279551)
+texture = ExtResource("15_b2s2a")
+
+[node name="Tree8" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D" unique_id=1173998593]
+modulate = Color(0.47397602, 0.4739756, 0.47397572, 1)
+light_mask = 8
+position = Vector2(-1044, 105)
+scale = Vector2(1.1684546, 1.1279551)
+texture = ExtResource("15_b2s2a")
+
+[node name="Parallax2D2" type="Parallax2D" parent="Foreground/Forest_Part2" unique_id=1026875050]
+scroll_scale = Vector2(1.2, 1)
+scroll_offset = Vector2(-436, 0)
+
+[node name="Bush2" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D2" unique_id=1980196196]
+position = Vector2(-1146, 208)
+texture = ExtResource("16_enrxm")
+
+[node name="Parallax2D3" type="Parallax2D" parent="Foreground/Forest_Part2" unique_id=1902843961]
+scroll_scale = Vector2(1.2, 1)
+scroll_offset = Vector2(-735, 0)
+
+[node name="Bush1Blur" type="Sprite2D" parent="Foreground/Forest_Part2/Parallax2D3" unique_id=215504990]
+position = Vector2(-551, 106)
+texture = ExtResource("17_kchec")
+offset = Vector2(1.1, 0)
+
+[node name="Global Light" type="DirectionalLight2D" parent="." unique_id=1001201149]
+energy = 0.0
+
+[node name="ForestAmbient" type="AudioStreamPlayer2D" parent="." unique_id=753076363]
+position = Vector2(-994, 223)
+stream = ExtResource("23_o8wfu")
+volume_db = -3.302
+autoplay = true
+
+[node name="LondonAmbient" type="AudioStreamPlayer2D" parent="." unique_id=1297708675]
+position = Vector2(-948, 326)
+stream = ExtResource("24_wk07h")
+
+[connection signal="body_entered" from="OutfitZone_London" to="." method="_on_zona_city_body_entered"]
+[connection signal="body_entered" from="OutfitZone_Forest" to="." method="_on_zona_bosque_body_entered"]

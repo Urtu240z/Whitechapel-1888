@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://de7qp86gcbt0j"]
+
+[ext_resource type="Script" uid="uid://cqncbgw8tm4cf" path="res://addons/curved_lines_2d/examples/pinball/chasing_light.gd" id="1_5swdf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qxspa"]
+radius = 18.0
+
+[sub_resource type="Gradient" id="Gradient_xagdg"]
+offsets = PackedFloat32Array(0, 0.727273)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tuwup"]
+gradient = SubResource("Gradient_xagdg")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="ChasingLight" type="CharacterBody2D" unique_id=570076545]
+z_index = -1
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
+script = ExtResource("1_5swdf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1320729237]
+shape = SubResource("CircleShape2D_qxspa")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1580763649]
+energy = 2.0
+texture = SubResource("GradientTexture2D_tuwup")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1977422446]

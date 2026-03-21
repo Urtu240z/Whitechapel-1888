@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://bugbdf345vasu"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_a37ok"]
+
+[resource]
+script = ExtResource("1_a37ok")
+name = "cure-doctor"
+display_name = "Cure Doctor"
+cost = 0.0
+effects = {}

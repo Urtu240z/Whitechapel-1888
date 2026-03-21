@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://gs43wgyqonvx"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_mmi7u"]
+
+[resource]
+script = ExtResource("1_mmi7u")
+name = "drink-cerveza"
+display_name = "Cerveza"
+cost = 1.0
+effects = {
+"alcohol": 10.0,
+"estres": -8.0,
+"felicidad": 5.0,
+"hambre": 2.0,
+"higiene": -2.0,
+"nervios": -5.0,
+"sueno": 5.0
+}

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://devl1udsex47w"]
+
+[ext_resource type="Script" uid="uid://bgfjdt2lfa4fu" path="res://Scripts/Core/pickup.gd" id="1_66btt"]
+
+[sub_resource type="Gradient" id="Gradient_t1dul"]
+offsets = PackedFloat32Array(0, 0.46)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_66btt"]
+gradient = SubResource("Gradient_t1dul")
+fill = 1
+fill_from = Vector2(0.4813084, 0.47196263)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6fw8u"]
+radius = 28.071337
+
+[node name="Pickup" type="Area2D" unique_id=1857319667]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_66btt")
+pickup_type = "vino"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1344178062]
+texture = SubResource("GradientTexture2D_66btt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1123591545]
+visible = false
+shape = SubResource("CircleShape2D_6fw8u")

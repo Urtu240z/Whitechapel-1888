@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://g6e6vle2a0l2"]
+
+[ext_resource type="Shader" uid="uid://cfs0s7thwppo1" path="res://Assets/Shaders/Blur_Sprite.gdshader" id="1_f1b4j"]
+[ext_resource type="Texture2D" uid="uid://dnmrcoacx72qn" path="res://Assets/Sprites/Atrezzo/Street_Lamp.png" id="1_xm5je"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xm5je"]
+shader = ExtResource("1_f1b4j")
+shader_parameter/blur_strength = 3.0000001425
+shader_parameter/opacity = 1.0
+shader_parameter/brightness = 0.7690000365275
+shader_parameter/tint_color = Color(0.5609549, 0.5609549, 0.5609549, 1)
+
+[sub_resource type="Gradient" id="Gradient_mict6"]
+offsets = PackedFloat32Array(0, 0.66486484)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xm5je"]
+gradient = SubResource("Gradient_mict6")
+fill = 1
+fill_from = Vector2(0.5, 0.50427353)
+
+[node name="Street_Lamp" type="Sprite2D" unique_id=2060761331]
+z_index = 3
+material = SubResource("ShaderMaterial_xm5je")
+texture = ExtResource("1_xm5je")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1826853064]
+position = Vector2(3.49998, -456)
+scale = Vector2(4.5468745, 4.4062505)
+energy = 3.16
+texture = SubResource("GradientTexture2D_xm5je")

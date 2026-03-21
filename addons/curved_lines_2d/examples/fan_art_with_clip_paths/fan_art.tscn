@@ -1,0 +1,695 @@
+[gd_scene format=3 uid="uid://clkub62tc5soa"]
+
+[ext_resource type="Script" uid="uid://cgl7svglo3dea" path="res://addons/curved_lines_2d/examples/fan_art_with_clip_paths/fan_art.gd" id="1_3gxsp"]
+[ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="2_i2hyy"]
+[ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="3_w1jjx"]
+[ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="4_i2hyy"]
+[ext_resource type="PackedScene" uid="uid://b7d7mk2ioy617" path="res://addons/curved_lines_2d/examples/fan_art_with_clip_paths/eye.tscn" id="5_3gxsp"]
+
+[sub_resource type="Curve2D" id="Curve2D_vuvrq"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0.6014105, 0, 3.8889952, -2.177835, 0, -0.6014105, 0, 0, 4.977915, -1.088915, 0, 0, 0, 0.6014105, 4.977915, 1.0889149, 0.6014105, 0, 0, 0, 3.8889952, 2.177835, 0, 0, -0.6014105, 0, -3.8889947, 2.177835, 0, 0.6014105, 0, 0, -4.977915, 1.0889149, 0, 0, 0, -0.6014105, -4.977915, -1.088915, -0.6014105, 0, 0, 0, -3.8889947, -2.177835, 0, 0, 0.6014105, 0, 3.8889952, -2.177835)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_dovol"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+
+[sub_resource type="Curve2D" id="Curve2D_21j8n"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0.6014105, 0, 3.8889952, -2.177835, 0, -0.6014105, 0, 0, 4.977915, -1.088915, 0, 0, 0, 0.6014105, 4.977915, 1.0889149, 0.6014105, 0, 0, 0, 3.8889952, 2.177835, 0, 0, -0.6014105, 0, -3.8889947, 2.177835, 0, 0.6014105, 0, 0, -4.977915, 1.0889149, 0, 0, 0, -0.6014105, -4.977915, -1.088915, -0.6014105, 0, 0, 0, -3.8889947, -2.177835, 0, 0, 0.6014105, 0, 3.8889952, -2.177835)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_ycpci"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+
+[sub_resource type="Curve2D" id="Curve2D_h4krt"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0.6014105, 0, 2.2167249, -2.022275, 0, -0.90211576, 0, 0, 3.305645, -0.38889492, 0, 0, 0, 0.90211576, 3.305645, 0.38889503, 0.6014105, 0, 0, 0, 2.2167249, 2.022275, 0, 0, -0.6014105, 0, -2.2167249, 2.022275, 0, 0.90211576, 0, 0, -3.305645, 0.38889503, 0, 0, 0, -0.90211576, -3.305645, -0.38889492, -0.6014105, 0, 0, 0, -2.2167249, -2.022275, 0, 0, 0.6014105, 0, 2.2167249, -2.022275)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_0ewes"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+
+[sub_resource type="Curve2D" id="Curve2D_7ab47"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, -0.133581, 3.61672, 1.8011, -2.20657, -0.325121, -2.56204, -0.350664, 0.0769, 1.32512, 10.2287, 3.3371, 0.398483, 0.601829, -9.16264, -6.3566, 10.6149, 0.293953, -0.394287, 0, 0, -1.1954, -1.54593)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_0hrpn"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+
+[sub_resource type="Curve2D" id="Curve2D_tdxpr"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 7.04836, -1.1108, -8.5744, -12.482, -7.04836, 0.69072, 1.12537, 8.70163, 3.4256, -11.482, -4.6239, -5.8951, -7.38191, 0.96647, 12.0495, 10.4131, 8.7672, 0.418823, -0.792978, -1.75007, -11.2067, 12.202, -0.0253906, 1.75006, 0, 0, -12.0495, 6.95184, 0, 0, 0, 0, -8.5744, -12.482)
+}
+point_count = 6
+
+[sub_resource type="Resource" id="Resource_m74ci"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+
+[sub_resource type="Curve2D" id="Curve2D_g3rv6"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0.6014105, 0, 2.2167249, -2.022275, 0, -0.90211576, 0, 0, 3.305645, -0.38889492, 0, 0, 0, 0.90211576, 3.305645, 0.38889503, 0.6014105, 0, 0, 0, 2.2167249, 2.022275, 0, 0, -0.6014105, 0, -2.2167249, 2.022275, 0, 0.90211576, 0, 0, -3.305645, 0.38889503, 0, 0, 0, -0.90211576, -3.305645, -0.38889492, -0.6014105, 0, 0, 0, -2.2167249, -2.022275, 0, 0, 0.6014105, 0, 2.2167249, -2.022275)
+}
+point_count = 9
+
+[sub_resource type="Resource" id="Resource_d0jpf"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+
+[sub_resource type="Curve2D" id="Curve2D_51t4y"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 3.98345, 3.1908, -0.0833435, -2.16666, -1.81313, -3.07524, -0.343185, 0.10534, 9.75121, 10.4696, 3.19353, -0.866333, -1.87273, -6.4266, 2.95197, 12.3641, 0, 0, 0, 0, -1.46037, 4.69773)
+}
+point_count = 4
+
+[sub_resource type="Resource" id="Resource_li8ts"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+
+[sub_resource type="Curve2D" id="Curve2D_row8l"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -9.78708, -8.52243, 0, 0, 0.4972, -2.30488, 12.2153, -8.52243, -0.374603, -3.94598, 0.24568, 2.58805, 21.1428, -11.554, 0, 0.731804, 0, 0, 15.0023, -7.46409, 0, 0, 0.0072, 0.46875, 15.2492, 8.63489, 2.48367, -0.551971, -8.77592, 1.95033, 10.8159, 10.8457, 7.33499, -0.178818, -7.33499, 0.17881, -11.5157, 13.3975, 0.466721, 1.67137, -0.466721, -1.67134, -21.135, 11.6806, 0, 0, 0, 0, -11.8468, 6.93817, 0, 0, -1.42244, -0.00072, -12.5741, -6.96933, -1.138, 3.60279, 0.955734, -3.02576, -19.7185, -12.448, -0.551308, -2.32829, 0, 0, -9.78708, -8.52243)
+}
+point_count = 12
+
+[sub_resource type="Resource" id="Resource_gw0fs"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+
+[sub_resource type="Curve2D" id="Curve2D_loqdy"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0.73064595, 3.175, 0, 1.7535524, 0, -1.7535524, 0, 0, 1.322915, 0, 0.73064595, 0, -0.73064595, -3.175, 0, -1.7535524, 0, 1.7535524, 0, 0, -1.322915, 0, -0.73064595, 0, 0, 3.175, 0)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_vpx2b"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+
+[sub_resource type="Curve2D" id="Curve2D_ojj3e"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 2.91041, -1.4493, 0, 0, 0, 0, -2.9104, -1.45967)
+}
+point_count = 2
+
+[sub_resource type="Resource" id="Resource_k4eqw"]
+script = ExtResource("2_i2hyy")
+radius = Vector2(2.91, 2.91)
+
+[sub_resource type="Resource" id="Resource_mg08f"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+arcs = Array[ExtResource("2_i2hyy")]([SubResource("Resource_k4eqw")])
+
+[sub_resource type="Curve2D" id="Curve2D_3gxsp"]
+resource_local_to_scene = true
+_data = {
+"points": PackedVector2Array(0, 0, 0.962421, 0.10373, 7.96465, 7.6074, -0.943039, 0.46283, 3.6988, -1.82266, 10.9088, 7.05247, 0.202003, 0.237968, 0.551035, -1.52306, 13.0722, 1.2108, 0.672356, 1.36607, -1.39959, -2.82158, 12.8836, -3.28074, 3.31781, -1.32369, -0.486996, -0.85981, 4.555, -5.92528, 1.05902, 0.181267, -1.33433, -0.21921, 2.09208, -7.58379, 0.683876, -0.99881, -0.42185, -0.66139, -1.24394, -6.29514, 0.712204, 0.121849, -1.38154, -0.22882, -3.00931, -7.51441, 0.477531, -1.5675, -2.99989, 0.12759, -6.23972, -5.18826, 0.380814, -2.27859, -0.466242, 2.80298, -13.4357, -1.24465, -3.69995, -0.615288, 2.69186, 0.44086, -6.10427, 5.07213, -1.35339, 1.70671, 0.897379, 1.67127, 0.569206, 2.98385, -2.0579, -0.21862, 0.51173, 0.90311, 5.25782, 5.9822, -1.20955, -0.130371, 0, 0, 7.96464, 7.60741)
+}
+point_count = 14
+
+[sub_resource type="Resource" id="Resource_vuvrq"]
+resource_local_to_scene = true
+script = ExtResource("3_w1jjx")
+
+[sub_resource type="Animation" id="Animation_i2hyy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FanArt/layer1/RightArm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FanArt/layer1/LeftArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FanArt/layer1/LeftFoot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(82.8819, 165.97)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FanArt/layer1/LeftFoot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FanArt/layer1/RightFoot:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(70.979, 166.323)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("FanArt/layer1/RightFoot:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("FanArt/layer1/Head:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(71.8393, 128.359)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("FanArt/layer1/Head:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("FanArt/layer1/RightArm:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(66.7614, 143.412)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("FanArt/layer1/LeftArm:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(79.5669, 140.329)]
+}
+
+[sub_resource type="Animation" id="Animation_k4eqw"]
+resource_name = "dance"
+length = 0.4
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FanArt/layer1/RightArm:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.09829, 0.427068]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FanArt/layer1/LeftArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.295603, -1.14068]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("FanArt/layer1/LeftFoot:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(84.0486, 164.553), Vector2(80.8486, 164.853)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FanArt/layer1/LeftFoot:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.671079, -0.0436613]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FanArt/layer1/RightFoot:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(70.979, 166.323), Vector2(71.879, 164.923)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("FanArt/layer1/RightFoot:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.155044]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("FanArt/layer1/RightArm:curve:point_0/position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.8011, -2.20657), Vector2(1.93309, 4.24783)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("FanArt/layer1/Head:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(75.4643, 127.859), Vector2(74.0357, 128.288)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("FanArt/layer1/Head:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.292313, -0.121693]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w1jjx"]
+_data = {
+&"RESET": SubResource("Animation_i2hyy"),
+&"dance": SubResource("Animation_k4eqw")
+}
+
+[node name="Node2D" type="Node2D" unique_id=261752855]
+
+[node name="FanArt" type="Node2D" parent="." unique_id=587669104]
+script = ExtResource("1_3gxsp")
+metadata/svg_root = true
+
+[node name="layer1" type="Node2D" parent="FanArt" unique_id=308124798]
+position = Vector2(-52.7614, -106.079)
+metadata/svg_style = {}
+
+[node name="RightFoot" type="Node2D" parent="FanArt/layer1" unique_id=1446882532 node_paths=PackedStringArray("polygon", "line")]
+position = Vector2(70.979, 166.323)
+script = ExtResource("4_i2hyy")
+polygon = NodePath("Fill")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 3.0
+line_joint_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_vuvrq")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_dovol")
+shape_type = 1
+size = Vector2(9.95583, 4.35567)
+rx = 1.08892
+ry = 1.08892
+
+[node name="Stroke" type="Line2D" parent="FanArt/layer1/RightFoot" unique_id=308795819]
+points = PackedVector2Array(3.8889952, -2.177835, 4.0003333, -2.172213, 4.108455, -2.1557126, 4.212813, -2.1288807, 4.3128586, -2.0922644, 4.4080462, -2.0464115, 4.497828, -1.9918689, 4.5816555, -1.929184, 4.658983, -1.8589039, 4.7292643, -1.781576, 4.791949, -1.6977478, 4.8464913, -1.6079663, 4.8923445, -1.5127789, 4.9289603, -1.4127326, 4.9557924, -1.3083751, 4.9722934, -1.2002535, 4.977915, -1.088915, 4.977915, 1.0889149, 4.972293, 1.2002532, 4.9557924, 1.3083751, 4.9289603, 1.4127326, 4.892344, 1.5127788, 4.8464913, 1.6079662, 4.791949, 1.6977477, 4.729264, 1.781576, 4.6589837, 1.8589039, 4.581656, 1.9291837, 4.4978275, 1.991869, 4.4080462, 2.0464115, 4.3128586, 2.0922647, 4.2128124, 2.1288807, 4.108455, 2.1557126, 4.000334, 2.172213, 3.8889952, 2.177835, -3.8889947, 2.177835, -4.0003333, 2.172213, -4.1084547, 2.1557126, -4.2128124, 2.1288805, -4.312858, 2.0922644, -4.408046, 2.0464115, -4.4978275, 1.9918689, -4.5816555, 1.929184, -4.658983, 1.8589039, -4.729264, 1.781576, -4.7919483, 1.6977478, -4.846491, 1.6079662, -4.8923445, 1.5127788, -4.9289603, 1.4127326, -4.9557924, 1.308375, -4.9722934, 1.2002534, -4.977915, 1.0889149, -4.977915, -1.088915, -4.972293, -1.2002534, -4.9557924, -1.3083752, -4.9289603, -1.4127326, -4.892344, -1.5127789, -4.8464913, -1.6079663, -4.791949, -1.697748, -4.729264, -1.7815762, -4.6589837, -1.8589039, -4.5816555, -1.9291838, -4.4978275, -1.991869, -4.408046, -2.0464115, -4.3128586, -2.0922647, -4.2128124, -2.1288807, -4.1084547, -2.1557126, -4.0003333, -2.172213, -3.8889947, -2.177835)
+closed = true
+width = 3.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="Polygon2D" parent="FanArt/layer1/RightFoot" unique_id=1403872801]
+color = Color(0.988235, 0.603922, 0.603922, 1)
+polygon = PackedVector2Array(3.8889952, -2.177835, 4.0003333, -2.172213, 4.108455, -2.1557126, 4.212813, -2.1288807, 4.3128586, -2.0922644, 4.4080462, -2.0464115, 4.497828, -1.9918689, 4.5816555, -1.929184, 4.658983, -1.8589039, 4.7292643, -1.781576, 4.791949, -1.6977478, 4.8464913, -1.6079663, 4.8923445, -1.5127789, 4.9289603, -1.4127326, 4.9557924, -1.3083751, 4.9722934, -1.2002535, 4.977915, -1.088915, 4.977915, 1.0889149, 4.972293, 1.2002532, 4.9557924, 1.3083751, 4.9289603, 1.4127326, 4.892344, 1.5127788, 4.8464913, 1.6079662, 4.791949, 1.6977477, 4.729264, 1.781576, 4.6589837, 1.8589039, 4.581656, 1.9291837, 4.4978275, 1.991869, 4.4080462, 2.0464115, 4.3128586, 2.0922647, 4.2128124, 2.1288807, 4.108455, 2.1557126, 4.000334, 2.172213, 3.8889952, 2.177835, -3.8889947, 2.177835, -4.0003333, 2.172213, -4.1084547, 2.1557126, -4.2128124, 2.1288805, -4.312858, 2.0922644, -4.408046, 2.0464115, -4.4978275, 1.9918689, -4.5816555, 1.929184, -4.658983, 1.8589039, -4.729264, 1.781576, -4.7919483, 1.6977478, -4.846491, 1.6079662, -4.8923445, 1.5127788, -4.9289603, 1.4127326, -4.9557924, 1.308375, -4.9722934, 1.2002534, -4.977915, 1.0889149, -4.977915, -1.088915, -4.972293, -1.2002534, -4.9557924, -1.3083752, -4.9289603, -1.4127326, -4.892344, -1.5127789, -4.8464913, -1.6079663, -4.791949, -1.697748, -4.729264, -1.7815762, -4.6589837, -1.8589039, -4.5816555, -1.9291838, -4.4978275, -1.991869, -4.408046, -2.0464115, -4.3128586, -2.0922647, -4.2128124, -2.1288807, -4.1084547, -2.1557126, -4.0003333, -2.172213, -3.8889947, -2.177835)
+metadata/_edit_lock_ = true
+
+[node name="LeftFoot" type="Node2D" parent="FanArt/layer1" unique_id=185194965 node_paths=PackedStringArray("polygon", "line")]
+position = Vector2(82.8819, 165.97)
+script = ExtResource("4_i2hyy")
+polygon = NodePath("Fill")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 3.0
+line_joint_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_21j8n")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_ycpci")
+shape_type = 1
+size = Vector2(9.95583, 4.35567)
+rx = 1.08892
+ry = 1.08892
+
+[node name="Stroke" type="Line2D" parent="FanArt/layer1/LeftFoot" unique_id=1374959371]
+points = PackedVector2Array(3.8889952, -2.177835, 4.0003333, -2.172213, 4.108455, -2.1557126, 4.212813, -2.1288807, 4.3128586, -2.0922644, 4.4080462, -2.0464115, 4.497828, -1.9918689, 4.5816555, -1.929184, 4.658983, -1.8589039, 4.7292643, -1.781576, 4.791949, -1.6977478, 4.8464913, -1.6079663, 4.8923445, -1.5127789, 4.9289603, -1.4127326, 4.9557924, -1.3083751, 4.9722934, -1.2002535, 4.977915, -1.088915, 4.977915, 1.0889149, 4.972293, 1.2002532, 4.9557924, 1.3083751, 4.9289603, 1.4127326, 4.892344, 1.5127788, 4.8464913, 1.6079662, 4.791949, 1.6977477, 4.729264, 1.781576, 4.6589837, 1.8589039, 4.581656, 1.9291837, 4.4978275, 1.991869, 4.4080462, 2.0464115, 4.3128586, 2.0922647, 4.2128124, 2.1288807, 4.108455, 2.1557126, 4.000334, 2.172213, 3.8889952, 2.177835, -3.8889947, 2.177835, -4.0003333, 2.172213, -4.1084547, 2.1557126, -4.2128124, 2.1288805, -4.312858, 2.0922644, -4.408046, 2.0464115, -4.4978275, 1.9918689, -4.5816555, 1.929184, -4.658983, 1.8589039, -4.729264, 1.781576, -4.7919483, 1.6977478, -4.846491, 1.6079662, -4.8923445, 1.5127788, -4.9289603, 1.4127326, -4.9557924, 1.308375, -4.9722934, 1.2002534, -4.977915, 1.0889149, -4.977915, -1.088915, -4.972293, -1.2002534, -4.9557924, -1.3083752, -4.9289603, -1.4127326, -4.892344, -1.5127789, -4.8464913, -1.6079663, -4.791949, -1.697748, -4.729264, -1.7815762, -4.6589837, -1.8589039, -4.5816555, -1.9291838, -4.4978275, -1.991869, -4.408046, -2.0464115, -4.3128586, -2.0922647, -4.2128124, -2.1288807, -4.1084547, -2.1557126, -4.0003333, -2.172213, -3.8889947, -2.177835)
+closed = true
+width = 3.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="Polygon2D" parent="FanArt/layer1/LeftFoot" unique_id=545535763]
+color = Color(0.988235, 0.603922, 0.603922, 1)
+polygon = PackedVector2Array(3.8889952, -2.177835, 4.0003333, -2.172213, 4.108455, -2.1557126, 4.212813, -2.1288807, 4.3128586, -2.0922644, 4.4080462, -2.0464115, 4.497828, -1.9918689, 4.5816555, -1.929184, 4.658983, -1.8589039, 4.7292643, -1.781576, 4.791949, -1.6977478, 4.8464913, -1.6079663, 4.8923445, -1.5127789, 4.9289603, -1.4127326, 4.9557924, -1.3083751, 4.9722934, -1.2002535, 4.977915, -1.088915, 4.977915, 1.0889149, 4.972293, 1.2002532, 4.9557924, 1.3083751, 4.9289603, 1.4127326, 4.892344, 1.5127788, 4.8464913, 1.6079662, 4.791949, 1.6977477, 4.729264, 1.781576, 4.6589837, 1.8589039, 4.581656, 1.9291837, 4.4978275, 1.991869, 4.4080462, 2.0464115, 4.3128586, 2.0922647, 4.2128124, 2.1288807, 4.108455, 2.1557126, 4.000334, 2.172213, 3.8889952, 2.177835, -3.8889947, 2.177835, -4.0003333, 2.172213, -4.1084547, 2.1557126, -4.2128124, 2.1288805, -4.312858, 2.0922644, -4.408046, 2.0464115, -4.4978275, 1.9918689, -4.5816555, 1.929184, -4.658983, 1.8589039, -4.729264, 1.781576, -4.7919483, 1.6977478, -4.846491, 1.6079662, -4.8923445, 1.5127788, -4.9289603, 1.4127326, -4.9557924, 1.308375, -4.9722934, 1.2002534, -4.977915, 1.0889149, -4.977915, -1.088915, -4.972293, -1.2002534, -4.9557924, -1.3083752, -4.9289603, -1.4127326, -4.892344, -1.5127789, -4.8464913, -1.6079663, -4.791949, -1.697748, -4.729264, -1.7815762, -4.6589837, -1.8589039, -4.5816555, -1.9291838, -4.4978275, -1.991869, -4.408046, -2.0464115, -4.3128586, -2.0922647, -4.2128124, -2.1288807, -4.1084547, -2.1557126, -4.0003333, -2.172213, -3.8889947, -2.177835)
+metadata/_edit_lock_ = true
+
+[node name="RightHand" type="Node2D" parent="FanArt/layer1" unique_id=1456835709 node_paths=PackedStringArray("polygon", "line")]
+position = Vector2(63.7614, 155.3287)
+script = ExtResource("4_i2hyy")
+polygon = NodePath("Fill")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 3.0
+line_joint_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_h4krt")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_0ewes")
+shape_type = 1
+size = Vector2(6.61129, 4.04455)
+rx = 1.08892
+ry = 1.63338
+
+[node name="Stroke" type="Line2D" parent="FanArt/layer1/RightHand" unique_id=1875744676]
+points = PackedVector2Array(2.2167249, -2.022275, 2.272762, -2.0201497, 2.3280632, -2.0138423, 2.3825605, -2.0034554, 2.4361851, -1.9890915, 2.5405424, -1.9488435, 2.6405888, -1.8939193, 2.7357762, -1.8251399, 2.8255577, -1.743326, 2.909386, -1.6492983, 2.986714, -1.5438783, 3.0569937, -1.4278866, 3.119679, -1.3021442, 3.1742215, -1.1674719, 3.2200744, -1.0246906, 3.2835226, -0.7180851, 3.305645, -0.38889492, 3.305645, 0.38889503, 3.2835224, 0.7180852, 3.2200744, 1.0246907, 3.1742215, 1.1674719, 3.119679, 1.3021443, 3.0569937, 1.4278866, 2.986714, 1.5438784, 2.909386, 1.6492984, 2.8255577, 1.743326, 2.7357762, 1.8251399, 2.6405885, 1.8939193, 2.5405426, 1.9488436, 2.436185, 1.9890915, 2.3825605, 2.0034554, 2.3280632, 2.0138423, 2.272762, 2.0201497, 2.2167249, 2.022275, -2.2167249, 2.022275, -2.272762, 2.0201497, -2.3280632, 2.0138423, -2.3825605, 2.0034554, -2.4361851, 1.9890915, -2.5405424, 1.9488436, -2.6405888, 1.8939193, -2.7357762, 1.8251399, -2.8255577, 1.7433261, -2.909386, 1.6492984, -2.986714, 1.5438784, -3.0569937, 1.4278868, -3.119679, 1.3021442, -3.1742215, 1.167472, -3.2200744, 1.0246907, -3.2835226, 0.7180852, -3.305645, 0.38889503, -3.305645, -0.38889492, -3.2835224, -0.7180851, -3.2200744, -1.0246906, -3.1742215, -1.1674718, -3.119679, -1.302144, -3.0569937, -1.4278866, -2.986714, -1.5438783, -2.909386, -1.6492983, -2.8255577, -1.7433258, -2.7357762, -1.8251398, -2.6405885, -1.8939193, -2.5405426, -1.9488436, -2.436185, -1.9890915, -2.3825605, -2.0034554, -2.3280632, -2.0138423, -2.272762, -2.0201497, -2.2167249, -2.022275)
+closed = true
+width = 3.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="Polygon2D" parent="FanArt/layer1/RightHand" unique_id=757549068]
+color = Color(0.988235, 0.603922, 0.603922, 1)
+polygon = PackedVector2Array(2.2167249, -2.022275, 2.272762, -2.0201497, 2.3280632, -2.0138423, 2.3825605, -2.0034554, 2.4361851, -1.9890915, 2.5405424, -1.9488435, 2.6405888, -1.8939193, 2.7357762, -1.8251399, 2.8255577, -1.743326, 2.909386, -1.6492983, 2.986714, -1.5438783, 3.0569937, -1.4278866, 3.119679, -1.3021442, 3.1742215, -1.1674719, 3.2200744, -1.0246906, 3.2835226, -0.7180851, 3.305645, -0.38889492, 3.305645, 0.38889503, 3.2835224, 0.7180852, 3.2200744, 1.0246907, 3.1742215, 1.1674719, 3.119679, 1.3021443, 3.0569937, 1.4278866, 2.986714, 1.5438784, 2.909386, 1.6492984, 2.8255577, 1.743326, 2.7357762, 1.8251399, 2.6405885, 1.8939193, 2.5405426, 1.9488436, 2.436185, 1.9890915, 2.3825605, 2.0034554, 2.3280632, 2.0138423, 2.272762, 2.0201497, 2.2167249, 2.022275, -2.2167249, 2.022275, -2.272762, 2.0201497, -2.3280632, 2.0138423, -2.3825605, 2.0034554, -2.4361851, 1.9890915, -2.5405424, 1.9488436, -2.6405888, 1.8939193, -2.7357762, 1.8251399, -2.8255577, 1.7433261, -2.909386, 1.6492984, -2.986714, 1.5438784, -3.0569937, 1.4278868, -3.119679, 1.3021442, -3.1742215, 1.167472, -3.2200744, 1.0246907, -3.2835226, 0.7180852, -3.305645, 0.38889503, -3.305645, -0.38889492, -3.2835224, -0.7180851, -3.2200744, -1.0246906, -3.1742215, -1.1674718, -3.119679, -1.302144, -3.0569937, -1.4278866, -2.986714, -1.5438783, -2.909386, -1.6492983, -2.8255577, -1.7433258, -2.7357762, -1.8251398, -2.6405885, -1.8939193, -2.5405426, -1.9488436, -2.436185, -1.9890915, -2.3825605, -2.0034554, -2.3280632, -2.0138423, -2.272762, -2.0201497, -2.2167249, -2.022275)
+metadata/_edit_lock_ = true
+
+[node name="RightArm" type="Node2D" parent="FanArt/layer1" unique_id=1813783304 node_paths=PackedStringArray("polygon", "line")]
+position = Vector2(66.7614, 143.412)
+script = ExtResource("4_i2hyy")
+polygon = NodePath("Fill")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 3.0
+line_joint_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_7ab47")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_0hrpn")
+
+[node name="Stroke" type="Line2D" parent="FanArt/layer1/RightArm" unique_id=536972044]
+points = PackedVector2Array(1.8011, -2.20657, 1.2435466, 7.7134295, 1.32512, 10.2287, -1.3958263, 10.600068, -3.797804, 10.73348, -6.3566, 10.6149, -5.949982, 7.4455123, -5.254929, 4.793835, -4.3815813, 2.6366239, -3.4400816, 0.95063734, -2.540572, -0.2873685, -1.7931938, -1.1006364, -1.5109735, -1.355257, -1.3080893, -1.5124093, -1.2407006, -1.5553427, -1.2162726, -1.5680575, -1.1983088, -1.5749984, -1.1870246, -1.5762107, -1.182635, -1.5717398, -1.1853551, -1.5616311, -1.1954, -1.54593)
+width = 3.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="Polygon2D" parent="FanArt/layer1/RightArm" unique_id=1548374621]
+color = Color(0.819608, 0.219608, 0.294118, 0.981982)
+polygon = PackedVector2Array(1.8011, -2.20657, 1.2435466, 7.7134295, 1.32512, 10.2287, -1.3958263, 10.600068, -3.797804, 10.73348, -6.3566, 10.6149, -5.949982, 7.4455123, -5.254929, 4.793835, -4.3815813, 2.6366239, -3.4400816, 0.95063734, -2.540572, -0.2873685, -1.7931938, -1.1006364, -1.5109735, -1.355257, -1.3080893, -1.5124093, -1.2407006, -1.5553427, -1.2162726, -1.5680575, -1.1983088, -1.5749984, -1.1870246, -1.5762107, -1.182635, -1.5717398, -1.1853551, -1.5616311, -1.1954, -1.54593)
+metadata/_edit_lock_ = true
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="FanArt/layer1/RightArm" unique_id=544281353]
+position = Vector2(-3, 11.9167)
+remote_path = NodePath("../../RightHand")
+
+[node name="Cape" type="Node2D" parent="FanArt/layer1" unique_id=1645772949 node_paths=PackedStringArray("polygon", "line")]
+position = Vector2(77.3358, 152.561)
+script = ExtResource("4_i2hyy")
+polygon = NodePath("Fill")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 3.0
+begin_cap_mode = 2
+end_cap_mode = 2
+line_joint_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_tdxpr")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_m74ci")
+
+[node name="Stroke" type="Line2D" parent="FanArt/layer1/Cape" unique_id=1220136917]
+points = PackedVector2Array(-8.5744, -12.482, -6.324218, -12.729622, -5.453653, -12.743007, -4.7170486, -12.697237, -4.087614, -12.603157, -3.5385556, -12.471616, -1.6102446, -11.787754, -1.0611863, -11.631598, -0.43175113, -11.503059, 0.30485272, -11.412983, 1.1754179, -11.372217, 3.4256, -11.482, 4.5976143, -5.218889, 6.4256015, 0.5179986, 7.5855856, 3.1891088, 8.909563, 5.7286625, 10.397534, 8.13666, 12.0495, 10.4131, 0.940884, 11.827034, -4.9123373, 12.235085, -11.2067, 12.202, -11.471627, 11.545725, -11.6764965, 10.889453, -11.934988, 9.576916, -12.040037, 8.2643795, -12.0495, 6.95184)
+closed = true
+width = 3.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="Polygon2D" parent="FanArt/layer1/Cape" unique_id=1517559358]
+color = Color(0.819608, 0.219608, 0.294118, 0.981982)
+polygon = PackedVector2Array(-8.5744, -12.482, -6.324218, -12.729622, -5.453653, -12.743007, -4.7170486, -12.697237, -4.087614, -12.603157, -3.5385556, -12.471616, -1.6102446, -11.787754, -1.0611863, -11.631598, -0.43175113, -11.503059, 0.30485272, -11.412983, 1.1754179, -11.372217, 3.4256, -11.482, 4.5976143, -5.218889, 6.4256015, 0.5179986, 7.5855856, 3.1891088, 8.909563, 5.7286625, 10.397534, 8.13666, 12.0495, 10.4131, 0.940884, 11.827034, -4.9123373, 12.235085, -11.2067, 12.202, -11.471627, 11.545725, -11.6764965, 10.889453, -11.934988, 9.576916, -12.040037, 8.2643795, -12.0495, 6.95184)
+metadata/_edit_lock_ = true
+
+[node name="LeftHand" type="Node2D" parent="FanArt/layer1" unique_id=1279235385 node_paths=PackedStringArray("polygon", "line")]
+position = Vector2(86.3169, 152.9123)
+rotation = -0.279749
+script = ExtResource("4_i2hyy")
+polygon = NodePath("Fill")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 3.0
+line_joint_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_g3rv6")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_d0jpf")
+shape_type = 1
+size = Vector2(6.61129, 4.04455)
+rx = 1.08892
+ry = 1.63338
+
+[node name="Stroke" type="Line2D" parent="FanArt/layer1/LeftHand" unique_id=362066665]
+points = PackedVector2Array(2.2167249, -2.022275, 2.272762, -2.0201497, 2.3280632, -2.0138423, 2.3825605, -2.0034554, 2.4361851, -1.9890915, 2.5405424, -1.9488435, 2.6405888, -1.8939193, 2.7357762, -1.8251399, 2.8255577, -1.743326, 2.909386, -1.6492983, 2.986714, -1.5438783, 3.0569937, -1.4278866, 3.119679, -1.3021442, 3.1742215, -1.1674719, 3.2200744, -1.0246906, 3.2835226, -0.7180851, 3.305645, -0.38889492, 3.305645, 0.38889503, 3.2835224, 0.7180852, 3.2200744, 1.0246907, 3.1742215, 1.1674719, 3.119679, 1.3021443, 3.0569937, 1.4278866, 2.986714, 1.5438784, 2.909386, 1.6492984, 2.8255577, 1.743326, 2.7357762, 1.8251399, 2.6405885, 1.8939193, 2.5405426, 1.9488436, 2.436185, 1.9890915, 2.3825605, 2.0034554, 2.3280632, 2.0138423, 2.272762, 2.0201497, 2.2167249, 2.022275, -2.2167249, 2.022275, -2.272762, 2.0201497, -2.3280632, 2.0138423, -2.3825605, 2.0034554, -2.4361851, 1.9890915, -2.5405424, 1.9488436, -2.6405888, 1.8939193, -2.7357762, 1.8251399, -2.8255577, 1.7433261, -2.909386, 1.6492984, -2.986714, 1.5438784, -3.0569937, 1.4278868, -3.119679, 1.3021442, -3.1742215, 1.167472, -3.2200744, 1.0246907, -3.2835226, 0.7180852, -3.305645, 0.38889503, -3.305645, -0.38889492, -3.2835224, -0.7180851, -3.2200744, -1.0246906, -3.1742215, -1.1674718, -3.119679, -1.302144, -3.0569937, -1.4278866, -2.986714, -1.5438783, -2.909386, -1.6492983, -2.8255577, -1.7433258, -2.7357762, -1.8251398, -2.6405885, -1.8939193, -2.5405426, -1.9488436, -2.436185, -1.9890915, -2.3825605, -2.0034554, -2.3280632, -2.0138423, -2.272762, -2.0201497, -2.2167249, -2.022275)
+closed = true
+width = 3.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="Polygon2D" parent="FanArt/layer1/LeftHand" unique_id=1149313083]
+color = Color(0.988235, 0.603922, 0.603922, 1)
+polygon = PackedVector2Array(2.2167249, -2.022275, 2.272762, -2.0201497, 2.3280632, -2.0138423, 2.3825605, -2.0034554, 2.4361851, -1.9890915, 2.5405424, -1.9488435, 2.6405888, -1.8939193, 2.7357762, -1.8251399, 2.8255577, -1.743326, 2.909386, -1.6492983, 2.986714, -1.5438783, 3.0569937, -1.4278866, 3.119679, -1.3021442, 3.1742215, -1.1674719, 3.2200744, -1.0246906, 3.2835226, -0.7180851, 3.305645, -0.38889492, 3.305645, 0.38889503, 3.2835224, 0.7180852, 3.2200744, 1.0246907, 3.1742215, 1.1674719, 3.119679, 1.3021443, 3.0569937, 1.4278866, 2.986714, 1.5438784, 2.909386, 1.6492984, 2.8255577, 1.743326, 2.7357762, 1.8251399, 2.6405885, 1.8939193, 2.5405426, 1.9488436, 2.436185, 1.9890915, 2.3825605, 2.0034554, 2.3280632, 2.0138423, 2.272762, 2.0201497, 2.2167249, 2.022275, -2.2167249, 2.022275, -2.272762, 2.0201497, -2.3280632, 2.0138423, -2.3825605, 2.0034554, -2.4361851, 1.9890915, -2.5405424, 1.9488436, -2.6405888, 1.8939193, -2.7357762, 1.8251399, -2.8255577, 1.7433261, -2.909386, 1.6492984, -2.986714, 1.5438784, -3.0569937, 1.4278868, -3.119679, 1.3021442, -3.1742215, 1.167472, -3.2200744, 1.0246907, -3.2835226, 0.7180852, -3.305645, 0.38889503, -3.305645, -0.38889492, -3.2835224, -0.7180851, -3.2200744, -1.0246906, -3.1742215, -1.1674718, -3.119679, -1.302144, -3.0569937, -1.4278866, -2.986714, -1.5438783, -2.909386, -1.6492983, -2.8255577, -1.7433258, -2.7357762, -1.8251398, -2.6405885, -1.8939193, -2.5405426, -1.9488436, -2.436185, -1.9890915, -2.3825605, -2.0034554, -2.3280632, -2.0138423, -2.272762, -2.0201497, -2.2167249, -2.022275)
+metadata/_edit_lock_ = true
+
+[node name="LeftArm" type="Node2D" parent="FanArt/layer1" unique_id=1759059984 node_paths=PackedStringArray("polygon", "line")]
+position = Vector2(79.5669, 140.329)
+script = ExtResource("4_i2hyy")
+polygon = NodePath("Fill")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 3.0
+line_joint_mode = 2
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_51t4y")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_li8ts")
+
+[node name="Stroke" type="Line2D" parent="FanArt/layer1/LeftArm" unique_id=878995238]
+points = PackedVector2Array(-0.0833435, -2.16666, 1.4085542, -0.8337201, 2.8788521, 0.7214187, 5.6478033, 4.1948047, 9.75121, 10.4696, 2.95197, 12.3641, 2.2246993, 10.1895485, 1.4724839, 8.455009, 0.7329011, 7.1142235, 0.043526366, 6.12094, -0.5580642, 5.428904, -1.0342945, 4.99186, -1.3475884, 4.7635536, -1.46037, 4.69773)
+width = 3.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="Polygon2D" parent="FanArt/layer1/LeftArm" unique_id=980478356]
+color = Color(0.819608, 0.219608, 0.294118, 0.981982)
+polygon = PackedVector2Array(-0.0833435, -2.16666, 1.4085542, -0.8337201, 2.8788521, 0.7214187, 5.6478033, 4.1948047, 9.75121, 10.4696, 2.95197, 12.3641, 2.2246993, 10.1895485, 1.4724839, 8.455009, 0.7329011, 7.1142235, 0.043526366, 6.12094, -0.5580642, 5.428904, -1.0342945, 4.99186, -1.3475884, 4.7635536, -1.46037, 4.69773)
+metadata/_edit_lock_ = true
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="FanArt/layer1/LeftArm" unique_id=95516115]
+position = Vector2(6.75, 12.5833)
+rotation = -0.279749
+remote_path = NodePath("../../LeftHand")
+
+[node name="Head" type="Node2D" parent="FanArt/layer1" unique_id=1385265559 node_paths=PackedStringArray("polygon", "line")]
+position = Vector2(71.8393, 128.359)
+script = ExtResource("4_i2hyy")
+polygon = NodePath("Fill")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 3.1
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_row8l")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_gw0fs")
+
+[node name="Stroke" type="Line2D" parent="FanArt/layer1/Head" unique_id=384629975]
+points = PackedVector2Array(-9.78708, -8.52243, 12.2153, -8.52243, 12.244084, -8.632164, 12.283591, -8.745114, 12.393381, -8.979661, 12.541876, -9.224057, 12.726289, -9.476293, 13.191704, -9.996232, 13.767299, -10.523388, 15.15974, -11.534969, 16.725023, -12.382288, 17.516672, -12.704117, 18.28456, -12.936598, 19.006363, -13.063642, 19.343008, -13.082594, 19.65976, -13.069151, 19.95383, -13.021303, 20.091486, -12.983847, 20.222427, -12.9370365, 20.346298, -12.880617, 20.462759, -12.814339, 20.571453, -12.737951, 20.672035, -12.651201, 20.764158, -12.553839, 20.84747, -12.44561, 20.921623, -12.326265, 20.986269, -12.195554, 21.041058, -12.053223, 21.085642, -11.899021, 21.119673, -11.7326975, 21.1428, -11.554, 21.149508, -11.432955, 21.1468, -11.312489, 21.134972, -11.19266, 21.114325, -11.073531, 21.04776, -10.837606, 20.949484, -10.605192, 20.821892, -10.376767, 20.667353, -10.152811, 20.48826, -9.933798, 20.286993, -9.720209, 19.827477, -9.311212, 19.307873, -8.929644, 18.16468, -8.2641, 17.009972, -7.7541733, 15.996302, -7.430464, 15.590031, -7.3480024, 15.420379, -7.328294, 15.276226, -7.3235703, 15.214458, -7.3269773, 15.15996, -7.3343096, 15.113028, -7.345628, 15.073959, -7.3609905, 15.043056, -7.380459, 15.020613, -7.4040914, 15.006928, -7.4319487, 15.0023, -7.46409, 15.2492, 8.63489, 15.248104, 8.657385, 15.244165, 8.680906, 15.237415, 8.705422, 15.227885, 8.730901, 15.2006235, 8.784626, 15.162643, 8.841828, 15.114208, 8.902263, 15.05558, 8.965678, 14.9088, 9.100462, 14.504514, 9.394858, 13.966627, 9.709087, 12.557414, 10.333317, 10.8159, 10.8457, -0.8902489, 12.785917, -11.5157, 13.3975, -16.047533, 13.439706, -17.65963, 13.373534, -18.90095, 13.232868, -19.39783, 13.130775, -19.820322, 13.005474, -20.174536, 12.855432, -20.327944, 12.770657, -20.46657, 12.679121, -20.591179, 12.580635, -20.70253, 12.475011, -20.801392, 12.362054, -20.888521, 12.241573, -20.964684, 12.1133795, -21.030642, 11.97728, -21.135, 11.6806, -21.149467, 11.601248, -21.14942, 11.519947, -21.135311, 11.436802, -21.107603, 11.3519125, -21.06675, 11.265382, -21.01321, 11.177313, -20.947441, 11.087807, -20.869898, 10.996966, -20.681324, 10.811693, -20.451149, 10.622313, -19.880617, 10.234499, -18.401258, 9.44559, -16.66592, 8.682632, -11.8468, 6.93817, -12.5741, -6.96933, -12.901248, -6.991395, -13.336156, -7.057178, -14.450535, -7.3190336, -15.759787, -7.753178, -17.106466, -8.357888, -17.744637, -8.723669, -18.333122, -9.131447, -18.852242, -9.581007, -19.079638, -9.821386, -19.282312, -10.072132, -19.457804, -10.333215, -19.603653, -10.6046095, -19.717403, -10.886288, -19.796587, -11.178223, -19.838749, -11.480389, -19.841429, -11.792758, -19.802166, -12.115305, -19.7185, -12.448, -19.66829, -12.584268, -19.607489, -12.70956, -19.53645, -12.824102, -19.455523, -12.928123, -19.36506, -13.02185, -19.265413, -13.105512, -19.156935, -13.179333, -19.039972, -13.243544, -18.914879, -13.298369, -18.782005, -13.344043, -18.49432, -13.408826, -18.17973, -13.439718, -17.841043, -13.438538, -17.102612, -13.347244, -16.3015, -13.149508, -15.460182, -12.8599, -14.60113, -12.492984, -12.919716, -11.585487, -11.437048, -10.543545, -10.826424, -10.008572, -10.332906, -9.483685, -10.137085, -9.229575, -9.978967, -8.983449, -9.861362, -8.747127, -9.81863, -8.633212)
+closed = true
+width = 3.1
+default_color = Color(0, 0, 0, 1)
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="Polygon2D" parent="FanArt/layer1/Head" unique_id=781150003]
+color = Color(0.988235, 0.603922, 0.603922, 1)
+polygon = PackedVector2Array(-9.78708, -8.52243, 12.2153, -8.52243, 12.244084, -8.632164, 12.283591, -8.745114, 12.393381, -8.979661, 12.541876, -9.224057, 12.726289, -9.476293, 13.191704, -9.996232, 13.767299, -10.523388, 15.15974, -11.534969, 16.725023, -12.382288, 17.516672, -12.704117, 18.28456, -12.936598, 19.006363, -13.063642, 19.343008, -13.082594, 19.65976, -13.069151, 19.95383, -13.021303, 20.091486, -12.983847, 20.222427, -12.9370365, 20.346298, -12.880617, 20.462759, -12.814339, 20.571453, -12.737951, 20.672035, -12.651201, 20.764158, -12.553839, 20.84747, -12.44561, 20.921623, -12.326265, 20.986269, -12.195554, 21.041058, -12.053223, 21.085642, -11.899021, 21.119673, -11.7326975, 21.1428, -11.554, 21.149508, -11.432955, 21.1468, -11.312489, 21.134972, -11.19266, 21.114325, -11.073531, 21.04776, -10.837606, 20.949484, -10.605192, 20.821892, -10.376767, 20.667353, -10.152811, 20.48826, -9.933798, 20.286993, -9.720209, 19.827477, -9.311212, 19.307873, -8.929644, 18.16468, -8.2641, 17.009972, -7.7541733, 15.996302, -7.430464, 15.590031, -7.3480024, 15.420379, -7.328294, 15.276226, -7.3235703, 15.214458, -7.3269773, 15.15996, -7.3343096, 15.113028, -7.345628, 15.073959, -7.3609905, 15.043056, -7.380459, 15.020613, -7.4040914, 15.006928, -7.4319487, 15.0023, -7.46409, 15.2492, 8.63489, 15.248104, 8.657385, 15.244165, 8.680906, 15.237415, 8.705422, 15.227885, 8.730901, 15.2006235, 8.784626, 15.162643, 8.841828, 15.114208, 8.902263, 15.05558, 8.965678, 14.9088, 9.100462, 14.504514, 9.394858, 13.966627, 9.709087, 12.557414, 10.333317, 10.8159, 10.8457, -0.8902489, 12.785917, -11.5157, 13.3975, -16.047533, 13.439706, -17.65963, 13.373534, -18.90095, 13.232868, -19.39783, 13.130775, -19.820322, 13.005474, -20.174536, 12.855432, -20.327944, 12.770657, -20.46657, 12.679121, -20.591179, 12.580635, -20.70253, 12.475011, -20.801392, 12.362054, -20.888521, 12.241573, -20.964684, 12.1133795, -21.030642, 11.97728, -21.135, 11.6806, -21.149467, 11.601248, -21.14942, 11.519947, -21.135311, 11.436802, -21.107603, 11.3519125, -21.06675, 11.265382, -21.01321, 11.177313, -20.947441, 11.087807, -20.869898, 10.996966, -20.681324, 10.811693, -20.451149, 10.622313, -19.880617, 10.234499, -18.401258, 9.44559, -16.66592, 8.682632, -11.8468, 6.93817, -12.5741, -6.96933, -12.901248, -6.991395, -13.336156, -7.057178, -14.450535, -7.3190336, -15.759787, -7.753178, -17.106466, -8.357888, -17.744637, -8.723669, -18.333122, -9.131447, -18.852242, -9.581007, -19.079638, -9.821386, -19.282312, -10.072132, -19.457804, -10.333215, -19.603653, -10.6046095, -19.717403, -10.886288, -19.796587, -11.178223, -19.838749, -11.480389, -19.841429, -11.792758, -19.802166, -12.115305, -19.7185, -12.448, -19.66829, -12.584268, -19.607489, -12.70956, -19.53645, -12.824102, -19.455523, -12.928123, -19.36506, -13.02185, -19.265413, -13.105512, -19.156935, -13.179333, -19.039972, -13.243544, -18.914879, -13.298369, -18.782005, -13.344043, -18.49432, -13.408826, -18.17973, -13.439718, -17.841043, -13.438538, -17.102612, -13.347244, -16.3015, -13.149508, -15.460182, -12.8599, -14.60113, -12.492984, -12.919716, -11.585487, -11.437048, -10.543545, -10.826424, -10.008572, -10.332906, -9.483685, -10.137085, -9.229575, -9.978967, -8.983449, -9.861362, -8.747127, -9.81863, -8.633212)
+metadata/_edit_lock_ = true
+
+[node name="Nose" type="Node2D" parent="FanArt/layer1/Head" unique_id=1197785801 node_paths=PackedStringArray("polygon")]
+position = Vector2(-16.8134, 11.133)
+script = ExtResource("4_i2hyy")
+polygon = NodePath("Fill")
+curve = SubResource("Curve2D_loqdy")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_vpx2b")
+shape_type = 2
+size = Vector2(6.35, 2.64583)
+rx = 3.175
+ry = 1.32292
+
+[node name="Fill" type="Polygon2D" parent="FanArt/layer1/Head/Nose" unique_id=852864156]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(3.175, 0, 3.1708686, 0.0680788, 3.1586084, 0.13526371, 3.138418, 0.20147157, 3.1104972, 0.26661932, 3.0750456, 0.3306238, 3.0322626, 0.39340195, 2.9823472, 0.45487058, 2.9254994, 0.51494676, 2.7918043, 0.63058877, 2.6327727, 0.73966324, 2.45, 0.84150517, 2.2450821, 0.9354497, 1.7751939, 1.0969871, 1.2358737, 1.2189566, 0.63988715, 1.2960389, 0, 1.322915, -0.6398871, 1.2960389, -1.2358737, 1.2189566, -1.7751939, 1.0969871, -2.2450821, 0.9354497, -2.45, 0.84150505, -2.6327724, 0.73966324, -2.7918043, 0.63058877, -2.9254994, 0.51494676, -2.9823472, 0.45487058, -3.0322623, 0.39340192, -3.0750456, 0.33062378, -3.1104972, 0.2666193, -3.1384177, 0.20147157, -3.1586084, 0.1352637, -3.1708689, 0.0680788, -3.175, 0, -3.1708686, -0.0680788, -3.1586084, -0.13526371, -3.138418, -0.20147157, -3.1104972, -0.26661932, -3.0750456, -0.3306238, -3.0322626, -0.39340195, -2.9823472, -0.45487058, -2.9254994, -0.51494676, -2.7918043, -0.63058877, -2.6327727, -0.73966324, -2.45, -0.84150517, -2.2450821, -0.9354497, -1.7751939, -1.0969871, -1.2358737, -1.2189566, -0.63988715, -1.2960389, 0, -1.322915, 0.6398871, -1.2960389, 1.2358737, -1.2189566, 1.7751939, -1.0969871, 2.2450821, -0.9354497, 2.45, -0.84150505, 2.6327724, -0.73966324, 2.7918043, -0.63058877, 2.9254994, -0.51494676, 2.9823472, -0.45487058, 3.0322623, -0.39340192, 3.0750456, -0.33062378, 3.1104972, -0.2666193, 3.1384177, -0.20147157, 3.1586084, -0.1352637, 3.1708689, -0.0680788)
+metadata/_edit_lock_ = true
+
+[node name="Mouth" type="Node2D" parent="FanArt/layer1/Head" unique_id=453432446 node_paths=PackedStringArray("line")]
+position = Vector2(-1.8317, 9.702)
+script = ExtResource("4_i2hyy")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 1.5875
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_ojj3e")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_mg08f")
+
+[node name="Stroke" type="Line2D" parent="FanArt/layer1/Head/Mouth" unique_id=234319722]
+points = PackedVector2Array(2.91041, -1.4492999, 2.9029586, -1.2462931, 2.8813643, -1.0443004, 2.8457325, -0.8443061, 2.7962365, -0.64728457, 2.7331176, -0.45419562, 2.6566832, -0.26597998, 2.5673058, -0.083554596, 2.4654207, 0.09219173, 2.3515244, 0.2604028, 2.2261717, 0.42025912, 2.0899732, 0.57098186, 1.9435928, 0.71183676, 1.7877433, 0.8421375, 1.6231842, 0.9612494, 1.4507171, 1.0685921, 1.2711823, 1.1636425, 1.0854545, 1.2459377, 0.8944384, 1.3150768, 0.69906473, 1.3707228, 0.5002853, 1.4126047, 0.2990686, 1.4405184, 0.09639488, 1.454328, -0.10674845, 1.453966, -0.30937168, 1.4394344, -0.5104877, 1.4108039, -0.7091166, 1.3682141, -0.90429074, 1.3118724, -1.0950593, 1.2420532, -1.2804927, 1.1590967, -1.4596877, 1.0634071, -1.6317712, 0.95545065, -1.7959049, 0.8357532, -1.951289, 0.70489794, -2.0971668, 0.5635224, -2.2328272, 0.41231534, -2.3576095, 0.2520134, -2.4709058, 0.08339756, -2.572164, -0.092710674, -2.660891, -0.27545333, -2.7366543, -0.4639401, -2.799085, -0.6572527, -2.8478785, -0.8544494, -2.8827975, -1.0545694, -2.903672, -1.2566377, -2.9104, -1.45967)
+width = 1.5875
+default_color = Color(0, 0, 0, 1)
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="RightEye" parent="FanArt/layer1/Head" unique_id=912968531 instance=ExtResource("5_3gxsp")]
+unique_name_in_owner = true
+position = Vector2(-7.39712, -0.674786)
+
+[node name="LeftEye" parent="FanArt/layer1/Head" unique_id=1612186412 instance=ExtResource("5_3gxsp")]
+unique_name_in_owner = true
+position = Vector2(9.25859, -0.465553)
+
+[node name="Hair2" type="Node2D" parent="FanArt/layer1/Head" unique_id=1434584763 node_paths=PackedStringArray("polygon", "line")]
+position = Vector2(1.19137, -13.1397)
+rotation = -3.02566
+script = ExtResource("4_i2hyy")
+polygon = NodePath("Fill")
+stroke_color = Color(0, 0, 0, 1)
+stroke_width = 3.1
+line = NodePath("Stroke")
+curve = SubResource("Curve2D_3gxsp")
+update_curve_at_runtime = true
+arc_list = SubResource("Resource_vuvrq")
+
+[node name="Stroke" type="Line2D" parent="FanArt/layer1/Head/Hair2" unique_id=1335304370]
+points = PackedVector2Array(7.96465, 7.6074, 8.328797, 7.6323204, 8.69808, 7.629538, 9.070483, 7.599437, 9.443994, 7.542395, 10.186273, 7.349022, 10.9088, 7.05247, 11.544858, 6.689115, 12.072004, 6.287918, 12.297555, 6.0756483, 12.499265, 5.8569407, 12.678259, 5.6328006, 12.8356695, 5.4042387, 13.090246, 4.9378734, 13.272024, 4.4659014, 13.390034, 3.9963822, 13.4533, 3.5373757, 13.470856, 3.0969393, 13.451727, 2.6831326, 13.339532, 1.9676423, 13.188947, 1.4553746, 13.12183, 1.2955964, 13.094264, 1.2433218, 13.082474, 1.2245288, 13.0722, 1.2108, 13.249881, 0.63654965, 13.369749, 0.058559578, 13.431961, -0.5194705, 13.436671, -1.0938412, 13.384036, -1.6608529, 13.274208, -2.2168064, 13.107344, -2.7580018, 12.8836, -3.28074, 12.595872, -3.7899642, 12.259978, -4.2587667, 11.879587, -4.6859827, 11.458372, -5.0704474, 11, -5.410995, 10.508138, -5.7064614, 9.986459, -5.95568, 9.438633, -6.1574864, 8.868326, -6.310715, 8.279211, -6.4142017, 7.6749544, -6.4667807, 7.059227, -6.467287, 6.4356995, -6.4145555, 5.8080387, -6.3074203, 5.1799154, -6.1447167, 4.555, -5.92528, 4.3527865, -6.2359686, 4.1136417, -6.521664, 3.8409383, -6.780094, 3.5380487, -7.008989, 3.208346, -7.2060766, 2.8552015, -7.3690867, 2.481989, -7.495748, 2.09208, -7.58379, 1.5936865, -7.6323223, 1.1040766, -7.615375, 0.6304859, -7.5357437, 0.18014984, -7.3962226, -0.034036696, -7.3048763, -0.23969622, -7.199606, -0.4359244, -7.080762, -0.6218168, -6.948691, -0.79646903, -6.803744, -0.9589765, -6.64627, -1.108435, -6.4766192, -1.24394, -6.29514, -1.4117013, -6.5324235, -1.5975933, -6.7475395, -1.8001091, -6.9394464, -2.0177422, -7.1071024, -2.2489858, -7.249468, -2.4923325, -7.365502, -2.7462764, -7.4541626, -3.00931, -7.51441, -3.2680132, -7.5432158, -3.5251837, -7.5444465, -3.7795258, -7.5190344, -4.029746, -7.4679127, -4.2745495, -7.3920107, -4.5126424, -7.292263, -4.7427306, -7.1696005, -4.9635186, -7.0249553, -5.1737127, -6.8592596, -5.372019, -6.6734447, -5.5571423, -6.468444, -5.727789, -6.2451878, -5.8826647, -6.00461, -6.0204744, -5.747641, -6.139924, -5.4752135, -6.23972, -5.18826, -7.3945994, -5.0756335, -8.576119, -4.838671, -9.734474, -4.485207, -10.819864, -4.0230803, -11.319633, -3.753716, -11.782484, -3.4601245, -12.202193, -3.1432848, -12.572533, -2.8041768, -12.887279, -2.44378, -13.021859, -2.255904, -13.140205, -2.0630734, -13.241542, -1.8654102, -13.325088, -1.663037, -13.390066, -1.456076, -13.4357, -1.24465, -13.46619, -0.98166335, -13.470848, -0.7185526, -13.450582, -0.45575303, -13.406297, -0.19370043, -13.338904, 0.06716963, -13.249312, 0.3264216, -13.007165, 0.8383292, -12.687123, 1.3385378, -12.296454, 1.8235629, -11.842426, 2.2899199, -11.332307, 2.7341247, -10.17287, 3.5421386, -8.876288, 4.2197275, -7.500706, 4.739017, -6.10427, 5.07213, -5.100171, 5.178976, -4.1162314, 5.1718297, -3.166645, 5.055134, -2.2656057, 4.8333287, -1.4273072, 4.510856, -1.0361212, 4.313257, -0.66594326, 4.092158, -0.31854722, 3.848112, 0.0042924583, 3.5816755, 0.30080158, 3.2934031, 0.569206, 2.98385, 0.94390965, 3.5835557, 1.3909914, 4.126666, 1.9044585, 4.6093483, 2.4783177, 5.027769, 3.1065764, 5.3780975, 3.7832417, 5.6565, 4.5023203, 5.859145, 5.25782, 5.9822, 5.471441, 6.3059773, 5.726554, 6.5988054, 6.020232, 6.858926, 6.349548, 7.084582, 6.7115736, 7.2740164, 7.103383, 7.4254704, 7.522047, 7.5371876)
+closed = true
+width = 3.1
+default_color = Color(0, 0, 0, 1)
+sharp_limit = 80.0
+metadata/_edit_lock_ = true
+
+[node name="Fill" type="Polygon2D" parent="FanArt/layer1/Head/Hair2" unique_id=1653639238]
+color = Color(0.976471, 0.976471, 0.976471, 1)
+polygon = PackedVector2Array(7.96465, 7.6074, 8.328797, 7.6323204, 8.69808, 7.629538, 9.070483, 7.599437, 9.443994, 7.542395, 10.186273, 7.349022, 10.9088, 7.05247, 11.544858, 6.689115, 12.072004, 6.287918, 12.297555, 6.0756483, 12.499265, 5.8569407, 12.678259, 5.6328006, 12.8356695, 5.4042387, 13.090246, 4.9378734, 13.272024, 4.4659014, 13.390034, 3.9963822, 13.4533, 3.5373757, 13.470856, 3.0969393, 13.451727, 2.6831326, 13.339532, 1.9676423, 13.188947, 1.4553746, 13.12183, 1.2955964, 13.094264, 1.2433218, 13.082474, 1.2245288, 13.0722, 1.2108, 13.249881, 0.63654965, 13.369749, 0.058559578, 13.431961, -0.5194705, 13.436671, -1.0938412, 13.384036, -1.6608529, 13.274208, -2.2168064, 13.107344, -2.7580018, 12.8836, -3.28074, 12.595872, -3.7899642, 12.259978, -4.2587667, 11.879587, -4.6859827, 11.458372, -5.0704474, 11, -5.410995, 10.508138, -5.7064614, 9.986459, -5.95568, 9.438633, -6.1574864, 8.868326, -6.310715, 8.279211, -6.4142017, 7.6749544, -6.4667807, 7.059227, -6.467287, 6.4356995, -6.4145555, 5.8080387, -6.3074203, 5.1799154, -6.1447167, 4.555, -5.92528, 4.3527865, -6.2359686, 4.1136417, -6.521664, 3.8409383, -6.780094, 3.5380487, -7.008989, 3.208346, -7.2060766, 2.8552015, -7.3690867, 2.481989, -7.495748, 2.09208, -7.58379, 1.5936865, -7.6323223, 1.1040766, -7.615375, 0.6304859, -7.5357437, 0.18014984, -7.3962226, -0.034036696, -7.3048763, -0.23969622, -7.199606, -0.4359244, -7.080762, -0.6218168, -6.948691, -0.79646903, -6.803744, -0.9589765, -6.64627, -1.108435, -6.4766192, -1.24394, -6.29514, -1.4117013, -6.5324235, -1.5975933, -6.7475395, -1.8001091, -6.9394464, -2.0177422, -7.1071024, -2.2489858, -7.249468, -2.4923325, -7.365502, -2.7462764, -7.4541626, -3.00931, -7.51441, -3.2680132, -7.5432158, -3.5251837, -7.5444465, -3.7795258, -7.5190344, -4.029746, -7.4679127, -4.2745495, -7.3920107, -4.5126424, -7.292263, -4.7427306, -7.1696005, -4.9635186, -7.0249553, -5.1737127, -6.8592596, -5.372019, -6.6734447, -5.5571423, -6.468444, -5.727789, -6.2451878, -5.8826647, -6.00461, -6.0204744, -5.747641, -6.139924, -5.4752135, -6.23972, -5.18826, -7.3945994, -5.0756335, -8.576119, -4.838671, -9.734474, -4.485207, -10.819864, -4.0230803, -11.319633, -3.753716, -11.782484, -3.4601245, -12.202193, -3.1432848, -12.572533, -2.8041768, -12.887279, -2.44378, -13.021859, -2.255904, -13.140205, -2.0630734, -13.241542, -1.8654102, -13.325088, -1.663037, -13.390066, -1.456076, -13.4357, -1.24465, -13.46619, -0.98166335, -13.470848, -0.7185526, -13.450582, -0.45575303, -13.406297, -0.19370043, -13.338904, 0.06716963, -13.249312, 0.3264216, -13.007165, 0.8383292, -12.687123, 1.3385378, -12.296454, 1.8235629, -11.842426, 2.2899199, -11.332307, 2.7341247, -10.17287, 3.5421386, -8.876288, 4.2197275, -7.500706, 4.739017, -6.10427, 5.07213, -5.100171, 5.178976, -4.1162314, 5.1718297, -3.166645, 5.055134, -2.2656057, 4.8333287, -1.4273072, 4.510856, -1.0361212, 4.313257, -0.66594326, 4.092158, -0.31854722, 3.848112, 0.0042924583, 3.5816755, 0.30080158, 3.2934031, 0.569206, 2.98385, 0.94390965, 3.5835557, 1.3909914, 4.126666, 1.9044585, 4.6093483, 2.4783177, 5.027769, 3.1065764, 5.3780975, 3.7832417, 5.6565, 4.5023203, 5.859145, 5.25782, 5.9822, 5.471441, 6.3059773, 5.726554, 6.5988054, 6.020232, 6.858926, 6.349548, 7.084582, 6.7115736, 7.2740164, 7.103383, 7.4254704, 7.522047, 7.5371876)
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FanArt" unique_id=415506464]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_w1jjx")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1098816672]
+position = Vector2(23, 31.6667)
+zoom = Vector2(7, 7)

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://oenlapb5cnp0"]
+
+[ext_resource type="Script" uid="uid://cv57xk5looia1" path="res://Scripts/Story/word_glitch.gd" id="1_jejht"]
+[ext_resource type="FontFile" uid="uid://uu50f1swggxa" path="res://Assets/Fonts/La Belle Aurore Regular.ttf" id="1_whrkg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fq6e1"]
+font = ExtResource("1_whrkg")
+font_size = 64
+
+[node name="Label" type="Label" unique_id=1315493061]
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_fq6e1")
+script = ExtResource("1_jejht")
+jump_interval_min = 0.05
+jump_interval_max = 0.3
+jump_strength = 1.0
+scale_max = 3.0
+pulse_duration = 0.04
+red_flash_chance = 1.0

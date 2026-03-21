@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://bivakanld4sxt"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_c4f78"]
+
+[resource]
+script = ExtResource("1_c4f78")
+name = "drink-absenta"
+display_name = "Absenta"
+cost = 94.0
+effects = {
+"alcohol": 100.0,
+"estres": -65.0,
+"felicidad": 50.0,
+"miedo": -85.0,
+"nervios": -75.0
+}

@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://w2kyt85wdinj"]
+
+[ext_resource type="Script" uid="uid://dccveow1oythr" path="res://Scripts/Story/dream_surfer.gd" id="1_naj63"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_givb2"]
+
+[sub_resource type="Gradient" id="Gradient_givb2"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.80550456)
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_naj63"]
+gradient = SubResource("Gradient_givb2")
+width = 1280
+height = 720
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_naj63"]
+blend_mode = 2
+
+[sub_resource type="Gradient" id="Gradient_yr0w7"]
+offsets = PackedFloat32Array(0, 0.5119266)
+colors = PackedColorArray(0, 0, 0, 0.6313726, 1, 1, 1, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_glnc1"]
+noise_type = 2
+frequency = 0.0015
+fractal_octaves = 2
+fractal_gain = 0.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kjyid"]
+width = 1280
+height = 720
+noise = SubResource("FastNoiseLite_glnc1")
+color_ramp = SubResource("Gradient_yr0w7")
+
+[sub_resource type="Animation" id="Animation_kjyid"]
+resource_name = "Dream_Lights"
+length = 10.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture:fill_to")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19999999, 0.33113658, 0.5897235, 0.75733036, 0.8556829, 1.1316316, 1.2454064, 1.2490926, 1.2818766, 1.5441499, 1.6716001, 1.7736387, 1.7873144, 2.068696, 2.1633623, 2.2135081, 2.4584196, 2.49489, 2.7052703, 2.983357, 3.0003276, 3.3152025, 3.475119, 3.6390398, 3.9013128, 3.9708853, 4.0652337, 4.393075, 4.397079, 4.556996, 4.606219, 4.6881323, 4.852053, 4.888841, 5.0159736, 5.1838984, 5.261902, 5.278247, 5.6716566, 5.6880956, 5.93393, 6.0978503, 6.1798577, 6.3601236, 6.474915, 6.5896125, 6.757913, 6.851886, 6.88467, 7.146943, 7.2452955, 7.413596, 7.573137, 7.83979, 7.9009786, 8.196035, 8.22882, 8.327172, 8.331552, 8.626609, 8.655013, 8.818934, 8.851718, 9.113992, 9.146775, 9.277912, 9.441833, 9.769674, 10.064732),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1.1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0), Vector2(1, 0), Vector2(1.2, 0), Vector2(1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2:texture:noise:fractal_gain")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.35064644, 0.5259696, 2.4385865, 2.7414174, 4.893111, 5.211881, 7.7460985, 8.633334, 9.132746),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.09, 0.442, 1.09, 0.442, -0.529, 1.09, 0.442, 1.09, 1.09]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.15, 2.36, 3.1, 3.32, 5.23),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0.09685862), Color(1, 1, 1, 1), Color(1, 1, 1, 0.31764707)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureRect2:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2.15, 2.36, 3.1, 3.32, 5.23),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0.09685862), Color(1, 1, 1, 1), Color(1, 1, 1, 0.31764707)]
+}
+
+[sub_resource type="Animation" id="Animation_vth5w"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture:fill_to")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect2:texture:noise:fractal_gain")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TextureRect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TextureRect2:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yj62s"]
+_data = {
+&"Dream_Lights": SubResource("Animation_kjyid"),
+&"RESET": SubResource("Animation_vth5w")
+}
+
+[node name="Dream_Surfer" type="CanvasLayer" unique_id=1309349624]
+layer = 5
+script = ExtResource("1_naj63")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=604569606]
+material = SubResource("CanvasItemMaterial_givb2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_naj63")
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=1544825252]
+material = SubResource("CanvasItemMaterial_naj63")
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("NoiseTexture2D_kjyid")
+stretch_mode = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=968054292]
+libraries/ = SubResource("AnimationLibrary_yj62s")
+autoplay = &"Dream_Lights"

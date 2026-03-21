@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://b5tefg3exuhda"]
+
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_ctxsc"]
+
+[resource]
+script = ExtResource("1_ctxsc")
+name = "drug-laudano"
+display_name = "Laudano"
+cost = 5.0
+effects = {
+"estres": -25.0,
+"felicidad": 20.0,
+"hambre": -15.0,
+"higiene": -15.0,
+"laudano": 30.0,
+"miedo": -20.0,
+"nervios": -15.0,
+"sueno": 10.0
+}

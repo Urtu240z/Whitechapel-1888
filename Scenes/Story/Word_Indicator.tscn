@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c2dv40xtbr6ct"]
+
+[ext_resource type="Script" uid="uid://duyanmv7i664o" path="res://Scripts/Story/word_indicator.gd" id="1_uf5um"]
+[ext_resource type="Shader" uid="uid://32aoc1nvtfkj" path="res://Assets/Shaders/Glow.gdshader" id="2_q8e7k"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4l436"]
+shader = ExtResource("2_q8e7k")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/radius = 0.45
+shader_parameter/edge_softness = 0.35
+shader_parameter/pulse_speed = 2.0
+shader_parameter/pulse_strength = 0.15
+
+[node name="WordIndicator" type="Node2D" unique_id=401939421]
+script = ExtResource("1_uf5um")
+
+[node name="Glow" type="ColorRect" parent="." unique_id=1804527600]
+material = SubResource("ShaderMaterial_4l436")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
