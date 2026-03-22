@@ -46,10 +46,12 @@ directories/dch_directory={}
 directories/dtl_directory={
 "npc_1": "res://Dialogues/npc_1.dtl"
 }
-layout/style_directory={}
+layout/style_directory={
+"": "res://Data/Dialogic/Whitechapel_Layout.tres"
+}
 glossary/default_case_sensitive=true
 layout/style_list=[]
-layout/default_style="res://Dialogues/Whitechapel_Layout.tres"
+layout/default_style="res://Data/Dialogic/Whitechapel_Layout.tres"
 variables={
 "dinero": 5.0,
 "enfermedad": 0.0,

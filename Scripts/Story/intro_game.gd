@@ -39,12 +39,12 @@ func cambiar_zona_audio(zona_destino: String, duracion: float = 2.0):
 
 # Detecta cuando entras en la zona forest
 func _on_zona_forest_body_entered(body):
-	if body.is_in_group("Player"):
+	if body.is_in_group("player"):
 		cambiar_zona_audio("forest", 2.0)
 
 # Detecta cuando entras en la zona london
 func _on_zona_london_body_entered(body):
-	if body.is_in_group("Player"):
+	if body.is_in_group("player"):
 		cambiar_zona_audio("london", 2.0)
 
 

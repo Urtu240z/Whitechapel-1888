@@ -98,7 +98,7 @@ func _update_surface() -> void:
 
 	var detected := SURFACE_DEFAULT
 
-	if collider is TileMap:
+	if collider is TileMapLayer or collider is TileMap:
 		var tile_pos: Vector2i = collider.local_to_map(
 			collider.to_local(shadow_ray.get_collision_point())
 		)
