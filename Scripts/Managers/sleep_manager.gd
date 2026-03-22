@@ -98,6 +98,12 @@ func start_sleep(lugar_str: String) -> void:
 		_mostrar_aviso_hostal_cerrado()
 		return
 
+	if _lugar == Lugar.HOSTAL:
+		var horas_restantes = _horas_entre(_hora_inicio, HORA_CIERRE_HOSTAL)
+		if horas_restantes < 1.0:
+			_mostrar_aviso_poco_tiempo()
+			return
+
 	_mostrar_selection()
 
 
@@ -157,6 +163,15 @@ func _mostrar_aviso_hostal_cerrado() -> void:
 	_selection.call("mostrar_aviso_cerrado")
 	_selection.connect("cancelado", _on_selection_cancelado)
 
+func _mostrar_aviso_poco_tiempo() -> void:
+	var player = PlayerManager.player_instance
+	if player:
+		player.disable_movement()
+
+	_selection = SCENE_SELECTION.instantiate()
+	get_tree().root.add_child(_selection)
+	_selection.call("mostrar_aviso_poco_tiempo")
+	_selection.connect("cancelado", _on_selection_cancelado)
 
 func _on_selection_confirmado(horas: float) -> void:
 	# No desbloqueamos — el sueño continúa con movimiento bloqueado
