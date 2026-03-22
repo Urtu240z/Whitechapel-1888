@@ -144,7 +144,6 @@ func _on_stats_updated() -> void:
 	_update_disease()
 
 func _update_vignette() -> void:
-	print("miedo: ", PlayerStats.miedo, " vignette visible: ", PlayerStats.miedo > 50)
 	if PlayerStats.miedo > 50:
 		_vignette.visible = true
 		var intensity: float = clamp((PlayerStats.miedo - 50) / 50.0, 0.0, 1.0)
