@@ -102,6 +102,7 @@ signal jugador_muerto()
 # ============================================================
 func _ready() -> void:
 	calcular_sex_appeal()
+	stats_updated.connect(_sync_dialogic_variables)
 
 # ============================================================
 # ⏱️ PROCESS — degradación con el tiempo

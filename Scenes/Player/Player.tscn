@@ -16,9 +16,14 @@
 [ext_resource type="AudioStream" uid="uid://d4ijev4oyvlh4" path="res://Assets/Audio/Walk_Grass_4.ogg" id="7_kiw7k"]
 [ext_resource type="Script" uid="uid://ddidgu1580flu" path="res://Scripts/Player/player_audio.gd" id="10_qdq1f"]
 [ext_resource type="Script" uid="uid://dulspmin6s2d8" path="res://Scripts/Player/player_interaction.gd" id="13_g66pu"]
+[ext_resource type="AudioStream" uid="uid://c6vn5kayyt8yx" path="res://Assets/Audio/Player/Sick/woman_cough_light_1.wav" id="15_wid83"]
+[ext_resource type="AudioStream" uid="uid://c07045kwlswt5" path="res://Assets/Audio/Player/Sick/woman_cough_light_2.wav" id="16_g7gci"]
 [ext_resource type="Texture2D" uid="uid://cmtfcx5y7cihw" path="res://Assets/Sprites/Player/Parts_London/London_Pieces_n.png" id="16_kiw7k"]
 [ext_resource type="Texture2D" uid="uid://vvs14iadk2rw" path="res://Assets/Sprites/Player/Parts_Farm/Farm_Pieces.png" id="17_ygan3"]
+[ext_resource type="AudioStream" uid="uid://prrh1fcg4oqv" path="res://Assets/Audio/Player/Sick/woman_cough_2.wav" id="18_6rswy"]
 [ext_resource type="Texture2D" uid="uid://cqiof322j2dmn" path="res://Assets/Sprites/Player/Parts_Farm/Farm_Pieces_n.png" id="18_e6owi"]
+[ext_resource type="AudioStream" uid="uid://dmby1hf1f1baq" path="res://Assets/Audio/Player/Sick/woman_suffering_1.wav" id="19_jbjyn"]
+[ext_resource type="AudioStream" uid="uid://bckjmpqic47r" path="res://Assets/Audio/Player/Sick/woman_suffering_2.wav" id="20_lw74r"]
 [ext_resource type="Script" uid="uid://3n2ir7g15yw5" path="res://addons/soupik/modifications/soup_group.gd" id="25_g66pu"]
 [ext_resource type="Script" uid="uid://bnso0mph1tb11" path="res://addons/soupik/modifications/soup_two_bone_ik.gd" id="25_uggh2"]
 [ext_resource type="Script" uid="uid://b4u1tvhlw4d2g" path="res://addons/soupik/modifications/soup_look_at.gd" id="27_kiw7k"]
@@ -1650,10 +1655,14 @@ step_sounds = {
 "water": [],
 "wood": []
 }
+cough_sounds_light = Array[AudioStream]([ExtResource("15_wid83"), ExtResource("16_g7gci")])
+cough_sounds_heavy = Array[AudioStream]([ExtResource("18_6rswy"), ExtResource("19_jbjyn"), ExtResource("20_lw74r"), ExtResource("15_wid83"), ExtResource("16_g7gci")])
 
 [node name="StepPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=2067585972]
 
 [node name="BreathRun" type="AudioStreamPlayer" parent="Audio" unique_id=2038737779]
+
+[node name="CoughPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=531224860]
 
 [node name="Interaction" type="Node2D" parent="." unique_id=495061018]
 visible = false

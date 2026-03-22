@@ -1,0 +1,412 @@
+# MASTER PROMPT — WHITECHAPEL 1888
+# Godot 4.6 | GDScript | 2D Lateral
+
+================================================================
+## 🎮 CONCEPTO DEL JUEGO
+================================================================
+Juego de supervivencia 2D ambientado en el Londres victoriano de 1888.
+El jugador controla a una prostituta que debe sobrevivir en las calles
+de Whitechapel ganando dinero con clientes, cuidando sus stats y
+evitando morir de enfermedad, hambre o a manos de Jack the Ripper.
+
+OBJETIVO: Reunir 200 chelines para escapar de Whitechapel.
+
+AMENAZAS:
+- Hambre, higiene, cansancio degradan salud
+- Enfermedad de transmisión sexual (por clientes)
+- Jack the Ripper (futuro — dash/esquiva pendiente)
+- Dormir en la calle es peligroso
+
+================================================================
+## 📁 ESTRUCTURA DE CARPETAS
+================================================================
+res://
+├── addons/
+│   └── pickup_creator/         ← Plugin editor para gestionar pickups
+├── Assets/
+│   ├── Audio/                  ← Sonidos del juego
+│   ├── Fonts/                  ← Cinzel.ttf, IMFellEnglish.ttf
+│   ├── Images/                 ← Journal.png (imagen del diario)
+│   ├── Shaders/                ← blur.gdshader, vignette.gdshader, distortion.gdshader
+│   ├── Sprites/
+│   ├── Textures/
+│   └── ...
+├── Data/
+│   ├── Audio/
+│   ├── Dialogic/               ← Timelines de Dialogic (.dtl)
+│   │   └── npc_1.dtl
+│   ├── Game/
+│   │   └── game_config.tres    ← Resource editable desde Inspector (GameConfig)
+│   ├── Pickups/                ← Resources .tres de cada pickup
+│   │   ├── client-poor.tres
+│   │   ├── client-medium.tres
+│   │   ├── client-rich.tres
+│   │   └── ... (todos los pickups)
+│   ├── Shaders/
+│   └── Translations/
+│       ├── translations.csv    ← Fuente de traducciones (editar aquí)
+│       ├── translations.es.translation  ← Compilado por Godot
+│       └── translations.en.translation  ← Compilado por Godot
+├── Design/
+│   ├── GDD.txt
+│   ├── Lista victimas.txt
+│   └── Master_Prompt.txt
+├── Dialogues/                  ← Timelines de Dialogic
+├── Scenes/
+│   ├── Core/
+│   │   ├── Pickup.tscn
+│   │   ├── Scene_Changer.tscn
+│   │   ├── Sleep_Selection.tscn  ← Panel selección horas sueño
+│   │   ├── Sleep_Screen.tscn     ← Pantalla animada de sueño
+│   │   └── UI_Stats.tscn
+│   ├── Exteriors/
+│   ├── NPC/
+│   │   ├── NPC_Charger.tscn
+│   │   └── NPC_Ragdoll.tscn
+│   ├── Player/
+│   │   ├── Player.tscn
+│   │   └── Fairy_Dream_Surfer.tscn
+│   ├── Test/
+│   │   └── Prueba_Mecanicas.tscn ← Escena de pruebas principal
+│   └── UI/
+│       └── Journal.tscn          ← Diario del jugador (libro victoriano)
+└── Scripts/
+	├── _Archive/
+	│   └── Level.gd
+	├── Core/
+	│   ├── pickup.gd
+	│   ├── scene_changer.gd
+	│   ├── sleep_screen.gd       ← Script de Sleep_Screen.tscn
+	│   ├── sleep_selection.gd    ← Script de Sleep_Selection.tscn
+	│   └── ui_stats.gd
+	├── Data/
+	│   ├── game_config.gd        ← class_name GameConfig (Resource)
+	│   └── pickup_data.gd
+	├── Managers/
+	│   ├── day_night_manager.gd
+	│   ├── effects_manager.gd
+	│   ├── game_manager.gd
+	│   ├── player_manager.gd
+	│   ├── player_stats.gd
+	│   ├── scene_manager.gd
+	│   └── sleep_manager.gd      ← Autoload: SleepManager
+	├── NPC/
+	│   ├── npc_animation.gd
+	│   ├── npc_audio.gd
+	│   ├── npc_conversation.gd
+	│   ├── npc_main.gd
+	│   ├── npc_movement.gd
+	│   └── npc_skin.gd
+	├── Player/
+	│   ├── Fairy/
+	│   ├── player_animation.gd
+	│   ├── player_audio.gd
+	│   ├── player_controller.gd
+	│   ├── player_interaction.gd
+	│   └── player_movement.gd
+	├── Story/  (sin cambios)
+	├── UI/
+	│   ├── fps_counter.gd
+	│   ├── journal.gd            ← Diario victoriano (adaptado de otro proyecto)
+	│   ├── stats_panel.gd
+	│   └── waypoint_marker.gd
+	└── Vehicles/
+		└── carriage_movement.gd
+
+================================================================
+## 🤖 AUTOLOADS (Singletons)
+================================================================
+Todos accesibles globalmente por su nombre:
+
+- GameManager        → Gestiona el ratón (hide/show)
+- PlayerManager      → Instancia y mueve el player entre escenas
+- PlayerStats        → Todos los stats del jugador (NÚCLEO DEL JUEGO)
+- SceneManager       → Fade negro entre escenas
+- DayNightManager    → Ciclo día/noche, emite hora_cambiada cada hora
+- EffectsManager     → Efectos visuales por estado del jugador
+- SleepManager       → Sistema de sueño (NUEVO)
+- Dialogic           → Sistema de diálogos (plugin)
+
+================================================================
+## 👤 PLAYER — Player.tscn
+================================================================
+(sin cambios respecto a versión anterior)
+
+VARIABLES IMPORTANTES en player_controller.gd:
+- can_move: bool      ← disable_movement() / enable_movement()
+- in_dialog: bool     ← true mientras Dialogic está activo
+- gravity: float
+- default_outfit: "London" | "Farm"
+
+player_instance en PlayerManager se declara como:
+  var player_instance: MainPlayer
+(necesario para que GDScript vea disable_movement() y enable_movement())
+
+En escenas donde el player está como nodo hijo directo (no instanciado
+via PlayerManager), registrarlo manualmente en _ready():
+  PlayerManager.player_instance = $Player
+
+================================================================
+## 🌙 DAY NIGHT MANAGER — day_night_manager.gd (Autoload: DayNightManager)
+================================================================
+- Duración controlada por GameConfig: CONFIG.duracion_hora_segundos
+  (por defecto 60.0 → 1 minuto real = 1 hora de juego)
+- hora_actual: empieza en 8:00
+- Señal: hora_cambiada(hora_actual) → emitida cada hora entera
+- Iluminación via CanvasModulate llamado "IluminacionAmbiental" en escena
+- Franjas horarias:
+  06-08: amanecer (cálido)
+  08-18: día (blanco)
+  18-20: atardecer (rojizo)
+  resto: noche (azul oscuro)
+
+API PÚBLICA (usada por SleepManager):
+- set_hora(hora) → salta a una hora concreta, emite hora_cambiada
+- pausar()       → pausa el ciclo (SleepManager toma el control)
+- reanudar()     → reanuda el ciclo
+
+================================================================
+## 😴 SLEEP MANAGER — sleep_manager.gd (Autoload: SleepManager)
+================================================================
+Gestiona el sueño del jugador. No es un estado persistente —
+es una transición controlada con pantalla propia.
+
+FLUJO COMPLETO:
+1. start_sleep(lugar) → bloquea movimiento del player
+2. Muestra Sleep_Selection → jugador elige horas con slider
+3. Confirma → fade negro (SceneManager, 1.5s) → Sleep_Screen aparece
+4. Fade de negro a Sleep_Screen (1.5s) → empieza el timer
+5. Timer avanza horas (0.4s reales = 1h juego) → recuperación progresiva
+6. Al terminar → fade negro → Sleep_Screen desaparece → fade al juego
+7. Si hostal terminó antes de las 10:00 → panel post-sueño (seguir/salir)
+
+API PÚBLICA:
+- start_sleep(lugar_str) → "hostal" | "calle" | "callejon"
+- interrupt_sleep(motivo) → hook para policía y Jack (futuro)
+
+HOSTAL: abierto 22:00 → 10:00 (cruza medianoche)
+CALLE/CALLEJÓN: máximo según CONFIG.horas_max_calle (default 8h)
+El slider muestra horas necesarias para recuperar sueno a 100.
+
+SEÑALES:
+- sleep_interrupted(motivo) ← hook para policía y Jack
+- sleep_ended(horas_dormidas, completado)
+
+ESCENAS UI:
+- Sleep_Selection.tscn → panel pequeño con slider + info
+  Script: sleep_selection.gd (class_name SleepSelection)
+  Señales: confirmado(horas), cancelado
+  IMPORTANTE: el script debe estar asignado al nodo raíz en el Inspector
+
+- Sleep_Screen.tscn → pantalla completa con luna/sol animado
+  Script: sleep_screen.gd (class_name SleepScreen)
+  Señales: cancelado, seguir_durmiendo, salir_a_la_calle
+  Contiene PostSleepPanel (oculto por defecto)
+  IMPORTANTE: el script debe estar asignado al nodo raíz en el Inspector
+
+NOTA TÉCNICA: Las escenas se instancian con preload() y se conectan
+con .connect("señal", callback) en lugar de sintaxis directa tipada,
+porque el cast as SleepScreen falla en runtime con escenas instanciadas
+dinámicamente (bug conocido de Godot con class_name en CanvasLayer).
+
+================================================================
+## ⚙️ GAME CONFIG — game_config.gd / game_config.tres
+================================================================
+Resource editable desde el Inspector (doble clic en game_config.tres).
+Path: res://Data/Game/game_config.tres
+Script: res://Scripts/Data/game_config.gd (class_name GameConfig)
+
+Uso en cualquier script:
+  const CONFIG = preload("res://Data/Game/game_config.tres")
+
+PARÁMETROS DISPONIBLES:
+⏰ Tiempo:
+- duracion_hora_segundos: 60.0  (1 min real = 1 hora de juego)
+
+😴 Sueño:
+- recuperacion_hostal_por_hora: 8.5
+- recuperacion_calle_por_hora: 4.5
+- horas_max_calle: 8.0
+
+💰 Economía:
+- objetivo_dinero: 200.0
+- coste_hostal: 2.0
+- coste_comida: 0.5
+- coste_medicina: 3.0
+- coste_medico: 15.0
+
+================================================================
+## 🌐 SISTEMA DE TRADUCCIÓN
+================================================================
+Godot LocalizationServer con archivos .csv compilados a .translation.
+Path: res://Data/Translations/translations.csv
+
+IDIOMAS: es (español, por defecto), en (inglés)
+Locale por defecto: "es" (Proyecto → Config → General → locale/fallback)
+
+USO EN SCRIPTS:
+  texto = tr("CLAVE_TRADUCCION")
+
+USO EN ESCENAS (.tscn):
+  Activar "Auto Translate Mode → Always" en cada Label
+
+CLAVES ACTUALES:
+- SLEEP_TITLE_HOSTAL, SLEEP_TITLE_CALLEJON, SLEEP_TITLE_CALLE
+- SLEEP_HORA, SLEEP_HORAS
+- SLEEP_HOSTAL_CERRADO
+- SLEEP_POST_TEXTO
+- SLEEP_DESPERTAR, SLEEP_SEGUIR, SLEEP_SALIR
+
+WORKFLOW: Editar translations.csv → clic derecho en Godot → Reimportar
+(o reiniciar Godot para recompilar automáticamente)
+
+================================================================
+## 📖 JOURNAL — journal.gd / Journal.tscn
+================================================================
+Diario victoriano del jugador. Adaptado de otro proyecto.
+Path escena: res://Scenes/UI/Journal.tscn
+Path script: res://Scripts/UI/journal.gd
+
+Tecla: Q (action "stats") — mismo que UI_Stats
+Fuentes: Cinzel.ttf (títulos), IMFellEnglish.ttf (cuerpo)
+CanvasLayer layer: 10+ para evitar iluminación del escenario
+ColorRect fondo: anchors Full Rect, opacidad configurable
+
+MUESTRA:
+- Hora actual (DayNightManager.hora_actual)
+- Sex appeal como "Atractivo general"
+- Dinero y día actual
+- Estado físico: higiene, salud, stamina, hambre, alcohol, laudano,
+  enfermedad, sueño
+- Estado mental: felicidad, calma (100-miedo), estres, nervios
+- Badges de clientes según sex_appeal (Vagabundos/Trabajadores/
+  Burgueses/Nobles con ✓/✗)
+
+Se refresca automáticamente via PlayerStats.stats_updated cuando
+está abierto.
+
+================================================================
+## 📊 STATS DEL JUGADOR — player_stats.gd (Autoload: PlayerStats)
+================================================================
+(sin cambios respecto a versión anterior)
+
+NOTA: dormir_hostal() y dormir_calle() en PlayerStats son OBSOLETAS.
+Todo el sistema de sueño está ahora en SleepManager.
+
+================================================================
+## 🎨 EFFECTS MANAGER — effects_manager.gd (Autoload: EffectsManager)
+================================================================
+(sin cambios respecto a versión anterior)
+
+================================================================
+## 🎬 SCENE MANAGER — scene_manager.gd (Autoload: SceneManager)
+================================================================
+Fade negro entre escenas. _fade_out() y _fade_in() son públicos.
+SleepManager los usa para las transiciones de sueño (1.5s cada uno).
+
+================================================================
+## 🧩 PLAYER MANAGER — player_manager.gd (Autoload: PlayerManager)
+================================================================
+- var player_instance: MainPlayer  ← tipado para ver disable/enable_movement
+- ensure_player(parent, position)
+- enter_building(scene, pos, open_sound, close_sound)
+
+================================================================
+## 📦 SISTEMA DE PICKUPS
+================================================================
+(sin cambios respecto a versión anterior)
+
+================================================================
+## 💬 MÓDULOS DE PLAYER, NPC, DIALOGIC
+================================================================
+(sin cambios respecto a versión anterior)
+
+================================================================
+## ⌨️ INPUT MAP
+================================================================
+move_left, move_right → A/D o flechas
+jump → Espacio
+run → Shift
+crouch → C (toggle, solo en suelo)
+interact → F
+stats → Q  (abre Journal Y UI_Stats)
+ui_accept → F
+ui_cancel → F
+
+================================================================
+## 🔧 NPC — SCRIPTS EMBEBIDOS ELIMINADOS
+================================================================
+NPC_Charger.tscn tenía scripts embebidos con class_name duplicados.
+SOLUCIONADO: Los nodos Movement, Animation y Conversation de
+NPC_Charger.tscn ahora usan los scripts externos:
+- Movement    → npc_movement.gd
+- Animation   → npc_animation.gd
+- Conversation → npc_conversation.gd
+
+================================================================
+## 🐙 GITHUB
+================================================================
+Repositorio: https://github.com/Urtu240z/Whitechapel-1888
+Rama: main
+GitHub Desktop conectado y funcionando.
+
+.gitignore excluye: .godot/, .import/, export.cfg,
+export_credentials.cfg, .mono/, data_*/, mono_crash.*.json
+NOTA: Intro_Forest_HD.png pesa 64MB (warning de GitHub, no error).
+Considerar comprimir o añadir a .gitignore en el futuro.
+
+Workflow commits:
+1. Cambios en Godot → guardar todo
+2. GitHub Desktop → escribir Summary → Commit to main → Push origin
+
+================================================================
+## 🚧 PENDIENTES / COMING SOON
+================================================================
+1. ✅ SleepManager — COMPLETADO
+   Sleep_Selection.tscn + Sleep_Screen.tscn + sleep_manager.gd
+
+2. Efectos de enfermedad grave (>70%):
+   - Caminar más lento (ya en _get_speed_multiplier)
+   - Visión borrosa (shader pendiente)
+   - Tos/sonidos
+   - No puede correr
+   - Sex appeal muy reducido (ya implementado)
+
+3. Sueño = 0 → player cae dormida (necesita animación)
+
+4. Jack the Ripper → amenaza nocturna, sistema de dash/esquiva
+   Hook interrupt_sleep("jack") ya existe en SleepManager
+
+5. Dialogic → conectar con NPCs reales en escenas
+   _sync_dialogic_variables() pendiente de conectar a stats_updated
+
+6. Fairy → minijuego con player alternativo (Level.gd en _Archive)
+
+7. Blur/shake progresivo en enfermedad grave (como stamina)
+
+8. GameConfig → añadir más parámetros según se necesiten
+
+9. Policía → interrupt_sleep("policia") hook ya existe en SleepManager
+
+10. Intro_Forest_HD.png → comprimir o añadir a .gitignore (64MB)
+
+================================================================
+## ⚠️ NOTAS IMPORTANTES PARA EL SIGUIENTE CHAT
+================================================================
+- player_stats.gd es el AUTOLOAD "PlayerStats" (sin class_name)
+- player_instance en PlayerManager debe ser MainPlayer (no Node2D)
+- En escenas con player como nodo hijo directo, registrar en _ready():
+	PlayerManager.player_instance = $Player
+- ShadowRAY collision mask: SOLO capa 2 activa
+- Shadow (sprite) es hijo DIRECTO del Player, NO de CharacterContainer
+- La F está en interact + ui_accept + ui_cancel para Dialogic
+- EffectsManager busca Camera2D via node_added (no tree_changed)
+- dormir_hostal() y dormir_calle() en PlayerStats son OBSOLETAS
+- Sleep_Screen.tscn y Sleep_Selection.tscn necesitan sus scripts
+  asignados manualmente en el Inspector al nodo raíz
+- Las señales de SleepScreen/SleepSelection se conectan con
+  .connect("nombre", callback) no con sintaxis directa tipada
+- translations.csv necesita Reimportar tras cada edición
+- NPC_Charger.tscn: scripts externos asignados (no embebidos)
+- debug_mode en PlayerStats → activa prints de stats cada actualización
+- Journal.tscn: CanvasLayer layer alto para evitar iluminación escenario

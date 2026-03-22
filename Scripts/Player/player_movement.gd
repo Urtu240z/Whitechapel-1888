@@ -126,6 +126,9 @@ func _set_exhausted(value: bool) -> void:
 	EffectsManager.on_stamina_exhausted(value)
 
 func _wants_to_run() -> bool:
+	# Enfermedad grave bloquea correr completamente
+	if PlayerStats.enfermedad >= 70:
+		return false
 	return Input.is_action_pressed("run") and not is_crouching and is_moving()
 
 # ============================================================================
@@ -166,7 +169,6 @@ func calculate_target_speed(_input_axis: float) -> float:
 	return target_speed
 
 func _get_speed_multiplier() -> float:
-	"""Calcula el multiplicador de velocidad según los stats actuales"""
 	var mult: float = 1.0
 
 	# Hambre alta → más lento (penaliza a partir de 70)
@@ -180,6 +182,10 @@ func _get_speed_multiplier() -> float:
 	# Salud baja → penaliza todo (por debajo de 40)
 	if PlayerStats.salud < 40:
 		mult -= (40 - PlayerStats.salud) / 40.0 * 0.4  # hasta -40% con salud 0
+
+	# Enfermedad grave → penaliza velocidad progresivamente
+	if PlayerStats.enfermedad >= 70:
+		mult -= (PlayerStats.enfermedad - 70) / 30.0 * 0.35  # hasta -35% con enfermedad 100
 
 	# Alcohol/laudano → efecto errático (velocidad que varía)
 	var sustancias: float = PlayerStats.alcohol + PlayerStats.laudano

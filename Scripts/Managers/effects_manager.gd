@@ -22,6 +22,7 @@ var _blur: ColorRect
 var _vignette: ColorRect
 var _blink: ColorRect
 var _distortion: ColorRect
+var _disease: ColorRect
 var _camera: Camera2D = null
 
 var _blink_active: bool = false
@@ -60,6 +61,10 @@ func _build_nodes() -> void:
 	_vignette = _make_fullscreen_rect()    # 4º — más arriba
 	_vignette.material = _load_shader("res://Assets/Shaders/vignette.gdshader")
 	_canvas.add_child(_vignette)
+
+	_disease = _make_fullscreen_rect()     # 5º — encima de todo
+	_disease.material = _load_shader("res://Assets/Shaders/disease.gdshader")
+	_canvas.add_child(_disease)
 
 	_set_visible_all(false)
 
@@ -136,6 +141,7 @@ func _on_stats_updated() -> void:
 	_update_vignette()
 	_update_distortion()
 	_update_blink_state()
+	_update_disease()
 
 func _update_vignette() -> void:
 	print("miedo: ", PlayerStats.miedo, " vignette visible: ", PlayerStats.miedo > 50)
@@ -174,10 +180,20 @@ func _do_blink() -> void:
 	tw.tween_property(_blink, "modulate:a", 0.0, BLINK_DURATION)
 	tw.tween_callback(func(): _blink.visible = false)
 
+func _update_disease() -> void:
+	if PlayerStats.enfermedad >= 60:
+		_disease.visible = true
+		# Intensidad progresiva: 0.0 en enfermedad 60, 1.0 en enfermedad 100
+		var intensity: float = clamp((PlayerStats.enfermedad - 60) / 40.0, 0.0, 1.0)
+		if _disease.material:
+			_disease.material.set_shader_parameter("intensity", intensity)
+	else:
+		_disease.visible = false
+
 # =========================================================
 # 🔧 UTILS
 # =========================================================
 func _set_visible_all(value: bool) -> void:
-	for node in [_blur, _vignette, _blink, _distortion]:
+	for node in [_blur, _vignette, _blink, _distortion, _disease]:
 		if node:
 			node.visible = value
