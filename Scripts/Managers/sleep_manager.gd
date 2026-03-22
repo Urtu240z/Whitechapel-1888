@@ -107,7 +107,69 @@ func start_sleep(lugar_str: String) -> void:
 	_mostrar_selection()
 
 
-# Interrumpe el sueño desde fuera (policía, Jack, ruido)
+# Igual que start_sleep pero forzado (sueno=0, sin Selection panel)
+# Muestra un mensaje de colapso antes del fade
+func start_sleep_forced(lugar_str: String, mensaje: String = "") -> void:
+	if _durmiendo or _screen != null:
+		return
+
+	_lugar = _parsear_lugar(lugar_str)
+	_hora_inicio = DayNightManager.hora_actual
+	_horas_totales = _calcular_horas_para_recuperar()
+	_hora_fin = fmod(_hora_inicio + _horas_totales, 24.0)
+	_horas_dormidas = 0.0
+	_cancelado = false
+	_durmiendo = true
+
+	# Mostramos el mensaje de colapso durante el fade
+	_mostrar_mensaje_colapso(mensaje)
+	await SceneManager._fade_out(2.0)
+	_limpiar_mensaje_colapso()
+	await _iniciar_sueno_directo()
+
+
+# ── Mensaje flotante de colapso ──────────────────────────────────
+var _collapse_label: CanvasLayer = null
+
+func _mostrar_mensaje_colapso(mensaje: String) -> void:
+	if mensaje.is_empty():
+		return
+	_collapse_label = CanvasLayer.new()
+	_collapse_label.layer = 20
+	var lbl := Label.new()
+	lbl.text = mensaje
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var font := load("res://Assets/Fonts/IMFellEnglish.ttf") as FontFile
+	if font:
+		lbl.add_theme_font_override("font", font)
+	lbl.add_theme_font_size_override("font_size", 32)
+	lbl.add_theme_color_override("font_color", Color(0.9, 0.85, 0.75))
+	_collapse_label.add_child(lbl)
+	get_tree().root.add_child(_collapse_label)
+
+func _limpiar_mensaje_colapso() -> void:
+	if _collapse_label:
+		_collapse_label.queue_free()
+		_collapse_label = null
+
+# Versión de _iniciar_sueno sin el fade_out inicial (ya se hizo)
+func _iniciar_sueno_directo() -> void:
+	DayNightManager.pausar()
+	_screen = SCENE_SCREEN.instantiate()
+	get_tree().root.add_child(_screen)
+	_screen.connect("cancelado", _on_screen_cancelado)
+	_screen.connect("seguir_durmiendo", _on_seguir_durmiendo)
+	_screen.connect("salir_a_la_calle", _on_salir_a_la_calle)
+	_screen.call("actualizar", DayNightManager.hora_actual, 0.0)
+	await SceneManager._fade_in(1.5)
+	_tick_timer = Timer.new()
+	_tick_timer.wait_time = SEGUNDOS_POR_HORA
+	_tick_timer.one_shot = false
+	_tick_timer.timeout.connect(_tick_hora)
+	add_child(_tick_timer)
+	_tick_timer.start()
 # Llamar cuando esos sistemas estén implementados
 func interrupt_sleep(motivo: String) -> void:
 	if not _durmiendo:
@@ -334,13 +396,17 @@ func _finalizar_sueno() -> void:
 	# Reanudamos el tiempo real
 	DayNightManager.reanudar()
 
-	# Devolvemos el control al jugador
+	# Devolvemos el control al jugador — primero animación de levantarse
 	var player = PlayerManager.player_instance
 	if player:
+		# Fade de negro a juego
+		await SceneManager._fade_in(1.5)
+		player.animation.play_rise()
+		await player.animation.anim_tree.animation_finished
 		player.enable_movement()
-
-	# Fade de negro a juego
-	await SceneManager._fade_in(1.5)
+	else:
+		# Fade de negro a juego
+		await SceneManager._fade_in(1.5)
 
 	sleep_ended.emit(_horas_dormidas, not _cancelado)
 

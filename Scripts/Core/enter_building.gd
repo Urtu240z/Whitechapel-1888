@@ -1,198 +1,315 @@
 extends Node2D
+# ================================================================
+# BUILDING ENTRANCE — enter_building.gd
+# Nodo: BuildingEntrance (Node2D), hijo del nodo raíz del edificio.
+# Lee su configuración del padre (building.gd).
+# ================================================================
 
-@export var enter_action := "interact"
-@export var fade_time := 0.8
-@export var zoom_in := Vector2(2.2, 2.2)
-@export var zoom_out := Vector2(1.68, 1.68)
+# ================================================================
+# NODOS INTERNOS
+# ================================================================
 
-@export var open_sounds: Array[AudioStream] = []
-@export var close_sounds: Array[AudioStream] = []
+var _enter_area: Area2D = null
+var _exit_area: Area2D = null
+var _interior: Node2D = null
+var _walls: StaticBody2D = null
+var _outside_audio: Node = null
+var _inside_audio: Node = null
 
-# Ahora apuntamos a los contenedores de audio, no a un solo stream
-@export var outside_audio_root_path: NodePath
-@export var inside_audio_root_path: NodePath
+# Config leída del padre (building.gd)
+var _config: Node = null
+var _audio: AudioStreamPlayer2D = null
 
-@onready var area: Area2D = $Area2D
-@onready var interior: TileMapLayer = $Interior
-@onready var walls: StaticBody2D = $Interior/Wall
-@onready var player := get_tree().current_scene.get_node("Player")
-@onready var camera: Camera2D = player.get_node("Camera2D")
-@onready var overlay: Sprite2D = camera.get_node("OverlayBlack")
-@onready var audio: AudioStreamPlayer2D = AudioStreamPlayer2D.new()
-@onready var exit_area: Area2D = $Interior/ExitArea
+# ================================================================
+# ESTADO
+# ================================================================
 
-var _player_near_exit := false
-var outside_audio_root: Node
-var inside_audio_root: Node
+var _inside: bool = false
+var _player_near_enter: bool = false
+var _player_near_exit: bool = false
+var _transitioning: bool = false
+var _original_limits: Dictionary = {}
+var _interior_audio_started: bool = false
 
-var _player_in_range := false
-var _inside := false
-var _transitioning := false
+# ================================================================
+# READY
+# ================================================================
 
+func _ready() -> void:
+	_config = get_parent()
 
-func _ready():
-	add_child(audio)
-	interior.visible = false
-	interior.modulate.a = 0.0
+	_audio = AudioStreamPlayer2D.new()
+	add_child(_audio)
+
+	# Nodos opcionales — no peta si faltan
+	_enter_area    = get_node_or_null("EnterArea")
+	_interior      = get_node_or_null("../Interior")
+	_exit_area     = get_node_or_null("../Interior/TileMapLayer/ExitArea")
+	_walls         = get_node_or_null("../Interior/TileMapLayer/Wall")
+	_outside_audio = get_node_or_null("../Interior/OutsideAudio")
+	_inside_audio  = get_node_or_null("../Interior/InsideAudio")
+
+	if _interior:
+		_interior.visible = false
+		_interior.modulate.a = 0.0
 	_set_walls_enabled(false)
 
-	if outside_audio_root_path != NodePath():
-		outside_audio_root = get_node(outside_audio_root_path)
-	if inside_audio_root_path != NodePath():
-		inside_audio_root = get_node(inside_audio_root_path)
-		# Inicialmente silenciamos todo el audio interior
-		for child in inside_audio_root.get_children():
-			if child is AudioStreamPlayer2D:
-				child.volume_db = -40
-				child.playing = true 
+	if _enter_area:
+		_enter_area.body_entered.connect(_on_enter_area_entered)
+		_enter_area.body_exited.connect(_on_enter_area_exited)
+	if _exit_area:
+		_exit_area.body_entered.connect(_on_exit_area_entered)
+		_exit_area.body_exited.connect(_on_exit_area_exited)
 
-	area.body_entered.connect(_on_body_entered)
-	area.body_exited.connect(_on_body_exited)
-	exit_area.process_mode = Node.PROCESS_MODE_ALWAYS
-	exit_area.body_entered.connect(_on_exit_entered)
-	exit_area.body_exited.connect(_on_exit_exited)
+# ================================================================
+# INPUT
+# ================================================================
 
-func _on_body_entered(body):
+func _process(_delta: float) -> void:
+	if _transitioning or not Input.is_action_just_pressed(_config.enter_action):
+		return
+
+	if not _inside and _player_near_enter:
+		if not _config.on_enter():
+			return
+		_transitioning = true
+		await _enter()
+		_transitioning = false
+
+	elif _inside and _player_near_exit:
+		if not _config.on_exit():
+			return
+		_transitioning = true
+		await _exit()
+		_transitioning = false
+
+# ================================================================
+# DETECCIÓN DE ÁREAS
+# ================================================================
+
+func _on_enter_area_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		_player_in_range = true
+		_player_near_enter = true
 
-func _on_body_exited(body):
+func _on_enter_area_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		_player_in_range = false
+		_player_near_enter = false
 
-func _on_exit_entered(body):
+func _on_exit_area_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_near_exit = true
 
-func _on_exit_exited(body):
+func _on_exit_area_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_near_exit = false
 
-func _process(_delta):
-	if Input.is_action_just_pressed(enter_action) and not _transitioning:
-		if _inside:
-			if _player_near_exit:  # ← CAMBIO AQUÍ
-				_transitioning = true
-				await _fade_out()
-				_transitioning = false
-			else:
-				print("No puedes salir por aquí.")
-		else:
-			if _player_in_range:
-				_transitioning = true
-				await _fade_in()
-				_transitioning = false
+# ================================================================
+# ENTRAR
+# ================================================================
 
-func _set_group_visibility(group_name: String, value: bool):
-	for node in get_tree().get_nodes_in_group(group_name):
-		if node is CanvasItem:
-			node.visible = value
-
-
-
-# =====================================================
-# 🌑 Entrar: fade + zoom in + activar paredes + PAUSA MUNDO
-# =====================================================
-func _fade_in():
+func _enter() -> void:
 	_inside = true
-	_play_random_sound(open_sounds)
-	
-	# Ocultamos NPCs exteriores
-	_set_group_visibility("npcs_outside", false)
-	
-	interior.modulate.a = 0.0
-	interior.visible = true
+	_play_sfx(_config.open_sounds)
+
+	var player = PlayerManager.player_instance
+	if not player:
+		push_error("BuildingEntrance: PlayerManager.player_instance es null")
+		return
+	var camera: Camera2D = player.get_node_or_null("Camera2D")
+
+	player.disable_movement()
+
+	# Fade a negro
+	await SceneManager._fade_out(_config.fade_time * 0.5)
+	# Pausar audio exterior
+	_set_group_audio_paused("audio_exterior", true)
+
+	# Congelar exterior mientras está negro
+	_freeze_world(true)
+	var exterior = get_parent().get_node_or_null("Exterior")
+	if exterior:
+		exterior.visible = false
+
+	# Mostrar interior
+	if _interior:
+		_interior.visible = true
+		_interior.modulate.a = 1.0
 	_set_walls_enabled(true)
 
-	get_tree().paused = true
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	player.process_mode = Node.PROCESS_MODE_ALWAYS
-	camera.process_mode = Node.PROCESS_MODE_ALWAYS
-	overlay.process_mode = Node.PROCESS_MODE_ALWAYS
-	interior.process_mode = Node.PROCESS_MODE_ALWAYS
+	# Zoom y límites de cámara
+	if camera:
+		camera.zoom = _config.zoom_in
+		_original_limits = {
+			"left": camera.limit_left, "top": camera.limit_top,
+			"right": camera.limit_right, "bottom": camera.limit_bottom
+		}
+		var limits = _config.get_interior_camera_limits()
+		if not limits.is_empty():
+			camera.limit_left   = limits["left"]
+			camera.limit_top    = limits["top"]
+			camera.limit_right  = limits["right"]
+			camera.limit_bottom = limits["bottom"]
 
-	var tw := create_tween()
-	tw.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# Fade de vuelta
+	await SceneManager._fade_in(_config.fade_time * 0.5)
 
-	# Fade visual
-	tw.tween_property(overlay, "modulate:a", 1.0, fade_time * 0.5)
-	tw.parallel().tween_property(camera, "zoom", zoom_in, fade_time)
-	tw.parallel().tween_property(interior, "modulate:a", 1.0, fade_time * 0.6).set_delay(fade_time * 0.2)
+	# Audio
+	# Arrancar y hacer fade de audio interior
+	# Primera vez: arrancar. Siguientes: reanudar
+	if not _interior_audio_started:
+		_interior_audio_started = true
+		_start_audio_group("audio_interior")
+	else:
+		_set_group_audio_paused("audio_interior", false)
+	var tw_audio := create_tween().set_parallel(true)
+	_fade_audio_group_by_group("audio_interior", 0.0, _config.fade_time * 0.8, tw_audio)
 
-	# Fade de audio (varios hijos)
-	_fade_audio_group(outside_audio_root, -40, fade_time * 0.8, tw)
-	_fade_audio_group(inside_audio_root, 0, fade_time * 0.8, tw, true)
+	player.enable_movement()
+# ================================================================
+# SALIR
+# ================================================================
 
-	await tw.finished
-
-
-# =====================================================
-# ☀️ Salir: fade inverso + desactivar paredes + DESPAUSA
-# =====================================================
-func _fade_out():
+func _exit() -> void:
 	_inside = false
-	_play_random_sound(close_sounds)
+	_play_sfx(_config.close_sounds)
 
-	# Mostramos NPCs exteriores otra vez
-	_set_group_visibility("npcs_outside", true)
+	var player = PlayerManager.player_instance
+	if not player:
+		push_error("BuildingEntrance: PlayerManager.player_instance es null")
+		return
+	var camera: Camera2D = player.get_node_or_null("Camera2D")
 
-	get_tree().paused = false
-	var tw := create_tween()
-	tw.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	player.disable_movement()
 
-	# Fade de audio
-	_fade_audio_group(outside_audio_root, 0, fade_time * 0.8, tw)
-	_fade_audio_group(inside_audio_root, -40, fade_time * 0.8, tw)
+	# Fade a negro
+	await SceneManager._fade_out(_config.fade_time * 0.5)
+	# Fade out y stop audio interior
+	var tw_stop := create_tween().set_parallel(true)
+	_fade_audio_group_by_group("audio_interior", -40.0, _config.fade_time * 0.4, tw_stop)
+	await tw_stop.finished
+	_set_group_audio_paused("audio_interior", true)
 
-	# Fade visual
-	tw.parallel().tween_property(interior, "modulate:a", 0.0, fade_time * 0.5)
-	await tw.finished
-
-	interior.visible = false
+	# Ocultar interior mientras está negro
+	if _interior:
+		_interior.visible = false
 	_set_walls_enabled(false)
 
-	tw = create_tween()
-	tw.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tw.tween_property(overlay, "modulate:a", 0.0, fade_time)
-	tw.parallel().tween_property(camera, "zoom", zoom_out, fade_time * 0.8)
-	await tw.finished
+	# Restaurar fachada exterior
+	var exterior = get_parent().get_node_or_null("Exterior")
+	if exterior:
+		exterior.visible = true
 
+	# Descongelar exterior
+	_freeze_world(false)
 
+	# Restaurar zoom y límites
+	if camera:
+		camera.zoom = _config.zoom_out
+		if not _original_limits.is_empty():
+			camera.limit_left   = _original_limits["left"]
+			camera.limit_top    = _original_limits["top"]
+			camera.limit_right  = _original_limits["right"]
+			camera.limit_bottom = _original_limits["bottom"]
 
+	# Fade de vuelta
+	await SceneManager._fade_in(_config.fade_time * 0.5)
+	# Reanudar audio exterior
+	_set_group_audio_paused("audio_exterior", false)
 
+	# Audio
 
-# =====================================================
-# 🔊 Función helper para fundir grupos de AudioStreamPlayer2D
-# =====================================================
-func _fade_audio_group(root: Node, target_db: float, duration: float, tw: Tween, play_if_stopped := false):
+	player.enable_movement()
+func _init_audio_group(root: Node, volume_db: float) -> void:
+	if not root:
+		return
+	for child in root.get_children():
+		if child is AudioStreamPlayer2D:
+			child.volume_db = volume_db
+			child.playing = true
+
+func _fade_audio_group(root: Node, target_db: float, duration: float, tw: Tween, play_if_stopped := false) -> void:
 	if not root:
 		return
 	for child in root.get_children():
 		if child is AudioStreamPlayer2D:
 			if play_if_stopped and not child.playing:
 				child.playing = true
-			tw.parallel().tween_property(child, "volume_db", target_db, duration)
+			tw.tween_property(child, "volume_db", target_db, duration)
 
-
-# =====================================================
-# 🧱 Activar / desactivar colisiones
-# =====================================================
-func _set_walls_enabled(enabled: bool):
-	if not is_instance_valid(walls):
+func _play_sfx(sounds: Array[AudioStream]) -> void:
+	if sounds.is_empty() or not _audio:
 		return
-	for shape in walls.get_children():
+	_audio.stream = sounds.pick_random()
+	_audio.pitch_scale = randf_range(0.95, 1.05)
+	_audio.volume_db = randf_range(-2.0, 0.0)
+	_audio.play()
+
+# ================================================================
+# COLISIONES
+# ================================================================
+
+func _set_walls_enabled(enabled: bool) -> void:
+	if not is_instance_valid(_walls):
+		return
+	for shape in _walls.get_children():
 		if shape is CollisionShape2D:
 			shape.disabled = not enabled
 
+# ================================================================
+# VISIBILIDAD DE GRUPOS
+# ================================================================
 
-# =====================================================
-# 🎧 Sonido aleatorio abrir/cerrar
-# =====================================================
-func _play_random_sound(sounds: Array[AudioStream]) -> void:
-	if sounds.is_empty():
+func _set_group_visibility(group_name: String, value: bool) -> void:
+	for node in get_tree().get_nodes_in_group(group_name):
+		if node is CanvasItem:
+			node.visible = value
+
+# ================================================================
+# CONGELAR / DESCONGELAR MUNDO EXTERIOR
+# ================================================================
+
+func _freeze_world(freeze: bool) -> void:
+	# Busca el nodo World en la escena
+	var world = get_tree().current_scene.find_child("World", true, false)
+	if not world:
 		return
-	var sound: AudioStream = sounds.pick_random()
-	audio.stream = sound
-	audio.pitch_scale = randf_range(0.95, 1.05)
-	audio.volume_db = randf_range(-2.0, 0.0)
-	audio.play()
+	for child in world.get_children():
+		# No tocar el edificio en el que estamos entrando
+		if child == get_parent():
+			continue
+		child.visible = not freeze
+		child.process_mode = Node.PROCESS_MODE_DISABLED if freeze else Node.PROCESS_MODE_INHERIT
+
+# ================================================================
+# AUDIO POR GRUPOS
+# ================================================================
+
+func _start_audio_group(group_name: String) -> void:
+	for node in get_tree().get_nodes_in_group(group_name):
+		for child in node.get_children():
+			if child is AudioStreamPlayer or child is AudioStreamPlayer2D:
+				child.volume_db = -40.0
+				child.play()
+
+func _stop_audio_group(group_name: String) -> void:
+	for node in get_tree().get_nodes_in_group(group_name):
+		for child in node.get_children():
+			if child is AudioStreamPlayer or child is AudioStreamPlayer2D:
+				child.stop()
+
+func _set_group_audio_paused(group_name: String, paused: bool) -> void:
+	for node in get_tree().get_nodes_in_group(group_name):
+		for child in node.get_children():
+			if child is AudioStreamPlayer or child is AudioStreamPlayer2D:
+				if paused:
+					child.volume_db = -80.0
+					child.stream_paused = true
+				else:
+					child.stream_paused = false
+					child.volume_db = 0.0
+
+func _fade_audio_group_by_group(group_name: String, target_db: float, duration: float, tw: Tween) -> void:
+	for node in get_tree().get_nodes_in_group(group_name):
+		for child in node.get_children():
+			if child is AudioStreamPlayer or child is AudioStreamPlayer2D:
+				tw.tween_property(child, "volume_db", target_db, duration)

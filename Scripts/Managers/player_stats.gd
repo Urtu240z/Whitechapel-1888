@@ -78,6 +78,8 @@ const ENFERMEDAD_POR_MINUTO: float = 0.3  # sube lentamente si está infectada
 
 var _degradacion_timer: float = 0.0
 const DEGRADACION_INTERVALO: float = 60.0
+var _sueno_anterior: float = 80.0  # Rastrea el sueno del frame anterior para detectar llegada a 0
+var _colapso_activo: bool = false  # Evita disparar sueno_agotado múltiples veces
 
 # ============================================================
 # 🎯 GOAL
@@ -96,6 +98,7 @@ signal objetivo_completado()
 signal stats_updated
 signal enfermedad_cambiada(estado: bool)
 signal jugador_muerto()
+signal sueno_agotado()  # Emitida cuando sueno llega a 0 — colapso involuntario
 
 # ============================================================
 # ⚙️ READY
@@ -124,7 +127,9 @@ func _process(delta: float) -> void:
 func _aplicar_degradacion() -> void:
 	hambre  = clamp(hambre  + HAMBRE_POR_MINUTO,  0, 100)
 	higiene = clamp(higiene + HIGIENE_POR_MINUTO, 0, 100)
+	var sueno_anterior = sueno
 	sueno   = clamp(sueno   + SUENO_POR_MINUTO,   0, 100)
+	# La detección de sueno=0 se hace en actualizar_stats()
 	alcohol = clamp(alcohol + ALCOHOL_POR_MINUTO, 0, 100)
 	laudano = clamp(laudano + LAUDANO_POR_MINUTO, 0, 100)
 
@@ -429,6 +434,13 @@ func actualizar_stats(delta: float = 1.0) -> void:
 	calcular_sex_appeal()
 	actualizar_salud(delta)
 	stamina_changed.emit(stamina)
+	# Detectar llegada a 0 desde cualquier fuente (pickups, degradación, etc.)
+	if sueno > 0 and _colapso_activo:
+		_colapso_activo = false
+	if sueno <= 0 and _sueno_anterior > 0 and not _colapso_activo:
+		_colapso_activo = true
+		sueno_agotado.emit()
+	_sueno_anterior = sueno
 	await get_tree().process_frame
 	stats_updated.emit()
 	if debug_mode:

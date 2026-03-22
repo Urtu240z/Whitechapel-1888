@@ -111,7 +111,7 @@ scale = Vector2(1.0523437, 1.0523438)
 texture = SubResource("CanvasTexture_j3y8p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=76883339]
-position = Vector2(124.5, 26)
+position = Vector2(124.5, 16)
 shape = SubResource("RectangleShape2D_bveo1")
 
 [node name="Tunnel2" type="Sprite2D" parent="Ground" unique_id=1406775495]

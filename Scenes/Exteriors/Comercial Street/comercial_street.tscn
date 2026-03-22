@@ -1,20 +1,41 @@
 [gd_scene format=3 uid="uid://cwgtlmcg3m7y2"]
 
-[ext_resource type="Texture2D" uid="uid://db0e7drmhg073" path="res://Assets/Sprites/Background/Ground.png" id="1_0ljum"]
-[ext_resource type="Texture2D" uid="uid://dck5x5gwvt7j6" path="res://Assets/Sprites/Building/5.png" id="2_67ajf"]
-[ext_resource type="Texture2D" uid="uid://cgyukudfhtam8" path="res://Assets/Sprites/Building/Apartment_Block_1.png" id="2_p02g6"]
-[ext_resource type="Texture2D" uid="uid://bem55l83lqsg4" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand2.png" id="2_ycwgr"]
-[ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="3_isxnx"]
-[ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player_Kinematic_3.tscn" id="3_p02g6"]
-[ext_resource type="Texture2D" uid="uid://dtdsneob5tt8g" path="res://Assets/Sprites/Building/6.png" id="4_0gbv2"]
-[ext_resource type="Texture2D" uid="uid://c4n6ma1wesm0n" path="res://Assets/Sprites/Building/Apartment_Block_2.png" id="6_tl17h"]
-[ext_resource type="Texture2D" uid="uid://b38snj6t625s5" path="res://Assets/Sprites/Effects/Fog.png" id="9_0gbv2"]
+[ext_resource type="Texture2D" uid="uid://dnedrc5e2pcxr" path="res://Assets/Sprites/Background/Sky_Night.png" id="1_v4abg"]
+[ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="2_gb7vo"]
+[ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="3_lwph6"]
+[ext_resource type="Texture2D" uid="uid://dck5x5gwvt7j6" path="res://Assets/Sprites/Building/5.png" id="4_ajpcj"]
+[ext_resource type="Texture2D" uid="uid://dtdsneob5tt8g" path="res://Assets/Sprites/Building/6.png" id="5_tp2us"]
+[ext_resource type="Texture2D" uid="uid://cgyukudfhtam8" path="res://Assets/Sprites/Building/Apartment_Block_1.png" id="6_y0tni"]
+[ext_resource type="Texture2D" uid="uid://c4n6ma1wesm0n" path="res://Assets/Sprites/Building/Apartment_Block_2.png" id="7_fcpjw"]
+[ext_resource type="Texture2D" uid="uid://c3bd6q6nv8xhc" path="res://Assets/Sprites/Building/Square.png" id="8_os2yf"]
+[ext_resource type="Script" uid="uid://dx87qkd75ne1c" path="res://Scripts/Core/Flame_Flicker.gd" id="9_7ajcb"]
+[ext_resource type="Texture2D" uid="uid://d046qlky05sps" path="res://Assets/Sprites/Effects/Smoke.png" id="10_ee86v"]
+[ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="11_nas3t"]
+[ext_resource type="Texture2D" uid="uid://db0e7drmhg073" path="res://Assets/Sprites/Background/Ground.png" id="12_v2j58"]
+[ext_resource type="Texture2D" uid="uid://bem55l83lqsg4" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand2.png" id="13_4w0qd"]
+[ext_resource type="PackedScene" uid="uid://5o5jm036m674" path="res://Scenes/Atrezzo/Street_Lamp.tscn" id="14_3j0sx"]
+[ext_resource type="PackedScene" uid="uid://g6e6vle2a0l2" path="res://Scenes/Atrezzo/Street_Lamp_Blur.tscn" id="15_5c5rf"]
+[ext_resource type="Texture2D" uid="uid://cuesydgcralbu" path="res://Assets/Sprites/Atrezzo/Street_Lamp_Blur.png" id="16_3duel"]
+[ext_resource type="Texture2D" uid="uid://b38snj6t625s5" path="res://Assets/Sprites/Effects/Fog.png" id="17_h8mjo"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_eoj0i"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_1loxg"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_v4abg"]
+gradient = SubResource("Gradient_1loxg")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8oeb8"]
 blend_mode = 1
 
+[sub_resource type="Gradient" id="Gradient_peixa"]
+offsets = PackedFloat32Array(0, 0.43093923)
+colors = PackedColorArray(1, 1, 1, 0.08235294, 1, 1, 1, 0.654902)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_isxnx"]
-size = Vector2(38216, 511)
+size = Vector2(38216, 599)
 
 [sub_resource type="Sky" id="Sky_p02g6"]
 
@@ -37,28 +58,56 @@ colors = PackedColorArray(0, 0, 0, 0, 0.78352344, 0.7835234, 0.7835234, 1)
 
 [node name="ComercialStreet" type="Node2D" unique_id=1435527189]
 
-[node name="Player" parent="." unique_id=722262165 instance=ExtResource("3_p02g6")]
-position = Vector2(-2736, -700)
+[node name="SkyNight" type="Sprite2D" parent="." unique_id=1824478962]
+visible = false
+modulate = Color(1, 1, 1, 0.60784316)
+self_modulate = Color(0.7792914, 0.7792914, 0.7792913, 1)
+position = Vector2(-1752, -6952)
+scale = Vector2(31.665, 31.665)
+texture = ExtResource("1_v4abg")
+
+[node name="360Light" type="Sprite2D" parent="SkyNight" unique_id=1050476300]
+modulate = Color(0, 0.2535772, 0.43682888, 1)
+material = SubResource("CanvasItemMaterial_eoj0i")
+position = Vector2(-5.891079, -139.33693)
+scale = Vector2(2.071084, 2.071084)
+texture = ExtResource("2_gb7vo")
+
+[node name="Player" parent="." unique_id=722262165 instance=ExtResource("3_lwph6")]
+position = Vector2(386.00037, -184.00002)
+scale = Vector2(0.21, 0.21)
 move_speed = 700.0
 run_speed = 1800.0
 acceleration = 800.0
 friction = 2500.0
 
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1108431742]
-zoom = Vector2(0.35, 0.35)
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=24779858]
+position = Vector2(80.000114, -499.99988)
+scale = Vector2(4.970761, 4.970761)
+zoom = Vector2(1.445, 1.445)
 position_smoothing_enabled = true
+drag_horizontal_enabled = true
+
+[node name="OverlayBlack" type="Sprite2D" parent="Player/Camera2D" unique_id=1859574260]
+modulate = Color(1, 1, 1, 0)
+z_index = -1
+position = Vector2(271.49872, 103.762405)
+scale = Vector2(96.127, 50.962)
+texture = SubResource("GradientTexture2D_v4abg")
 
 [node name="Scenary" type="Node2D" parent="." unique_id=89859433]
 texture_filter = 2
+scale = Vector2(0.2, 0.2)
 
 [node name="Buildings" type="Node2D" parent="Scenary" unique_id=1928828764]
 modulate = Color(0.5014063, 0.5014066, 0.50140643, 1)
 
 [node name="ApartmentBlock2" type="Sprite2D" parent="Scenary/Buildings" unique_id=1962539512]
+visible = false
 texture_filter = 1
 position = Vector2(8293, -1650)
 scale = Vector2(6.344498, 6.344497)
-texture = ExtResource("2_67ajf")
+texture = ExtResource("4_ajpcj")
 
 [node name="PointLight2D3" type="PointLight2D" parent="Scenary/Buildings/ApartmentBlock2" unique_id=594291234]
 position = Vector2(185.51505, 99.14103)
@@ -67,18 +116,19 @@ color = Color(1.2331204, 0.7472388, 0, 1)
 energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
-texture = ExtResource("3_isxnx")
+texture = ExtResource("2_gb7vo")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scenary/Buildings/ApartmentBlock2/PointLight2D3" unique_id=1167710293]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("3_isxnx")
+texture = ExtResource("2_gb7vo")
 
 [node name="ApartmentBlock3" type="Sprite2D" parent="Scenary/Buildings" unique_id=1793552706]
+visible = false
 texture_filter = 1
 position = Vector2(1274.3751, -2091.4153)
 scale = Vector2(3.5635378, 3.5635378)
-texture = ExtResource("4_0gbv2")
+texture = ExtResource("5_tp2us")
 
 [node name="PointLight2D4" type="PointLight2D" parent="Scenary/Buildings/ApartmentBlock3" unique_id=755997894]
 position = Vector2(185.66519, 198.23425)
@@ -87,18 +137,19 @@ color = Color(1.2331204, 0.7472388, 0, 1)
 energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
-texture = ExtResource("3_isxnx")
+texture = ExtResource("2_gb7vo")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scenary/Buildings/ApartmentBlock3/PointLight2D4" unique_id=1780491686]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("3_isxnx")
+texture = ExtResource("2_gb7vo")
 
 [node name="ApartmentBlock1" type="Sprite2D" parent="Scenary/Buildings" unique_id=1321002648]
+visible = false
 texture_filter = 1
 position = Vector2(-3321.0002, -2378)
 scale = Vector2(9, 9)
-texture = ExtResource("2_p02g6")
+texture = ExtResource("6_y0tni")
 
 [node name="PointLight2D" type="PointLight2D" parent="Scenary/Buildings/ApartmentBlock1" unique_id=1453904529]
 position = Vector2(-104.44442, 130.44444)
@@ -106,12 +157,12 @@ color = Color(1.2331204, 0.7472388, 0, 1)
 energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
-texture = ExtResource("3_isxnx")
+texture = ExtResource("2_gb7vo")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scenary/Buildings/ApartmentBlock1/PointLight2D" unique_id=1136691930]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("3_isxnx")
+texture = ExtResource("2_gb7vo")
 
 [node name="PointLight2D2" type="PointLight2D" parent="Scenary/Buildings/ApartmentBlock1" unique_id=818147125]
 position = Vector2(90.55558, 130.44444)
@@ -119,17 +170,18 @@ color = Color(1.2331204, 0.7472388, 0, 1)
 energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
-texture = ExtResource("3_isxnx")
+texture = ExtResource("2_gb7vo")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scenary/Buildings/ApartmentBlock1/PointLight2D2" unique_id=660587124]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("3_isxnx")
+texture = ExtResource("2_gb7vo")
 
 [node name="ApartmentBlock4" type="Sprite2D" parent="Scenary/Buildings" unique_id=269792243]
-position = Vector2(4632.2344, -1249.75)
+visible = false
+position = Vector2(-9414, -1466.0001)
 scale = Vector2(4.2606587, 4.2606587)
-texture = ExtResource("6_tl17h")
+texture = ExtResource("7_fcpjw")
 
 [node name="PointLight2D5" type="PointLight2D" parent="Scenary/Buildings/ApartmentBlock4" unique_id=583068615]
 position = Vector2(151.56476, 45.23948)
@@ -138,12 +190,62 @@ color = Color(1.2331204, 0.7472388, 0, 1)
 energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
-texture = ExtResource("3_isxnx")
+texture = ExtResource("2_gb7vo")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scenary/Buildings/ApartmentBlock4/PointLight2D5" unique_id=185857427]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("3_isxnx")
+texture = ExtResource("2_gb7vo")
+
+[node name="Square" type="Sprite2D" parent="Scenary/Buildings" unique_id=1806577367]
+visible = false
+light_mask = 4
+visibility_layer = 4
+position = Vector2(5675, -1571)
+scale = Vector2(3, 3)
+texture = ExtResource("8_os2yf")
+
+[node name="PointLight2D" type="PointLight2D" parent="Scenary/Buildings/Square" unique_id=628324448]
+light_mask = 4
+visibility_layer = 4
+position = Vector2(1.8132591, 319.19986)
+scale = Vector2(1.8132648, 1.0261748)
+color = Color(1, 0.49411765, 0.29411766, 1)
+energy = 16.0
+range_item_cull_mask = 4
+shadow_item_cull_mask = 0
+texture = ExtResource("2_gb7vo")
+texture_scale = 1.45
+script = ExtResource("9_7ajcb")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Scenary/Buildings/Square" unique_id=317187057]
+modulate = Color(1, 1, 1, 0.34509805)
+light_mask = 4
+visibility_layer = 4
+position = Vector2(7.2530556, 235.72446)
+scale = Vector2(1.8132648, 1.8132645)
+amount = 1500
+texture = ExtResource("10_ee86v")
+lifetime = 4.0
+preprocess = 0.05
+speed_scale = 0.4
+emission_shape = 2
+emission_sphere_radius = 11.09
+spread = 52.89
+gravity = Vector2(20, -100)
+initial_velocity_max = 35.08
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.0
+scale_amount_max = 0.2
+color = Color(0.27058825, 0.27058825, 0.27058825, 0.972549)
+color_ramp = SubResource("Gradient_peixa")
+
+[node name="Ten_Bells" parent="Scenary/Buildings" unique_id=926207058 instance=ExtResource("11_nas3t")]
+position = Vector2(3440, -2151.0002)
+scale = Vector2(3.7, 3.7)
+zoom_in = Vector2(0.3, 0.3)
+zoom_out = Vector2(1, 1)
 
 [node name="Ground" type="StaticBody2D" parent="Scenary" unique_id=1541999250]
 collision_mask = 0
@@ -152,17 +254,80 @@ collision_mask = 0
 modulate = Color(3.860604, 1.1520259, 0.6224204, 1)
 position = Vector2(87.000496, -291.5)
 scale = Vector2(34.89258, 9.421051)
-texture = ExtResource("1_0ljum")
+texture = ExtResource("12_v2j58")
 region_enabled = true
 region_rect = Rect2(0, 0, 1024, 19)
 
 [node name="GroundCobbelstoneSand2" type="Sprite2D" parent="Scenary/Ground" unique_id=1538756005]
 scale = Vector2(7.67, 7.67)
-texture = ExtResource("2_ycwgr")
+texture = ExtResource("13_4w0qd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scenary/Ground" unique_id=1757411227]
-position = Vector2(67, 25.5)
+position = Vector2(67, -18.5)
 shape = SubResource("RectangleShape2D_isxnx")
+
+[node name="Lights" type="Node2D" parent="." unique_id=1386870515]
+visible = false
+position = Vector2(-1946, -428)
+scale = Vector2(1.11, 1.11)
+
+[node name="Parallax2D" type="Parallax2D" parent="Lights" unique_id=1465751157]
+scale = Vector2(4.2606587, 4.2606587)
+scroll_scale = Vector2(1.01, 1)
+scroll_offset = Vector2(1079.1759, 330.93475)
+
+[node name="Lights_background" type="Node2D" parent="Lights/Parallax2D" unique_id=1833250996]
+
+[node name="Street_Lamp" parent="Lights/Parallax2D/Lights_background" unique_id=1667577496 instance=ExtResource("14_3j0sx")]
+position = Vector2(-757.125, -177.71143)
+scale = Vector2(0.23765433, 0.23765434)
+
+[node name="Street_Lamp3" parent="Lights/Parallax2D/Lights_background" unique_id=1826258392 instance=ExtResource("14_3j0sx")]
+position = Vector2(-139.375, -177.71143)
+scale = Vector2(0.23765433, 0.23765434)
+
+[node name="Street_Lamp5" parent="Lights/Parallax2D/Lights_background" unique_id=1022455554 instance=ExtResource("14_3j0sx")]
+position = Vector2(540.625, -177.71143)
+scale = Vector2(0.23765433, 0.23765434)
+
+[node name="Street_Lamp7" parent="Lights/Parallax2D/Lights_background" unique_id=166615034 instance=ExtResource("14_3j0sx")]
+position = Vector2(1212.625, -177.71143)
+scale = Vector2(0.23765433, 0.23765434)
+
+[node name="Parallax2D2" type="Parallax2D" parent="Lights" unique_id=2016238725]
+scale = Vector2(4.2606587, 4.2606587)
+scroll_scale = Vector2(1.3, 1)
+scroll_offset = Vector2(1079.1759, 330.93475)
+
+[node name="Lights_Foreground" type="Node2D" parent="Lights/Parallax2D2" unique_id=1877099797]
+
+[node name="Street_Lamp2" parent="Lights/Parallax2D2/Lights_Foreground" unique_id=2060761331 instance=ExtResource("15_5c5rf")]
+z_index = 5
+material = null
+position = Vector2(-1095, -148.94882)
+scale = Vector2(0.45463523, 0.45463517)
+texture = ExtResource("16_3duel")
+
+[node name="Street_Lamp4" parent="Lights/Parallax2D2/Lights_Foreground" unique_id=800303584 instance=ExtResource("15_5c5rf")]
+z_index = 5
+material = null
+position = Vector2(-237.99998, -148.94882)
+scale = Vector2(0.45463523, 0.45463517)
+texture = ExtResource("16_3duel")
+
+[node name="Street_Lamp6" parent="Lights/Parallax2D2/Lights_Foreground" unique_id=1838405559 instance=ExtResource("15_5c5rf")]
+z_index = 5
+material = null
+position = Vector2(699, -148.94882)
+scale = Vector2(0.45463523, 0.45463517)
+texture = ExtResource("16_3duel")
+
+[node name="Street_Lamp8" parent="Lights/Parallax2D2/Lights_Foreground" unique_id=25661548 instance=ExtResource("15_5c5rf")]
+z_index = 5
+material = null
+position = Vector2(1642, -148.94882)
+scale = Vector2(0.45463523, 0.45463517)
+texture = ExtResource("16_3duel")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=839120985]
 environment = SubResource("Environment_p02g6")
@@ -173,11 +338,12 @@ color = Color(0, 0, 0, 1)
 blend_mode = 2
 
 [node name="GPUParticles2D" type="CPUParticles2D" parent="." unique_id=1326619843]
+visible = false
 modulate = Color(0.5287153, 0.5287153, 0.5287153, 0.49411765)
 z_index = 5
 position = Vector2(-13760, -197)
 amount = 500
-texture = ExtResource("9_0gbv2")
+texture = ExtResource("17_h8mjo")
 lifetime = 35.0
 preprocess = 10.0
 randomness = 0.5

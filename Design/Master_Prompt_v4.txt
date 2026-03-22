@@ -1,0 +1,414 @@
+# MASTER PROMPT — WHITECHAPEL 1888
+# Godot 4.6 | GDScript | 2D Lateral
+# Actualizado: Sesión 23/03/2026
+
+================================================================
+## 🎮 CONCEPTO DEL JUEGO
+================================================================
+Juego de supervivencia 2D ambientado en el Londres victoriano de 1888.
+El jugador controla a una prostituta que debe sobrevivir en las calles
+de Whitechapel ganando dinero con clientes, cuidando sus stats y
+evitando morir de enfermedad, hambre o a manos de Jack the Ripper.
+
+OBJETIVO: Reunir 200 chelines para escapar de Whitechapel.
+
+AMENAZAS:
+- Hambre, higiene, cansancio degradan salud
+- Enfermedad de transmisión sexual (por clientes)
+- Jack the Ripper (futuro — dash/esquiva pendiente)
+- Dormir en la calle es peligroso
+
+================================================================
+## 📁 ESTRUCTURA DE CARPETAS
+================================================================
+res://
+├── Assets/
+│   ├── Audio/
+│   │   └── Player/
+│   │       └── Sick/       ← woman_cough_light_1/2, woman_cough_1/2/3/4,
+│   │                          woman_suffering_1/2
+│   ├── Fonts/              ← Cinzel.ttf, IMFellEnglish.ttf
+│   ├── Images/             ← Journal.png, Paper.png
+│   ├── Shaders/            ← blur.gdshader, vignette.gdshader,
+│   │                          distortion.gdshader, disease.gdshader
+│   ├── Sprites/
+│   └── Textures/
+├── Data/
+│   ├── Dialogic/           ← Whitechapel_Layout.tres
+│   ├── Game/
+│   │   └── game_config.tres
+│   ├── Pickups/
+│   └── Translations/
+│       ├── translations.csv
+│       ├── translations.es.translation
+│       └── translations.en.translation
+├── Design/
+│   ├── GDD.txt
+│   ├── Lista victimas.txt
+│   └── Master_Prompt_v4.txt  ← ESTE ARCHIVO
+├── Dialogues/              ← npc_1.dtl
+├── Scenes/
+│   ├── Buildings/          ← NUEVO — escenas de edificios instanciables
+│   │   ├── Bar_Bells.tscn  ← Ten Bells (Commercial Street)
+│   │   └── Lodge_House.tscn
+│   ├── Core/
+│   │   ├── Pickup.tscn
+│   │   ├── Scene_Changer.tscn
+│   │   ├── Sleep_Selection.tscn
+│   │   ├── Sleep_Screen.tscn
+│   │   └── UI_Stats.tscn
+│   ├── Exteriors/
+│   │   └── Comercial_Street.tscn  ← escena activa con Ten Bells y Lodge
+│   ├── NPC/
+│   │   ├── NPC_Charger.tscn
+│   │   └── NPC_Ragdoll.tscn
+│   ├── Player/
+│   │   └── Player.tscn
+│   ├── Test/
+│   │   └── Prueba_Mecanicas.tscn
+│   └── UI/
+│       └── Journal.tscn
+└── Scripts/
+	├── Core/
+	│   ├── building.gd         ← NUEVO — script raíz de cada edificio
+	│   ├── enter_building.gd   ← NUEVO — sistema de entrada/salida unificado
+	│   ├── pickup.gd
+	│   ├── scene_changer.gd
+	│   ├── sleep_screen.gd
+	│   ├── sleep_selection.gd
+	│   └── ui_stats.gd
+	├── Data/
+	│   ├── game_config.gd
+	│   └── pickup_data.gd
+	├── Managers/
+	│   ├── day_night_manager.gd
+	│   ├── effects_manager.gd
+	│   ├── game_manager.gd
+	│   ├── player_manager.gd
+	│   ├── player_stats.gd     ← modificado (sueno_agotado, _colapso_activo)
+	│   ├── scene_manager.gd
+	│   └── sleep_manager.gd    ← modificado (start_sleep_forced, play_rise)
+	├── NPC/
+	│   ├── npc_animation.gd
+	│   ├── npc_audio.gd
+	│   ├── npc_conversation.gd
+	│   ├── npc_main.gd
+	│   ├── npc_movement.gd
+	│   └── npc_skin.gd
+	├── Player/
+	│   ├── player_animation.gd ← modificado (Faint, Rise, collapse_finished)
+	│   ├── player_audio.gd
+	│   ├── player_controller.gd← modificado (sueno_agotado, PlayerManager self-register)
+	│   ├── player_interaction.gd
+	│   └── player_movement.gd
+	├── Story/
+	├── UI/
+	│   ├── journal.gd
+	│   ├── fps_counter.gd
+	│   ├── stats_panel.gd
+	│   └── waypoint_marker.gd
+	└── Vehicles/
+		└── carriage_movement.gd
+
+================================================================
+## 🤖 AUTOLOADS (Singletons)
+================================================================
+- GameManager        → Gestiona el ratón
+- PlayerManager      → var player_instance: MainPlayer
+- PlayerStats        → Stats del jugador (sin class_name)
+- SceneManager       → Fade negro, _fade_out() y _fade_in() públicos
+- DayNightManager    → Ciclo día/noche
+- EffectsManager     → Efectos visuales
+- SleepManager       → Sistema de sueño
+- Dialogic           → Plugin diálogos
+
+================================================================
+## 👤 PLAYER
+================================================================
+Nodo raíz: CharacterBody2D (class_name MainPlayer)
+Script: player_controller.gd
+
+IMPORTANTE: PlayerManager.player_instance = self
+se asigna en _ready() de player_controller.gd automáticamente.
+NO hace falta asignarlo manualmente en cada escena.
+
+================================================================
+## 😴 SISTEMA DE SUEÑO — COLAPSO POR AGOTAMIENTO
+================================================================
+Implementado en esta sesión. Flujo completo:
+
+1. sueno llega a 0 → PlayerStats emite sueno_agotado
+   - Protegido con _colapso_activo (no se dispara múltiples veces)
+   - _sueno_anterior rastrea el valor anterior frame a frame
+   - Se detecta en actualizar_stats() — funciona desde cualquier fuente
+	 (pickups, degradación, etc.)
+
+2. player_controller recibe sueno_agotado:
+   - disable_movement()
+   - animation.play_collapse() → viaja a estado "Faint" en AnimationTree
+   - await animation.collapse_finished (timeout 3s de seguridad)
+   - SleepManager.start_sleep_forced("calle", tr("SLEEP_COLAPSO_MENSAJE"))
+
+3. SleepManager.start_sleep_forced():
+   - Muestra mensaje con fuente IMFellEnglish color crema
+   - Fade negro 2s
+   - Arranca Sleep_Screen directamente (sin Sleep_Selection)
+   - Al terminar: fade → play_rise() → Idle → enable_movement()
+
+ANIMACIONES REQUERIDAS EN ANIMATIONTREE:
+- Estado "Faint": BlendTree con animación Faint
+- Estado "Rise": BlendTree con animación Rise
+- Transiciones: Idle→Faint, Faint→Rise, Rise→Idle
+- TODAS con Advance Mode: Disabled (solo por código con travel())
+- TODAS con Switch Mode: At End
+
+TRADUCCIÓN NECESARIA EN translations.csv:
+SLEEP_COLAPSO_MENSAJE,"Te has desvanecido de agotamiento...","You have fainted from exhaustion..."
+
+================================================================
+## 🏠 SISTEMA DE EDIFICIOS — NUEVO
+================================================================
+Sistema unificado para entrar/salir de edificios.
+
+SCRIPTS:
+- Scripts/Core/building.gd      → raíz de cada edificio (exports)
+- Scripts/Core/enter_building.gd → lógica de entrada/salida
+
+ESTRUCTURA DE CADA EDIFICIO:
+```
+Bar_Bells.tscn
+├── Ten_Bells (Node2D) ← building.gd
+│   ├── Exterior (Sprite2D/Node2D)
+│   ├── Interior (Node2D)
+│   │   ├── TileMapLayer
+│   │   │   ├── Wall (StaticBody2D) ← metadata surface_type: "wood"
+│   │   │   │   ├── WallLeft, Roof, Floor, WallRight (CollisionShape2D)
+│   │   │   ├── Objects (Node2D)
+│   │   │   ├── Light (Node2D)
+│   │   │   └── ExitArea (Area2D) ← Layer/Mask capa 2
+│   │   │       ├── Door
+│   │   │       └── CollisionShape2D
+│   │   └── CameraLimits (Node2D) ← OPCIONAL para límites de cámara
+│   │       ├── TopLeft (Marker2D)
+│   │       └── BottomRight (Marker2D)
+│   ├── Audio (Node2D) ← grupo global "audio_interior"
+│   │   ├── Ambient (AudioStreamPlayer2D) ← SIN Autoplay
+│   │   └── Music (AudioStreamPlayer2D)   ← SIN Autoplay
+│   └── BuildingEntrance (Node2D) ← enter_building.gd
+│       └── EnterArea (Area2D) ← Layer/Mask capa 2
+│           ├── Door
+│           └── Door2
+```
+
+ESTRUCTURA DE LA ESCENA DE CALLE:
+```
+Comercial_Street.tscn
+├── Streets (Node2D) ← sin script o script mínimo
+│   ├── IluminacionAmbiental
+│   ├── LightOverlay
+│   ├── Exterior (Node2D) ← contiene todo lo exterior
+│   │   ├── Audio (Node2D) ← grupo global "audio_exterior"
+│   │   │   ├── FireflyAudio... (AudioStreamPlayer2D)
+│   │   │   └── ShadowsBeneath... (AudioStreamPlayer2D)
+│   │   └── World (Node2D)
+│   │       ├── Street1, Parallax2D, Parallax2D2
+│   │       ├── NPCs (grupo "npcs_outside")
+│   │       ├── Ten_Bells (instancia Bar_Bells.tscn)
+│   │       └── Lodge (instancia Lodge_House.tscn)
+│   ├── Journal
+│   └── Player
+```
+
+FLUJO AL ENTRAR:
+1. F cerca de EnterArea → building.on_enter() → fade negro
+2. Pausa audio_exterior, congela World (excepto edificio actual)
+3. Oculta Exterior del edificio, muestra Interior
+4. Activa Wall, aplica zoom_in y límites de cámara
+5. Fade vuelta, arranca audio_interior (primera vez play(), resto unpause)
+6. enable_movement()
+
+FLUJO AL SALIR:
+1. F cerca de ExitArea → building.on_exit() → fade negro
+2. Fade out + pause audio_interior
+3. Oculta Interior, desactiva Wall
+4. Restaura Exterior del edificio, descongela World
+5. Restaura zoom_out y límites de cámara originales
+6. Fade vuelta, reanuda audio_exterior
+7. enable_movement()
+
+EXPORTS DE building.gd (visibles en Inspector al instanciar):
+- enter_action: "interact"
+- fade_time: 0.8
+- zoom_in: Vector2(2.2, 2.2)
+- zoom_out: Vector2(1.445, 1.445)  ← ajustar al zoom real de la cámara
+- open_sounds / close_sounds: arrays de AudioStream
+- on_enter() / on_exit(): sobrescribibles para lógica especial
+
+GRUPOS GLOBALES NECESARIOS:
+- "audio_exterior" → nodo Audio de la calle
+- "audio_interior" → nodo Audio del edificio
+- "npcs_outside"   → NPCs de la calle
+- "player"         → el player (ya existía)
+
+RUTAS QUE USA enter_building.gd:
+- $EnterArea
+- $"../Interior/TileMapLayer/ExitArea"
+- $"../Interior"
+- $"../Interior/TileMapLayer/Wall"
+- $"../Interior/OutsideAudio" (opcional)
+- $"../Interior/InsideAudio"  (opcional)
+
+LÓGICA ESPECIAL POR EDIFICIO:
+Extiende building.gd y sobrescribe on_enter()/on_exit()
+Ejemplo: hostal cobra dinero, médico cura, etc.
+
+================================================================
+## 🔊 AUDIO — PASOS POR SUPERFICIE
+================================================================
+Sistema en player_audio.gd — detecta superficie via ShadowRAY.
+
+SUPERFICIE EN StaticBody2D:
+- Seleccionar el nodo StaticBody2D (ej: Wall)
+- Inspector → Node → Metadata → añadir "surface_type" (String)
+- Valores: "stone", "wood", "dirt", "grass", "water"
+- NOTA: poner en el StaticBody2D, no en el CollisionShape2D hijo
+
+SUPERFICIE EN TileMapLayer:
+- TileSet → Custom Data Layers → añadir "surface_type" (String)
+- Asignar valor a cada tile
+
+Ten Bells → Wall → surface_type: "wood" ✅
+
+================================================================
+## 🦠 EFECTOS DE ENFERMEDAD GRAVE
+================================================================
+(sin cambios respecto a v3)
+Activos cuando enfermedad >= 60:
+- Shader disease.gdshader via EffectsManager
+- Tos via player_audio.gd (cough_sounds_light/heavy)
+- Velocidad reducida, no puede correr >= 70
+
+================================================================
+## 🌙 DAY NIGHT MANAGER
+================================================================
+(sin cambios)
+- Duración: CONFIG.duracion_hora_segundos (default 60)
+- hora_actual empieza en 8:00
+- Señal: hora_cambiada(hora_actual)
+
+================================================================
+## ⚙️ GAME CONFIG — game_config.tres
+================================================================
+(sin cambios)
+Path: res://Data/Game/game_config.tres
+Uso: const CONFIG = preload("res://Data/Game/game_config.tres")
+
+================================================================
+## 🌐 TRADUCCIONES
+================================================================
+Path: res://Data/Translations/translations.csv
+Idioma por defecto: es
+
+Claves actuales:
+SLEEP_TITLE_HOSTAL/CALLEJON/CALLE, SLEEP_HORA/HORAS,
+SLEEP_HOSTAL_CERRADO, SLEEP_HOSTAL_POCO_TIEMPO,
+SLEEP_POST_TEXTO, SLEEP_DESPERTAR, SLEEP_SEGUIR, SLEEP_SALIR,
+SLEEP_COLAPSO_MENSAJE ← NUEVO
+
+================================================================
+## 📊 PLAYER STATS — CAMBIOS DE ESTA SESIÓN
+================================================================
+NUEVO: signal sueno_agotado()
+NUEVO: var _colapso_activo: bool
+NUEVO: var _sueno_anterior: float
+NUEVO: detección de sueno=0 en actualizar_stats() (no en _aplicar_degradacion)
+	   funciona desde cualquier fuente (pickups, degradación, etc.)
+
+================================================================
+## 🎨 EFFECTS MANAGER
+================================================================
+(sin cambios)
+CanvasLayer layer 10. Efectos:
+- Blur + shake → Stamina < 50%
+- Viñeta oscura → Miedo > 50
+- Parpadeos → Sueño < 35
+- Distorsión → Alcohol+Laudano > 40
+- Viñeta verdosa → Enfermedad >= 60 (disease.gdshader)
+
+================================================================
+## 💬 DIALOGIC
+================================================================
+(sin cambios respecto a v3)
+Versión: 2.0-Alpha-19
+NOTA: Dialogic.start() devuelve CanvasLayer — usar hide()/show()
+	  NO modulate.a directamente.
+
+Precarga en Level.gd/_ready():
+  var dialogic_node = Dialogic.start("res://Dialogues/npc_1.dtl")
+  dialogic_node.hide()
+  await get_tree().process_frame
+  Dialogic.end_timeline()
+  dialogic_node.show()
+
+================================================================
+## 🐙 GITHUB
+================================================================
+Repo: https://github.com/Urtu240z/Whitechapel-1888
+Rama: main — GitHub Desktop conectado
+PENDIENTE: commit de la sesión de hoy
+
+================================================================
+## 🚧 PENDIENTES
+================================================================
+1. **Dialogic** — diálogos reales con condiciones en Streets
+   (variables declaradas, NPCs con timeline, falta contenido)
+
+2. **Jack the Ripper** — hook interrupt_sleep("jack") listo
+
+3. **Más escenas de Whitechapel**
+   - Buck's Row (donde murió Mary Ann Nichols)
+   - Hanbury Street
+   - Mitre Square
+   - Dorset Street
+
+4. **Fairy** → minijuego (Level.gd en _Archive)
+
+5. **Paper.png** como fondo de diálogos (Assets/Images/)
+
+6. **Lógica especial de edificios**:
+   - Hostal: cobra dinero, llama a SleepManager
+   - Médico: cobra 15 chelines, cura enfermedad
+   - Ten Bells: interacción con barman/clientes
+
+7. **CameraLimits** en Ten Bells y Lodge:
+   - Crear Interior/CameraLimits/TopLeft y BottomRight (Marker2D)
+   - Ajustar zoom_out a 1.445 en Inspector de cada edificio
+
+8. **Sonidos de pasos en madera** para Ten Bells:
+   - Asignar en Inspector del player → player_audio → step_sounds["wood"]
+
+9. **Level.gd de Streets** — actualmente sin script en el nodo raíz Streets
+   (PlayerManager.player_instance se asigna solo desde player_controller)
+
+================================================================
+## ⚠️ NOTAS IMPORTANTES
+================================================================
+- PlayerStats sin class_name (evita conflicto autoload)
+- player_instance se registra en player_controller._ready() automáticamente
+- ShadowRAY collision mask: SOLO capa 2
+- Shadow sprite es hijo DIRECTO del Player
+- F en interact + ui_accept + ui_cancel para Dialogic
+- EffectsManager busca Camera2D via node_added
+- Sleep_Selection y Sleep_Screen necesitan scripts asignados en Inspector
+- Señales Sleep con .connect("nombre", cb) no sintaxis tipada
+- translations.csv → Reimportar tras editar
+- NPC_Charger: scripts externos (no embebidos)
+- disease.gdshader usa SCREEN_TEXTURE (no TEXTURE)
+- CoughPlayer es hijo de Audio en Player.tscn
+- AnimationTree estados Faint/Rise → Advance Mode: Disabled
+- building.gd va en nodo RAÍZ del edificio
+- enter_building.gd va en nodo BuildingEntrance (hijo de la raíz)
+- audio_exterior/audio_interior son grupos GLOBALES
+- Wall (StaticBody2D) necesita metadata surface_type para pasos
+- Dialogic.start() devuelve CanvasLayer → usar hide()/show()
+- zoom_out debe coincidir con el zoom real de la Camera2D de la escena

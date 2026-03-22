@@ -36,6 +36,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 # READY
 # ==========================
 func _ready() -> void:
+	PlayerManager.player_instance = self
 	if not has_node("Camera2D"):
 		push_warning("MainPlayer: No Camera2D found. Add one manually to the scene.")
 	movement.initialize(self)
@@ -43,6 +44,17 @@ func _ready() -> void:
 	interaction.initialize(self)
 	audio.initialize(self)
 	set_outfit(default_outfit)
+	# Conectar colapso por agotamiento
+	PlayerStats.sueno_agotado.connect(_on_sueno_agotado)
+
+# ==========================
+# COLAPSO POR AGOTAMIENTO
+# ==========================
+func _on_sueno_agotado() -> void:
+	disable_movement()
+	animation.play_collapse()
+	await animation.collapse_finished
+	SleepManager.start_sleep_forced("calle", tr("SLEEP_COLAPSO_MENSAJE"))
 
 # ==========================
 # MAIN LOOP

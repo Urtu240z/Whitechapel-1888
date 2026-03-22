@@ -1,12 +1,7 @@
 [gd_scene format=4 uid="uid://1pqfhxw14n4a"]
 
+[ext_resource type="Script" uid="uid://cyg1gqnmj4s5m" path="res://Scripts/Core/building.gd" id="1_p8nmd"]
 [ext_resource type="Script" uid="uid://co4vtq04cujyn" path="res://Scripts/Core/enter_building.gd" id="1_sx2l7"]
-[ext_resource type="AudioStream" uid="uid://blulpegm5fkto" path="res://Assets/Audio/Buildings/Open_Door (1).wav" id="2_u77ig"]
-[ext_resource type="AudioStream" uid="uid://2ocbh2xjeg3i" path="res://Assets/Audio/Buildings/Open_Door (2).wav" id="3_ogrot"]
-[ext_resource type="AudioStream" uid="uid://bpbgo1ht1u2mx" path="res://Assets/Audio/Buildings/Open_Door (3).wav" id="4_2b1k0"]
-[ext_resource type="AudioStream" uid="uid://bq626yq3ebj5a" path="res://Assets/Audio/Buildings/Close_Door (1).wav" id="5_bh7vn"]
-[ext_resource type="AudioStream" uid="uid://vsi28chd68ph" path="res://Assets/Audio/Buildings/Close_Door (2).wav" id="6_d2g54"]
-[ext_resource type="AudioStream" uid="uid://d1q5svthqkw2r" path="res://Assets/Audio/Buildings/Close_Door (3).wav" id="7_wnwk1"]
 [ext_resource type="Texture2D" uid="uid://cbmf23b74kvf3" path="res://Assets/Sprites/Building/Lodging_House_1.png" id="8_i0ema"]
 [ext_resource type="Texture2D" uid="uid://dpv0wabl7sn2g" path="res://Assets/Tilesets/BuildingInterior.png" id="9_wtgbi"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="10_38y22"]
@@ -85,139 +80,139 @@ size = Vector2(128.87479, 280.20502)
 size = Vector2(164, 273)
 
 [node name="Lodge" type="Node2D" unique_id=444969637]
-script = ExtResource("1_sx2l7")
-open_sounds = Array[AudioStream]([ExtResource("2_u77ig"), ExtResource("3_ogrot"), ExtResource("4_2b1k0")])
-close_sounds = Array[AudioStream]([ExtResource("5_bh7vn"), ExtResource("6_d2g54"), ExtResource("7_wnwk1")])
+script = ExtResource("1_p8nmd")
 
 [node name="Exterior" type="Sprite2D" parent="." unique_id=1915103148]
 position = Vector2(8.999985, 18.99997)
 scale = Vector2(1.8308128, 1.8308128)
 texture = ExtResource("8_i0ema")
 
-[node name="Interior" type="TileMapLayer" parent="." unique_id=897291406]
+[node name="Interior" type="Node2D" parent="." unique_id=1238585940]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Interior" unique_id=897291406]
 z_index = 1
 position = Vector2(22, -175)
 tile_map_data = PackedByteArray("AAD6/wgAAAAAAAIAAAD6/wkAAAAAAAIAAAD7/wgAAAAAAAIAAAD7/wkAAAAAAAIAAAD8/wgAAAAAAAIAAAD8/wkAAAAAAAIAAAD9/wgAAAAAAAIAAAD9/wkAAAAAAAIAAAD+/wgAAAAAAAIAAAD+/wkAAAAAAAIAAAD//wgAAAAAAAIAAAD//wkAAAAAAAIAAAAAAAgAAAAAAAIAAAAAAAkAAAAAAAIAAAABAAgAAAAAAAIAAAABAAkAAAAAAAIAAAACAAgAAAAAAAIAAAACAAkAAAAAAAIAAAADAAgAAAAAAAIAAAADAAkAAAAAAAIAAAACAAYAAAAAAAIAAAACAAcAAAAAAAIAAAADAAYAAAAAAAIAAAADAAcAAAAAAAIAAAAEAAYAAAAAAAIAAAAEAAcAAAAAAAIAAAAFAAYAAAAAAAIAAAAFAAcAAAAAAAIAAAAEAAgAAAAAAAIAAAAEAAkAAAAAAAIAAAAFAAgAAAAAAAIAAAAFAAkAAAAAAAIAAAABAAYAAAAAAAIAAAAAAAYAAAAAAAIAAAD//wYAAAAAAAIAAAD+/wYAAAAAAAIAAAD9/wYAAAAAAAIAAAD8/wYAAAAAAAIAAAD7/wYAAAAAAAIAAAD6/wYAAAAAAAIAAAD6/wcAAAAAAAIAAAD7/wcAAAAAAAIAAAD8/wcAAAAAAAIAAAD9/wcAAAAAAAIAAAD+/wcAAAAAAAIAAAD//wcAAAAAAAIAAAAAAAcAAAAAAAIAAAABAAcAAAAAAAIAAAAFAAUAAAAAAAIAAAAFAAQAAAAAAAIAAAAEAAQAAAAAAAIAAAAEAAMAAAAAAAIAAAAFAAMAAAAAAAIAAAADAAMAAAAAAAIAAAACAAMAAAAAAAIAAAABAAMAAAAAAAIAAAAAAAMAAAAAAAIAAAD//wMAAAAAAAIAAAD+/wMAAAAAAAIAAAD9/wMAAAAAAAIAAAD8/wMAAAAAAAIAAAD7/wMAAAAAAAIAAAD6/wMAAAAAAAIAAAD6/wQAAAAAAAIAAAD6/wUAAAAAAAIAAAD7/wQAAAAAAAIAAAD7/wUAAAAAAAIAAAD8/wUAAAAAAAIAAAD8/wQAAAAAAAIAAAD9/wUAAAAAAAIAAAD9/wQAAAAAAAIAAAD+/wQAAAAAAAIAAAD+/wUAAAAAAAIAAAD//wUAAAAAAAIAAAAAAAUAAAAAAAIAAAAAAAQAAAAAAAIAAAABAAQAAAAAAAIAAAABAAUAAAAAAAIAAAACAAUAAAAAAAIAAAADAAUAAAAAAAIAAAAEAAUAAAAAAAIAAAADAAQAAAAAAAIAAAACAAQAAAAAAAIAAAD//wQAAAAAAAIAAAAFAAIAAAAAAAIAAAAEAAIAAAAAAAIAAAADAAIAAAAAAAIAAAACAAIAAAAAAAIAAAABAAIAAAAAAAIAAAAAAAIAAAAAAAIAAAD//wIAAAAAAAIAAAD+/wIAAAAAAAIAAAD9/wIAAAAAAAIAAAD8/wIAAAAAAAIAAAD7/wIAAAAAAAIAAAD6/wIAAAAAAAIAAAAGAAgAAAAAAAIAAAAGAAkAAAAAAAIAAAAHAAgAAAAAAAIAAAAHAAkAAAAAAAIAAAAIAAgAAAAAAAIAAAAIAAkAAAAAAAIAAAAJAAgAAAAAAAIAAAAJAAkAAAAAAAIAAAAKAAgAAAAAAAIAAAAKAAkAAAAAAAIAAAD5/wgAAAAAAAIAAAD5/wkAAAAAAAIAAAD3/wgAAAAAAAIAAAD3/wkAAAAAAAIAAAD4/wgAAAAAAAIAAAD4/wkAAAAAAAIAAAD1/wgAAAACAAIAAAD1/wkAAAACAAIAAAD2/wgAAAACAAIAAAD2/wkAAAACAAIAAADz/wgAAAACAAIAAADz/wkAAAACAAIAAAD0/wgAAAACAAIAAAD0/wkAAAACAAIAAAD5/wYAAAAAAAIAAAD5/wUAAAAAAAIAAAD4/wUAAAAAAAIAAAD3/wUAAAAAAAIAAAD3/wYAAAAAAAIAAAD4/wYAAAAAAAIAAAD5/wcAAAAAAAIAAAD4/wcAAAAAAAIAAAD3/wcAAAAAAAIAAAD2/wcAAAACAAIAAAD1/wcAAAACAAIAAAD0/wcAAAACAAIAAAD1/wYAAAACAAIAAAD2/wYAAAACAAIAAAD4/wQAAAAAAAIAAAD5/wQAAAAAAAIAAAD3/wQAAAAAAAIAAAD2/wQAAAACAAIAAAD1/wQAAAACAAIAAAD0/wMAAAACAAIAAADz/wMAAAACAAIAAADz/wQAAAACAAIAAADz/wUAAAACAAIAAADz/wYAAAACAAIAAADz/wcAAAACAAIAAAD0/wQAAAACAAIAAAD0/wUAAAACAAIAAAD0/wYAAAACAAIAAAD1/wUAAAACAAIAAAD2/wUAAAACAAIAAAD1/wMAAAACAAIAAAD2/wMAAAACAAIAAAD3/wMAAAAAAAIAAAD4/wMAAAAAAAIAAAD5/wMAAAAAAAIAAAAGAAMAAAAAAAIAAAAHAAMAAAAAAAIAAAAIAAMAAAAAAAIAAAAJAAMAAAAAAAIAAAAKAAMAAAAAAAIAAAAKAAQAAAAAAAIAAAAKAAUAAAAAAAIAAAAKAAYAAAAAAAIAAAAKAAcAAAAAAAIAAAAJAAQAAAAAAAIAAAAJAAUAAAAAAAIAAAAIAAQAAAAAAAIAAAAIAAUAAAAAAAIAAAAHAAQAAAAAAAIAAAAHAAUAAAAAAAIAAAAGAAQAAAAAAAIAAAAGAAUAAAAAAAIAAAAGAAYAAAAAAAIAAAAGAAcAAAAAAAIAAAAIAAYAAAAAAAIAAAAHAAYAAAAAAAIAAAAJAAYAAAAAAAIAAAAJAAcAAAAAAAIAAAAIAAcAAAAAAAIAAAAHAAcAAAAAAAIAAADz/wIAAAACAAIAAAD0/wIAAAACAAIAAAD1/wIAAAACAAIAAAD2/wIAAAACAAIAAAD3/wIAAAAAAAIAAAD4/wIAAAAAAAIAAAD5/wIAAAAAAAIAAAAGAAIAAAAAAAIAAAAHAAIAAAAAAAIAAAAIAAIAAAAAAAIAAAAJAAIAAAAAAAIAAAAKAAIAAAAAAAIAAADz/wEAAAACAAIAAAD0/wEAAAACAAIAAAD1/wEAAAACAAIAAAD2/wEAAAACAAIAAAD3/wEAAAAAAAIAAAD4/wEAAAAAAAIAAAD5/wEAAAAAAAIAAAD6/wEAAAAAAAIAAAD7/wEAAAAAAAIAAAD8/wEAAAAAAAIAAAD9/wEAAAAAAAIAAAD+/wEAAAAAAAIAAAD//wEAAAAAAAIAAAAAAAEAAAAAAAIAAAABAAEAAAAAAAIAAAACAAEAAAAAAAIAAAADAAEAAAAAAAIAAAAEAAEAAAAAAAIAAAAFAAEAAAAAAAIAAAAGAAEAAAAAAAIAAAAHAAEAAAAAAAIAAAAIAAEAAAAAAAIAAAAJAAEAAAAAAAIAAAAKAAEAAAAAAAIAAADz/wAAAAACAAIAAAD0/wAAAAACAAIAAAD1/wAAAAACAAIAAAD2/wAAAAACAAIAAAD3/wAAAAAAAAIAAAD4/wAAAAAAAAIAAAD5/wAAAAAAAAIAAAD6/wAAAAAAAAIAAAD7/wAAAAAAAAIAAAD8/wAAAAAAAAIAAAD9/wAAAAAAAAIAAAD+/wAAAAAAAAIAAAD//wAAAAAAAAIAAAAAAAAAAAAAAAIAAAABAAAAAAAAAAIAAAACAAAAAAAAAAIAAAADAAAAAAAAAAIAAAAEAAAAAAAAAAIAAAAFAAAAAAAAAAIAAAAGAAAAAAAAAAIAAAAHAAAAAAAAAAIAAAAIAAAAAAAAAAIAAAAJAAAAAAAAAAIAAAAKAAAAAAAAAAIAAADz////AAAFAAAAAADy////AAAFAAAAAAALAP//AAAFAAAAAAAKAP//AAAFAAAAAAAJAP//AAAFAAAAAAAIAP//AAAFAAAAAAAHAP//AAAFAAAAAAAGAP//AAAFAAAAAAAFAP//AAAFAAAAAAAEAP//AAAFAAAAAAADAP//AAAFAAAAAAACAP//AAAFAAAAAAABAP//AAAFAAAAAAAAAP//AAAFAAAAAAD/////AAAFAAAAAAD+////AAAFAAAAAAD9////AAAFAAAAAAD8////AAAFAAAAAAD7////AAAFAAAAAAD6////AAAFAAAAAAD5////AAAFAAAAAAD4////AAAFAAAAAAD3////AAAFAAAAAAD2////AAAFAAAAAAD1////AAAFAAAAAAD0////AAAFAAAAAAALAAAAAAAAAAIAAAALAAEAAAAAAAIAAAALAAIAAAAAAAIAAAALAAMAAAAAAAIAAAALAAQAAAAAAAIAAAALAAUAAAAAAAIAAAALAAYAAAAAAAIAAAALAAcAAAAAAAIAAAALAAgAAAAAAAIAAAALAAkAAAAAAAIAAADy/wAAAAACAAIAAADy/wEAAAACAAIAAADy/wIAAAACAAIAAADy/wMAAAACAAIAAADy/wQAAAACAAIAAADy/wUAAAACAAIAAADy/wYAAAACAAIAAADy/wcAAAACAAIAAADy/wgAAAACAAIAAADy/wkAAAACAAIAAADz/woAAAADAAEAAAD0/woAAAAEAAEAAAD1/woAAAADAAEAAAD2/woAAAAEAAEAAAD3/woAAAAEAAEAAAD4/woAAAADAAEAAAD5/woAAAAEAAEAAAD6/woAAAADAAEAAAD7/woAAAAEAAEAAAD8/woAAAADAAEAAAD9/woAAAAEAAEAAAD+/woAAAADAAEAAAD//woAAAAEAAEAAAAAAAoAAAADAAEAAAABAAoAAAAEAAEAAAACAAoAAAADAAEAAAADAAoAAAAEAAEAAAAEAAoAAAADAAEAAAAFAAoAAAAEAAEAAAAGAAoAAAADAAEAAAAHAAoAAAAEAAEAAAAIAAoAAAADAAEAAAAJAAoAAAAEAAEAAAAKAAoAAAADAAEAAAAKAAsAAAADAAIAAAAJAAsAAAAEAAIAAAAIAAsAAAADAAIAAAAHAAsAAAAEAAIAAAAGAAsAAAADAAIAAAAFAAsAAAAEAAIAAAAEAAsAAAADAAIAAAADAAsAAAAEAAIAAAACAAsAAAADAAIAAAABAAsAAAAEAAIAAAAAAAsAAAADAAIAAAD//wsAAAAEAAIAAAD+/wsAAAADAAIAAAD9/wsAAAAEAAIAAAD8/wsAAAADAAIAAAD7/wsAAAAEAAIAAAD6/wsAAAADAAIAAAD5/wsAAAAEAAIAAAD4/wsAAAADAAIAAAD3/wsAAAAEAAIAAAD2/wsAAAAEAAIAAAD1/wsAAAADAAIAAAD0/wsAAAAEAAIAAADz/wsAAAADAAIAAADy/woAAAAEAAEAAADy/wsAAAAEAAIAAAALAAoAAAAEAAEAAAALAAsAAAAEAAIAAAAMAAgAAAAAAAIAAAAMAAkAAAAAAAIAAAAMAAoAAAADAAEAAAANAAgAAAAAAAIAAAANAAkAAAAAAAIAAAANAAoAAAAEAAEAAAAOAAgAAAAAAAIAAAAOAAkAAAAAAAIAAAAOAAoAAAADAAEAAAAPAAgAAAAAAAIAAAAPAAkAAAAAAAIAAAAPAAoAAAAEAAEAAAAQAAgAAAAAAAIAAAAQAAkAAAAAAAIAAAAQAAoAAAADAAEAAAARAAgAAAAAAAIAAAARAAkAAAAAAAIAAAARAAoAAAAEAAEAAAAMAAIAAAAAAAIAAAAMAAMAAAAAAAIAAAAMAAQAAAAAAAIAAAAMAAUAAAAAAAIAAAAMAAYAAAAAAAIAAAAMAAcAAAAAAAIAAAANAAIAAAAAAAIAAAANAAMAAAAAAAIAAAANAAQAAAAAAAIAAAANAAUAAAAAAAIAAAANAAYAAAAAAAIAAAANAAcAAAAAAAIAAAAOAAIAAAAAAAIAAAAOAAMAAAAAAAIAAAAOAAQAAAAAAAIAAAAOAAUAAAAAAAIAAAAOAAYAAAAAAAIAAAAOAAcAAAAAAAIAAAAPAAIAAAAAAAIAAAAPAAMAAAAAAAIAAAAPAAQAAAAAAAIAAAAPAAUAAAAAAAIAAAAPAAYAAAAAAAIAAAAPAAcAAAAAAAIAAAAQAAIAAAAAAAIAAAAQAAMAAAAAAAIAAAAQAAQAAAAAAAIAAAAQAAUAAAAAAAIAAAAQAAYAAAAAAAIAAAAQAAcAAAAAAAIAAAARAAIAAAAAAAIAAAARAAMAAAAAAAIAAAARAAQAAAAAAAIAAAARAAUAAAAAAAIAAAARAAYAAAAAAAIAAAARAAcAAAAAAAIAAADu/wIAAAACAAIAAADu/wMAAAACAAIAAADu/wQAAAACAAIAAADu/wUAAAACAAIAAADu/wYAAAACAAIAAADu/wcAAAACAAIAAADu/wgAAAACAAIAAADu/wkAAAACAAIAAADu/woAAAAEAAEAAADv/wIAAAACAAIAAADv/wMAAAACAAIAAADv/wQAAAACAAIAAADv/wUAAAACAAIAAADv/wYAAAACAAIAAADv/wcAAAACAAIAAADv/wgAAAACAAIAAADv/wkAAAACAAIAAADv/woAAAADAAEAAADw/wIAAAACAAIAAADw/wMAAAACAAIAAADw/wQAAAACAAIAAADw/wUAAAACAAIAAADw/wYAAAACAAIAAADw/wcAAAACAAIAAADw/wgAAAACAAIAAADw/wkAAAACAAIAAADw/woAAAAEAAEAAADx/wIAAAACAAIAAADx/wMAAAACAAIAAADx/wQAAAACAAIAAADx/wUAAAACAAIAAADx/wYAAAACAAIAAADx/wcAAAACAAIAAADx/wgAAAACAAIAAADx/wkAAAACAAIAAADx/woAAAADAAEAAADu/wAAAAACAAIAAADu/wEAAAACAAIAAADv/wAAAAACAAIAAADv/wEAAAACAAIAAADw/wAAAAACAAIAAADw/wEAAAACAAIAAADx/wAAAAACAAIAAADx/wEAAAACAAIAAAAMAAAAAAAAAAIAAAAMAAEAAAAAAAIAAAANAAAAAAAAAAIAAAANAAEAAAAAAAIAAAAOAAAAAAAAAAIAAAAOAAEAAAAAAAIAAAAPAAAAAAAAAAIAAAAPAAEAAAAAAAIAAAAQAAAAAAAAAAIAAAAQAAEAAAAAAAIAAAARAAAAAAAAAAIAAAARAAEAAAAAAAIAAAAMAP//AAAFAAAAAAANAP//AAAFAAAAAAAOAP//AAAFAAAAAAAPAP//AAAFAAAAAAAQAP//AAAFAAAAAAARAP//AAAFAAAAAADu////AAAFAAAAAADv////AAAFAAAAAADw////AAAFAAAAAADx////AAAFAAAAAADt////AAAEAAAAAADt/wAAAAAHAAIAAADt/wEAAAAHAAIAAADt/wIAAAAHAAIAAADt/wMAAAAHAAIAAADt/wQAAAAHAAIAAADt/wUAAAAHAAIAAADt/wYAAAAHAAIAAADt/wcAAAAHAAIAAADt/wgAAAAHAAIAAADt/wkAAAAHAAIAAADt/woAAAAHAAIAAADt/wsAAAAHAAIAAADt/wwAAAAHAAIAAADt/w0AAAAHAAIAAADu/wwAAAABAAIAAADu/w0AAAABAAIAAADv/wwAAAABAAIAAADv/w0AAAABAAIAAADw/wwAAAABAAIAAADw/w0AAAABAAIAAADx/wwAAAABAAIAAADx/w0AAAABAAIAAADy/wwAAAABAAIAAADy/w0AAAABAAIAAADz/wwAAAABAAIAAADz/w0AAAABAAIAAAD0/wwAAAABAAIAAAD0/w0AAAABAAIAAAD1/wwAAAABAAIAAAD1/w0AAAABAAIAAAD2/wwAAAABAAIAAAD2/w0AAAABAAIAAAD3/wwAAAABAAIAAAD3/w0AAAABAAIAAAD4/wwAAAABAAIAAAD4/w0AAAABAAIAAAD5/wwAAAABAAIAAAD5/w0AAAABAAIAAAD6/wwAAAABAAIAAAD6/w0AAAABAAIAAAD7/wwAAAABAAIAAAD7/w0AAAABAAIAAAD8/wwAAAABAAIAAAD8/w0AAAABAAIAAAD9/wwAAAABAAIAAAD9/w0AAAABAAIAAAD+/wwAAAABAAIAAAD+/w0AAAABAAIAAAD//wwAAAABAAIAAAD//w0AAAABAAIAAAAAAAwAAAABAAIAAAAAAA0AAAABAAIAAAABAAwAAAABAAIAAAABAA0AAAABAAIAAAACAAwAAAABAAIAAAACAA0AAAABAAIAAAADAAwAAAABAAIAAAADAA0AAAABAAIAAAAEAAwAAAABAAIAAAAEAA0AAAABAAIAAAAFAAwAAAABAAIAAAAFAA0AAAABAAIAAAAGAAwAAAABAAIAAAAGAA0AAAABAAIAAAAHAAwAAAABAAIAAAAHAA0AAAABAAIAAAAIAAwAAAABAAIAAAAIAA0AAAABAAIAAAAJAAwAAAABAAIAAAAJAA0AAAABAAIAAAAKAAwAAAABAAIAAAAKAA0AAAABAAIAAAALAAwAAAABAAIAAAALAA0AAAABAAIAAAAMAAwAAAABAAIAAAAMAA0AAAABAAIAAAANAAwAAAABAAIAAAANAA0AAAABAAIAAAAOAAwAAAABAAIAAAAOAA0AAAABAAIAAAAPAAwAAAABAAIAAAAPAA0AAAABAAIAAAAQAAwAAAABAAIAAAAQAA0AAAABAAIAAAARAAwAAAABAAIAAAARAA0AAAABAAIAAAAMAAsAAAADAAIAAAANAAsAAAAEAAIAAAAOAAsAAAADAAIAAAAPAAsAAAAEAAIAAAAQAAsAAAADAAIAAAARAAsAAAAEAAIAAADu/wsAAAAEAAIAAADv/wsAAAADAAIAAADw/wsAAAAEAAIAAADx/wsAAAADAAIAAAASAAAAAAAHAAEAAAASAP//AAAGAAAAAAASAAEAAAAHAAEAAAASAAIAAAAHAAEAAAASAAMAAAAHAAEAAAASAAQAAAAHAAEAAAASAAUAAAAHAAEAAAASAAYAAAAHAAEAAAASAAcAAAAHAAEAAAASAAgAAAAHAAEAAAASAAkAAAAHAAEAAAASAAoAAAAHAAEAAAASAAsAAAAHAAEAAAASAAwAAAAHAAEAAAASAA0AAAAHAAEAAAA=")
 tile_set = SubResource("TileSet_ibxqm")
 
-[node name="Wall" type="StaticBody2D" parent="Interior" unique_id=163807710]
+[node name="Wall" type="StaticBody2D" parent="Interior/TileMapLayer" unique_id=163807710]
 collision_layer = 3
 collision_mask = 3
 
-[node name="WallLeft" type="CollisionShape2D" parent="Interior/Wall" unique_id=1699644481]
+[node name="WallLeft" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=1699644481]
 position = Vector2(-890, 331.5)
 shape = SubResource("RectangleShape2D_g8sw3")
 
-[node name="Roof" type="CollisionShape2D" parent="Interior/Wall" unique_id=1837797922]
+[node name="Roof" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=1837797922]
 position = Vector2(-1, -5)
 shape = SubResource("RectangleShape2D_vcas7")
 
-[node name="Floor" type="CollisionShape2D" parent="Interior/Wall" unique_id=83599958]
+[node name="Floor" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=83599958]
 position = Vector2(-1, 664)
 shape = SubResource("RectangleShape2D_vcas7")
 
-[node name="WallRight" type="CollisionShape2D" parent="Interior/Wall" unique_id=394353619]
+[node name="WallRight" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=394353619]
 position = Vector2(889, 329.25)
 shape = SubResource("RectangleShape2D_g8sw3")
 
-[node name="Objects" type="Node2D" parent="Interior" unique_id=1834296797]
+[node name="Objects" type="Node2D" parent="Interior/TileMapLayer" unique_id=1834296797]
 position = Vector2(0, 145.99998)
 scale = Vector2(0.85, 0.85)
 
-[node name="Shadow2" type="Sprite2D" parent="Interior/Objects" unique_id=1151712733]
+[node name="Shadow2" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1151712733]
 position = Vector2(903.52954, 560)
 scale = Vector2(0.37000003, 0.51)
 texture = ExtResource("10_38y22")
 
-[node name="Table2" type="Node2D" parent="Interior/Objects" unique_id=1646544332]
+[node name="Table2" type="Node2D" parent="Interior/TileMapLayer/Objects" unique_id=1646544332]
 modulate = Color(0.25929382, 0.25929368, 0.25929365, 1)
 position = Vector2(1550.5881, -16.470556)
 scale = Vector2(1.2, 1.2)
 
-[node name="Chair" type="Sprite2D" parent="Interior/Objects/Table2" unique_id=107247911]
+[node name="Chair" type="Sprite2D" parent="Interior/TileMapLayer/Objects/Table2" unique_id=107247911]
 position = Vector2(-598, 433)
 scale = Vector2(0.255, 0.255)
 texture = ExtResource("10_yqv2o")
 
-[node name="Chair2" type="Sprite2D" parent="Interior/Objects/Table2" unique_id=540547679]
+[node name="Chair2" type="Sprite2D" parent="Interior/TileMapLayer/Objects/Table2" unique_id=540547679]
 position = Vector2(-480.00003, 433)
 rotation = 3.1415927
 scale = Vector2(0.255, -0.255)
 texture = ExtResource("10_yqv2o")
 
-[node name="Table2" type="Sprite2D" parent="Interior/Objects/Table2" unique_id=1563948235]
+[node name="Table2" type="Sprite2D" parent="Interior/TileMapLayer/Objects/Table2" unique_id=1563948235]
 position = Vector2(-546, 440)
 scale = Vector2(0.295, 0.295)
 texture = ExtResource("12_w6o7l")
 
-[node name="Stairs2" type="Sprite2D" parent="Interior/Objects" unique_id=1464149820]
+[node name="Stairs2" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1464149820]
 modulate = Color(0.5931336, 0.59313357, 0.59313357, 1)
 position = Vector2(-760.8557, 122.35296)
 scale = Vector2(0.6230689, 0.5882353)
 texture = ExtResource("13_w6o7l")
 
-[node name="Stairs1" type="Sprite2D" parent="Interior/Objects" unique_id=1677100036]
+[node name="Stairs1" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1677100036]
 modulate = Color(0.5931336, 0.59313357, 0.59313357, 1)
 position = Vector2(-757.21924, 305.88235)
 rotation = 3.1415927
 scale = Vector2(0.6204886, -0.5882353)
 texture = ExtResource("14_vwn3n")
 
-[node name="Cross" type="Sprite2D" parent="Interior/Objects" unique_id=1910889015]
+[node name="Cross" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1910889015]
 modulate = Color(0.6955032, 0.6955031, 0.6955031, 1)
 position = Vector2(-29.411743, 43.529434)
 scale = Vector2(0.312, 0.312)
 texture = ExtResource("15_skwrx")
 
-[node name="Reception" type="Sprite2D" parent="Interior/Objects" unique_id=1009188911]
+[node name="Reception" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1009188911]
 modulate = Color(0.6542321, 0.6542321, 0.654232, 1)
 position = Vector2(428.2353, 432.94116)
 scale = Vector2(0.46183762, 0.46183762)
 texture = ExtResource("16_4okcm")
 
-[node name="Window" type="Sprite2D" parent="Interior/Objects" unique_id=218412669]
+[node name="Window" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=218412669]
 modulate = Color(0.52906674, 0.52906674, 0.52906656, 1)
 position = Vector2(-403.52942, 76.4706)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("17_npv2w")
 
-[node name="Window2" type="Sprite2D" parent="Interior/Objects" unique_id=2083425758]
+[node name="Window2" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=2083425758]
 modulate = Color(0.52906674, 0.52906674, 0.52906656, 1)
 position = Vector2(418.82358, 76.4706)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("17_npv2w")
 
-[node name="Window3" type="Sprite2D" parent="Interior/Objects" unique_id=862035451]
+[node name="Window3" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=862035451]
 modulate = Color(0.52906674, 0.52906674, 0.52906656, 1)
 position = Vector2(651.76465, 76.4706)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("17_npv2w")
 
-[node name="Window4" type="Sprite2D" parent="Interior/Objects" unique_id=1016179812]
+[node name="Window4" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1016179812]
 modulate = Color(0.52906674, 0.52906674, 0.52906656, 1)
 position = Vector2(876.4706, 76.4706)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("17_npv2w")
 
-[node name="Crowd" type="Sprite2D" parent="Interior/Objects" unique_id=80287521]
+[node name="Crowd" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=80287521]
 modulate = Color(0.49747366, 0.49747366, 0.49747366, 1)
 position = Vector2(-181.17647, 459.99997)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("18_00tee")
 
-[node name="Shadow" type="Sprite2D" parent="Interior/Objects" unique_id=1177387442]
+[node name="Shadow" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1177387442]
 position = Vector2(365.8823, 572.9412)
 scale = Vector2(1.03, 0.415)
 texture = ExtResource("10_38y22")
 
-[node name="Shadow3" type="Sprite2D" parent="Interior/Objects" unique_id=473808040]
+[node name="Shadow3" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=473808040]
 position = Vector2(-320, 601.17645)
 scale = Vector2(1.26, 0.705)
 texture = ExtResource("10_38y22")
 
-[node name="Light" type="Node2D" parent="Interior" unique_id=342218812]
+[node name="Light" type="Node2D" parent="Interior/TileMapLayer" unique_id=342218812]
 
-[node name="PointLight2D5" type="PointLight2D" parent="Interior/Light" unique_id=1629255081]
+[node name="PointLight2D5" type="PointLight2D" parent="Interior/TileMapLayer/Light" unique_id=1629255081]
 position = Vector2(-0.49996948, 328.5)
 scale = Vector2(1.7579052, 1.3378906)
 color = Color(1.366, 1.217016, 0.9469433, 0.365)
@@ -226,7 +221,7 @@ texture = SubResource("NoiseTexture2D_ifweb")
 height = 94.0
 script = ExtResource("13_vwn3n")
 
-[node name="PointLight2D" type="PointLight2D" parent="Interior/Light" unique_id=1772278011]
+[node name="PointLight2D" type="PointLight2D" parent="Interior/TileMapLayer/Light" unique_id=1772278011]
 position = Vector2(-835, 12)
 color = Color(1, 0.53333336, 0, 0.13333334)
 energy = 13.81
@@ -236,7 +231,7 @@ texture_scale = 2.5
 height = 94.0
 script = ExtResource("13_vwn3n")
 
-[node name="PointLight2D6" type="PointLight2D" parent="Interior/Light" unique_id=1108607768]
+[node name="PointLight2D6" type="PointLight2D" parent="Interior/TileMapLayer/Light" unique_id=1108607768]
 position = Vector2(-851, 558)
 rotation = 4.363323
 color = Color(1, 0.53333336, 0, 0.13333334)
@@ -247,7 +242,7 @@ texture = ExtResource("20_6lei8")
 texture_scale = 5.41
 script = ExtResource("13_vwn3n")
 
-[node name="PointLight2D2" type="PointLight2D" parent="Interior/Light" unique_id=1861004271]
+[node name="PointLight2D2" type="PointLight2D" parent="Interior/TileMapLayer/Light" unique_id=1861004271]
 position = Vector2(-202, 250)
 color = Color(1, 0.53333336, 0, 0.13333334)
 energy = 13.81
@@ -257,7 +252,7 @@ texture_scale = 2.5
 height = 94.0
 script = ExtResource("13_vwn3n")
 
-[node name="PointLight2D3" type="PointLight2D" parent="Interior/Light" unique_id=1702029180]
+[node name="PointLight2D3" type="PointLight2D" parent="Interior/TileMapLayer/Light" unique_id=1702029180]
 position = Vector2(207, 250)
 color = Color(1, 0.53333336, 0, 0.13333334)
 energy = 13.81
@@ -267,7 +262,7 @@ texture_scale = 2.5
 height = 94.0
 script = ExtResource("13_vwn3n")
 
-[node name="PointLight2D4" type="PointLight2D" parent="Interior/Light" unique_id=868762710]
+[node name="PointLight2D4" type="PointLight2D" parent="Interior/TileMapLayer/Light" unique_id=868762710]
 position = Vector2(836, 250)
 color = Color(1, 0.53333336, 0, 0.13333334)
 energy = 13.81
@@ -277,67 +272,59 @@ texture_scale = 2.5
 height = 94.0
 script = ExtResource("13_vwn3n")
 
-[node name="Light" type="Sprite2D" parent="Interior/Light" unique_id=321264732]
+[node name="Light" type="Sprite2D" parent="Interior/TileMapLayer/Light" unique_id=321264732]
 modulate = Color(0.49354547, 0.49354553, 0.49354553, 1)
 position = Vector2(208, 249)
 texture = ExtResource("21_cm6gi")
 
-[node name="Light2" type="Sprite2D" parent="Interior/Light" unique_id=613016953]
+[node name="Light2" type="Sprite2D" parent="Interior/TileMapLayer/Light" unique_id=613016953]
 modulate = Color(0.49354547, 0.49354553, 0.49354553, 1)
 position = Vector2(-200, 249)
 texture = ExtResource("21_cm6gi")
 
-[node name="Light3" type="Sprite2D" parent="Interior/Light" unique_id=2019949863]
+[node name="Light3" type="Sprite2D" parent="Interior/TileMapLayer/Light" unique_id=2019949863]
 modulate = Color(0.49354547, 0.49354553, 0.49354553, 1)
 position = Vector2(834, 249)
 texture = ExtResource("21_cm6gi")
 
-[node name="Sprite2D" type="Sprite2D" parent="Interior/Light" unique_id=264716829]
+[node name="Sprite2D" type="Sprite2D" parent="Interior/TileMapLayer/Light" unique_id=264716829]
 modulate = Color(0.33333334, 0.20784314, 0, 0.22745098)
 material = SubResource("CanvasItemMaterial_si63j")
 position = Vector2(-200.99997, 283)
 scale = Vector2(1.8427734, 2.4746096)
 texture = ExtResource("20_6lei8")
 
-[node name="Sprite2D2" type="Sprite2D" parent="Interior/Light" unique_id=1824852433]
+[node name="Sprite2D2" type="Sprite2D" parent="Interior/TileMapLayer/Light" unique_id=1824852433]
 modulate = Color(0.33333334, 0.20784314, 0, 0.22745098)
 material = SubResource("CanvasItemMaterial_si63j")
 position = Vector2(203, 283)
 scale = Vector2(1.8427734, 2.4746096)
 texture = ExtResource("20_6lei8")
 
-[node name="Sprite2D3" type="Sprite2D" parent="Interior/Light" unique_id=475121661]
+[node name="Sprite2D3" type="Sprite2D" parent="Interior/TileMapLayer/Light" unique_id=475121661]
 modulate = Color(0.33333334, 0.20784314, 0, 0.22745098)
 material = SubResource("CanvasItemMaterial_si63j")
 position = Vector2(831, 283)
 scale = Vector2(1.8427734, 2.4746096)
 texture = ExtResource("20_6lei8")
 
-[node name="ExitArea" type="Area2D" parent="Interior" unique_id=1087004762]
+[node name="ExitArea" type="Area2D" parent="Interior/TileMapLayer" unique_id=1087004762]
 process_mode = 3
 position = Vector2(-5.0000076, 497.00003)
 scale = Vector2(1.02425, 1.02425)
 collision_layer = 2
 collision_mask = 2
 
-[node name="Door" type="Sprite2D" parent="Interior/ExitArea" unique_id=1310056800]
+[node name="Door" type="Sprite2D" parent="Interior/TileMapLayer/ExitArea" unique_id=1310056800]
 modulate = Color(0.24840033, 0.24840012, 0.24840012, 0.5529412)
 z_index = 6
 scale = Vector2(0.99999994, 0.99999994)
 texture = ExtResource("14_skwrx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interior/ExitArea" unique_id=1654892343]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interior/TileMapLayer/ExitArea" unique_id=1654892343]
 position = Vector2(1.9526486, 19.03833)
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_xtf64")
-
-[node name="Area2D" type="Area2D" parent="." unique_id=1226471041]
-collision_layer = 2
-collision_mask = 2
-
-[node name="Door" type="CollisionShape2D" parent="Area2D" unique_id=1377955640]
-position = Vector2(29, 346.5)
-shape = SubResource("RectangleShape2D_0l6d3")
 
 [node name="Audio" type="Node2D" parent="." unique_id=1996820493]
 
@@ -355,3 +342,14 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=184241922]
 position = Vector2(-88, 564)
 polygon = PackedVector2Array(1314, 23, 1165, -27, 259, -30, 229, -51, 195, -85, 38, -87, -29, -32, -905, -49, -1055, 24)
+
+[node name="BuildingEntrance" type="Node2D" parent="." unique_id=933052707]
+script = ExtResource("1_sx2l7")
+
+[node name="EnterArea" type="Area2D" parent="BuildingEntrance" unique_id=1226471041]
+collision_layer = 2
+collision_mask = 2
+
+[node name="Door" type="CollisionShape2D" parent="BuildingEntrance/EnterArea" unique_id=1377955640]
+position = Vector2(29, 346.5)
+shape = SubResource("RectangleShape2D_0l6d3")

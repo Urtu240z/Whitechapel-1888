@@ -1,0 +1,350 @@
+# MASTER PROMPT — WHITECHAPEL 1888
+# Godot 4.6 | GDScript | 2D Lateral
+
+================================================================
+## 🎮 CONCEPTO DEL JUEGO
+================================================================
+Juego de supervivencia 2D ambientado en el Londres victoriano de 1888.
+El jugador controla a una prostituta que debe sobrevivir en las calles
+de Whitechapel ganando dinero con clientes, cuidando sus stats y
+evitando morir de enfermedad, hambre o a manos de Jack the Ripper.
+
+OBJETIVO: Reunir 200 chelines para escapar de Whitechapel.
+
+AMENAZAS:
+- Hambre, higiene, cansancio degradan salud
+- Enfermedad de transmisión sexual (por clientes)
+- Jack the Ripper (futuro — dash/esquiva pendiente)
+- Dormir en la calle es peligroso
+
+================================================================
+## 📁 ESTRUCTURA DE CARPETAS
+================================================================
+res://
+├── addons/
+│   └── pickup_creator/
+├── Assets/
+│   ├── Audio/
+│   │   └── Player/
+│   │       └── Sick/       ← woman_cough_light_1/2, woman_cough_1/2/3/4,
+│   │                          woman_suffering_1/2
+│   ├── Fonts/              ← Cinzel.ttf, IMFellEnglish.ttf
+│   ├── Images/             ← Journal.png, Paper.png (fondo victoriano futuro)
+│   ├── Shaders/            ← blur.gdshader, vignette.gdshader,
+│   │                          distortion.gdshader, disease.gdshader (NUEVO)
+│   ├── Sprites/
+│   └── Textures/
+├── Data/
+│   ├── Dialogic/           ← Whitechapel_Layout.tres
+│   ├── Game/
+│   │   └── game_config.tres
+│   ├── Pickups/
+│   └── Translations/
+│       ├── translations.csv
+│       ├── translations.es.translation
+│       └── translations.en.translation
+├── Design/
+│   ├── GDD.txt
+│   ├── Lista victimas.txt
+│   └── Master_Prompt.txt
+├── Dialogues/              ← npc_1.dtl
+├── Scenes/
+│   ├── Core/
+│   │   ├── Pickup.tscn
+│   │   ├── Scene_Changer.tscn
+│   │   ├── Sleep_Selection.tscn
+│   │   ├── Sleep_Screen.tscn
+│   │   └── UI_Stats.tscn
+│   ├── Exteriors/
+│   ├── NPC/
+│   │   ├── NPC_Charger.tscn  ← scripts externos asignados (no embebidos)
+│   │   └── NPC_Ragdoll.tscn
+│   ├── Player/
+│   │   └── Player.tscn
+│   ├── Test/
+│   │   └── Prueba_Mecanicas.tscn
+│   └── UI/
+│       └── Journal.tscn
+└── Scripts/
+	├── Core/
+	│   ├── pickup.gd
+	│   ├── scene_changer.gd
+	│   ├── sleep_screen.gd     ← class_name SleepScreen
+	│   ├── sleep_selection.gd  ← class_name SleepSelection
+	│   └── ui_stats.gd
+	├── Data/
+	│   ├── game_config.gd      ← class_name GameConfig
+	│   └── pickup_data.gd
+	├── Managers/
+	│   ├── day_night_manager.gd
+	│   ├── effects_manager.gd
+	│   ├── game_manager.gd
+	│   ├── player_manager.gd
+	│   ├── player_stats.gd
+	│   ├── scene_manager.gd
+	│   └── sleep_manager.gd
+	├── NPC/
+	│   ├── npc_animation.gd
+	│   ├── npc_audio.gd
+	│   ├── npc_conversation.gd
+	│   ├── npc_main.gd
+	│   ├── npc_movement.gd
+	│   └── npc_skin.gd
+	├── Player/
+	│   ├── player_animation.gd
+	│   ├── player_audio.gd     ← sistema tos añadido
+	│   ├── player_controller.gd
+	│   ├── player_interaction.gd
+	│   └── player_movement.gd  ← enfermedad en speed multiplier
+	├── Story/
+	├── UI/
+	│   ├── journal.gd
+	│   ├── fps_counter.gd
+	│   ├── stats_panel.gd
+	│   └── waypoint_marker.gd
+	└── Vehicles/
+		└── carriage_movement.gd
+
+================================================================
+## 🤖 AUTOLOADS (Singletons)
+================================================================
+- GameManager        → Gestiona el ratón
+- PlayerManager      → var player_instance: MainPlayer
+- PlayerStats        → Stats del jugador (sin class_name)
+- SceneManager       → Fade negro, _fade_out() y _fade_in() públicos
+- DayNightManager    → Ciclo día/noche
+- EffectsManager     → Efectos visuales
+- SleepManager       → Sistema de sueño
+- Dialogic           → Plugin diálogos
+
+================================================================
+## 👤 PLAYER
+================================================================
+Nodo raíz: CharacterBody2D (class_name MainPlayer)
+Script: player_controller.gd
+
+En escenas con player como nodo hijo directo registrar en _ready():
+  PlayerManager.player_instance = $Player
+
+================================================================
+## 🏃 MOVIMIENTO — player_movement.gd
+================================================================
+_get_speed_multiplier() penaliza por:
+- Hambre > 70 → hasta -30%
+- Sueño < 30 → hasta -25%
+- Salud < 40 → hasta -40%
+- Enfermedad >= 70 → hasta -35%
+- Alcohol+Laudano > 50 → efecto errático ±15%
+
+_wants_to_run() bloquea correr si enfermedad >= 70
+
+================================================================
+## 🦠 EFECTOS DE ENFERMEDAD GRAVE
+================================================================
+Activos cuando enfermedad >= 60:
+
+VISUAL (disease.gdshader via EffectsManager):
+- Viñeta verdosa-amarillenta que se cierra desde los bordes
+- Desaturación progresiva
+- Pulso sutil (sensación de fiebre)
+- Intensidad: 0.0 en enfermedad 60, 1.0 en enfermedad 100
+- Shader: res://Assets/Shaders/disease.gdshader
+
+AUDIO (player_audio.gd):
+- 40-70%: woman_cough_light_1/2 — tos leve (45s→20s entre toses)
+- 70-100%: woman_cough_1/2/3/4 + woman_suffering_1/2 aleatorios
+		   (20s→3s entre toses)
+- Pitch varía según gravedad (más grave cuando peor)
+- No repite el mismo sonido dos veces seguidas
+- AudioStreamPlayer: $Audio/CoughPlayer
+
+VELOCIDAD:
+- Enfermedad >= 70 → no puede correr
+- Reducción progresiva hasta -35% en enfermedad 100
+
+================================================================
+## 🌙 DAY NIGHT MANAGER
+================================================================
+- Duración: CONFIG.duracion_hora_segundos (default 60 = 1min=1hora)
+- hora_actual empieza en 8:00
+- Señal: hora_cambiada(hora_actual)
+- API: set_hora(), pausar(), reanudar()
+- IluminacionAmbiental (CanvasModulate) en escena
+
+================================================================
+## 😴 SLEEP MANAGER
+================================================================
+API: start_sleep("hostal"|"calle"|"callejon")
+
+HOSTAL: abierto 22:00→10:00
+- Si queda < 1 hora → aviso "El hostal cierra pronto"
+- Slider: horas necesarias para sueno=100, máximo hasta 10:00
+- Panel post-sueño si termina antes de las 10:00
+
+CALLE/CALLEJÓN: máximo CONFIG.horas_max_calle (8h)
+
+FLUJO: bloquea movimiento → Sleep_Selection → fade negro →
+	   Sleep_Screen → timer (0.4s/hora) → fade negro → juego
+
+NOTA TÉCNICA: Señales con .connect("nombre", cb) no sintaxis tipada.
+Scripts deben estar asignados al nodo raíz en el Inspector.
+
+RECUPERACIÓN:
+- Hostal: sueno +8.5/h, salud +0.5/h, estres -1.0/h
+- Calle: sueno +4.5/h
+- Al despertar calle: alcohol -10, laudano -5,
+  15% curar enfermedad, 15% empeorar +10
+
+Hook futuro: interrupt_sleep("jack"|"policia")
+
+================================================================
+## ⚙️ GAME CONFIG — game_config.tres
+================================================================
+Path: res://Data/Game/game_config.tres
+Uso: const CONFIG = preload("res://Data/Game/game_config.tres")
+
+Parámetros:
+- duracion_hora_segundos: 60.0
+- recuperacion_hostal_por_hora: 8.5
+- recuperacion_calle_por_hora: 4.5
+- horas_max_calle: 8.0
+- objetivo_dinero: 200.0
+- coste_hostal/comida/medicina/medico
+
+================================================================
+## 🌐 TRADUCCIONES
+================================================================
+Path: res://Data/Translations/translations.csv
+Idioma por defecto: es
+Uso scripts: tr("CLAVE")
+Uso escenas: Auto Translate Mode → Always
+
+Claves actuales:
+SLEEP_TITLE_HOSTAL/CALLEJON/CALLE, SLEEP_HORA/HORAS,
+SLEEP_HOSTAL_CERRADO, SLEEP_HOSTAL_POCO_TIEMPO,
+SLEEP_POST_TEXTO, SLEEP_DESPERTAR, SLEEP_SEGUIR, SLEEP_SALIR
+
+================================================================
+## 📖 JOURNAL — Journal.tscn
+================================================================
+Tecla Q. Fuentes Cinzel + IMFellEnglish.
+CanvasLayer layer alto (evita iluminación escenario).
+Muestra: hora, sex_appeal, dinero, día, stats físicos y mentales,
+badges de clientes según sex_appeal.
+Se refresca via PlayerStats.stats_updated.
+Día calculado con CONFIG.duracion_hora_segundos.
+
+================================================================
+## 📊 PLAYER STATS
+================================================================
+Stats: miedo, estres, felicidad, nervios, hambre, higiene,
+	   sueno, alcohol, laudano, salud, stamina, enfermedad
+Derivado: sex_appeal
+
+Degradación cada 60s reales.
+Señales: stats_updated, sex_appeal_changed, dinero_changed,
+		 stamina_changed, atributo_critico, enfermedad_cambiada,
+		 durmiendo_en_calle, objetivo_completado, jugador_muerto
+
+_sync_dialogic_variables() conectada a stats_updated en _ready()
+Sincroniza: sex_appeal, hora, dinero, higiene, enfermedad
+
+ELIMINADAS: dormir_hostal() y dormir_calle() — usar SleepManager
+
+================================================================
+## 🎨 EFFECTS MANAGER
+================================================================
+CanvasLayer layer 10. Efectos:
+- Blur + shake → Stamina < 50%
+- Viñeta oscura → Miedo > 50
+- Parpadeos → Sueño < 35
+- Distorsión → Alcohol+Laudano > 40
+- Viñeta verdosa → Enfermedad >= 60 (disease.gdshader) NUEVO
+
+Orden capas: distortion, blur, blink, vignette, disease
+
+================================================================
+## 💬 DIALOGIC
+================================================================
+Versión: 2.0-Alpha-19
+Timelines: res://Dialogues/
+Layout: res://Data/Dialogic/Whitechapel_Layout.tres
+Default Style apunta a: res://Data/Dialogic/Whitechapel_Layout.tres
+
+Variables declaradas en Dialogic → Variables:
+sex_appeal (flt 50), hora (flt 8), dinero (flt 5),
+higiene (flt 70), enfermedad (flt 0)
+
+NPCs en Streets: NPC, NPC2, NPC3 — todos con npc_1.dtl asignado
+Precarga en _ready() de Streets para evitar tirón primer diálogo.
+
+================================================================
+## 📦 PICKUPS
+================================================================
+Pickup.gd — body_entered detecta grupo "player" (minúscula)
+Curas: solo queue_free() si la acción devuelve true (éxito)
+cure-reset y cure-street siempre exitosos (gratuitos)
+
+================================================================
+## 🔊 AUDIO PLAYER
+================================================================
+Superficies: stone, wood, dirt, grass, water
+Detección via ShadowRAY — TileMapLayer OR TileMap (Godot 4.6)
+Pasos: step_sounds dict por superficie
+Respiración: delay 1.5s, intervalo 2.0s al correr
+Tos: _handle_cough() en _process, 3 arrays export en Inspector:
+  - cough_sounds_light (40-70%)
+  - cough_sounds_heavy (70-100%, mezcla cough+suffering)
+
+================================================================
+## 🏠 STREETS — escena principal
+================================================================
+NPCs: NPC, NPC2, NPC3 (NPC_Charger.tscn)
+Scripts externos asignados (Movement/Animation/Conversation)
+Script Level.gd con _ready():
+  PlayerManager.player_instance = $Player
+  + precarga Dialogic
+
+================================================================
+## ⌨️ INPUT MAP
+================================================================
+move_left/right → A/D, jump → Espacio, run → Shift
+crouch → C, interact → F, stats → Q
+ui_accept → F, ui_cancel → F
+
+================================================================
+## 🐙 GITHUB
+================================================================
+Repo: https://github.com/Urtu240z/Whitechapel-1888
+Rama: main — GitHub Desktop conectado
+
+================================================================
+## 🚧 PENDIENTES
+================================================================
+1. Dialogic — diálogos reales con condiciones en Streets
+   (variables declaradas, NPCs con timeline, falta contenido)
+2. Jack the Ripper — hook interrupt_sleep("jack") listo
+3. Sueño = 0 → player cae dormida
+4. Fairy → minijuego (Level.gd en _Archive)
+5. Más escenas de Whitechapel
+6. Paper.png como fondo de diálogos (Assets/Images/)
+7. Interacción con edificios — unificar sistema
+   (BuildingEntrance group vs enter_building.gd)
+
+================================================================
+## ⚠️ NOTAS IMPORTANTES
+================================================================
+- PlayerStats sin class_name (evita conflicto autoload)
+- player_instance debe ser MainPlayer (no Node2D)
+- En escenas con player hijo directo: PlayerManager.player_instance = $Player
+- ShadowRAY collision mask: SOLO capa 2
+- Shadow sprite es hijo DIRECTO del Player
+- F en interact + ui_accept + ui_cancel para Dialogic
+- EffectsManager busca Camera2D via node_added
+- Sleep_Selection y Sleep_Screen necesitan scripts asignados en Inspector
+- Señales Sleep con .connect("nombre", cb) no sintaxis tipada
+- translations.csv → Reimportar tras editar
+- NPC_Charger: scripts externos (no embebidos)
+- disease.gdshader usa SCREEN_TEXTURE (no TEXTURE)
+- CoughPlayer es hijo de Audio en Player.tscn
+- intro_game.gd usa is_in_group("player") minúscula ✅ corregido

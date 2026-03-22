@@ -4,6 +4,11 @@ extends Node
 # ==========================
 
 # ==========================
+# SEÑALES
+# ==========================
+signal collapse_finished  # Emitida cuando la animación de colapso termina
+
+# ==========================
 # REFERENCES
 # ==========================
 var player: MainPlayer = null
@@ -138,3 +143,33 @@ func force_idle() -> void:
 	if state_machine:
 		state_machine.travel("Idle")
 		last_state = "Idle"
+
+# ==========================
+# COLAPSO POR AGOTAMIENTO
+# ==========================
+func play_collapse() -> void:
+	if not state_machine or not anim_tree:
+		collapse_finished.emit()
+		return
+	# Forzar Idle primero — desde Idle sí hay transición a Faint
+	state_machine.travel("Idle")
+	last_state = "Idle"
+	await get_tree().process_frame
+	await get_tree().process_frame
+	state_machine.travel("Faint")
+	last_state = "Faint"
+	await get_tree().process_frame
+	await get_tree().create_timer(3.0).timeout
+	collapse_finished.emit()
+
+# ==========================
+# LEVANTARSE AL DESPERTAR
+# ==========================
+func play_rise() -> void:
+	if not state_machine or not anim_tree:
+		return
+	state_machine.travel("Rise")
+	last_state = "Rise"
+	await anim_tree.animation_finished
+	state_machine.travel("Idle")
+	last_state = "Idle"
