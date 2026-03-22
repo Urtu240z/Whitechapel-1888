@@ -1,4 +1,15 @@
 extends Node2D
+
+func _ready() -> void:
+	PlayerManager.player_instance = $Player
+	# Precarga Dialogic ocultando el layout visualmente
+	await get_tree().process_frame
+	var dialogic_node = Dialogic.start("res://Dialogues/npc_1.dtl")
+	dialogic_node.modulate.a = 0.0  # invisible
+	await get_tree().process_frame
+	Dialogic.end_timeline()
+	dialogic_node.modulate.a = 1.0  # restaurar para diálogos reales
+
 #
 #@onready var world = $World
 #@onready var player = $Player

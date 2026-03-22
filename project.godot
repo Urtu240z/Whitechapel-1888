@@ -48,9 +48,15 @@ directories/dtl_directory={
 }
 layout/style_directory={}
 glossary/default_case_sensitive=true
-layout/style_list=["res://Dialogues/Whitechapel_Layout.tres"]
+layout/style_list=[]
 layout/default_style="res://Dialogues/Whitechapel_Layout.tres"
-variables={}
+variables={
+"dinero": 5.0,
+"enfermedad": 0.0,
+"higiene": 70.0,
+"hora": 8.0,
+"sex_appeal": 50.0
+}
 extensions_folder="res://addons/dialogic_additions"
 text/letter_speed=0.01
 text/initial_text_reveal_skippable=true
