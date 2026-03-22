@@ -136,3 +136,12 @@ func mostrar_aviso_cerrado() -> void:
 	$Panel/Margins/VBox/HSeparator.visible = false
 	btn_descansar.visible = false
 	btn_cancelar.grab_focus()
+
+func mostrar_aviso_poco_tiempo() -> void:
+	titulo.text = tr("SLEEP_HOSTAL_POCO_TIEMPO")
+	$Panel/Margins/VBox/InfoGrid.visible = false
+	slider.visible = false
+	lbl_horas.visible = false
+	$Panel/Margins/VBox/HSeparator.visible = false
+	btn_descansar.visible = false
+	btn_cancelar.grab_focus()
