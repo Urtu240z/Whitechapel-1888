@@ -29,48 +29,51 @@ var player: MainPlayer = null
 # ==========================
 # INIT
 # ==========================
+
 func initialize(p: MainPlayer) -> void:
 	player = p
 
 # ==========================
 # PROCESS INTERACTIONS
 # ==========================
+
 func process_interactions() -> void:
 	if not player or not player.can_move:
 		return
 	if Input.is_action_just_pressed("interact"):
-		_check_for_dialog()
+		InteractionManager.try_interact()
+
+# ==========================
+# REGISTRO DE NPCs
+# ==========================
+
+func register_npc(npc: NPC) -> void:
+	print("Registrando NPC: ", npc.name)
+	InteractionManager.register(npc, InteractionManager.Priority.NPC, func(): _start_dialog(npc))
+
+func unregister_npc(npc: NPC) -> void:
+	InteractionManager.unregister(npc)
 
 # ==========================
 # DIALOG — DIALOGIC
 # ==========================
-func _check_for_dialog() -> void:
-	var interaction_area = player.get_node_or_null("Interaction/InteractionArea")
-	if not interaction_area:
+
+func _start_dialog(npc: NPC) -> void:
+	var timeline: String = npc.dialog_timeline
+	if timeline.is_empty():
+		push_warning("NPC '%s' no tiene dialog_timeline asignado." % npc.name)
 		return
-
-	for area in interaction_area.get_overlapping_areas():
-		var parent = area.get_parent()
-		if parent is NPC:
-			var timeline: String = parent.dialog_timeline
-			if timeline.is_empty():
-				push_warning("NPC '%s' no tiene dialog_timeline asignado." % parent.name)
-				return
-
-			# Orientarse mutuamente
-			var player_is_right: bool = player.global_position.x > parent.global_position.x
-			parent.animation.lock_facing(player_is_right)
-			player.movement.facing_right = not player_is_right
-			player.animation.update_animation()
-
-			# Parar ambos
-			player.disable_movement()
-			parent.movement.freeze()
-
-			Dialogic.start(timeline)
-			Dialogic.timeline_ended.connect(func():
-				player.enable_movement()
-				parent.movement.unfreeze()
-				parent.animation.unlock_facing()
-			, CONNECT_ONE_SHOT)
-			return
+	# Orientarse mutuamente
+	var player_is_right: bool = player.global_position.x > npc.global_position.x
+	npc.animation.lock_facing(player_is_right)
+	player.movement.facing_right = not player_is_right
+	player.animation.update_animation()
+	# Parar ambos
+	player.disable_movement()
+	npc.movement.freeze()
+	Dialogic.start(timeline)
+	Dialogic.timeline_ended.connect(func():
+		player.enable_movement()
+		npc.movement.unfreeze()
+		npc.animation.unlock_facing()
+	, CONNECT_ONE_SHOT)

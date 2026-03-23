@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://cyg1gqnmj4s5m" path="res://Scripts/Core/building.gd" id="1_p8nmd"]
 [ext_resource type="Script" uid="uid://co4vtq04cujyn" path="res://Scripts/Core/enter_building.gd" id="1_sx2l7"]
+[ext_resource type="AudioStream" uid="uid://blulpegm5fkto" path="res://Assets/Audio/Buildings/Open_Door (1).wav" id="2_4j78l"]
+[ext_resource type="AudioStream" uid="uid://2ocbh2xjeg3i" path="res://Assets/Audio/Buildings/Open_Door (2).wav" id="3_1wgdf"]
+[ext_resource type="AudioStream" uid="uid://bpbgo1ht1u2mx" path="res://Assets/Audio/Buildings/Open_Door (3).wav" id="4_20bsc"]
+[ext_resource type="AudioStream" uid="uid://bq626yq3ebj5a" path="res://Assets/Audio/Buildings/Close_Door (1).wav" id="5_nddhr"]
+[ext_resource type="AudioStream" uid="uid://vsi28chd68ph" path="res://Assets/Audio/Buildings/Close_Door (2).wav" id="6_m8ipo"]
+[ext_resource type="AudioStream" uid="uid://d1q5svthqkw2r" path="res://Assets/Audio/Buildings/Close_Door (3).wav" id="7_txu1n"]
 [ext_resource type="Texture2D" uid="uid://cbmf23b74kvf3" path="res://Assets/Sprites/Building/Lodging_House_1.png" id="8_i0ema"]
 [ext_resource type="Texture2D" uid="uid://dpv0wabl7sn2g" path="res://Assets/Tilesets/BuildingInterior.png" id="9_wtgbi"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="10_38y22"]
@@ -18,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://dbswel0gy6gaq" path="res://Assets/Sprites/Interiors/Lodging House/Window.png" id="17_npv2w"]
 [ext_resource type="Texture2D" uid="uid://c3qanupl4tchn" path="res://Assets/Sprites/Interiors/Lodging House/Crowd.png" id="18_00tee"]
 [ext_resource type="Texture2D" uid="uid://b0y5oeotay27s" path="res://Assets/Sprites/Lights/180 Light.png" id="20_6lei8"]
+[ext_resource type="Shader" uid="uid://duaxbbg0a834o" path="res://Assets/Shaders/Interaction_Glow.gdshader" id="20_31840"]
 [ext_resource type="Texture2D" uid="uid://c5sqoyhdxo4s6" path="res://Assets/Sprites/Interiors/Bar Bells/Light.png" id="21_cm6gi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ec4d"]
@@ -55,7 +62,7 @@ sources/0 = SubResource("TileSetAtlasSource_1ec4d")
 size = Vector2(45, 689.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vcas7"]
-size = Vector2(1730, 20)
+size = Vector2(1730, 22)
 
 [sub_resource type="Gradient" id="Gradient_yhmwb"]
 
@@ -79,9 +86,18 @@ size = Vector2(128.87479, 280.20502)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0l6d3"]
 size = Vector2(164, 273)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dslda"]
+shader = ExtResource("20_31840")
+shader_parameter/glow_color = Color(1, 0.86, 0.35, 1)
+shader_parameter/glow_strength = 0.0
+shader_parameter/edge_size = 0.5
+shader_parameter/fill_strength = 0.15
+
 [node name="Lodge" type="Node2D" unique_id=444969637]
 script = ExtResource("1_p8nmd")
-fade_time = 1.5
+fade_time = 3.5
+open_sounds = Array[AudioStream]([ExtResource("2_4j78l"), ExtResource("3_1wgdf"), ExtResource("4_20bsc")])
+close_sounds = Array[AudioStream]([ExtResource("5_nddhr"), ExtResource("6_m8ipo"), ExtResource("7_txu1n")])
 building_name = "St. Jude's Refuge & Dispensary"
 street_name = "Commercial Street"
 
@@ -89,6 +105,14 @@ street_name = "Commercial Street"
 position = Vector2(8.999985, 18.99997)
 scale = Vector2(1.8308128, 1.8308128)
 texture = ExtResource("8_i0ema")
+
+[node name="Stairs" type="StaticBody2D" parent="." unique_id=589877159]
+visible = false
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Stairs" unique_id=654001859]
+polygon = PackedVector2Array(169, 533, -106, 534, -52, 478, 113, 478)
 
 [node name="Interior" type="Node2D" parent="." unique_id=1238585940]
 visible = false
@@ -102,6 +126,7 @@ tile_set = SubResource("TileSet_ibxqm")
 [node name="Wall" type="StaticBody2D" parent="Interior/TileMapLayer" unique_id=163807710]
 collision_layer = 3
 collision_mask = 3
+metadata/surface_type = "wood"
 
 [node name="WallLeft" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=1699644481]
 position = Vector2(-890, 331.5)
@@ -112,7 +137,7 @@ position = Vector2(-1, -5)
 shape = SubResource("RectangleShape2D_vcas7")
 
 [node name="Floor" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=83599958]
-position = Vector2(-1, 664)
+position = Vector2(-1, 663)
 shape = SubResource("RectangleShape2D_vcas7")
 
 [node name="WallRight" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=394353619]
@@ -121,16 +146,16 @@ shape = SubResource("RectangleShape2D_g8sw3")
 
 [node name="Objects" type="Node2D" parent="Interior/TileMapLayer" unique_id=1834296797]
 position = Vector2(0, 145.99998)
-scale = Vector2(0.85, 0.85)
+scale = Vector2(0.68, 0.68)
 
 [node name="Shadow2" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1151712733]
-position = Vector2(903.52954, 560)
+position = Vector2(903.52954, 691.17645)
 scale = Vector2(0.37000003, 0.51)
 texture = ExtResource("10_38y22")
 
 [node name="Table2" type="Node2D" parent="Interior/TileMapLayer/Objects" unique_id=1646544332]
 modulate = Color(0.25929382, 0.25929368, 0.25929365, 1)
-position = Vector2(1550.5881, -16.470556)
+position = Vector2(1555.8824, 97.058846)
 scale = Vector2(1.2, 1.2)
 
 [node name="Chair" type="Sprite2D" parent="Interior/TileMapLayer/Objects/Table2" unique_id=107247911]
@@ -151,66 +176,66 @@ texture = ExtResource("12_w6o7l")
 
 [node name="Stairs2" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1464149820]
 modulate = Color(0.5931336, 0.59313357, 0.59313357, 1)
-position = Vector2(-760.8557, 122.35296)
-scale = Vector2(0.6230689, 0.5882353)
+position = Vector2(-951.4706, 223.52943)
+scale = Vector2(0.75, 0.708)
 texture = ExtResource("13_w6o7l")
 
 [node name="Stairs1" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1677100036]
 modulate = Color(0.5931336, 0.59313357, 0.59313357, 1)
-position = Vector2(-757.21924, 305.88235)
+position = Vector2(-955.7485, 440.29416)
 rotation = 3.1415927
-scale = Vector2(0.6204886, -0.5882353)
+scale = Vector2(0.75, -0.711)
 texture = ExtResource("14_vwn3n")
 
 [node name="Cross" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1910889015]
 modulate = Color(0.6955032, 0.6955031, 0.6955031, 1)
-position = Vector2(-29.411743, 43.529434)
+position = Vector2(-7.3529453, 183.82355)
 scale = Vector2(0.312, 0.312)
 texture = ExtResource("15_skwrx")
 
 [node name="Reception" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1009188911]
 modulate = Color(0.6542321, 0.6542321, 0.654232, 1)
-position = Vector2(428.2353, 432.94116)
+position = Vector2(428.2353, 551.4706)
 scale = Vector2(0.46183762, 0.46183762)
 texture = ExtResource("16_4okcm")
 
 [node name="Window" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=218412669]
 modulate = Color(0.52906674, 0.52906674, 0.52906656, 1)
-position = Vector2(-403.52942, 76.4706)
+position = Vector2(-403.52942, 195.1471)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("17_npv2w")
 
 [node name="Window2" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=2083425758]
 modulate = Color(0.52906674, 0.52906674, 0.52906656, 1)
-position = Vector2(418.82358, 76.4706)
+position = Vector2(418.82358, 195.1471)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("17_npv2w")
 
 [node name="Window3" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=862035451]
 modulate = Color(0.52906674, 0.52906674, 0.52906656, 1)
-position = Vector2(651.76465, 76.4706)
+position = Vector2(651.76465, 195.1471)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("17_npv2w")
 
 [node name="Window4" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1016179812]
 modulate = Color(0.52906674, 0.52906674, 0.52906656, 1)
-position = Vector2(876.4706, 76.4706)
+position = Vector2(876.4706, 195.1471)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("17_npv2w")
 
 [node name="Crowd" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=80287521]
 modulate = Color(0.49747366, 0.49747366, 0.49747366, 1)
-position = Vector2(-181.17647, 459.99997)
+position = Vector2(-181.17647, 578.67645)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("18_00tee")
 
 [node name="Shadow" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1177387442]
-position = Vector2(365.8823, 572.9412)
+position = Vector2(365.8823, 691.6177)
 scale = Vector2(1.03, 0.415)
 texture = ExtResource("10_38y22")
 
 [node name="Shadow3" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=473808040]
-position = Vector2(-320, 601.17645)
+position = Vector2(-320, 719.8529)
 scale = Vector2(1.26, 0.705)
 texture = ExtResource("10_38y22")
 
@@ -347,20 +372,22 @@ stream = ExtResource("15_4okcm")
 stream = ExtResource("16_npv2w")
 volume_db = -6.0
 
-[node name="Stairs" type="StaticBody2D" parent="." unique_id=589877159]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Stairs" unique_id=654001859]
-polygon = PackedVector2Array(169, 533, -106, 534, -52, 476, 112, 476)
-
 [node name="BuildingEntrance" type="Node2D" parent="." unique_id=933052707]
 script = ExtResource("1_sx2l7")
 
 [node name="EnterArea" type="Area2D" parent="BuildingEntrance" unique_id=1226471041]
+visible = false
 collision_layer = 2
 collision_mask = 2
 
 [node name="Door" type="CollisionShape2D" parent="BuildingEntrance/EnterArea" unique_id=1377955640]
 position = Vector2(29, 346.5)
 shape = SubResource("RectangleShape2D_0l6d3")
+
+[node name="DoorGlow" type="Sprite2D" parent="BuildingEntrance" unique_id=1186055788]
+material = SubResource("ShaderMaterial_dslda")
+position = Vector2(29.2, 355)
+scale = Vector2(1.831, 1.831)
+texture = ExtResource("8_i0ema")
+region_enabled = true
+region_rect = Rect2(605.2232, 436.10205, 85.70618, 124.74066)

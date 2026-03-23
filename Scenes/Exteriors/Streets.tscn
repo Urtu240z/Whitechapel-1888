@@ -114,7 +114,8 @@ texture = ExtResource("4_va4r7")
 
 [node name="NPC" parent="Exterior/World" unique_id=608212762 groups=["npcs_outside"] instance=ExtResource("13_0u7dm")]
 modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
-z_index = 2
+z_index = 3
+y_sort_enabled = true
 position = Vector2(-1413, -137)
 scale = Vector2(0.125, 0.125)
 move_speed = 110.0
@@ -126,7 +127,7 @@ pitch_variation = 0.7
 
 [node name="NPC2" parent="Exterior/World" unique_id=254397291 groups=["npcs_outside"] instance=ExtResource("13_0u7dm")]
 modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
-z_index = 2
+z_index = 3
 position = Vector2(-1193, -136)
 scale = Vector2(0.125, 0.125)
 move_speed = 85.0
@@ -138,7 +139,7 @@ pitch_variation = 1.0
 
 [node name="NPC3" parent="Exterior/World" unique_id=1133018 groups=["npcs_outside"] instance=ExtResource("13_0u7dm")]
 modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
-z_index = 2
+z_index = 3
 position = Vector2(-1075, -140)
 scale = Vector2(0.125, 0.125)
 move_speed = 100.0
@@ -148,15 +149,15 @@ dialog_timeline = "uid://bwcu6ifl26or8"
 talk_volume_db = 12.0
 
 [node name="StartPoint_A" type="Marker2D" parent="Exterior/World" unique_id=1919983357]
-position = Vector2(-3453, -91)
+position = Vector2(-8461, -183)
 
 [node name="EndPoint_A" type="Marker2D" parent="Exterior/World" unique_id=1750039055]
-position = Vector2(3644, -142)
+position = Vector2(-2808, -88)
 
 [node name="Car3" parent="Exterior/World" unique_id=213822754 groups=["npcs_outside"] instance=ExtResource("13_8xjo6")]
 modulate = Color(0.35906908, 0.35906908, 0.35906908, 1)
 z_index = 3
-position = Vector2(4431, -123)
+position = Vector2(-14242, -820)
 scale = Vector2(4.965, 4.965)
 speed_min = 500.0
 speed_max = 800.0
@@ -164,7 +165,7 @@ speed_max = 800.0
 [node name="Car2" parent="Exterior/World" unique_id=1526125390 groups=["npcs_outside"] instance=ExtResource("13_8xjo6")]
 modulate = Color(0.35906908, 0.35906908, 0.35906908, 1)
 z_index = 3
-position = Vector2(-5156, -131)
+position = Vector2(-23829, -828)
 scale = Vector2(4.965, 4.965)
 speed_min = 500.0
 speed_max = 800.0
@@ -172,7 +173,7 @@ speed_max = 800.0
 [node name="Car" parent="Exterior/World" unique_id=1008649135 groups=["npcs_outside"] instance=ExtResource("13_8xjo6")]
 modulate = Color(0.35906908, 0.35906908, 0.35906908, 1)
 z_index = 3
-position = Vector2(-8088, -227)
+position = Vector2(-26761, -924)
 scale = Vector2(4.965, 4.965)
 speed_min = 500.0
 speed_max = 800.0
@@ -191,14 +192,12 @@ texture = ExtResource("10_boktq")
 [node name="Ten_Bells" parent="Exterior/World" unique_id=926207058 instance=ExtResource("17_1loxg")]
 position = Vector2(-487, -370)
 scale = Vector2(0.67, 0.67)
-fade_time = 1.5
 open_sounds = Array[AudioStream]([ExtResource("12_vsjiw"), ExtResource("13_80ji7"), ExtResource("14_evs4v")])
 close_sounds = Array[AudioStream]([ExtResource("15_vkywb"), ExtResource("16_urswk"), ExtResource("17_0gjoy")])
 
 [node name="Lodge" parent="Exterior/World" unique_id=1878724243 instance=ExtResource("14_1loxg")]
-position = Vector2(-2331, -333)
-scale = Vector2(0.6, 0.6)
-fade_time = 1.5
+position = Vector2(-2625.0002, -490)
+scale = Vector2(0.9, 0.9)
 
 [node name="Area2D" type="Area2D" parent="Exterior" unique_id=749285088]
 position = Vector2(2104, -23)
@@ -233,10 +232,13 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Journal" parent="." unique_id=822435912 instance=ExtResource("16_e1isi")]
+visible = false
 
 [node name="Player" parent="." unique_id=1458210690 instance=ExtResource("17_rusfs")]
-position = Vector2(-484.00003, -126)
-scale = Vector2(0.21, 0.21)
+modulate = Color(0.65834004, 0.6583399, 0.6583399, 1)
+y_sort_enabled = true
+position = Vector2(-1398, -118)
+scale = Vector2(0.2, 0.2)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1388803304]
 position = Vector2(80.000114, -414.28574)

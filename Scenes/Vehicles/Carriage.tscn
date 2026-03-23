@@ -225,7 +225,7 @@ tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
 tracks/16/path = NodePath("Sprites/Horse/Skeleton2D/Back/Neck:rotation")
-tracks/16/interp = 1
+tracks/16/interp = 4
 tracks/16/loop_wrap = true
 tracks/16/keys = {
 "times": PackedFloat32Array(0),
@@ -655,14 +655,15 @@ bones = ["Back", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 internal_vertex_count = 4
 
 [node name="Skeleton2D" type="Skeleton2D" parent="Sprites/Horse" unique_id=11541955]
+visible = false
 
 [node name="Back" type="Bone2D" parent="Sprites/Horse/Skeleton2D" unique_id=476409849]
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Neck" type="Bone2D" parent="Sprites/Horse/Skeleton2D/Back" unique_id=798929937]
 position = Vector2(34, -12)
-rotation = -0.06868683
-scale = Vector2(0.9999998, 0.9999998)
+rotation = 6.2144985
+scale = Vector2(0.9999997, 0.9999997)
 rest = Transform2D(1, 0, 0, 1, 34, -12)
 
 [node name="Nose" type="Bone2D" parent="Sprites/Horse/Skeleton2D/Back/Neck" unique_id=1277644948]

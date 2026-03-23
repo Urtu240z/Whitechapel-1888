@@ -92,8 +92,9 @@ enabled = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmcse"]
 size = Vector2(707, 976)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wqe7e"]
-size = Vector2(322, 815)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r6t50"]
+radius = 128.7
+height = 850.24
 
 [sub_resource type="Animation" id="Animation_v340a"]
 resource_name = "Crouch"
@@ -1972,6 +1973,7 @@ z_index = 1
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_0u84n")
+friction = 1250.0
 breath_run_sounds = Array[AudioStream]([ExtResource("2_io2mu"), ExtResource("3_e5iqy")])
 
 [node name="Movement" type="Node" parent="." unique_id=1659947276]
@@ -1999,10 +2001,10 @@ cough_sounds_heavy = Array[AudioStream]([ExtResource("18_6rswy"), ExtResource("1
 [node name="CoughPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=531224860]
 
 [node name="Interaction" type="Node2D" parent="." unique_id=495061018]
-visible = false
 script = ExtResource("13_g66pu")
 
 [node name="InteractionArea" type="Area2D" parent="Interaction" unique_id=902202576]
+visible = false
 collision_layer = 17
 collision_mask = 17
 
@@ -2181,6 +2183,7 @@ bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 internal_vertex_count = 2
 
 [node name="Bones" type="Node2D" parent="CharacterContainer" unique_id=1021464987]
+visible = false
 
 [node name="Skeleton2D" type="Skeleton2D" parent="CharacterContainer/Bones" unique_id=1831699988]
 modification_stack = SubResource("SkeletonModificationStack2D_qdq1f")
@@ -2232,7 +2235,7 @@ rest = Transform2D(1, 0, 0, 1, 47, -121)
 
 [node name="ForeArmL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/ArmL" unique_id=808976861]
 position = Vector2(22, 120)
-rotation = 0.49762627
+rotation = 0.49762613
 scale = Vector2(0.99984795, 0.99984795)
 rest = Transform2D(0.99988055, 0.015455957, -0.015455957, 0.99988055, 22, 120)
 auto_calculate_length_and_angle = false
@@ -2258,14 +2261,14 @@ bone_angle = 91.99996
 [node name="LegL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=1374812682]
 visible = false
 position = Vector2(55.522446, 115.97094)
-rotation = -0.36591956
+rotation = -0.36591855
 scale = Vector2(0.99984384, 0.99984384)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegL" unique_id=278652099]
 position = Vector2(-7, 125)
-rotation = 0.28081366
-scale = Vector2(0.9998471, 0.9998471)
+rotation = 0.28081247
+scale = Vector2(0.99984705, 0.99984705)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -2417,6 +2420,7 @@ bone_node = NodePath("../../Hip")
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
 [node name="IK Targets" type="Node2D" parent="CharacterContainer" unique_id=869899808]
+visible = false
 
 [node name="Head Target" type="Node2D" parent="CharacterContainer/IK Targets" unique_id=7104240]
 position = Vector2(21, -389)
@@ -2471,8 +2475,9 @@ shape = SubResource("RectangleShape2D_hmcse")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=1724075595]
 visible = false
-position = Vector2(0, 73.5)
-shape = SubResource("RectangleShape2D_wqe7e")
+z_index = 1
+position = Vector2(1, 60.5)
+shape = SubResource("CapsuleShape2D_r6t50")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1366254268]
 libraries/ = SubResource("AnimationLibrary_ur43p")

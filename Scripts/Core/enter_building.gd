@@ -18,7 +18,8 @@ extends Node2D
 # │   ├── Ambient (AudioStreamPlayer2D)
 # │   └── Music (AudioStreamPlayer2D)
 # └── BuildingEntrance (Node2D) ← este script
-#     └── EnterArea (Area2D)
+#     ├── EnterArea (Area2D)
+#     └── DoorGlow (Sprite2D / Polygon2D)
 # ================================================================
 
 # ================================================================
@@ -29,8 +30,9 @@ var _enter_area: Area2D = null
 var _exit_area: Area2D = null
 var _interior: Node2D = null
 var _walls: StaticBody2D = null
-var _inside_audio: Node = null   # Audio del edificio (local)
+var _inside_audio: Node = null
 var _audio_sfx: AudioStreamPlayer2D = null
+var _door_glow: Node2D = null
 
 # Config del padre (building.gd)
 var _config: Node = null
@@ -57,11 +59,12 @@ func _ready() -> void:
 	add_child(_audio_sfx)
 
 	# Nodos por ruta local — no por grupos globales
-	_enter_area    = get_node_or_null("EnterArea")
-	_interior      = get_node_or_null("../Interior")
-	_exit_area     = get_node_or_null("../Interior/TileMapLayer/ExitArea")
-	_walls         = get_node_or_null("../Interior/TileMapLayer/Wall")
-	_inside_audio  = get_node_or_null("../Audio")  # Audio local del edificio
+	_enter_area   = get_node_or_null("EnterArea")
+	_door_glow    = get_node_or_null("DoorGlow")
+	_interior     = get_node_or_null("../Interior")
+	_exit_area    = get_node_or_null("../Interior/TileMapLayer/ExitArea")
+	_walls        = get_node_or_null("../Interior/TileMapLayer/Wall")
+	_inside_audio = get_node_or_null("../Audio")
 
 	if _interior:
 		_interior.visible = false
@@ -76,46 +79,46 @@ func _ready() -> void:
 		_exit_area.body_exited.connect(_on_exit_area_exited)
 
 # ================================================================
-# INPUT
-# ================================================================
-
-func _process(_delta: float) -> void:
-	if _transitioning or not Input.is_action_just_pressed(_config.enter_action):
-		return
-
-	if not _inside and _player_near_enter:
-		if not _config.on_enter():
-			return
-		_transitioning = true
-		await _enter()
-		_transitioning = false
-
-	elif _inside and _player_near_exit:
-		if not _config.on_exit():
-			return
-		_transitioning = true
-		await _exit()
-		_transitioning = false
-
-# ================================================================
 # DETECCIÓN DE ÁREAS
 # ================================================================
 
 func _on_enter_area_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_near_enter = true
+		_set_door_glow(true)
+		InteractionManager.register(self, InteractionManager.Priority.BUILDING, _on_interact)
 
 func _on_enter_area_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_near_enter = false
+		_set_door_glow(false)
+		InteractionManager.unregister(self)
 
 func _on_exit_area_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_near_exit = true
+		InteractionManager.register(self, InteractionManager.Priority.BUILDING, _on_interact)
 
 func _on_exit_area_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_near_exit = false
+		InteractionManager.unregister(self)
+
+func _on_interact() -> void:
+	if _transitioning:
+		return
+	if not _inside and _player_near_enter:
+		if not _config.on_enter():
+			return
+		_transitioning = true
+		await _enter()
+		_transitioning = false
+	elif _inside and _player_near_exit:
+		if not _config.on_exit():
+			return
+		_transitioning = true
+		await _exit()
+		_transitioning = false
 
 # ================================================================
 # ENTRAR
@@ -133,27 +136,25 @@ func _enter() -> void:
 
 	player.disable_movement()
 
-	# Mostrar nombre del edificio durante el fade
-	_mostrar_nombre(_config.building_name)
-	await SceneManager._fade_out(_config.fade_time * 0.5)
-	_limpiar_nombre()
+	var fade_total: float = _config.fade_time
+	var fade_half: float = fade_total * 0.5
+	var nombre_duracion: float = fade_total * (2.0 / 3.0)
+	var nombre_margen: float = (fade_total - nombre_duracion) * 0.5
 
-	# Congelar exterior
+	# Nombre en paralelo al fade total — centrado
+	_mostrar_nombre_con_fade(_config.building_name, nombre_margen, nombre_duracion)
+	await SceneManager._fade_out(fade_half)
+
+	# Cambios de escena
 	_freeze_world(true)
 	var exterior = get_parent().get_node_or_null("Exterior")
 	if exterior:
 		exterior.visible = false
-
-	# Pausar audio exterior
 	_set_exterior_audio_paused(true)
-
-	# Mostrar interior
 	if _interior:
 		_interior.visible = true
 		_interior.modulate.a = 1.0
 	_set_walls_enabled(true)
-
-	# Zoom y límites de cámara
 	if camera:
 		camera.zoom = _config.zoom_in
 		_original_limits = {
@@ -167,9 +168,9 @@ func _enter() -> void:
 			camera.limit_right  = limits["right"]
 			camera.limit_bottom = limits["bottom"]
 
-	await SceneManager._fade_in(_config.fade_time * 0.5)
+	await SceneManager._fade_in(fade_half)
 
-	# Audio interior — primera vez play, resto unpause
+	# Audio interior
 	if not _interior_audio_started:
 		_interior_audio_started = true
 		_start_inside_audio()
@@ -194,28 +195,24 @@ func _exit() -> void:
 
 	player.disable_movement()
 
-	# Fade out + pause audio interior
-	_mostrar_nombre(_config.street_name)
-	await SceneManager._fade_out(_config.fade_time * 0.5)
-	_limpiar_nombre()
+	var fade_total: float = _config.fade_time
+	var fade_half: float = fade_total * 0.5
+	var nombre_duracion: float = fade_total * (2.0 / 3.0)
+	var nombre_margen: float = (fade_total - nombre_duracion) * 0.5
+
+	# Nombre en paralelo al fade total — centrado
+	_mostrar_nombre_con_fade(_config.street_name, nombre_margen, nombre_duracion)
+	await SceneManager._fade_out(fade_half)
 
 	_set_inside_audio_paused(true)
-
-	# Ocultar interior
 	if _interior:
 		_interior.visible = false
 	_set_walls_enabled(false)
-
-	# Restaurar exterior
 	var exterior = get_parent().get_node_or_null("Exterior")
 	if exterior:
 		exterior.visible = true
 	_freeze_world(false)
-
-	# Reanudar audio exterior
 	_set_exterior_audio_paused(false)
-
-	# Restaurar zoom y límites
 	if camera:
 		camera.zoom = _config.zoom_out
 		if not _original_limits.is_empty():
@@ -224,7 +221,7 @@ func _exit() -> void:
 			camera.limit_right  = _original_limits["right"]
 			camera.limit_bottom = _original_limits["bottom"]
 
-	await SceneManager._fade_in(_config.fade_time * 0.5)
+	await SceneManager._fade_in(fade_half)
 
 	player.enable_movement()
 
@@ -234,9 +231,10 @@ func _exit() -> void:
 
 var _name_label: CanvasLayer = null
 
-func _mostrar_nombre(nombre: String) -> void:
+func _mostrar_nombre_con_fade(nombre: String, delay: float, duracion: float) -> void:
 	if nombre.is_empty():
 		return
+
 	_name_label = CanvasLayer.new()
 	_name_label.layer = 20
 	var lbl := Label.new()
@@ -249,8 +247,19 @@ func _mostrar_nombre(nombre: String) -> void:
 		lbl.add_theme_font_override("font", font)
 	lbl.add_theme_font_size_override("font_size", 36)
 	lbl.add_theme_color_override("font_color", Color(0.9, 0.85, 0.75))
+	lbl.modulate.a = 0.0
 	_name_label.add_child(lbl)
 	get_tree().root.add_child(_name_label)
+
+	# fade_nombre = 20% de la duración para cada fade in/out del texto
+	var fade_nombre: float = duracion * 0.2
+	var visible_puro: float = duracion - fade_nombre * 2.0
+	var tw := _name_label.create_tween()
+	tw.tween_interval(delay)
+	tw.tween_property(lbl, "modulate:a", 1.0, fade_nombre)
+	tw.tween_interval(visible_puro)
+	tw.tween_property(lbl, "modulate:a", 0.0, fade_nombre)
+	tw.tween_callback(_limpiar_nombre)
 
 func _limpiar_nombre() -> void:
 	if _name_label:
@@ -258,7 +267,7 @@ func _limpiar_nombre() -> void:
 		_name_label = null
 
 # ================================================================
-# AUDIO LOCAL (referencia directa, sin grupos globales)
+# AUDIO LOCAL
 # ================================================================
 
 func _start_inside_audio() -> void:
@@ -268,7 +277,6 @@ func _start_inside_audio() -> void:
 		if child is AudioStreamPlayer or child is AudioStreamPlayer2D:
 			child.volume_db = -40.0
 			child.play()
-	# Fade a volumen normal
 	var tw := create_tween().set_parallel(true)
 	for child in _inside_audio.get_children():
 		if child is AudioStreamPlayer or child is AudioStreamPlayer2D:
@@ -298,7 +306,7 @@ func _set_exterior_audio_paused(paused: bool) -> void:
 					child.volume_db = 0.0
 
 # ================================================================
-# AUDIO SFX (abrir/cerrar puerta)
+# AUDIO SFX
 # ================================================================
 
 func _play_sfx(sounds: Array[AudioStream]) -> void:
@@ -333,3 +341,42 @@ func _freeze_world(freeze: bool) -> void:
 			continue
 		child.visible = not freeze
 		child.process_mode = Node.PROCESS_MODE_DISABLED if freeze else Node.PROCESS_MODE_INHERIT
+
+# ================================================================
+# GLOW DE PUERTA
+# ================================================================
+
+var _glow_tween: Tween = null
+
+func _set_door_glow(active: bool) -> void:
+	if not is_instance_valid(_door_glow):
+		return
+	var mat := _door_glow.material as ShaderMaterial
+	if not mat:
+		return
+
+	if _glow_tween:
+		_glow_tween.kill()
+		_glow_tween = null
+
+	if active:
+		_glow_pulse(mat)
+	else:
+		_glow_tween = create_tween()
+		_glow_tween.tween_method(
+			func(v: float): mat.set_shader_parameter("glow_strength", v),
+			mat.get_shader_parameter("glow_strength"),
+			0.0,
+			0.2
+		)
+
+func _glow_pulse(mat: ShaderMaterial) -> void:
+	_glow_tween = create_tween().set_loops()
+	_glow_tween.tween_method(
+		func(v: float): mat.set_shader_parameter("glow_strength", v),
+		0.0, 2.0, 0.7
+	)
+	_glow_tween.tween_method(
+		func(v: float): mat.set_shader_parameter("glow_strength", v),
+		2.0, 0.0, 0.7
+	)

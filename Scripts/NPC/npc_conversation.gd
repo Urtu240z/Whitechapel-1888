@@ -17,60 +17,77 @@ var partner: CharacterBody2D = null
 var is_talking: bool = false
 var is_listening: bool = false
 
-
 func _ready() -> void:
+	area_entered.connect(_on_area_entered)
+	area_exited.connect(_on_area_exited)
 	body_entered.connect(_on_area_body_entered)
 	body_exited.connect(_on_area_body_exited)
 
+# ================================================================
+# DETECCIÓN DEL PLAYER (via InteractionArea)
+# ================================================================
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.name != "InteractionArea":
+		return
+	var player = area.get_parent().get_parent() # InteractionArea → Interaction → Player
+	if not player is MainPlayer:
+		return
+	var interaction = player.get_node_or_null("Interaction")
+	if interaction:
+		interaction.register_npc(get_parent())
+
+func _on_area_exited(area: Area2D) -> void:
+	if area.name != "InteractionArea":
+		return
+	var player = area.get_parent().get_parent()
+	if not player is MainPlayer:
+		return
+	var interaction = player.get_node_or_null("Interaction")
+	if interaction:
+		interaction.unregister_npc(get_parent())
+
+# ================================================================
+# DETECCIÓN DE OTROS NPCs (via CharacterBody2D)
+# ================================================================
 
 func _on_area_body_entered(body: Node) -> void:
 	if body == get_parent():
 		return
-	
-	# Si es el player, lo guardamos como referencia pero no iniciamos conversación NPC
 	if body is MainPlayer:
-		return  # el player_interaction.gd se encarga de iniciar el diálogo
-	
+		return
 	if not (body is CharacterBody2D):
 		return
 	if not body.has_node("Conversation"):
 		return
-	# ... resto igual
-
 	var other_convo: NPCConversation = body.get_node("Conversation")
 	if not other_convo or other_convo.active or active:
 		return
 	if randf() > conversation_chance:
 		return
-
 	active = true
 	other_convo.active = true
 	partner = body
 	other_convo.partner = get_parent()
-
-	# Parar movimiento total
 	movement.freeze()
 	body.get_node("Movement").freeze()
-
-	# --- Orientarse ---
 	var facing_right: bool = body.global_position.x > get_parent().global_position.x
 	var anim_a: NPCAnimation = animation
 	var anim_b: NPCAnimation = body.get_node("Animation")
-
 	anim_a.lock_facing(facing_right)
 	anim_b.lock_facing(!facing_right)
-
-	# --- Quién empieza ---
 	if randf() < 0.5:
 		_start_talking()
 	else:
 		other_convo._start_talking()
 
-
 func _on_area_body_exited(body: Node) -> void:
 	if body == partner:
 		_end_conversation()
 
+# ================================================================
+# CONVERSACIÓN ENTRE NPCs
+# ================================================================
 
 func _start_talking() -> void:
 	if not partner or not partner.is_inside_tree():
@@ -81,10 +98,8 @@ func _start_talking() -> void:
 	var other_convo: NPCConversation = partner.get_node("Conversation")
 	other_convo.is_talking = false
 	other_convo.is_listening = true
-
 	emit_signal("conversation_started", partner)
 	animation.play_talk(_on_talk_finished)
-
 
 func _on_talk_finished() -> void:
 	if not partner or not partner.is_inside_tree():
@@ -93,7 +108,6 @@ func _on_talk_finished() -> void:
 	is_talking = false
 	is_listening = false
 	animation.stop_talk()
-
 	var other_convo: NPCConversation = partner.get_node("Conversation")
 	if randf() < continue_conversation_chance:
 		var pause: float = randf_range(pause_between_turns_min, pause_between_turns_max)
@@ -101,7 +115,6 @@ func _on_talk_finished() -> void:
 		other_convo._start_talking()
 	else:
 		_end_conversation()
-
 
 func _end_conversation() -> void:
 	if not active:
@@ -112,7 +125,6 @@ func _end_conversation() -> void:
 	animation.stop_talk()
 	movement.unfreeze()
 	animation.unlock_facing()
-
 	if partner and partner.is_inside_tree():
 		var other_convo: NPCConversation = partner.get_node("Conversation")
 		other_convo.active = false
@@ -121,6 +133,5 @@ func _end_conversation() -> void:
 		other_convo.movement.unfreeze()
 		other_convo.animation.unlock_facing()
 		other_convo.partner = null
-
 	emit_signal("conversation_ended", partner)
 	partner = null

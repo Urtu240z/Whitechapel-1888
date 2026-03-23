@@ -28,10 +28,10 @@ diffuse_texture = ExtResource("8_bveo1")
 normal_texture = ExtResource("6_nikpo")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bveo1"]
-size = Vector2(5301, 86)
+size = Vector2(6851, 86)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nikpo"]
-size = Vector2(5312, 114)
+size = Vector2(6792, 114)
 
 [sub_resource type="Gradient" id="Gradient_15oiq"]
 offsets = PackedFloat32Array(0, 0.43093923)
@@ -111,7 +111,8 @@ scale = Vector2(1.0523437, 1.0523438)
 texture = SubResource("CanvasTexture_j3y8p")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=76883339]
-position = Vector2(124.5, 16)
+visible = false
+position = Vector2(-650.5, 16)
 shape = SubResource("RectangleShape2D_bveo1")
 
 [node name="Tunnel2" type="Sprite2D" parent="Ground" unique_id=1406775495]
@@ -157,12 +158,13 @@ texture = ExtResource("4_t8yqd")
 texture_scale = 5.51
 
 [node name="SubGround" type="StaticBody2D" parent="." unique_id=1467724020]
+visible = false
 position = Vector2(0, -1)
 collision_layer = 512
 collision_mask = 512
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="SubGround" unique_id=1043381223]
-position = Vector2(57, 84)
+position = Vector2(-683, 84)
 shape = SubResource("RectangleShape2D_nikpo")
 debug_color = Color(0.9349291, 2.0407439e-05, 0.6405946, 0.41960785)
 
