@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://b1nbpmgfq3kvk"]
 
 [ext_resource type="Script" uid="uid://bci0mfmwe2mol" path="res://Scripts/UI/ui_stats.gd" id="1_b5itx"]
-[ext_resource type="Script" uid="uid://c6ppr2gjoefvy" path="res://Scripts/UI/stats_panel.gd" id="2_ur5w8"]
 
 [node name="UIStats" type="CanvasLayer" unique_id=607837971]
 layer = 10
@@ -11,7 +10,6 @@ script = ExtResource("1_b5itx")
 visible = false
 offset_right = 346.0
 offset_bottom = 472.0
-script = ExtResource("2_ur5w8")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1850771080]
 layout_mode = 2

@@ -127,9 +127,7 @@ func _process(delta: float) -> void:
 func _aplicar_degradacion() -> void:
 	hambre  = clamp(hambre  + HAMBRE_POR_MINUTO,  0, 100)
 	higiene = clamp(higiene + HIGIENE_POR_MINUTO, 0, 100)
-	var sueno_anterior = sueno
 	sueno   = clamp(sueno   + SUENO_POR_MINUTO,   0, 100)
-	# La detección de sueno=0 se hace en actualizar_stats()
 	alcohol = clamp(alcohol + ALCOHOL_POR_MINUTO, 0, 100)
 	laudano = clamp(laudano + LAUDANO_POR_MINUTO, 0, 100)
 
@@ -325,12 +323,10 @@ func descansar_calle() -> void:
 
 	var tirada := randf()
 	if tirada < 0.15:
-		# ✅ 15% — se cura
 		enfermedad = 0.0
 		enferma = false
 		enfermedad_cambiada.emit(false)
 	elif tirada < 0.30:
-		# ❌ 15% — empeora
 		enfermedad = min(100, enfermedad + 10)
 		_check_enfermedad_efectos()
 

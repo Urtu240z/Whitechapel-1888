@@ -81,6 +81,9 @@ size = Vector2(164, 273)
 
 [node name="Lodge" type="Node2D" unique_id=444969637]
 script = ExtResource("1_p8nmd")
+fade_time = 1.5
+building_name = "St. Jude's Refuge & Dispensary"
+street_name = "Commercial Street"
 
 [node name="Exterior" type="Sprite2D" parent="." unique_id=1915103148]
 position = Vector2(8.999985, 18.99997)
@@ -88,6 +91,7 @@ scale = Vector2(1.8308128, 1.8308128)
 texture = ExtResource("8_i0ema")
 
 [node name="Interior" type="Node2D" parent="." unique_id=1238585940]
+visible = false
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Interior" unique_id=897291406]
 z_index = 1
@@ -326,6 +330,14 @@ position = Vector2(1.9526486, 19.03833)
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_xtf64")
 
+[node name="CameraLimits" type="Node2D" parent="Interior" unique_id=79935523]
+
+[node name="TopLeft" type="Marker2D" parent="Interior/CameraLimits" unique_id=1995321068]
+position = Vector2(-870, -191)
+
+[node name="BottomRight" type="Marker2D" parent="Interior/CameraLimits" unique_id=243658893]
+position = Vector2(930, 496)
+
 [node name="Audio" type="Node2D" parent="." unique_id=1996820493]
 
 [node name="Ambient" type="AudioStreamPlayer2D" parent="Audio" unique_id=78734833]
@@ -335,13 +347,12 @@ stream = ExtResource("15_4okcm")
 stream = ExtResource("16_npv2w")
 volume_db = -6.0
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=589877159]
+[node name="Stairs" type="StaticBody2D" parent="." unique_id=589877159]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="StaticBody2D" unique_id=184241922]
-position = Vector2(-88, 564)
-polygon = PackedVector2Array(1314, 23, 1165, -27, 259, -30, 229, -51, 195, -85, 38, -87, -29, -32, -905, -49, -1055, 24)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Stairs" unique_id=654001859]
+polygon = PackedVector2Array(169, 533, -106, 534, -52, 476, 112, 476)
 
 [node name="BuildingEntrance" type="Node2D" parent="." unique_id=933052707]
 script = ExtResource("1_sx2l7")

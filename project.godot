@@ -113,7 +113,6 @@ enabled=PackedStringArray("res://addons/curved_lines_2d/plugin.cfg", "res://addo
 
 player=""
 audio_exterior=""
-audio_interior=""
 
 [gui]
 

@@ -13,13 +13,14 @@ extends Node2D
 # │   │   └── CollisionShape2D
 # └── Interior (Node2D)
 #     ├── TileMapLayer
-#     │   ├── Wall (StaticBody2D)
+#     │   ├── Wall (StaticBody2D)  ← metadata surface_type
 #     │   └── ExitArea (Area2D)
 #     ├── CameraLimits (Node2D)  ← opcional, para límites de cámara
 #     │   ├── TopLeft (Marker2D)
 #     │   └── BottomRight (Marker2D)
-#     ├── OutsideAudio (Node)
-#     └── InsideAudio (Node)
+# ├── Audio (Node2D)  ← audio local del edificio (sin grupos globales)
+#     ├── Ambient (AudioStreamPlayer2D)
+#     └── Music (AudioStreamPlayer2D)
 #
 # ================================================================
 
@@ -43,6 +44,14 @@ extends Node2D
 @export_group("🔊 Audio")
 @export var open_sounds: Array[AudioStream] = []
 @export var close_sounds: Array[AudioStream] = []
+
+# ================================================================
+# 🏷️ NOMBRES
+# Aparecen en pantalla durante el fundido de entrada/salida
+# ================================================================
+@export_group("🏷️ Names")
+@export var building_name: String = ""  # ej: "The Ten Bells"
+@export var street_name: String = ""    # ej: "Commercial Street"
 
 # ================================================================
 # 🏠 LÓGICA ESPECÍFICA DEL EDIFICIO

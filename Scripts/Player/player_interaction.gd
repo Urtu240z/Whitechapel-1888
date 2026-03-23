@@ -3,11 +3,13 @@ extends Node
 # INTERACTION MODULE
 # ==========================
 # Gestiona las interacciones del jugador con el mundo:
-# - Entrar en edificios (BuildingEntrance) → tecla "interact"
-# - Iniciar diálogos con NPCs via Dialogic  → tecla "interact"
+# - Iniciar diálogos con NPCs via Dialogic → tecla "interact"
 #
 # ℹ️ Los pickups NO se gestionan aquí.
 # El nodo Pickup.tscn se auto-aplica via body_entered en su propio script.
+#
+# ℹ️ Los edificios NO se gestionan aquí.
+# enter_building.gd en BuildingEntrance gestiona su propia entrada/salida.
 #
 # 📋 SETUP NPCs PARA DIALOGIC:
 # - El NPC debe tener class_name NPC (ya lo tiene)
@@ -17,7 +19,7 @@ extends Node
 #   solaparse con el Area2D Conversation del NPC (capa 5)
 #
 # 📋 INPUT MAP — teclas necesarias:
-# - "interact"   → F  (abrir diálogo / entrar edificio)
+# - "interact"   → F  (abrir diálogo)
 # - ui_accept    → F  (avanzar texto y seleccionar opciones en Dialogic)
 # - ui_cancel    → F  (cerrar diálogo al terminar)
 # ==========================
@@ -37,21 +39,7 @@ func process_interactions() -> void:
 	if not player or not player.can_move:
 		return
 	if Input.is_action_just_pressed("interact"):
-		_check_for_building_entry()
 		_check_for_dialog()
-
-# ==========================
-# BUILDING ENTRY
-# ==========================
-func _check_for_building_entry() -> void:
-	var interaction_area = player.get_node_or_null("Interaction/InteractionArea")
-	if not interaction_area:
-		return
-
-	for area in interaction_area.get_overlapping_areas():
-		if area.is_in_group("BuildingEntrance"):
-			area.call_deferred("enter_building", player)
-			return
 
 # ==========================
 # DIALOG — DIALOGIC

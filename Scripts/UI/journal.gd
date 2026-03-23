@@ -63,7 +63,7 @@ func _ready() -> void:
 # INPUT
 # ================================================================
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("stats"):
 		if is_open:
 			_close()
