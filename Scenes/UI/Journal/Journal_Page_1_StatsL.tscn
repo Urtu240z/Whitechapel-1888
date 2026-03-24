@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://cuov50nux1n8l"]
+
+[ext_resource type="Texture2D" uid="uid://cfme643ymvbew" path="res://Assets/Images/Journal_L.png" id="1_h73ng"]
+[ext_resource type="Script" uid="uid://baldt7g3gc78f" path="res://Scripts/UI/Journal/journal_page_1.gd" id="2_a3lul"]
+
+[node name="JournalPage1" type="Node2D" unique_id=1943010589]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("2_a3lul")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=181185242]
+visible = false
+texture_filter = 1
+position = Vector2(279.5, 367.5)
+texture = ExtResource("1_h73ng")
+
+[node name="LabelTitle" type="Label" parent="." unique_id=457162476]
+offset_left = 106.0
+offset_top = 55.0
+offset_right = 250.0
+offset_bottom = 78.0
+text = "nfeinifeniefnineifn"
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelHour" type="Label" parent="." unique_id=266703005]
+offset_left = 141.0
+offset_top = 144.0
+offset_right = 206.0
+offset_bottom = 167.0
+text = "ijinoinsv"
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelAttrText" type="Label" parent="." unique_id=655873324]
+offset_left = 100.0
+offset_top = 299.0
+offset_right = 171.0
+offset_bottom = 322.0
+text = "dsfsdfdsf"
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelAttrValue" type="Label" parent="." unique_id=205471398]
+offset_left = 97.0
+offset_top = 331.0
+offset_right = 168.0
+offset_bottom = 354.0
+text = "sdfdsfdsf"
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelMoneyTitle" type="Label" parent="." unique_id=1794030710]
+offset_left = 99.0
+offset_top = 425.0
+offset_right = 164.0
+offset_bottom = 448.0
+text = "sddsfdfs"
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelMoneyValue" type="Label" parent="." unique_id=660325299]
+offset_left = 98.0
+offset_top = 453.0
+offset_right = 161.0
+offset_bottom = 476.0
+text = "sdfdfsdf"
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelDaysTitle" type="Label" parent="." unique_id=449218085]
+offset_left = 94.0
+offset_top = 546.0
+offset_right = 165.0
+offset_bottom = 569.0
+text = "dsfdsfdfs"
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelDaysValue" type="Label" parent="." unique_id=324555748]
+offset_left = 95.0
+offset_top = 578.0
+offset_right = 153.0
+offset_bottom = 601.0
+text = "dsfddsf"
+metadata/_edit_use_anchors_ = true
