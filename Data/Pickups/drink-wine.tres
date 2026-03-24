@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="PickupData" format=3 uid="uid://dkdj8l60g2a0q"]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dkdj8l60g2a0q"]
 
-[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/pickup_data.gd" id="1_wwhyb"]
+[ext_resource type="Script" uid="uid://dys3np3hnv0v7" path="res://Scripts/Data/item_data.gd" id="1_wwhyb"]
 
 [resource]
 script = ExtResource("1_wwhyb")

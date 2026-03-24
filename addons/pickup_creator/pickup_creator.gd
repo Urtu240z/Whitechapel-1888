@@ -191,7 +191,7 @@ func _load_selected_pickup(index: int):
 	if pickup == null:
 		return
 
-	# Suponiendo clase PickupData con props display_name, cost, effects (Dictionary)
+	# Suponiendo clase ItemData con props display_name, cost, effects (Dictionary)
 	display_name_field.text = pickup.display_name
 	cost_field.value = float(pickup.cost)
 
@@ -253,7 +253,7 @@ func _create_pickup_data():
 		push_warning("⚠️ Ya existe un pickup con ese nombre.")
 		return
 
-	var pickup := PickupData.new()
+	var pickup := ItemData.new()
 	pickup.name = pickup_name
 	pickup.display_name = pickup_name.capitalize()
 	pickup.cost = 0.0
