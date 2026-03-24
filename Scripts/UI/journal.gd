@@ -15,26 +15,27 @@ extends CanvasLayer
 
 @onready var color_rect        = $Control/ColorRect
 @onready var journal_container = $Control/JournalContainer
-@onready var page_left         = $Control/JournalContainer/PageLeft
-@onready var page_right        = $Control/JournalContainer/PageRight
+@onready var page_left         = $Control/JournalContainer/JournalBg/PageLeft
+@onready var page_right        = $Control/JournalContainer/JournalBg/PageRight
 @onready var page_turn_r       = $Control/JournalContainer/JournalBg/PageTurnR
 @onready var page_turn_l       = $Control/JournalContainer/JournalBg/PageTurnL
 @onready var arrow_left        = $Control/JournalContainer/ArrowLeft
 @onready var arrow_right       = $Control/JournalContainer/ArrowRight
 
-@onready var label_title        = $Control/JournalContainer/JournalBg/LabelTitle
-@onready var label_hour         = $Control/JournalContainer/JournalBg/LabelHour
-@onready var label_attr_text    = $Control/JournalContainer/JournalBg/LabelAttrText
-@onready var label_attr_value   = $Control/JournalContainer/JournalBg/LabelAttrValue
-@onready var badges_container   = $Control/JournalContainer/JournalBg/HBoxContainerBadges
-@onready var grid_physical      = $Control/JournalContainer/JournalBg/GridContainerPhysical
-@onready var grid_mental        = $Control/JournalContainer/JournalBg/GridContainerMental
-@onready var label_money_title  = $Control/JournalContainer/JournalBg/LabelMoneyTitle
-@onready var label_money_value  = $Control/JournalContainer/JournalBg/LabelMoneyValue
-@onready var label_days_title   = $Control/JournalContainer/JournalBg/LabelDaysTitle
-@onready var label_days_value   = $Control/JournalContainer/JournalBg/LabelDaysValue
-@onready var label_physical     = $Control/JournalContainer/JournalBg/LabelPhysical
-@onready var label_mental       = $Control/JournalContainer/JournalBg/LabelMental
+@onready var label_title        = $Control/JournalContainer/JournalBg/PageLeft/SpreadL0/LabelTitle
+@onready var label_hour         = $Control/JournalContainer/JournalBg/PageLeft/SpreadL0/LabelHour
+@onready var label_attr_text    = $Control/JournalContainer/JournalBg/PageLeft/SpreadL0/LabelAttrText
+@onready var label_attr_value   = $Control/JournalContainer/JournalBg/PageLeft/SpreadL0/LabelAttrValue
+@onready var label_money_title  = $Control/JournalContainer/JournalBg/PageLeft/SpreadL0/LabelMoneyTitle
+@onready var label_money_value  = $Control/JournalContainer/JournalBg/PageLeft/SpreadL0/LabelMoneyValue
+@onready var label_days_title   = $Control/JournalContainer/JournalBg/PageLeft/SpreadL0/LabelDaysTitle
+@onready var label_days_value   = $Control/JournalContainer/JournalBg/PageLeft/SpreadL0/LabelDaysValue
+
+@onready var grid_physical      = $Control/JournalContainer/JournalBg/PageRight/SpreadR0/GridContainerPhysical
+@onready var grid_mental        = $Control/JournalContainer/JournalBg/PageRight/SpreadR0/GridContainerMental
+@onready var badges_container   = $Control/JournalContainer/JournalBg/PageRight/SpreadR0/HBoxContainerBadges
+@onready var label_physical     = $Control/JournalContainer/JournalBg/PageRight/SpreadR0/LabelPhysical
+@onready var label_mental       = $Control/JournalContainer/JournalBg/PageRight/SpreadR0/LabelMental
 
 # ================================================================
 # FUENTES Y COLORES
