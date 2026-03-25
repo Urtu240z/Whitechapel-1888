@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://qwjw2x1qmrwf"]
+
+[ext_resource type="Script" uid="uid://dbejg3n1avrk4" path="res://Scripts/UI/Journal/journal_page_3.gd" id="1_gxtst"]
+[ext_resource type="Texture2D" uid="uid://cfme643ymvbew" path="res://Assets/Images/Journal_L.png" id="2_wrqbj"]
+
+[node name="JournalPage3" type="Node2D" unique_id=478532696]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_gxtst")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1780543045]
+texture_filter = 1
+position = Vector2(279.5, 367.5)
+texture = ExtResource("2_wrqbj")
+
+[node name="LabelTitle" type="Label" parent="." unique_id=557474596]
+offset_left = 117.0
+offset_top = 53.0
+offset_right = 157.0
+offset_bottom = 76.0
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=691353943]
+offset_left = 138.0
+offset_top = 187.0
+offset_right = 178.0
+offset_bottom = 227.0
+
+[node name="LabelCount" type="Label" parent="." unique_id=80127551]
+offset_left = 284.0
+offset_top = 615.0
+offset_right = 324.0
+offset_bottom = 638.0

@@ -1,9 +1,18 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ddw2ie8wnrnre"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ddw2ie8wnrnre"]
 
 [ext_resource type="Shader" uid="uid://b57sdbj15qx37" path="res://addons/PageFlip/Assets/page_flip_final.gdshader" id="1_cl0rr"]
 
+[sub_resource type="Gradient" id="Gradient_cl0rr"]
+colors = PackedColorArray(0, 0, 0, 0.8, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jccc6"]
+gradient = SubResource("Gradient_cl0rr")
+
 [resource]
 shader = ExtResource("1_cl0rr")
+shader_parameter/spine_shadow_gradient = SubResource("GradientTexture2D_jccc6")
 shader_parameter/shadow_intensity = 0.0
-shader_parameter/max_shadow_spread = 0.35
+shader_parameter/max_shadow_spread = 1.0
+shader_parameter/shadow_softness = 3.4420001397449997
+shader_parameter/shadow_curve = 1.8
 shader_parameter/debug_mode = false

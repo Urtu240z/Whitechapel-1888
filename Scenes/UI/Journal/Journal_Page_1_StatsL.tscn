@@ -8,24 +8,23 @@ scale = Vector2(1.5, 1.5)
 script = ExtResource("2_a3lul")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=181185242]
-visible = false
 texture_filter = 1
 position = Vector2(279.5, 367.5)
 texture = ExtResource("1_h73ng")
 
 [node name="LabelTitle" type="Label" parent="." unique_id=457162476]
-offset_left = 106.0
+offset_left = 143.33333
 offset_top = 55.0
-offset_right = 250.0
+offset_right = 287.3333
 offset_bottom = 78.0
 text = "nfeinifeniefnineifn"
 metadata/_edit_use_anchors_ = true
 
 [node name="LabelHour" type="Label" parent="." unique_id=266703005]
-offset_left = 141.0
-offset_top = 144.0
-offset_right = 206.0
-offset_bottom = 167.0
+offset_left = 197.33333
+offset_top = 162.0
+offset_right = 262.3333
+offset_bottom = 185.0
 text = "ijinoinsv"
 metadata/_edit_use_anchors_ = true
 
@@ -38,41 +37,49 @@ text = "dsfsdfdsf"
 metadata/_edit_use_anchors_ = true
 
 [node name="LabelAttrValue" type="Label" parent="." unique_id=205471398]
-offset_left = 97.0
-offset_top = 331.0
-offset_right = 168.0
-offset_bottom = 354.0
+offset_left = 237.33334
+offset_top = 286.6667
+offset_right = 308.33334
+offset_bottom = 309.6667
 text = "sdfdsfdsf"
 metadata/_edit_use_anchors_ = true
 
+[node name="AttrBarContainer" type="Control" parent="." unique_id=1745881518]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 102.0
+offset_top = 352.0
+offset_right = 142.0
+offset_bottom = 392.0
+
 [node name="LabelMoneyTitle" type="Label" parent="." unique_id=1794030710]
-offset_left = 99.0
-offset_top = 425.0
-offset_right = 164.0
-offset_bottom = 448.0
+offset_left = 330.33334
+offset_top = 298.66666
+offset_right = 395.33334
+offset_bottom = 321.66666
 text = "sddsfdfs"
 metadata/_edit_use_anchors_ = true
 
 [node name="LabelMoneyValue" type="Label" parent="." unique_id=660325299]
-offset_left = 98.0
-offset_top = 453.0
-offset_right = 161.0
-offset_bottom = 476.0
+offset_left = 430.66666
+offset_top = 287.3333
+offset_right = 493.66666
+offset_bottom = 310.3333
 text = "sdfdfsdf"
 metadata/_edit_use_anchors_ = true
 
 [node name="LabelDaysTitle" type="Label" parent="." unique_id=449218085]
-offset_left = 94.0
-offset_top = 546.0
-offset_right = 165.0
-offset_bottom = 569.0
+offset_left = 232.66667
+offset_top = 470.0
+offset_right = 303.6667
+offset_bottom = 492.99997
 text = "dsfdsfdfs"
 metadata/_edit_use_anchors_ = true
 
 [node name="LabelDaysValue" type="Label" parent="." unique_id=324555748]
-offset_left = 95.0
-offset_top = 578.0
-offset_right = 153.0
-offset_bottom = 601.0
+offset_left = 274.66666
+offset_top = 549.3333
+offset_right = 332.66666
+offset_bottom = 572.3333
 text = "dsfddsf"
 metadata/_edit_use_anchors_ = true

@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://cm7ioqdu32csh"]
+
+[ext_resource type="Script" uid="uid://d14bagbb1r6yt" path="res://Scripts/UI/Journal/journal_page_4.gd" id="1_7jty4"]
+[ext_resource type="Texture2D" uid="uid://bk4knn1k0il5a" path="res://Assets/Images/Journal_R.png" id="2_5fbwd"]
+[ext_resource type="Texture2D" uid="uid://jwtsn0g28bbp" path="res://Assets/Sprites/Player/Player_Front.png" id="3_5fbwd"]
+
+[node name="JournalPage4" type="Node2D" unique_id=258372096]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_7jty4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1756142898]
+texture_filter = 1
+position = Vector2(279.5, 367.5)
+texture = ExtResource("2_5fbwd")
+
+[node name="LabelTitle" type="Label" parent="." unique_id=1276135302]
+offset_left = 52.0
+offset_top = 53.0
+offset_right = 92.000015
+offset_bottom = 76.0
+
+[node name="Silhouette" type="Sprite2D" parent="." unique_id=1145609928]
+modulate = Color(0.585062, 0.585062, 0.58506197, 0.60300004)
+position = Vector2(270, 388.66666)
+scale = Vector2(0.53, 0.53)
+texture = ExtResource("3_5fbwd")
+
+[node name="SlotsContainer" type="Node2D" parent="." unique_id=2102319922]
+position = Vector2(256, 460)
+
+[node name="HEAD" type="Marker2D" parent="SlotsContainer" unique_id=821408336]
+position = Vector2(116, -237)
+
+[node name="NECK_COLLAR" type="Marker2D" parent="SlotsContainer" unique_id=1222320313]
+position = Vector2(-94, -200)
+
+[node name="NECK_PERFUME" type="Marker2D" parent="SlotsContainer" unique_id=1285449627]
+position = Vector2(-158.66667, -200)
+
+[node name="BODY" type="Marker2D" parent="SlotsContainer" unique_id=893374429]
+position = Vector2(4.666667, -112)
+
+[node name="HAND_LEFT" type="Marker2D" parent="SlotsContainer" unique_id=818530249]
+position = Vector2(-94, -70)
+
+[node name="HAND_RIGHT" type="Marker2D" parent="SlotsContainer" unique_id=841592634]
+position = Vector2(116, -70)
+
+[node name="GLOVES" type="Marker2D" parent="SlotsContainer" unique_id=1708623067]
+position = Vector2(116, -3.9999924)
+
+[node name="SHOES" type="Marker2D" parent="SlotsContainer" unique_id=1642460691]
+position = Vector2(116, 105)

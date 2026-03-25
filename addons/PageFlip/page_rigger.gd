@@ -28,7 +28,6 @@ enum CurlMode {
 }
 
 const SKELETON_NAME = "AutoSkeleton"
-const SHADOW_NAME = "AutoShadow"
 
 
 # ==============================================================================
@@ -90,13 +89,6 @@ var _custom_cache: Dictionary = {}
 @export_range(0.0, 1.0, 0.05) var curl_lag: float = 0.8
 
 
-@export_subgroup("Shadow FX")
-## Create a dynamic shadow behind the page (Background Shadow).
-@export var enable_shadow: bool = false
-## The gradient texture used for the back shadow.
-@export var shadow_gradient: GradientTexture2D
-
-
 @export_subgroup("Fine Timing")
 ## Normalized time (0.0 - 1.0) for the peak lift position.
 @export_range(0.05, 0.45, 0.01) var timing_peak_lift: float = 0.15
@@ -143,7 +135,6 @@ func _on_preset_changed(val):
 	# Defaults
 	curl_mode = CurlMode.BOTTOM_CORNER_FIRST
 	curl_lag = 0.3
-	enable_shadow = false
 	anim_duration = 0.75
 	
 	match val:
@@ -203,8 +194,7 @@ func _save_state_to_cache():
 		"stiffness": paper_stiffness, "lift": lift_bend, "land": land_bend,
 		"curl_m": curl_mode, "curl_l": curl_lag,
 		"t_lift": timing_peak_lift, "t_land": timing_peak_land,
-		"dur": anim_duration, "shadow": enable_shadow
-	}
+		"dur": anim_duration, 	}
 
 
 func _load_state_from_cache():
@@ -216,7 +206,6 @@ func _load_state_from_cache():
 	timing_peak_lift = _custom_cache.get("t_lift", 0.15)
 	timing_peak_land = _custom_cache.get("t_land", 0.85)
 	anim_duration = _custom_cache.get("dur", 1.0)
-	enable_shadow = _custom_cache.get("shadow", true)
 
 
 # ==============================================================================
@@ -254,37 +243,6 @@ func _create_rig_logic(current_page_size: Vector2 = Vector2.ZERO):
 	var step_x = tex_size.x / subdivision_x
 	var step_y = tex_size.y / subdivision_y
 	
-	# Prepare Gradient Texture for Background Shadow
-	var applied_shadow_tex: Texture2D = null
-	if not shadow_gradient:
-		shadow_gradient = preload("uid://rm7bporlv3cf")
-	var dup = shadow_gradient.duplicate()
-	if dup is GradientTexture2D:
-		dup.width = int(tex_size.x)
-	applied_shadow_tex = dup
-	
-	# --- 0. BACKGROUND SHADOW ---
-	if enable_shadow:
-		var shadow = Polygon2D.new()
-		shadow.name = SHADOW_NAME
-		shadow.z_index = -1
-		
-		if applied_shadow_tex:
-			shadow.texture = applied_shadow_tex
-			shadow.color = Color.WHITE
-		else:
-			shadow.color = Color(0, 0, 0, 0.5)
-			
-		var margin = 4.0
-		shadow.polygon = PackedVector2Array([
-			Vector2(margin, margin), Vector2(tex_size.x - margin, margin),
-			Vector2(tex_size.x - margin, tex_size.y - margin), Vector2(margin, tex_size.y - margin)
-		])
-		shadow.uv = shadow.polygon
-		add_child(shadow)
-		if Engine.is_editor_hint() and get_tree().edited_scene_root:
-			shadow.owner = get_tree().edited_scene_root
-
 	# --- 1. MESH & UV ---
 	var new_uvs = PackedVector2Array()
 	for y in range(subdivision_y + 1):
@@ -420,7 +378,6 @@ func _create_single_anim(library: AnimationLibrary, anim_name: String, is_rigid:
 	
 	var visible_col = Color(1, 1, 1, 1)
 	var invisible_col = Color(1, 1, 1, 0)
-	var faded_col = Color(1, 1, 1, 0.6)
 	
 	var t_mid = anim_duration * 0.5
 	var t_end_snap = anim_duration * 0.95
@@ -434,33 +391,6 @@ func _create_single_anim(library: AnimationLibrary, anim_name: String, is_rigid:
 	anim.track_insert_key(z_track, 0.0, 10)
 	anim.track_insert_key(z_track, anim_duration * 0.15, 25)
 	anim.track_insert_key(z_track, anim_duration * 0.65, 10)
-
-	# ==========================================================================
-	# 2. BACKGROUND SHADOW
-	# ==========================================================================
-	var shadow_node = find_child(SHADOW_NAME, true, false)
-	if shadow_node and enable_shadow:
-		var shadow_path = anim_player.get_node(anim_player.root_node).get_path_to(shadow_node)
-		var t_scale = anim.add_track(Animation.TYPE_VALUE)
-		anim.track_set_path(t_scale, str(shadow_path) + ":scale")
-		anim.track_set_interpolation_type(t_scale, Animation.INTERPOLATION_CUBIC)
-		var t_mod = anim.add_track(Animation.TYPE_VALUE)
-		anim.track_set_path(t_mod, str(shadow_path) + ":modulate")
-		
-		var s_start = Vector2(-1.0, 1.0) if is_mirror else Vector2(1.0, 1.0)
-		var s_end = Vector2(1.0, 1.0) if is_mirror else Vector2(-1.0, 1.0)
-		
-		anim.track_insert_key(t_scale, 0.0, s_start)
-		anim.track_insert_key(t_mod, 0.0, invisible_col)
-		anim.track_insert_key(t_mod, anim_duration * 0.1, visible_col)
-		
-		anim.track_insert_key(t_scale, t_mid, Vector2(0.01, 1.0))
-		anim.track_insert_key(t_mod, t_mid, faded_col)
-		
-		anim.track_insert_key(t_scale, t_end_snap, s_end)
-		anim.track_insert_key(t_scale, anim_duration, s_end)
-		anim.track_insert_key(t_mod, t_end_snap, invisible_col)
-		anim.track_insert_key(t_mod, anim_duration, invisible_col)
 
 	# ==========================================================================
 	# 3. BONE ANIMATION
@@ -588,7 +518,5 @@ func _clean_previous_rig():
 	for c in get_children():
 		remove_child(c)
 		c.free()
-	var old_shadow = find_child(SHADOW_NAME, true, false)
-	if old_shadow: old_shadow.free()
 	clear_bones()
 	skeleton = NodePath("")
