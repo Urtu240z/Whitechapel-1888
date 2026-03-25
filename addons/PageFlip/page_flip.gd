@@ -349,6 +349,12 @@ func _update_static_visuals_immediate():
 func _unhandled_input(event):
 	if Engine.is_editor_hint(): return
 	if not visible or is_animating: return
+	# Bloquear input si el CanvasLayer padre no es visible
+	var parent = get_parent()
+	while parent:
+		if parent is CanvasLayer and not parent.visible:
+			return
+		parent = parent.get_parent()
 
 	if event.is_action_pressed("ui_right"):
 		next_page()

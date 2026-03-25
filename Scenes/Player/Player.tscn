@@ -31,6 +31,7 @@
 [ext_resource type="Script" uid="uid://bnso0mph1tb11" path="res://addons/soupik/modifications/soup_two_bone_ik.gd" id="25_uggh2"]
 [ext_resource type="Script" uid="uid://b4u1tvhlw4d2g" path="res://addons/soupik/modifications/soup_look_at.gd" id="27_kiw7k"]
 [ext_resource type="Script" uid="uid://b5uiivwxcoics" path="res://addons/soupik/modifications/soup_stay_at.gd" id="28_qdq1f"]
+[ext_resource type="PackedScene" uid="uid://ghu38u8cg8fa" path="res://Scenes/UI/Journal.tscn" id="33_6rswy"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="35_bmii2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ygan3"]
@@ -1973,7 +1974,8 @@ z_index = 1
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_0u84n")
-friction = 1250.0
+friction = 2500.0
+run_friction = 6000.0
 breath_run_sounds = Array[AudioStream]([ExtResource("2_io2mu"), ExtResource("3_e5iqy")])
 
 [node name="Movement" type="Node" parent="." unique_id=1659947276]
@@ -2245,14 +2247,14 @@ bone_angle = 42.711983
 [node name="LegR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=250582046]
 visible = false
 position = Vector2(-14.700328, 126.63689)
-rotation = -0.5327865
-scale = Vector2(0.9998498, 0.9998498)
+rotation = -0.5327861
+scale = Vector2(0.99984974, 0.99984974)
 rest = Transform2D(0.99116075, -0.1326665, 0.1326665, 0.99116075, -66, 103)
 
 [node name="KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegR" unique_id=1757211730]
 position = Vector2(1, 146)
-rotation = 0.5405159
-scale = Vector2(0.999879, 0.999879)
+rotation = 0.5405153
+scale = Vector2(0.99987894, 0.99987894)
 rest = Transform2D(0.9880616, 0.15405944, -0.15405944, 0.9880616, 1, 146)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -2261,14 +2263,14 @@ bone_angle = 91.99996
 [node name="LegL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=1374812682]
 visible = false
 position = Vector2(55.522446, 115.97094)
-rotation = -0.36591855
+rotation = -0.36591956
 scale = Vector2(0.99984384, 0.99984384)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegL" unique_id=278652099]
 position = Vector2(-7, 125)
-rotation = 0.28081247
-scale = Vector2(0.99984705, 0.99984705)
+rotation = 0.28081366
+scale = Vector2(0.9998471, 0.9998471)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -2501,3 +2503,6 @@ parameters/Walk/TimeScale/scale = 1.1000000000000014
 position = Vector2(-9.002001, 481)
 scale = Vector2(0.39, 0.39)
 texture = ExtResource("35_bmii2")
+
+[node name="Journal" parent="." unique_id=1260495271 instance=ExtResource("33_6rswy")]
+visible = false

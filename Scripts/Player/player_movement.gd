@@ -17,6 +17,8 @@ var player: MainPlayer = null
 var is_crouching: bool = false
 var facing_right: bool = true
 var was_moving: bool = false
+var enabled: bool = true
+var ignore_movement_until_release: bool = false
 
 # ============================================================================
 # STAMINA
@@ -49,6 +51,20 @@ func initialize(p: MainPlayer) -> void:
 # ============================================================================
 func process_movement(delta: float) -> void:
 	if not player:
+		return
+
+	# 🔴 Journal abierto → bloqueo total
+	if not enabled:
+		player.velocity = Vector2.ZERO
+		was_moving = false
+		return
+
+	# 🔴 NUEVO — bloqueo hasta soltar teclas
+	if _is_movement_input_blocked():
+		player.velocity.x = 0.0
+		was_moving = false
+		_update_stamina(delta)
+		apply_gravity(delta)
 		return
 
 	handle_input()
@@ -244,3 +260,39 @@ func get_movement_speed() -> float:
 
 func is_stamina_exhausted() -> bool:
 	return stamina_exhausted
+
+# ============================================================================
+# 🔴 CONTROL DE BLOQUEO DE INPUT (Journal fix)
+# ============================================================================
+
+func force_stop() -> void:
+	if not player:
+		return
+
+	player.velocity = Vector2.ZERO
+	was_moving = false
+
+
+func block_movement_input_until_release() -> void:
+	ignore_movement_until_release = true
+
+
+func _movement_inputs_released() -> bool:
+	return (
+		not Input.is_action_pressed("move_left")
+		and not Input.is_action_pressed("move_right")
+		and not Input.is_action_pressed("jump")
+		and not Input.is_action_pressed("crouch")
+		and not Input.is_action_pressed("run")
+	)
+
+
+func _is_movement_input_blocked() -> bool:
+	if not ignore_movement_until_release:
+		return false
+
+	if _movement_inputs_released():
+		ignore_movement_until_release = false
+		return false
+
+	return true

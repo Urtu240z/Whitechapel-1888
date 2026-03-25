@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c625hdygwxvdq"]
+
+[ext_resource type="Texture2D" uid="uid://d4i3ney2iw4rw" path="res://Assets/Images/Journal_MapR.png" id="1_0q5tv"]
+
+[node name="JournalPage6" type="Node2D" unique_id=1551118562]
+scale = Vector2(1.5, 1.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1227580860]
+texture_filter = 1
+position = Vector2(279.5, 367.5)
+texture = ExtResource("1_0q5tv")

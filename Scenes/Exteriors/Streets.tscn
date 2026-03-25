@@ -16,7 +16,6 @@
 [ext_resource type="AudioStream" uid="uid://bpbgo1ht1u2mx" path="res://Assets/Audio/Buildings/Open_Door (3).wav" id="14_evs4v"]
 [ext_resource type="AudioStream" uid="uid://bq626yq3ebj5a" path="res://Assets/Audio/Buildings/Close_Door (1).wav" id="15_vkywb"]
 [ext_resource type="PackedScene" uid="uid://csx4il2s0ov4r" path="res://Scenes/Core/Scene_Changer.tscn" id="16_1loxg"]
-[ext_resource type="PackedScene" uid="uid://3t5syg80qv" path="res://Scenes/UI/Journal.tscn" id="16_e1isi"]
 [ext_resource type="AudioStream" uid="uid://vsi28chd68ph" path="res://Assets/Audio/Buildings/Close_Door (2).wav" id="16_urswk"]
 [ext_resource type="AudioStream" uid="uid://d1q5svthqkw2r" path="res://Assets/Audio/Buildings/Close_Door (3).wav" id="17_0gjoy"]
 [ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="17_1loxg"]
@@ -230,9 +229,6 @@ offset_bottom = 445.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
-
-[node name="Journal" parent="." unique_id=822435912 instance=ExtResource("16_e1isi")]
-visible = false
 
 [node name="Player" parent="." unique_id=1458210690 instance=ExtResource("17_rusfs")]
 modulate = Color(0.65834004, 0.6583399, 0.6583399, 1)

@@ -1,0 +1,330 @@
+[gd_scene format=3 uid="uid://3t5syg80qv"]
+
+[ext_resource type="Script" uid="uid://ucqf85ew0ugr" path="res://Scripts/UI/journal.gd" id="1_vo2py"]
+[ext_resource type="Texture2D" uid="uid://d138qe7jyxdg2" path="res://Assets/Images/Journal.png" id="2_ky5dj"]
+[ext_resource type="Shader" uid="uid://b58crd4c1ygh2" path="res://Assets/Shaders/Page_Turn.gdshader" id="3_bngh4"]
+[ext_resource type="Texture2D" uid="uid://bk4knn1k0il5a" path="res://Assets/Images/Journal_R.png" id="3_oc0lf"]
+[ext_resource type="Texture2D" uid="uid://cfme643ymvbew" path="res://Assets/Images/Journal_L.png" id="4_bngh4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bngh4"]
+resource_local_to_scene = true
+shader = ExtResource("3_bngh4")
+shader_parameter/fold_progress = 0.0
+shader_parameter/fold_from_right = true
+shader_parameter/shadow_color = Color(0, 0, 0, 0.6)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xgk57"]
+resource_local_to_scene = true
+shader = ExtResource("3_bngh4")
+shader_parameter/fold_progress = 0.0
+shader_parameter/fold_from_right = false
+shader_parameter/shadow_color = Color(0, 0, 0, 0.6)
+
+[node name="Journal" type="CanvasLayer" unique_id=822435912]
+layer = 10
+script = ExtResource("1_vo2py")
+
+[node name="Control" type="Control" parent="." unique_id=343103444]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1520701144]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JournalContainer" type="Control" parent="Control" unique_id=766999540]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JournalBg" type="TextureRect" parent="Control/JournalContainer" unique_id=1185822789]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 18.645836
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ky5dj")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="PageTurnR" type="Control" parent="Control/JournalContainer/JournalBg" unique_id=1358291917]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/JournalContainer/JournalBg/PageTurnR" unique_id=293601459]
+material = SubResource("ShaderMaterial_bngh4")
+layout_mode = 0
+offset_left = 655.0
+offset_right = 1218.0
+offset_bottom = 719.0
+texture = ExtResource("3_oc0lf")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="SpreadTurnR0" type="Control" parent="Control/JournalContainer/JournalBg/PageTurnR" unique_id=1471970695]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpreadTurnR1" type="Control" parent="Control/JournalContainer/JournalBg/PageTurnR" unique_id=1677015601]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpreadTurnR2" type="Control" parent="Control/JournalContainer/JournalBg/PageTurnR" unique_id=1243957678]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PageTurnL" type="Control" parent="Control/JournalContainer/JournalBg" unique_id=2092846988]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/JournalContainer/JournalBg/PageTurnL" unique_id=769280529]
+material = SubResource("ShaderMaterial_xgk57")
+layout_mode = 0
+offset_left = 132.0
+offset_right = 695.0
+offset_bottom = 719.0
+texture = ExtResource("4_bngh4")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="SpreadTurnL0" type="Control" parent="Control/JournalContainer/JournalBg/PageTurnL" unique_id=979123945]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpreadTurnL1" type="Control" parent="Control/JournalContainer/JournalBg/PageTurnL" unique_id=1418301029]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpreadTurnL2" type="Control" parent="Control/JournalContainer/JournalBg/PageTurnL" unique_id=1805275895]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PageLeft" type="Control" parent="Control/JournalContainer/JournalBg" unique_id=519976710]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpreadL0" type="Control" parent="Control/JournalContainer/JournalBg/PageLeft" unique_id=448788892]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelTitle" type="Label" parent="Control/JournalContainer/JournalBg/PageLeft/SpreadL0" unique_id=320778071]
+layout_mode = 0
+offset_left = 381.0
+offset_top = 89.0
+offset_right = 525.0
+offset_bottom = 112.0
+text = "nfeinifeniefnineifn"
+
+[node name="LabelHour" type="Label" parent="Control/JournalContainer/JournalBg/PageLeft/SpreadL0" unique_id=233983287]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 130.0
+offset_right = 465.0
+offset_bottom = 153.0
+text = "ijinoinsv"
+
+[node name="LabelAttrText" type="Label" parent="Control/JournalContainer/JournalBg/PageLeft/SpreadL0" unique_id=1215416851]
+layout_mode = 0
+offset_left = 311.0
+offset_top = 227.0
+offset_right = 382.0
+offset_bottom = 250.0
+text = "dsfsdfdsf"
+
+[node name="LabelAttrValue" type="Label" parent="Control/JournalContainer/JournalBg/PageLeft/SpreadL0" unique_id=1245907711]
+layout_mode = 0
+offset_left = 308.0
+offset_top = 259.0
+offset_right = 379.0
+offset_bottom = 282.0
+text = "sdfdsfdsf"
+
+[node name="LabelMoneyTitle" type="Label" parent="Control/JournalContainer/JournalBg/PageLeft/SpreadL0" unique_id=947322246]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 335.0
+offset_right = 369.0
+offset_bottom = 358.0
+text = "sddsfdfs"
+
+[node name="LabelMoneyValue" type="Label" parent="Control/JournalContainer/JournalBg/PageLeft/SpreadL0" unique_id=1758950334]
+layout_mode = 0
+offset_left = 303.0
+offset_top = 363.0
+offset_right = 366.0
+offset_bottom = 386.0
+text = "sdfdfsdf"
+
+[node name="LabelDaysTitle" type="Label" parent="Control/JournalContainer/JournalBg/PageLeft/SpreadL0" unique_id=670693441]
+layout_mode = 0
+offset_left = 303.0
+offset_top = 428.0
+offset_right = 374.0
+offset_bottom = 451.0
+text = "dsfdsfdfs"
+
+[node name="LabelDaysValue" type="Label" parent="Control/JournalContainer/JournalBg/PageLeft/SpreadL0" unique_id=1001036373]
+layout_mode = 0
+offset_left = 304.0
+offset_top = 460.0
+offset_right = 362.0
+offset_bottom = 483.0
+text = "dsfddsf"
+
+[node name="SpreadL1" type="Control" parent="Control/JournalContainer/JournalBg/PageLeft" unique_id=2056784481]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpreadL2" type="Control" parent="Control/JournalContainer/JournalBg/PageLeft" unique_id=1856668225]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PageRight" type="Control" parent="Control/JournalContainer/JournalBg" unique_id=872981025]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpreadR0" type="Control" parent="Control/JournalContainer/JournalBg/PageRight" unique_id=748833140]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainerPhysical" type="GridContainer" parent="Control/JournalContainer/JournalBg/PageRight/SpreadR0" unique_id=1860594657]
+layout_mode = 0
+offset_left = 747.0
+offset_top = 161.0
+offset_right = 787.0
+offset_bottom = 161.0
+
+[node name="LabelMental" type="Label" parent="Control/JournalContainer/JournalBg/PageRight/SpreadR0" unique_id=110338829]
+layout_mode = 0
+offset_left = 745.0
+offset_top = 263.0
+offset_right = 808.0
+offset_bottom = 286.0
+text = "sdfdsfdf"
+
+[node name="GridContainerMental" type="GridContainer" parent="Control/JournalContainer/JournalBg/PageRight/SpreadR0" unique_id=1101203385]
+layout_mode = 0
+offset_left = 747.0
+offset_top = 305.0
+offset_right = 787.0
+offset_bottom = 305.0
+
+[node name="HBoxContainerBadges" type="HBoxContainer" parent="Control/JournalContainer/JournalBg/PageRight/SpreadR0" unique_id=2020034999]
+layout_mode = 0
+offset_left = 747.0
+offset_top = 530.0
+offset_right = 787.0
+offset_bottom = 530.0
+
+[node name="LabelPhysical" type="Label" parent="Control/JournalContainer/JournalBg/PageRight/SpreadR0" unique_id=466182560]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 115.0
+offset_right = 829.0
+offset_bottom = 138.0
+text = "sfsddfsdsf"
+
+[node name="SpreadR1" type="Control" parent="Control/JournalContainer/JournalBg/PageRight" unique_id=262998171]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpreadR2" type="Control" parent="Control/JournalContainer/JournalBg/PageRight" unique_id=1157202348]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ArrowLeft" type="Button" parent="Control/JournalContainer" unique_id=1693162904]
+custom_minimum_size = Vector2(40, 60)
+layout_mode = 0
+offset_left = 273.0
+offset_top = 310.0
+offset_right = 313.0
+offset_bottom = 370.0
+text = "<"
+
+[node name="ArrowRight" type="Button" parent="Control/JournalContainer" unique_id=980947850]
+custom_minimum_size = Vector2(40, 60)
+layout_mode = 0
+offset_left = 1050.0
+offset_top = 310.0
+offset_right = 1090.0
+offset_bottom = 370.0
+text = ">"
