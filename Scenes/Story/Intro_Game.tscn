@@ -384,21 +384,6 @@ polygon = PackedVector2Array(0.9334655, -17.936512, 3.6047664, -17.30159, 5.4021
 position = Vector2(-1413, -16)
 scale = Vector2(0.2, 0.2)
 
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=863116853]
-position = Vector2(185, -325)
-scale = Vector2(0.16999999, 0.16999999)
-zoom = Vector2(2.065, 2.065)
-limit_left = -1800
-limit_top = -500
-limit_right = 1545
-limit_bottom = 133
-limit_smoothed = true
-position_smoothing_enabled = true
-position_smoothing_speed = 2.0
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_horizontal_offset = 0.3
-
 [node name="Label" type="Label" parent="Player" unique_id=739379087]
 offset_left = -2931.6802
 offset_top = -600.86
@@ -407,7 +392,7 @@ offset_bottom = -577.86
 script = ExtResource("18_k31m2")
 
 [node name="Foreground" type="Node2D" parent="." unique_id=1884329316]
-z_index = 1
+z_index = 5
 
 [node name="London_Part2" type="Node2D" parent="Foreground" unique_id=1923575272]
 

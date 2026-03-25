@@ -1969,6 +1969,12 @@ states/Walk/position = Vector2(645, 100)
 transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_q284w"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_rj8q8"), "Walk", "Run", SubResource("AnimationNodeStateMachineTransition_b7epl"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_ybri8"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_il54b"), "Idle", "Crouch_Down", SubResource("AnimationNodeStateMachineTransition_qdq1f"), "Crouch_Down", "Crouch_Idle", SubResource("AnimationNodeStateMachineTransition_12xgd"), "Crouch_Idle", "Crouch_Walk", SubResource("AnimationNodeStateMachineTransition_1g52f"), "Crouch_Walk", "Crouch_Idle", SubResource("AnimationNodeStateMachineTransition_7gg3n"), "Crouch_Up", "Idle", SubResource("AnimationNodeStateMachineTransition_y3vh2"), "Crouch_Idle", "Crouch_Up", SubResource("AnimationNodeStateMachineTransition_4qus3"), "Idle", "Faint", SubResource("AnimationNodeStateMachineTransition_lw74r"), "Faint", "Rise", SubResource("AnimationNodeStateMachineTransition_tf3ct"), "Rise", "Idle", SubResource("AnimationNodeStateMachineTransition_to4uw")]
 graph_offset = Vector2(-9, -131.86746)
 
+[sub_resource type="Gradient" id="Gradient_wdekc"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6rswy"]
+gradient = SubResource("Gradient_wdekc")
+
 [node name="Player" type="CharacterBody2D" unique_id=1458210690 groups=["player"]]
 z_index = 1
 collision_layer = 3
@@ -2263,13 +2269,13 @@ bone_angle = 91.99996
 [node name="LegL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=1374812682]
 visible = false
 position = Vector2(55.522446, 115.97094)
-rotation = -0.36591956
+rotation = -0.36591998
 scale = Vector2(0.99984384, 0.99984384)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegL" unique_id=278652099]
 position = Vector2(-7, 125)
-rotation = 0.28081366
+rotation = 0.28081435
 scale = Vector2(0.9998471, 0.9998471)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
@@ -2506,3 +2512,24 @@ texture = ExtResource("35_bmii2")
 
 [node name="Journal" parent="." unique_id=1260495271 instance=ExtResource("33_6rswy")]
 visible = false
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=430310312]
+position = Vector2(185, -325)
+limit_enabled = false
+limit_left = -1800
+limit_top = -500
+limit_right = 1545
+limit_bottom = 133
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_horizontal_offset = 0.3
+
+[node name="OverlayBlack" type="Sprite2D" parent="Camera2D" unique_id=698112768]
+modulate = Color(1, 1, 1, 0)
+z_index = -1
+position = Vector2(1429.5552, 101.49237)
+scale = Vector2(477.82428, 253.3199)
+texture = SubResource("GradientTexture2D_6rswy")

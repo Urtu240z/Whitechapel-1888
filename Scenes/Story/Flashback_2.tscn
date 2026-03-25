@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b8hx4pju35ndy"]
 
 [ext_resource type="Script" uid="uid://b4xf7coa4su2x" path="res://Scripts/Story/flashback.gd" id="1_ejy22"]
-[ext_resource type="PackedScene" uid="uid://bu4x7otlqo03y" path="res://Scenes/Player/Fairy_Dream_Surfer.tscn" id="3_hyy26"]
+[ext_resource type="PackedScene" uid="uid://bu4x7otlqo03y" path="res://Scenes/Player/Fairy.tscn" id="3_hyy26"]
 [ext_resource type="AudioStream" uid="uid://cp3m0unlnfbyi" path="res://Assets/Audio/Glitch_Scream.ogg" id="3_vxi7f"]
 [ext_resource type="VideoStream" uid="uid://d4f8vkbdcuxql" path="res://Assets/Videos/Oniric_2.ogv" id="3_ys48n"]
 [ext_resource type="Texture2D" uid="uid://cf2nykfo2ckbw" path="res://Assets/Storyboard/Flashback_2/1.png" id="4_ejy22"]

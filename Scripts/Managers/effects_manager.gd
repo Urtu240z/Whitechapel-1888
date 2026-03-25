@@ -93,7 +93,10 @@ func _connect_signals() -> void:
 # =========================================================
 func _on_node_added(node: Node) -> void:
 	if node is Camera2D:
-		_camera = node
+		# Esperar un frame para que is_current() sea válido
+		await get_tree().process_frame
+		if is_instance_valid(node) and node.is_current():
+			_camera = node
 
 # =========================================================
 # 🔄 PROCESS — solo stamina (necesita ser fluido) y parpadeos
@@ -119,7 +122,7 @@ func _update_stamina_effects() -> void:
 		_blur.visible = true
 		if _blur.material:
 			_blur.material.set_shader_parameter("blur_amount", intensity * 3.0)
-		if _camera:
+		if _camera and is_instance_valid(_camera):
 			var t: float = Time.get_ticks_msec() * 0.01
 			_camera.offset = Vector2(
 				sin(t * 7.3) * intensity * 4.0,
@@ -127,7 +130,7 @@ func _update_stamina_effects() -> void:
 			)
 	else:
 		_blur.visible = false
-		if _camera:
+		if _camera and is_instance_valid(_camera):
 			_camera.offset = Vector2.ZERO
 
 func on_stamina_exhausted(_exhausted: bool) -> void:

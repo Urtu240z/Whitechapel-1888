@@ -2278,13 +2278,13 @@ bone_angle = 23.196201
 
 [node name="ArmL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest" unique_id=1310672979]
 position = Vector2(29.69851, -130.1768)
-rotation = 0.15048835
+rotation = 0.1504887
 scale = Vector2(0.9998461, 0.9998461)
 rest = Transform2D(1, 0, 0, 1, 47, -121)
 
 [node name="ForeArmL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/ArmL" unique_id=808976861]
 position = Vector2(22, 120)
-rotation = 0.49746755
+rotation = 0.49746698
 scale = Vector2(0.9998492, 0.9998492)
 rest = Transform2D(0.99988055, 0.015455957, -0.015455957, 0.99988055, 22, 120)
 auto_calculate_length_and_angle = false
@@ -2344,7 +2344,7 @@ rest = Transform2D(1, 0, 0, 1, -1, 23)
 
 [node name="SkirtC2" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/SkirtC" unique_id=1904504327]
 position = Vector2(7, 173)
-rotation = -0.12770689
+rotation = -0.1277069
 scale = Vector2(0.99994147, 0.99994147)
 rest = Transform2D(1, 0, 0, 1, 7, 173)
 auto_calculate_length_and_angle = false

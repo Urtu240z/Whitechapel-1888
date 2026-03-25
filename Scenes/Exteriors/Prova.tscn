@@ -2,12 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://dpv0wabl7sn2g" path="res://Assets/Tilesets/BuildingInterior.png" id="1_v3mca"]
 [ext_resource type="Script" uid="uid://co4vtq04cujyn" path="res://Scripts/Core/enter_building.gd" id="2_ogbcj"]
-[ext_resource type="AudioStream" uid="uid://blulpegm5fkto" path="res://Assets/Audio/Buildings/Open_Door (1).wav" id="3_dxt0j"]
-[ext_resource type="AudioStream" uid="uid://2ocbh2xjeg3i" path="res://Assets/Audio/Buildings/Open_Door (2).wav" id="4_nhx2c"]
-[ext_resource type="AudioStream" uid="uid://bpbgo1ht1u2mx" path="res://Assets/Audio/Buildings/Open_Door (3).wav" id="5_hi2mq"]
-[ext_resource type="AudioStream" uid="uid://bq626yq3ebj5a" path="res://Assets/Audio/Buildings/Close_Door (1).wav" id="6_r0ddp"]
-[ext_resource type="AudioStream" uid="uid://vsi28chd68ph" path="res://Assets/Audio/Buildings/Close_Door (2).wav" id="7_spynl"]
-[ext_resource type="AudioStream" uid="uid://d1q5svthqkw2r" path="res://Assets/Audio/Buildings/Close_Door (3).wav" id="8_q0vov"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n5b6d"]
 texture = ExtResource("1_v3mca")
@@ -79,8 +73,6 @@ shape = SubResource("RectangleShape2D_sm0hs")
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("2_ogbcj")
-open_sounds = Array[AudioStream]([ExtResource("3_dxt0j"), ExtResource("4_nhx2c"), ExtResource("5_hi2mq")])
-close_sounds = Array[AudioStream]([ExtResource("6_r0ddp"), ExtResource("7_spynl"), ExtResource("8_q0vov")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=638944156]
 position = Vector2(1.5, 346.5)

@@ -25,12 +25,6 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rusfs"]
 size = Vector2(87, 372)
 
-[sub_resource type="Gradient" id="Gradient_wdekc"]
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_e1isi"]
-gradient = SubResource("Gradient_wdekc")
-
 [node name="Streets" type="Node2D" unique_id=2082393348]
 
 [node name="Exterior" type="Node2D" parent="." unique_id=616161901]
@@ -235,17 +229,3 @@ modulate = Color(0.65834004, 0.6583399, 0.6583399, 1)
 y_sort_enabled = true
 position = Vector2(-1398, -118)
 scale = Vector2(0.2, 0.2)
-
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1388803304]
-position = Vector2(80.000114, -414.28574)
-scale = Vector2(4.970761, 4.970761)
-zoom = Vector2(1.445, 1.445)
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-
-[node name="OverlayBlack" type="Sprite2D" parent="Player/Camera2D" unique_id=702220413]
-modulate = Color(1, 1, 1, 0)
-z_index = -1
-position = Vector2(271.49872, 103.762405)
-scale = Vector2(96.127, 50.962)
-texture = SubResource("GradientTexture2D_e1isi")

@@ -894,8 +894,8 @@ offset = Vector2(-20.151917, 183.66013)
 
 [node name="Mp1FootL" type="Sprite2D" parent="CharacterContainer/Skins/NPC_1" unique_id=1841217651]
 position = Vector2(120.286285, 867.3678)
-rotation = -0.0865578
-scale = Vector2(0.99999213, 0.99999213)
+rotation = -0.08655779
+scale = Vector2(0.9999921, 0.9999921)
 texture = SubResource("CanvasTexture_a8oic")
 offset = Vector2(55.85885, -17.018677)
 
@@ -906,23 +906,23 @@ scale = Vector2(0.999999, 0.999999)
 occluder = SubResource("OccluderPolygon2D_730wc")
 
 [node name="Mp1LegR" type="Sprite2D" parent="CharacterContainer/Skins/NPC_1" unique_id=1722824031]
-position = Vector2(-28.915352, 538.63684)
-rotation = 0.032450557
-scale = Vector2(0.99999166, 0.99999166)
+position = Vector2(-28.915354, 538.63684)
+rotation = 0.032450553
+scale = Vector2(0.9999916, 0.9999916)
 texture = SubResource("CanvasTexture_g06q7")
 offset = Vector2(-9.676544, 126.73047)
 
 [node name="Mp1KneeR" type="Sprite2D" parent="CharacterContainer/Skins/NPC_1" unique_id=1261671432]
 position = Vector2(-2.9999962, 162)
 rotation = -0.02362764
-scale = Vector2(0.9999927, 0.9999927)
+scale = Vector2(0.99999267, 0.99999267)
 texture = SubResource("CanvasTexture_h4dmm")
 offset = Vector2(-9.582409, 178.99864)
 
 [node name="Mp1FootR" type="Sprite2D" parent="CharacterContainer/Skins/NPC_1" unique_id=1667012104]
 position = Vector2(-53.35926, 893.88794)
 rotation = -0.060029414
-scale = Vector2(0.9999904, 0.9999904)
+scale = Vector2(0.99999034, 0.99999034)
 texture = SubResource("CanvasTexture_w1llw")
 offset = Vector2(35.293945, 13.78595)
 
@@ -1066,7 +1066,7 @@ remote_path = NodePath("../../../../Skins/NPC_1/Mp1Hip")
 [node name="Mp1KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Mp1Hip" unique_id=156570700]
 position = Vector2(-60.999996, 21.999998)
 rotation = -0.023627639
-scale = Vector2(0.9999926, 0.9999926)
+scale = Vector2(0.99999255, 0.99999255)
 rest = Transform2D(0.99998546, 0.005377505, -0.005377505, 0.99998546, -60.999996, 21.999998)
 metadata/_local_pose_override_enabled_ = true
 
@@ -1119,8 +1119,8 @@ remote_path = NodePath("../../../../../../Skins/NPC_1/Mp1LegL")
 
 [node name="Mp1FootL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL/Mp1LegL" unique_id=344357680]
 position = Vector2(-9.517823, 334.01404)
-rotation = -0.053424403
-scale = Vector2(0.99999356, 0.99999356)
+rotation = -0.0534244
+scale = Vector2(0.9999935, 0.9999935)
 rest = Transform2D(0.9998846, 0.015190551, -0.015190551, 0.9998846, -9.517823, 334.01404)
 auto_calculate_length_and_angle = false
 length = 128.896

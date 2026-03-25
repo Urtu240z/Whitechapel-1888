@@ -79,7 +79,6 @@ scale = Vector2(0.21, 0.21)
 move_speed = 700.0
 run_speed = 1800.0
 acceleration = 800.0
-friction = 2500.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=24779858]
 position = Vector2(80.000114, -499.99988)

@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bem55l83lqsg4" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand2.png" id="1_cgexh"]
 [ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="3_gbdqv"]
-[ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player_Kinematic_3.tscn" id="5_jteew"]
+[ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="5_jteew"]
 [ext_resource type="Shader" uid="uid://51eilkdp7lo6" path="res://Assets/Shaders/Blur_Global.gdshader" id="6_cr13b"]
 [ext_resource type="Texture2D" uid="uid://dnmrcoacx72qn" path="res://Assets/Sprites/Atrezzo/Street_Lamp.png" id="7_nnqo3"]
 

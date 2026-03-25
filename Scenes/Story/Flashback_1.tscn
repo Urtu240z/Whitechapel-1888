@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://dvqfgnrg6bn0c" path="res://Assets/Storyboard/Flashback_1/Flashback_1 (7).png" id="21_k0uqs"]
 [ext_resource type="AudioStream" uid="uid://bvvyk61l2p24e" path="res://Assets/Audio/Water_Drop.ogg" id="22_k0uqs"]
 [ext_resource type="AudioStream" uid="uid://cee1i205c37qi" path="res://Assets/Music/Flashback - 1.ogg" id="23_timdj"]
-[ext_resource type="PackedScene" uid="uid://bu4x7otlqo03y" path="res://Scenes/Player/Fairy_Dream_Surfer.tscn" id="24_5m34y"]
+[ext_resource type="PackedScene" uid="uid://bu4x7otlqo03y" path="res://Scenes/Player/Fairy.tscn" id="24_5m34y"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ecmfk"]
 blend_mode = 1

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b7bxdhh6ah23f" path="res://Scenes/Story/Orb.tscn" id="7_icp32"]
 [ext_resource type="Texture2D" uid="uid://b38snj6t625s5" path="res://Assets/Sprites/Effects/Fog.png" id="8_4ykg3"]
 [ext_resource type="Script" uid="uid://b1118sf504lh7" path="res://Scripts/UI/fps_counter.gd" id="8_lbbm5"]
-[ext_resource type="PackedScene" uid="uid://bu4x7otlqo03y" path="res://Scenes/Player/Fairy_Dream_Surfer.tscn" id="8_ptmib"]
+[ext_resource type="PackedScene" uid="uid://bu4x7otlqo03y" path="res://Scenes/Player/Fairy.tscn" id="8_ptmib"]
 
 [sub_resource type="Gradient" id="Gradient_kisme"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)

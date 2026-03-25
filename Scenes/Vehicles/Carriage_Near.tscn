@@ -941,7 +941,7 @@ rest = Transform2D(1, 0, 0, 1, 152, 15)
 
 [node name="Neck" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest" unique_id=1279465329]
 rotation = 0.12619059
-scale = Vector2(0.9999998, 0.9999998)
+scale = Vector2(0.99999976, 0.99999976)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Nose" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest/Neck" unique_id=876277526]
@@ -954,18 +954,18 @@ length = 70.0
 bone_angle = 54.99998
 
 [node name="LFR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest" unique_id=283411692]
-rotation = 0.009806168
-scale = Vector2(0.9999997, 0.9999997)
+rotation = 0.009806294
+scale = Vector2(0.99999964, 0.99999964)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="LegR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest/LFR" unique_id=1242908154]
 position = Vector2(-8, 101)
-rotation = 0.37641522
+rotation = 0.230399
 rest = Transform2D(1, 0, 0, 1, -8, 101)
 
 [node name="KneeR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest/LFR/LegR" unique_id=301150670]
 position = Vector2(-10, 56)
-rotation = 0.43227285
+rotation = 0.7820576
 scale = Vector2(0.99999976, 0.99999976)
 rest = Transform2D(1, 0, 0, 1, -10, 56)
 auto_calculate_length_and_angle = false
@@ -973,19 +973,19 @@ length = 25.0
 bone_angle = 30.315998
 
 [node name="LFL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest" unique_id=2021530998]
-rotation = -0.6632628
+rotation = -0.66326237
 scale = Vector2(0.9999998, 0.9999998)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="LegL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest/LFL" unique_id=1991921919]
 position = Vector2(5, 103)
-rotation = 0.11332028
+rotation = 0.11331865
 scale = Vector2(0.9999999, 0.9999999)
 rest = Transform2D(1, 0, 0, 1, 5, 103)
 
 [node name="KneeL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/Chest/LFL/LegL" unique_id=176911393]
 position = Vector2(-8, 57)
-rotation = 0.8535601
+rotation = 0.5499437
 scale = Vector2(0.9999999, 0.9999999)
 rest = Transform2D(1, 0, 0, 1, -8, 57)
 auto_calculate_length_and_angle = false
@@ -1001,12 +1001,12 @@ rest = Transform2D(1, 0, 0, 1, 16, 58)
 [node name="LegRearR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/LRR" unique_id=1002151988]
 position = Vector2(-35, 53)
 rotation = 1.0530282
-scale = Vector2(0.99999994, 0.99999994)
+scale = Vector2(0.9999999, 0.9999999)
 rest = Transform2D(1, 0, 0, 1, -35, 53)
 
 [node name="KneeRearR" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/LRR/LegRearR" unique_id=1207585259]
 position = Vector2(-9, 58)
-rotation = 0.5226337
+rotation = 0.52263385
 scale = Vector2(0.9999999, 0.9999999)
 rest = Transform2D(1, 0, 0, 1, -9, 58)
 auto_calculate_length_and_angle = false
@@ -1021,12 +1021,12 @@ rest = Transform2D(1, 0, 0, 1, 27, 63)
 [node name="LegRearL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/LRL" unique_id=475516282]
 position = Vector2(-31, 54)
 rotation = 0.64423794
-scale = Vector2(0.9999999, 0.9999999)
+scale = Vector2(0.9999998, 0.9999998)
 rest = Transform2D(1, 0, 0, 1, -31, 54)
 
 [node name="KneeRearL" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back/LRL/LegRearL" unique_id=304520175]
 position = Vector2(-2, 43)
-rotation = 0.64017916
+rotation = 0.640179
 scale = Vector2(0.9999998, 0.9999998)
 rest = Transform2D(1, 0, 0, 1, -2, 43)
 auto_calculate_length_and_angle = false
@@ -1035,7 +1035,7 @@ bone_angle = 45.0
 
 [node name="TopTail" type="Bone2D" parent="Sprites/Horse/Bones/Skeleton2D/Back" unique_id=1878627075]
 position = Vector2(-27, 22)
-rotation = -0.016389724
+rotation = -0.016389605
 scale = Vector2(0.99999994, 0.99999994)
 rest = Transform2D(1, 0, 0, 1, -27, 22)
 auto_calculate_length_and_angle = false

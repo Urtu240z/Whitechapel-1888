@@ -1,5 +1,4 @@
 extends Node
-
 # =========================================================
 # 🧩 PlayerManager
 # Responsabilidades:
@@ -9,9 +8,19 @@ extends Node
 #
 # ℹ️ El fade negro lo gestiona SceneManager, no este script.
 # =========================================================
-
 var player_scene := preload("res://Scenes/Player/Player.tscn")
 var player_instance: MainPlayer
+
+
+# =========================================================
+# 📝 Registro del player activo
+# Llamar desde _ready() del Player
+# =========================================================
+func register_player(player: MainPlayer) -> void:
+	if player_instance and player_instance != player:
+		push_warning("PlayerManager: ya había un player registrado, reemplazando.")
+	player_instance = player
+
 
 # =========================================================
 # 🧠 Asegura que el jugador exista en la escena actual
@@ -20,14 +29,12 @@ func ensure_player(parent: Node, position: Vector2) -> void:
 	if parent == null:
 		printerr("❌ ensure_player(): El parent es nulo, abortando.")
 		return
-
 	if player_instance == null:
 		player_instance = player_scene.instantiate()
-
 	if not player_instance.is_inside_tree():
 		parent.add_child(player_instance)
-
 	player_instance.global_position = position
+
 
 # =========================================================
 # 🚪 Cambio de escena con sonidos de puerta
@@ -48,6 +55,10 @@ func enter_building(
 	close_sound: AudioStream = null,
 	fade_time: float = 0.5
 ) -> void:
+	if SceneManager.is_transitioning():
+		push_warning("PlayerManager: transición ya en curso, ignorando.")
+		return
+
 	# Sonido de abrir puerta antes del fade
 	if open_sound:
 		_play_sfx(open_sound)
@@ -64,6 +75,7 @@ func enter_building(
 		_play_sfx(close_sound)
 
 	await SceneManager._fade_in(fade_time)
+
 
 # =========================================================
 # 🔊 Reproduce un sonido puntual sin nodo persistente

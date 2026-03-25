@@ -301,7 +301,7 @@ draw_limits = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1787373967]
 physics_interpolation_mode = 1
-position = Vector2(140.73866, -91.205)
+position = Vector2(138.761, -91.205)
 zoom = Vector2(2, 2)
 process_callback = 0
 limit_left = -387

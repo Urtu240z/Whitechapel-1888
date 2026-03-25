@@ -82,16 +82,16 @@ func _close_journal() -> void:
 	hide_mouse()
 
 	var player = PlayerManager.player_instance
-
 	if is_instance_valid(player):
 		player.velocity = Vector2.ZERO
 
 		if player.has_node("Movement"):
 			var movement = player.get_node("Movement")
 			movement.force_stop()
-			movement.enabled = true
 			movement.block_movement_input_until_release()
+			movement.enabled = true
 
+		# AnimationTree se reactiva DESPUÉS del bloqueo
 		if player.has_node("AnimationTree"):
 			player.get_node("AnimationTree").active = true
 

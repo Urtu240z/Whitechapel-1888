@@ -33,7 +33,7 @@ uv1_world_triplanar = true
 [node name="MainCamera3D" type="Camera3D" parent="." unique_id=449688829]
 unique_name_in_owner = true
 physics_interpolation_mode = 1
-transform = Transform3D(0.99976534, 0.010455184, -0.018972186, -9.313226e-10, 0.8758164, 0.48264444, 0.02166229, -0.4825312, 0.8756109, -0.137901, 4.03222, 6.36446)
+transform = Transform3D(0.99976534, 0.010478485, -0.018959325, -1.8626451e-09, 0.87522274, 0.48372012, 0.021662287, -0.48360664, 0.87501734, -0.137901, 4.03222, 6.36446)
 
 [node name="PhantomCameraHost" type="Node" parent="MainCamera3D" unique_id=1441166189]
 process_priority = 300
@@ -45,7 +45,7 @@ transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 
 metadata/_edit_lock_ = true
 
 [node name="PhantomCamera3D" type="Node3D" parent="." unique_id=132903750 node_paths=PackedStringArray("look_at_target")]
-transform = Transform3D(0.999765, 0.010455185, -0.018972201, -9.3132224e-10, 0.8758165, 0.48264486, 0.021662282, -0.48253125, 0.8756116, -0.137901, 4.03222, 6.36446)
+transform = Transform3D(0.999765, 0.010478486, -0.01895934, -1.8626445e-09, 0.87522286, 0.48372054, 0.02166228, -0.4836067, 0.87501806, -0.137901, 4.03222, 6.36446)
 script = ExtResource("2_t3gk2")
 priority = 10
 look_at_mode = 2

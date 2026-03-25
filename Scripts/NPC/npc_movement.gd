@@ -22,7 +22,10 @@ func _ready() -> void:
 
 func update_movement(delta: float) -> void:
 	var npc := get_parent() as CharacterBody2D
-	if not npc or is_frozen:
+	if not npc:
+		return
+
+	if is_frozen:
 		npc.velocity = Vector2.ZERO
 		return
 

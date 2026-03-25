@@ -873,8 +873,8 @@ offset = Vector2(-20.151917, 183.66013)
 
 [node name="Mp1FootL" type="Sprite2D" parent="CharacterContainer/Skins/NPC_1" unique_id=1015211277]
 position = Vector2(120.286285, 867.3678)
-rotation = -0.086557835
-scale = Vector2(0.99999595, 0.99999595)
+rotation = -0.0865578
+scale = Vector2(0.9999959, 0.9999959)
 texture = SubResource("CanvasTexture_a8oic")
 offset = Vector2(55.85885, -17.018677)
 
@@ -885,23 +885,23 @@ scale = Vector2(0.999999, 0.999999)
 occluder = SubResource("OccluderPolygon2D_730wc")
 
 [node name="Mp1LegR" type="Sprite2D" parent="CharacterContainer/Skins/NPC_1" unique_id=966757603]
-position = Vector2(-28.915453, 538.6383)
+position = Vector2(-28.915451, 538.6383)
 rotation = 0.03245056
-scale = Vector2(0.9999954, 0.9999954)
+scale = Vector2(0.99999535, 0.99999535)
 texture = SubResource("CanvasTexture_g06q7")
 offset = Vector2(-9.676544, 126.73047)
 
 [node name="Mp1KneeR" type="Sprite2D" parent="CharacterContainer/Skins/NPC_1" unique_id=1961738744]
 position = Vector2(-2.9999962, 162)
-rotation = -0.023627639
-scale = Vector2(0.99999654, 0.99999654)
+rotation = -0.023627643
+scale = Vector2(0.9999965, 0.9999965)
 texture = SubResource("CanvasTexture_h4dmm")
 offset = Vector2(-9.582409, 178.99864)
 
 [node name="Mp1FootR" type="Sprite2D" parent="CharacterContainer/Skins/NPC_1" unique_id=1346636835]
-position = Vector2(-53.35946, 893.89075)
-rotation = -0.060037892
-scale = Vector2(0.9999948, 0.9999948)
+position = Vector2(-53.359455, 893.89075)
+rotation = -0.06003789
+scale = Vector2(0.99999475, 0.99999475)
 texture = SubResource("CanvasTexture_w1llw")
 offset = Vector2(35.293945, 13.78595)
 
@@ -910,7 +910,7 @@ occluder = SubResource("OccluderPolygon2D_730wc")
 
 [node name="Mp1Head" type="Sprite2D" parent="CharacterContainer/Skins/NPC_1" unique_id=1940891905]
 position = Vector2(80.476585, -294.79837)
-rotation = -0.10874753
+rotation = -0.10874751
 scale = Vector2(0.9999979, 0.9999979)
 texture = SubResource("CanvasTexture_a41jj")
 offset = Vector2(20, -85)
@@ -1042,8 +1042,8 @@ remote_path = NodePath("../../../../Skins/NPC_1/Mp1Hip")
 
 [node name="Mp1KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Mp1Hip" unique_id=1858767866]
 position = Vector2(-60.999996, 21.999998)
-rotation = -0.023627639
-scale = Vector2(0.9999964, 0.9999964)
+rotation = -0.023627643
+scale = Vector2(0.99999636, 0.99999636)
 rest = Transform2D(0.99998546, 0.005377505, -0.005377505, 0.99998546, -60.999996, 21.999998)
 metadata/_local_pose_override_enabled_ = true
 
@@ -1053,7 +1053,7 @@ remote_path = NodePath("../../../../../Skins/NPC_1/Mp1KneeR")
 
 [node name="Mp1LegR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" unique_id=718148819]
 position = Vector2(-34.80659, 375.9222)
-rotation = 0.0560782
+rotation = 0.056078203
 scale = Vector2(0.9999989, 0.9999989)
 rest = Transform2D(0.9995881, 0.028696883, -0.028696883, 0.9995881, -34.80659, 375.9222)
 metadata/_local_pose_override_enabled_ = true
@@ -1096,12 +1096,12 @@ remote_path = NodePath("../../../../../../Skins/NPC_1/Mp1LegL")
 
 [node name="Mp1FootL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL/Mp1LegL" unique_id=909040570]
 position = Vector2(-9.517823, 334.01404)
-rotation = -0.05342444
-scale = Vector2(0.9999974, 0.9999974)
+rotation = -0.053424407
+scale = Vector2(0.9999973, 0.9999973)
 rest = Transform2D(0.9998846, 0.015190551, -0.015190551, 0.9998846, -9.517823, 334.01404)
 auto_calculate_length_and_angle = false
 length = 128.896
-bone_angle = 13.587993
+bone_angle = 13.587992
 metadata/_local_pose_override_enabled_ = true
 
 [node name="Mp1FootL" type="RemoteTransform2D" parent="CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL/Mp1LegL/Mp1FootL" unique_id=93648376]
@@ -1170,7 +1170,7 @@ remote_path = NodePath("../../../../../../../../Skins/NPC_1/Mp1ForearmL")
 
 [node name="Mp1Head" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle" unique_id=1090892894]
 position = Vector2(-7, -49)
-rotation = -0.17098536
+rotation = -0.17098534
 scale = Vector2(0.999998, 0.999998)
 rest = Transform2D(0.9969057, -0.07860553, 0.07860553, 0.9969057, -7, -49)
 auto_calculate_length_and_angle = false

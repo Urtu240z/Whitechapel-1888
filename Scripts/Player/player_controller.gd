@@ -36,7 +36,7 @@ var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 # READY
 # ==========================
 func _ready() -> void:
-	PlayerManager.player_instance = self
+	PlayerManager.register_player(self)
 	if not has_node("Camera2D"):
 		push_warning("MainPlayer: No Camera2D found. Add one manually to the scene.")
 	movement.initialize(self)

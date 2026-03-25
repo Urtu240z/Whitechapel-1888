@@ -2,7 +2,7 @@
 
 [ext_resource type="VideoStream" uid="uid://d2kg148rgno38" path="res://Assets/Videos/Oniric_1.ogv" id="1_alan6"]
 [ext_resource type="PackedScene" uid="uid://b7bxdhh6ah23f" path="res://Scenes/Story/Orb.tscn" id="2_imhxd"]
-[ext_resource type="PackedScene" uid="uid://bu4x7otlqo03y" path="res://Scenes/Player/Fairy_Dream_Surfer.tscn" id="3_3ltmb"]
+[ext_resource type="PackedScene" uid="uid://bu4x7otlqo03y" path="res://Scenes/Player/Fairy.tscn" id="3_3ltmb"]
 [ext_resource type="Script" uid="uid://de3jpss66xjfh" path="res://addons/curved_lines_2d/scalable_vector_shape_2d.gd" id="4_ardmq"]
 [ext_resource type="Script" uid="uid://dlbv4pit17dnu" path="res://addons/curved_lines_2d/scalable_arc.gd" id="5_443gf"]
 [ext_resource type="Script" uid="uid://dl1t88tthmwts" path="res://addons/curved_lines_2d/scalable_arc_list.gd" id="6_q62iq"]
