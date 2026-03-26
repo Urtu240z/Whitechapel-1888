@@ -41,7 +41,7 @@ colors = PackedColorArray(1, 1, 1, 0.08235294, 1, 1, 1, 0.654902)
 blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_xtpen"]
-offsets = PackedFloat32Array(0, 0.14917128)
+offsets = PackedFloat32Array(0, 0.27644232)
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
 [sub_resource type="Gradient" id="Gradient_fvg26"]
@@ -80,6 +80,7 @@ tile_size = Vector2i(48, 48)
 sources/0 = SubResource("TileSetAtlasSource_gmldl")
 
 [node name="Street1" type="Node2D" unique_id=2068958027]
+scale = Vector2(5, 5)
 
 [node name="SkyNight" type="Sprite2D" parent="." unique_id=1895621234]
 modulate = Color(1, 1, 1, 0.60784316)
@@ -281,11 +282,11 @@ z_index = 5
 material = SubResource("CanvasItemMaterial_j3y8p")
 position = Vector2(1925.9999, -117)
 scale = Vector2(0.20099764, 0.20099767)
-amount = 512
+amount = 1024
 texture = ExtResource("9_nikpo")
-lifetime = 10.0
+lifetime = 30.0
 preprocess = 10.0
-speed_scale = 0.1
+speed_scale = 0.2
 randomness = 1.0
 fixed_fps = 30
 emission_shape = 3
@@ -294,8 +295,8 @@ direction = Vector2(0, 0)
 spread = 0.0
 gravity = Vector2(-200, 5)
 initial_velocity_max = 271.93
-scale_amount_min = 0.07
-scale_amount_max = 0.2
+scale_amount_min = 0.0
+scale_amount_max = 2.2
 color = Color(0.44481522, 0.7852611, 0.7290407, 0.12941177)
 color_ramp = SubResource("Gradient_xtpen")
 color_initial_ramp = SubResource("Gradient_fvg26")

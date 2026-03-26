@@ -94,7 +94,7 @@ func stop_crouch() -> void:
 # ============================================================================
 func apply_gravity(delta: float) -> void:
 	if not player.is_on_floor():
-		player.velocity.y += player.gravity * player.gravity_scale * delta
+		player.velocity.y += player.get_scaled_gravity() * delta
 
 # ============================================================================
 # SALTO
@@ -103,7 +103,7 @@ func handle_jump() -> void:
 	if is_crouching:
 		return
 	if player.is_on_floor() and Input.is_action_just_pressed("jump"):
-		player.velocity.y = -player.jump_speed
+		player.velocity.y = -player.get_scaled_jump_speed()
 
 # ============================================================================
 # STAMINA — estilo Zelda: BotW
@@ -171,16 +171,16 @@ func update_facing_direction(input_axis: float) -> void:
 		facing_right = false
 
 func calculate_target_speed(_input_axis: float) -> float:
-	var target_speed: float = player.move_speed
+	var target_speed: float = player.get_scaled_move_speed()
 
 	# Aplicar penalizaciones de stats
 	target_speed *= _get_speed_multiplier()
 
 	# Correr — solo si no agotada y no agachada
 	if _wants_to_run() and not stamina_exhausted:
-		target_speed = player.run_speed * _get_speed_multiplier()
+		target_speed = player.get_scaled_run_speed() * _get_speed_multiplier()
 	elif is_crouching:
-		target_speed = player.move_speed * 0.4
+		target_speed = player.get_scaled_move_speed() * 0.4
 
 	return target_speed
 
@@ -215,29 +215,32 @@ func apply_movement(input_axis: float, target_speed: float, delta: float) -> voi
 	var changing_direction: bool = (input_axis > 0 and player.velocity.x < 0) or \
 								  (input_axis < 0 and player.velocity.x > 0)
 
-	if changing_direction and abs(player.velocity.x) > player.move_speed:
-		player.velocity.x = move_toward(player.velocity.x, 0.0, player.run_friction * delta)
+	if changing_direction and abs(player.velocity.x) > player.get_scaled_move_speed():
+		player.velocity.x = move_toward(player.velocity.x, 0.0, player.get_scaled_run_friction() * delta)
 	else:
 		player.velocity.x = move_toward(
 			player.velocity.x,
 			input_axis * target_speed,
-			player.acceleration * delta
+			player.get_scaled_acceleration() * delta
 		)
 
 func apply_friction(delta: float) -> float:
-	var current_friction: float = player.friction
+	var current_friction: float = player.get_scaled_friction()
 
-	if abs(player.velocity.x) > player.move_speed:
-		current_friction = player.run_friction
+	if abs(player.velocity.x) > player.get_scaled_move_speed():
+		current_friction = player.get_scaled_run_friction()
 
 	player.velocity.x = move_toward(player.velocity.x, 0.0, current_friction * delta)
 	return player.velocity.x
 
 func update_movement_state() -> void:
 	var speed: float = abs(player.velocity.x)
-	if speed > 20.0:
+	var moving_threshold: float = 20.0 * player.motion_scale_multiplier
+	var stop_threshold: float = 5.0 * player.motion_scale_multiplier
+
+	if speed > moving_threshold:
 		was_moving = true
-	elif speed < 5.0:
+	elif speed < stop_threshold:
 		was_moving = false
 
 # ============================================================================

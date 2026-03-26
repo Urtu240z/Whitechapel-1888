@@ -21,6 +21,9 @@ class_name MainPlayer
 @export_group("🔊 Audio Settings")
 @export var breath_run_sounds: Array[AudioStream] = []
 
+@export_group("📏 World Scale Compensation")
+@export var motion_scale_multiplier: float = 5.0
+
 @onready var movement: Node = $Movement
 @onready var animation: Node = $Animation
 @onready var interaction: Node = $Interaction
@@ -31,6 +34,33 @@ class_name MainPlayer
 # ==========================
 var can_move: bool = true
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+# ==========================
+# SCALE COMPENSATION
+# Compensa el movimiento cuando el Player root está a escala 1
+# pero antes el gameplay se sentía bien a escala 0.2.
+# 0.2 -> 1.0 = x5
+# ==========================
+func get_scaled_move_speed() -> float:
+	return move_speed * motion_scale_multiplier
+
+func get_scaled_run_speed() -> float:
+	return run_speed * motion_scale_multiplier
+
+func get_scaled_jump_speed() -> float:
+	return jump_speed * motion_scale_multiplier
+
+func get_scaled_acceleration() -> float:
+	return acceleration * motion_scale_multiplier
+
+func get_scaled_friction() -> float:
+	return friction * motion_scale_multiplier
+
+func get_scaled_run_friction() -> float:
+	return run_friction * motion_scale_multiplier
+
+func get_scaled_gravity() -> float:
+	return gravity * gravity_scale * motion_scale_multiplier
 
 # ==========================
 # READY

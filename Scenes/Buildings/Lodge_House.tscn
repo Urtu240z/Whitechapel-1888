@@ -96,8 +96,12 @@ shader_parameter/fill_strength = 0.15
 [node name="Lodge" type="Node2D" unique_id=444969637]
 script = ExtResource("1_p8nmd")
 fade_time = 3.5
+zoom_in = Vector2(0.38, 0.38)
+zoom_out = Vector2(0.3, 0.3)
 open_sounds = Array[AudioStream]([ExtResource("2_4j78l"), ExtResource("3_1wgdf"), ExtResource("4_20bsc")])
 close_sounds = Array[AudioStream]([ExtResource("5_nddhr"), ExtResource("6_m8ipo"), ExtResource("7_txu1n")])
+sfx_volume_db_min = 0.0
+sfx_volume_db_max = 2.0
 building_name = "St. Jude's Refuge & Dispensary"
 street_name = "Commercial Street"
 
@@ -370,7 +374,7 @@ stream = ExtResource("15_4okcm")
 
 [node name="Music" type="AudioStreamPlayer2D" parent="Audio" unique_id=1764463077]
 stream = ExtResource("16_npv2w")
-volume_db = -6.0
+volume_db = -80.0
 
 [node name="BuildingEntrance" type="Node2D" parent="." unique_id=933052707]
 script = ExtResource("1_sx2l7")

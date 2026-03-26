@@ -80,7 +80,7 @@ func _determine_animation_state() -> String:
 
 	if not is_moving:
 		return "Idle"
-	elif is_running and speed > (player.move_speed + player.run_speed) / 2:
+	elif is_running and speed > (player.get_scaled_move_speed() + player.get_scaled_run_speed()) / 2.0:
 		return "Run"
 	else:
 		return "Walk"

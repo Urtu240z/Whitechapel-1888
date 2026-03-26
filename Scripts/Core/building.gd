@@ -44,6 +44,8 @@ extends Node2D
 @export_group("🔊 Audio")
 @export var open_sounds: Array[AudioStream] = []
 @export var close_sounds: Array[AudioStream] = []
+@export var sfx_volume_db_min: float = -2.0
+@export var sfx_volume_db_max: float = 0.0
 
 # ================================================================
 # 🏷️ NOMBRES

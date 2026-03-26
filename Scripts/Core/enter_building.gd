@@ -47,6 +47,7 @@ var _player_near_exit: bool = false
 var _transitioning: bool = false
 var _original_limits: Dictionary = {}
 var _interior_audio_started: bool = false
+var _original_limit_enabled: bool = false
 
 # ================================================================
 # READY
@@ -157,16 +158,24 @@ func _enter() -> void:
 	_set_walls_enabled(true)
 	if camera:
 		camera.zoom = _config.zoom_in
+
+		_original_limit_enabled = camera.limit_enabled
 		_original_limits = {
-			"left": camera.limit_left, "top": camera.limit_top,
-			"right": camera.limit_right, "bottom": camera.limit_bottom
+			"left": camera.limit_left,
+			"top": camera.limit_top,
+			"right": camera.limit_right,
+			"bottom": camera.limit_bottom
 		}
+
 		var limits = _config.get_interior_camera_limits()
 		if not limits.is_empty():
-			camera.limit_left   = limits["left"]
-			camera.limit_top    = limits["top"]
-			camera.limit_right  = limits["right"]
+			camera.limit_enabled = true
+			camera.limit_left = limits["left"]
+			camera.limit_top = limits["top"]
+			camera.limit_right = limits["right"]
 			camera.limit_bottom = limits["bottom"]
+			camera.reset_smoothing()
+			camera.force_update_scroll()
 
 	await SceneManager._fade_in(fade_half)
 
@@ -216,10 +225,13 @@ func _exit() -> void:
 	if camera:
 		camera.zoom = _config.zoom_out
 		if not _original_limits.is_empty():
-			camera.limit_left   = _original_limits["left"]
-			camera.limit_top    = _original_limits["top"]
-			camera.limit_right  = _original_limits["right"]
+			camera.limit_left = _original_limits["left"]
+			camera.limit_top = _original_limits["top"]
+			camera.limit_right = _original_limits["right"]
 			camera.limit_bottom = _original_limits["bottom"]
+			camera.limit_enabled = _original_limit_enabled
+			camera.reset_smoothing()
+			camera.force_update_scroll()
 
 	await SceneManager._fade_in(fade_half)
 
@@ -314,7 +326,7 @@ func _play_sfx(sounds: Array[AudioStream]) -> void:
 		return
 	_audio_sfx.stream = sounds.pick_random()
 	_audio_sfx.pitch_scale = randf_range(0.95, 1.05)
-	_audio_sfx.volume_db = randf_range(-2.0, 0.0)
+	_audio_sfx.volume_db = randf_range(_config.sfx_volume_db_min, _config.sfx_volume_db_max)
 	_audio_sfx.play()
 
 # ================================================================

@@ -23,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="17_rusfs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rusfs"]
-size = Vector2(87, 372)
+size = Vector2(532, 2155)
 
 [node name="Streets" type="Node2D" unique_id=2082393348]
 
@@ -32,25 +32,23 @@ size = Vector2(87, 372)
 [node name="Audio" type="Node2D" parent="Exterior" unique_id=1091310372 groups=["audio_exterior"]]
 position = Vector2(-1135, -107)
 
-[node name="FireflyAudioAtmosphereOfAStreetWhitoutCarsAtNight,CrowVariation1" type="AudioStreamPlayer2D" parent="Exterior/Audio" unique_id=412839403]
+[node name="FireflyAudioAtmosphereOfAStreetWhitoutCarsAtNight,CrowVariation1" type="AudioStreamPlayer" parent="Exterior/Audio" unique_id=278960691]
 stream = ExtResource("7_nb0nf")
 volume_db = -10.275
 autoplay = true
 
-[node name="ShadowsBeneathTheVeilV2" type="AudioStreamPlayer2D" parent="Exterior/Audio" unique_id=1201856042]
-position = Vector2(355, -256)
+[node name="ShadowsBeneathTheVeilV2" type="AudioStreamPlayer" parent="Exterior/Audio" unique_id=2081144783]
 stream = ExtResource("10_va4r7")
 volume_db = 9.892
 autoplay = true
-max_distance = 4096.0
-attenuation = 1.3114903e-05
 
 [node name="World" type="Node2D" parent="Exterior" unique_id=405277679]
+scale = Vector2(5, 5)
 
 [node name="Street1" parent="Exterior/World" unique_id=1656879164 instance=ExtResource("2_u7sjw")]
+scale = Vector2(1, 1)
 
 [node name="Parallax2D" type="Parallax2D" parent="Exterior/World" unique_id=1782976723]
-visible = false
 scroll_scale = Vector2(1.01, 1)
 
 [node name="Lights_background" type="Node2D" parent="Exterior/World/Parallax2D" unique_id=317355705]
@@ -72,7 +70,6 @@ position = Vector2(1212.625, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
 [node name="Parallax2D2" type="Parallax2D" parent="Exterior/World" unique_id=238859678]
-visible = false
 scroll_scale = Vector2(1.3, 1)
 
 [node name="Lights_Foreground" type="Node2D" parent="Exterior/World/Parallax2D2" unique_id=314579702]
@@ -191,22 +188,26 @@ close_sounds = Array[AudioStream]([ExtResource("15_vkywb"), ExtResource("16_ursw
 [node name="Lodge" parent="Exterior/World" unique_id=1878724243 instance=ExtResource("14_1loxg")]
 position = Vector2(-2625.0002, -490)
 scale = Vector2(0.9, 0.9)
+zoom_in = Vector2(0.31, 0.31)
 
 [node name="Area2D" type="Area2D" parent="Exterior" unique_id=749285088]
-position = Vector2(2104, -23)
+position = Vector2(10242, -23)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("17_e1isi")
 next_scene_path = "uid://w2jbko6gsfj8"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exterior/Area2D" unique_id=1599580841]
-position = Vector2(33.5, -176)
+position = Vector2(256, -1067.5)
 shape = SubResource("RectangleShape2D_rusfs")
 disabled = true
 
 [node name="SceneChanger" parent="Exterior/Area2D" unique_id=1533950328 instance=ExtResource("16_1loxg")]
 position = Vector2(-71, -89)
 next_scene_path = "uid://cc6bg7ryeymg4"
+
+[node name="CollisionShape2D" parent="Exterior/Area2D/SceneChanger" index="0" unique_id=1949894590]
+position = Vector2(835, -995)
 
 [node name="IluminacionAmbiental" type="CanvasModulate" parent="." unique_id=2122831357]
 color = Color(1.224, 1.224, 1.224, 1)
@@ -227,5 +228,6 @@ color = Color(0, 0, 0, 1)
 [node name="Player" parent="." unique_id=1458210690 instance=ExtResource("17_rusfs")]
 modulate = Color(0.65834004, 0.6583399, 0.6583399, 1)
 y_sort_enabled = true
-position = Vector2(-1398, -118)
-scale = Vector2(0.2, 0.2)
+position = Vector2(-1398, -504)
+
+[editable path="Exterior/Area2D/SceneChanger"]
