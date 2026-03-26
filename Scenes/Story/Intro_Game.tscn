@@ -28,6 +28,7 @@
 [ext_resource type="Script" uid="uid://cxbwqc3wbpdmd" path="res://Scripts/Story/outfit_zone.gd" id="22_0gs8i"]
 [ext_resource type="AudioStream" uid="uid://ciyt77vs6vf83" path="res://Assets/Audio/Ambience/Countryside_ambient_sound_with_birds,_trees,_and_w_variation1.wav" id="23_o8wfu"]
 [ext_resource type="AudioStream" uid="uid://biea8wymmn235" path="res://Assets/Music/El susurro de Jack.wav" id="24_wk07h"]
+[ext_resource type="PackedScene" uid="uid://3d87y1mwfg15" path="res://Scenes/Player/Thomas.tscn" id="29_clpkd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mr8ke"]
 size = Vector2(1886, 624)
@@ -48,9 +49,6 @@ shader_parameter/strength = 0.0010000000475
 shader_parameter/target_color = Color(0.8, 0.6, 0.1, 1)
 shader_parameter/color_threshold = 0.5170000245575
 shader_parameter/modulate_color = Color(0.50140655, 0.5014065, 0.5014065, 1)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2p2hw"]
-size = Vector2(110.61974, 238.41864)
 
 [sub_resource type="Shader" id="Shader_jbdmi"]
 code = "shader_type canvas_item;
@@ -105,9 +103,6 @@ fill_from = Vector2(0.47008547, 0.43589744)
 diffuse_texture = ExtResource("4_42g8d")
 normal_texture = ExtResource("5_p3t74")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwmy8"]
-size = Vector2(122.17139, 832.5793)
-
 [sub_resource type="Gradient" id="Gradient_v63i2"]
 offsets = PackedFloat32Array(0.10810811, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.17254902)
@@ -146,11 +141,18 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 offsets = PackedFloat32Array(0.38121548, 1)
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2p2hw"]
+size = Vector2(214.00012, 899)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwmy8"]
+size = Vector2(122.17139, 832.5793)
+
 [node name="Intro_Game" type="Node2D" unique_id=1685960519]
 script = ExtResource("1_v63i2")
 
 [node name="ZoneController" type="Area2D" parent="." unique_id=793677248]
 z_index = -3
+position = Vector2(-1784, 0)
 script = ExtResource("15_v1xlq")
 player_path = NodePath("../Player")
 light_path = NodePath("../Global Light")
@@ -162,13 +164,13 @@ player_color_outside = Color(1.6197081, 1.6197081, 1.6197081, 1)
 player_color_inside = Color(0.23753911, 0.23753914, 0.23753911, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneController" unique_id=1982960725]
-position = Vector2(629, -159)
+position = Vector2(-32, -159)
 shape = SubResource("RectangleShape2D_mr8ke")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="ZoneController" unique_id=1018033159]
 
 [node name="OutfitZone_London" type="Area2D" parent="." unique_id=1626944024]
-position = Vector2(-405, 247)
+position = Vector2(-2070, 247)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("22_0gs8i")
@@ -178,6 +180,7 @@ position = Vector2(1383, -300.5)
 shape = SubResource("RectangleShape2D_o8wfu")
 
 [node name="OutfitZone_Forest" type="Area2D" parent="." unique_id=943630267]
+position = Vector2(-936, 0)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("22_0gs8i")
@@ -188,6 +191,7 @@ position = Vector2(-1143, -153)
 shape = SubResource("RectangleShape2D_0gs8i")
 
 [node name="EchoeBridge" type="Area2D" parent="." unique_id=1369323434]
+position = Vector2(-1608, 0)
 audio_bus_override = true
 audio_bus_name = &"ReverbZone"
 
@@ -197,6 +201,7 @@ shape = SubResource("RectangleShape2D_wk07h")
 
 [node name="Background" type="Node2D" parent="." unique_id=1586876092]
 modulate = Color(0.47007543, 0.47007596, 0.47007567, 1)
+scale = Vector2(5, 5)
 
 [node name="Forest_Part" type="Node2D" parent="Background" unique_id=466500631]
 
@@ -218,21 +223,11 @@ position = Vector2(307.00235, -277.2001)
 scale = Vector2(9.0085, 10.06215)
 texture = ExtResource("4_thp8f")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Background/Forest_Part/IntroForest" unique_id=465206148]
-position = Vector2(-1076.9958, 83.15989)
-scale = Vector2(6.91, 6.91)
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/Forest_Part/IntroForest/StaticBody2D" unique_id=2001632497]
-position = Vector2(-430.67865, 109.209335)
-shape = SubResource("RectangleShape2D_2p2hw")
-
-[node name="Sprite2D2" type="Sprite2D" parent="Background/Forest_Part/IntroForest/StaticBody2D" unique_id=2049773177]
+[node name="Sprite2D2" type="Sprite2D" parent="Background/Forest_Part/IntroForest" unique_id=2049773177]
 modulate = Color(0.728822, 0.728822, 0.7288219, 1)
 material = SubResource("ShaderMaterial_sfppk")
-position = Vector2(-403.39258, -55.7677)
-scale = Vector2(1.0431148, 1.0431148)
+position = Vector2(-3864.438, -302.19482)
+scale = Vector2(7.2079225, 7.207923)
 texture = ExtResource("3_2p2hw")
 
 [node name="London_Part" type="Node2D" parent="Background" unique_id=841388785]
@@ -310,17 +305,6 @@ position = Vector2(1359.408, -87.72809)
 scale = Vector2(0.356, 0.456)
 texture = ExtResource("2_thp8f")
 
-[node name="Area2D" type="Area2D" parent="Background/London_Part/Tunnel2" unique_id=658349387]
-scale = Vector2(0.99999994, 1)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("15_myhum")
-next_scene_path = "uid://c5eqkxt8vsyw7"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/London_Part/Tunnel2/Area2D" unique_id=1690131183]
-position = Vector2(180.99539, 58.823536)
-shape = SubResource("RectangleShape2D_xwmy8")
-
 [node name="PointLight2D" type="PointLight2D" parent="Background/London_Part/Tunnel2" unique_id=913895856]
 z_index = 2
 position = Vector2(-481.48303, 190.19318)
@@ -357,32 +341,9 @@ color = Color(1, 1, 1, 0.5372549)
 color_ramp = SubResource("Gradient_myhum")
 color_initial_ramp = SubResource("Gradient_xwmy8")
 
-[node name="Ground_Farm" type="StaticBody2D" parent="Background" unique_id=2130687291]
-z_index = -3
-collision_layer = 2
-collision_mask = 2
-metadata/surface_type = "dirt"
-
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Background/Ground_Farm" unique_id=169102013]
-z_index = -3
-position = Vector2(603, 139.5)
-scale = Vector2(100.69999, 3.1499996)
-polygon = PackedVector2Array(-9.712017, 12.222221, -23.843102, 13.492065, -23.843102, -23.333338, -23.336647, -23.015877, -22.641512, -17.619051, -21.97617, -17.619051, -20.893747, -9.682541, -19.344591, -7.1428604, -18.262167, -9.682541, -17.368423, -3.968254, -15.134064, -7.1428604, -14.111223, -7.4603195, -13.515394, -9.365082, -11.539227, -14.126987, -9.642504, -16.349209)
-
-[node name="Ground_London" type="StaticBody2D" parent="Background" unique_id=1469857162]
-collision_layer = 2
-collision_mask = 2
-metadata/surface_type = "stone"
-
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Background/Ground_London" unique_id=551654874]
-z_index = -3
-position = Vector2(603, 139.5)
-scale = Vector2(100.69999, 3.1499996)
-polygon = PackedVector2Array(0.9334655, -17.936512, 3.6047664, -17.30159, 5.402185, -11.904766, 6.3455815, -14.444447, 7.060577, -20.158733, 7.94439, -26.50794, 9.046675, -31.904766, 9.801392, -29.047623, 9.801392, 15.079365, -9.712017, 7.1428566, -9.642504, -16.349209)
-
 [node name="Player" parent="." unique_id=1458210690 instance=ExtResource("17_k31m2")]
-position = Vector2(-1413, -16)
-scale = Vector2(0.2, 0.2)
+position = Vector2(-7518, -179)
+default_outfit = "Farm"
 
 [node name="Label" type="Label" parent="Player" unique_id=739379087]
 offset_left = -2931.6802
@@ -393,6 +354,7 @@ script = ExtResource("18_k31m2")
 
 [node name="Foreground" type="Node2D" parent="." unique_id=1884329316]
 z_index = 5
+scale = Vector2(5, 5)
 
 [node name="London_Part2" type="Node2D" parent="Foreground" unique_id=1923575272]
 
@@ -536,6 +498,62 @@ autoplay = true
 [node name="LondonAmbient" type="AudioStreamPlayer2D" parent="." unique_id=1297708675]
 position = Vector2(-948, 326)
 stream = ExtResource("24_wk07h")
+
+[node name="Limits" type="Node2D" parent="." unique_id=1309261011]
+position = Vector2(-8, 0)
+
+[node name="Left" type="StaticBody2D" parent="Limits" unique_id=465206148]
+position = Vector2(-6312, -765)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/Left" unique_id=2001632497]
+position = Vector2(-2023, 635.5)
+shape = SubResource("RectangleShape2D_2p2hw")
+
+[node name="Right" type="Area2D" parent="Limits" unique_id=658349387]
+position = Vector2(6805.04, -438.64044)
+scale = Vector2(1.7799999, 2.28)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("15_myhum")
+next_scene_path = "uid://c5eqkxt8vsyw7"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limits/Right" unique_id=1690131183]
+position = Vector2(180.99539, 58.823536)
+shape = SubResource("RectangleShape2D_xwmy8")
+
+[node name="Ground_Farm" type="StaticBody2D" parent="Limits" unique_id=2130687291]
+z_index = -3
+position = Vector2(8, 0)
+collision_layer = 2
+collision_mask = 2
+metadata/surface_type = "dirt"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Limits/Ground_Farm" unique_id=1808206438]
+position = Vector2(6797.04, -438.64044)
+scale = Vector2(1.7799999, 2.28)
+polygon = PackedVector2Array(-6111.259, 446.7721, -7037.1016, 471.7721, -7286.54, 430.10547, -7600.585, 448.0879, -8035.4165, 431.85983, -8338.787, 378.35107, -8537.102, 376.59668, -8726.989, 338.43878, -8871.934, 336.6844, -8870.248, 592.38617, -4861.259, 585.3686, -4861.259, 385.3686, -5382.607, 399.4037)
+
+[node name="Ground_London" type="StaticBody2D" parent="Limits" unique_id=1469857162]
+position = Vector2(8, 0)
+collision_layer = 2
+collision_mask = 2
+metadata/surface_type = "stone"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Limits/Ground_London" unique_id=1859650348]
+position = Vector2(6797.04, -438.64044)
+scale = Vector2(1.7799999, 2.28)
+polygon = PackedVector2Array(-4861.259, 385.3686, -4861.259, 585.3686, 648.854, 620.4563, 644.35986, 297.6493, 433.12354, 276.59668, 118.516846, 315.19318, -330.9214, 399.4037, -596.08984, 416.94757, -1108.4495, 378.35107)
+
+[node name="Thomas" parent="." unique_id=1932639728 instance=ExtResource("29_clpkd")]
+position = Vector2(-7953, -231)
+collision_layer = 0
+collision_mask = 2
+walk_speed = 300.0
+gravity_scale = 2.0
+wander_min_x = -1000.0
+wander_max_x = 1000.0
 
 [connection signal="body_entered" from="OutfitZone_London" to="." method="_on_zona_city_body_entered"]
 [connection signal="body_entered" from="OutfitZone_Forest" to="." method="_on_zona_bosque_body_entered"]

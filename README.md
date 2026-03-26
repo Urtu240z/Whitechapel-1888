@@ -164,4 +164,3 @@ El motivo principal de dedicarse a ello era la pobreza extrema.
 
 LA HORA APREMIA.
 A cierta hora la posibilidad de coger hostal se dificulta. o mas CARO? falta info
-
