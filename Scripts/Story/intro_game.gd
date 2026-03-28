@@ -3,6 +3,8 @@ extends Node2D
 # Referencias a tus AudioStreamPlayer2D
 @onready var forest_ambient = $ForestAmbient
 @onready var london_ambient = $LondonAmbient
+@onready var top_left = $TopLeft      # Marker2D
+@onready var bottom_right = $BottomRight  # Marker2D
 
 # Variable para controlar el tween
 var audio_tween: Tween
@@ -19,6 +21,7 @@ func _ready():
 	# Conecta las señales de las zonas
 	$OutfitZone_Forest.body_entered.connect(_on_zona_forest_body_entered)
 	$OutfitZone_London.body_entered.connect(_on_zona_london_body_entered)
+	call_deferred("_apply_camera_limits")
 
 func cambiar_zona_audio(zona_destino: String, duracion: float = 2.0):
 	# Cancela el tween anterior si existe
@@ -50,3 +53,18 @@ func _on_zona_london_body_entered(body):
 
 func _on_zona_city_body_entered(body: Node2D) -> void:
 	pass # Replace with function body.
+
+func _apply_camera_limits() -> void:
+	await get_tree().process_frame
+	var player = PlayerManager.player_instance
+	if not is_instance_valid(player): return
+	var cam = player.get_node_or_null("Camera2D")
+	if not cam: return
+
+	cam.limit_enabled = true
+	cam.limit_left   = int(top_left.global_position.x)
+	cam.limit_top    = int(top_left.global_position.y)
+	cam.limit_right  = int(bottom_right.global_position.x)
+	cam.limit_bottom = int(bottom_right.global_position.y)
+	cam.reset_smoothing()
+	cam.force_update_scroll()
