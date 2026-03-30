@@ -48,7 +48,7 @@ func change_scene(target_path: String, fade_time: float = 0.5) -> void:
 	if _is_transitioning:
 		push_warning("SceneManager: transición ya en curso, ignorando.")
 		return
-	_do_change_scene(target_path, fade_time)
+	await _do_change_scene(target_path, fade_time)
 
 
 func _do_change_scene(target_path: String, fade_time: float) -> void:

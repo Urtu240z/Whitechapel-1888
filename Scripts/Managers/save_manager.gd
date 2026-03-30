@@ -13,6 +13,8 @@ const MAX_SLOTS := 3
 # 💾 GUARDAR
 # =========================================================
 func save_game(slot: int = 0) -> bool:
+	var lista_edificios = get_tree().get_nodes_in_group("buildings")
+	print("🔍 DEBUG SAVE: Edificios encontrados en el grupo: ", lista_edificios)
 	var data = _collect_data()
 	var path = _slot_path(slot)
 
@@ -102,10 +104,19 @@ func get_slot_info(slot: int) -> Dictionary:
 # =========================================================
 func _collect_data() -> Dictionary:
 	var player = PlayerManager.player_instance
-	var pos    = player.global_position if is_instance_valid(player) else Vector2.ZERO
+	var pos = player.global_position if is_instance_valid(player) else Vector2.ZERO
 	var escena = get_tree().current_scene.scene_file_path if get_tree().current_scene else ""
 	var outfit = player.default_outfit if is_instance_valid(player) else "London"
-
+	
+	# DETECCIÓN DE INTERIOR
+	var esta_dentro = false
+	for b in get_tree().get_nodes_in_group("buildings"):
+		var entrance = b.get_node_or_null("BuildingEntrance")
+		if is_instance_valid(entrance):
+			# CAMBIO CLAVE: Buscamos _inside, que es como se llama en tu script
+			if entrance._inside == true: 
+				esta_dentro = true
+				break
 	# Equipamiento: convertir enum keys a string
 	var equipment_data: Dictionary = {}
 	for slot_key in InventoryManager.get_equipped_all():
@@ -121,8 +132,9 @@ func _collect_data() -> Dictionary:
 		"escena":   escena,
 		"player_x": pos.x,
 		"player_y": pos.y,
+		"en_interior": esta_dentro,
 		"outfit":   outfit,
-
+		
 		# Tiempo
 		"hora":             DayNightManager.hora_actual,
 		"tiempo_acumulado": DayNightManager.tiempo_acumulado,
@@ -208,18 +220,42 @@ func _apply_data(data: Dictionary) -> void:
 
 	# Escena y posición del player
 	var escena: String = data.get("escena", "")
-	var px: float      = data.get("player_x", 0.0)
-	var py: float      = data.get("player_y", 0.0)
+	var px: float = data.get("player_x", 0.0)
+	var py: float = data.get("player_y", 0.0)
 	var outfit: String = data.get("outfit", "London")
+	var en_interior: bool = data.get("en_interior", false)
 
 	if escena != "" and FileAccess.file_exists(escena):
-		SceneManager.change_scene(escena)
+		await SceneManager._fade_out(0.3)
+		get_tree().change_scene_to_file(escena)
+		
+		# Damos 2 frames para que los edificios en el grupo "buildings" se registren
 		await get_tree().process_frame
 		await get_tree().process_frame
+
 		var player = PlayerManager.player_instance
 		if is_instance_valid(player):
 			player.global_position = Vector2(px, py)
 			player.set_outfit(outfit)
+			if "velocity" in player: player.velocity = Vector2.ZERO
+
+			if en_interior:
+				var edificios = get_tree().get_nodes_in_group("buildings")
+				print("📂 Cargando interior. Edificios en escena: ", edificios.size())
+				
+				for b in edificios:
+					# Usamos una distancia amplia (800) porque a veces el origen del 
+					# edificio está lejos de donde aparece el jugador dentro
+					var distancia = b.global_position.distance_to(player.global_position)
+					
+					if distancia < 800:
+						var entrance = b.get_node_or_null("BuildingEntrance")
+						if is_instance_valid(entrance) and entrance.has_method("force_inside_state"):
+							print("✅ Edificio detectado para carga: ", b.name)
+							entrance.force_inside_state(true)
+							break
+
+		await SceneManager._fade_in(0.5)
 
 
 # =========================================================

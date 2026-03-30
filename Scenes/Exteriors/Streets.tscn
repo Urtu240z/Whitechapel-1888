@@ -179,13 +179,13 @@ texture = ExtResource("9_i3cx7")
 position = Vector2(-46.666664, 493.3334)
 texture = ExtResource("10_boktq")
 
-[node name="Ten_Bells" parent="Exterior/World" unique_id=926207058 instance=ExtResource("17_1loxg")]
+[node name="Ten_Bells" parent="Exterior/World" unique_id=926207058 groups=["buildings"] instance=ExtResource("17_1loxg")]
 position = Vector2(-487, -370)
 scale = Vector2(0.67, 0.67)
 open_sounds = Array[AudioStream]([ExtResource("12_vsjiw"), ExtResource("13_80ji7"), ExtResource("14_evs4v")])
 close_sounds = Array[AudioStream]([ExtResource("15_vkywb"), ExtResource("16_urswk"), ExtResource("17_0gjoy")])
 
-[node name="Lodge" parent="Exterior/World" unique_id=1878724243 instance=ExtResource("14_1loxg")]
+[node name="Lodge" parent="Exterior/World" unique_id=1878724243 groups=["buildings"] instance=ExtResource("14_1loxg")]
 position = Vector2(-2625.0002, -490)
 scale = Vector2(0.9, 0.9)
 zoom_in = Vector2(0.31, 0.31)

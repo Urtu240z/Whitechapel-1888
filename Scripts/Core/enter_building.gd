@@ -392,3 +392,40 @@ func _glow_pulse(mat: ShaderMaterial) -> void:
 		func(v: float): mat.set_shader_parameter("glow_strength", v),
 		2.0, 0.0, 0.7
 	)
+
+func force_inside_state(inside: bool) -> void:
+	print("🏠 FORZANDO ESTADO INTERIOR: ", inside, " en el edificio: ", _config.building_name)
+	_inside = inside
+	
+	# 1. Visibilidad y colisiones
+	if _interior:
+		_interior.visible = inside
+		_interior.modulate.a = 1.0 if inside else 0.0
+	
+	_set_walls_enabled(inside)
+	_freeze_world(inside)
+	
+	var exterior = get_parent().get_node_or_null("Exterior")
+	if exterior: 
+		exterior.visible = not inside
+	
+	# 2. Configurar cámara e interior_audio
+	if inside:
+		var player = PlayerManager.player_instance
+		if is_instance_valid(player):
+			var camera = player.get_node_or_null("Camera2D")
+			if camera:
+				camera.zoom = _config.zoom_in
+				var limits = _config.get_interior_camera_limits()
+				if not limits.is_empty():
+					camera.limit_enabled = true
+					camera.limit_left = limits["left"]
+					camera.limit_top = limits["top"]
+					camera.limit_right = limits["right"]
+					camera.limit_bottom = limits["bottom"]
+					camera.force_update_scroll()
+		
+		# Arrancamos audio si existe
+		if not _interior_audio_started:
+			_interior_audio_started = true
+			_start_inside_audio()
