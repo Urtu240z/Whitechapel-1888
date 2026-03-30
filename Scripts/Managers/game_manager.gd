@@ -13,6 +13,14 @@ func _input(event: InputEvent) -> void:
 		toggle_mouse()
 	if event.is_action_pressed("stats"):
 		toggle_journal()
+	# TEMPORAL — borrar después de probar
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_F6:
+			SaveManager.save_game(0)
+			print("💾 Guardado en slot 0")
+		if event.keycode == KEY_F7:
+			SaveManager.load_game(0)
+			print("📂 Cargando slot 0")
 
 
 # ==============================================================================

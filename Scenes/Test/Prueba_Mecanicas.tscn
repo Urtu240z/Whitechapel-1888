@@ -18,14 +18,14 @@ colors = PackedColorArray(0.23177361, 0.074526556, 0, 1, 0.45882353, 0, 0, 1)
 gradient = SubResource("Gradient_vj6ek")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m4vru"]
-size = Vector2(66, 65)
+size = Vector2(45803, 1277.0002)
 
 [node name="Node2D" type="Node2D" unique_id=1896704466]
 script = ExtResource("1_wk82u")
 
 [node name="Builds" type="Node2D" parent="." unique_id=1653832861]
 position = Vector2(-9.999999, -65.99999)
-scale = Vector2(0.519, 0.586)
+scale = Vector2(2.5, 2.823)
 
 [node name="Build1" type="Sprite2D" parent="Builds" unique_id=1617787713]
 position = Vector2(221, -610)
@@ -79,7 +79,7 @@ texture = SubResource("GradientTexture2D_xhvna")
 
 [node name="Labels" type="Node2D" parent="." unique_id=286322343]
 position = Vector2(-9.999999, -65.99999)
-scale = Vector2(0.519, 0.586)
+scale = Vector2(2.5, 2.823)
 
 [node name="Food" type="Label" parent="Labels" unique_id=387945171]
 offset_left = 115.00001
@@ -305,70 +305,73 @@ pickup_type = "cure-reset"
 disappear_on_pickup = false
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=3571519]
-scale = Vector2(286.96, 3)
 collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=682330662]
-position = Vector2(0, 0.50000083)
+position = Vector2(1282.5, 381.5)
 scale = Vector2(1, 0.99999994)
 shape = SubResource("RectangleShape2D_m4vru")
 
 [node name="Sprite2D" type="Sprite2D" parent="Ground" unique_id=1841653187]
+position = Vector2(1395.5015, 148.50002)
+scale = Vector2(710.85944, 12.703124)
 texture = SubResource("GradientTexture2D_xhvna")
 
 [node name="Player" parent="." unique_id=370210788 instance=ExtResource("1_vj6ek")]
-position = Vector2(-2369, -191)
-scale = Vector2(0.17, 0.17)
-
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1605457982]
-position = Vector2(858.8232, -382.35287)
-zoom = Vector2(1.955, 1.955)
-position_smoothing_enabled = true
+position = Vector2(-11448, -805)
 
 [node name="UIStats" parent="." unique_id=1543806037 instance=ExtResource("2_m4vru")]
 
 [node name="Laudanum" parent="." unique_id=720660128 instance=ExtResource("3_ju50u")]
 modulate = Color(1, 0, 0, 1)
-position = Vector2(-2231, -315)
+position = Vector2(-10735.999, -1365.9999)
+scale = Vector2(5, 5)
 pickup_type = "drug-laudano"
 disappear_on_pickup = false
 
 [node name="Opium" parent="." unique_id=90970568 instance=ExtResource("3_ju50u")]
 modulate = Color(1, 1, 0.27450982, 1)
-position = Vector2(-1966, -309)
+position = Vector2(-9355, -1327)
+scale = Vector2(5, 5)
 pickup_type = "drug-eter"
 disappear_on_pickup = false
 
 [node name="Wine" parent="." unique_id=1383529166 instance=ExtResource("3_ju50u")]
-position = Vector2(-1172, -304)
+position = Vector2(-5559.9995, -1279)
+scale = Vector2(5, 5)
 pickup_type = "drink-ginebra"
 disappear_on_pickup = false
 
 [node name="Wine2" parent="." unique_id=840803717 instance=ExtResource("3_ju50u")]
-position = Vector2(-983, -313)
+position = Vector2(-4775, -1321)
+scale = Vector2(5, 5)
 pickup_type = "drink-whisky"
 disappear_on_pickup = false
 
 [node name="Wine3" parent="." unique_id=81052459 instance=ExtResource("3_ju50u")]
-position = Vector2(-825, -309)
+position = Vector2(-3944.9998, -1295)
+scale = Vector2(5, 5)
 pickup_type = "drink-ron"
 disappear_on_pickup = false
 
 [node name="Food" parent="." unique_id=1668661142 instance=ExtResource("3_ju50u")]
 modulate = Color(0, 0, 1, 1)
-position = Vector2(-30, -314)
+position = Vector2(-387.99997, -1311)
+scale = Vector2(5, 5)
 pickup_type = "food-pan"
 disappear_on_pickup = false
 
 [node name="Food2" parent="." unique_id=533992165 instance=ExtResource("3_ju50u")]
 modulate = Color(0, 0, 1, 1)
-position = Vector2(219, -320)
+position = Vector2(1162, -1306)
+scale = Vector2(5, 5)
 pickup_type = "food-tocino"
 disappear_on_pickup = false
 
 [node name="Ducha" parent="." unique_id=2042363160 instance=ExtResource("3_ju50u")]
 modulate = Color(0.23921569, 1, 1, 1)
-position = Vector2(597, -320)
+position = Vector2(3045.9998, -1413.9999)
+scale = Vector2(5, 5)
 pickup_type = "health-ducha"
 disappear_on_pickup = false
