@@ -23,21 +23,17 @@ extends Node2D
 #     └── Music (AudioStreamPlayer2D)
 #
 # ================================================================
-
-# ================================================================
 # ⚙️ COMPORTAMIENTO
 # ================================================================
 @export_group("⚙️ Behaviour")
 @export var enter_action: String = "interact"
 @export var fade_time: float = 0.8
-
 # ================================================================
 # 📷 CÁMARA
 # ================================================================
 @export_group("📷 Camera")
 @export var zoom_in: Vector2 = Vector2(1.7, 1.7)
 @export var zoom_out: Vector2 = Vector2(1.445, 1.445)
-
 # ================================================================
 # 🔊 AUDIO
 # ================================================================
@@ -46,38 +42,33 @@ extends Node2D
 @export var close_sounds: Array[AudioStream] = []
 @export var sfx_volume_db_min: float = -2.0
 @export var sfx_volume_db_max: float = 0.0
-
 # ================================================================
 # 🏷️ NOMBRES
-# Aparecen en pantalla durante el fundido de entrada/salida
 # ================================================================
 @export_group("🏷️ Names")
-@export var building_name: String = ""  # ej: "The Ten Bells"
-@export var street_name: String = ""    # ej: "Commercial Street"
+@export var building_name: String = ""
+@export var street_name: String = ""
+
+
+# ================================================================
+# READY — auto-registro en grupo
+# ================================================================
+func _ready() -> void:
+	# Registro automático — no hace falta hacerlo a mano en el Inspector
+	add_to_group("buildings")
+
 
 # ================================================================
 # 🏠 LÓGICA ESPECÍFICA DEL EDIFICIO
-# Sobrescribe estas funciones en scripts heredados si necesitas
-# comportamiento especial (ej: hostal cobra dinero al entrar)
 # ================================================================
-
-func _ready() -> void:
-	pass
-
-# Llamada por BuildingEntrance justo antes de entrar
-# Devuelve true para permitir la entrada, false para bloquearla
 func on_enter() -> bool:
 	return true
 
-# Llamada por BuildingEntrance justo antes de salir
-# Devuelve true para permitir la salida, false para bloquearla
 func on_exit() -> bool:
 	return true
 
-# Devuelve los límites de cámara del interior
-# Busca CameraLimits/TopLeft y CameraLimits/BottomRight en Interior
 func get_interior_camera_limits() -> Dictionary:
-	var top_left = get_node_or_null("Interior/CameraLimits/TopLeft")
+	var top_left     = get_node_or_null("Interior/CameraLimits/TopLeft")
 	var bottom_right = get_node_or_null("Interior/CameraLimits/BottomRight")
 	if top_left and bottom_right:
 		return {

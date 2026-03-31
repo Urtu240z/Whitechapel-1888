@@ -2,29 +2,27 @@ extends Node
 # =========================================================
 # 💾 SaveManager
 # Guardado desde menú de pausa (ESC)
+# Carga directa sin escena intermedia
 # =========================================================
 
-const SAVE_DIR  := "user://saves/"
-const SAVE_EXT  := ".sav"
-const MAX_SLOTS := 3
+const SAVE_DIR   := "user://saves/"
+const SAVE_EXT   := ".sav"
+const MAX_SLOTS  := 3
+
+var _pending_data: Dictionary = {}
 
 
 # =========================================================
 # 💾 GUARDAR
 # =========================================================
 func save_game(slot: int = 0) -> bool:
-	var lista_edificios = get_tree().get_nodes_in_group("buildings")
-	print("🔍 DEBUG SAVE: Edificios encontrados en el grupo: ", lista_edificios)
 	var data = _collect_data()
 	var path = _slot_path(slot)
-
 	DirAccess.make_dir_recursive_absolute(SAVE_DIR)
-
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	if not file:
-		push_error("SaveManager: no se pudo abrir el archivo: %s" % path)
+		push_error("SaveManager: no se pudo abrir: %s" % path)
 		return false
-
 	file.store_string(JSON.stringify(data, "\t"))
 	file.close()
 	print("💾 Partida guardada en slot %d" % slot)
@@ -34,17 +32,16 @@ func save_game(slot: int = 0) -> bool:
 # =========================================================
 # 📂 CARGAR
 # =========================================================
-func load_game(slot: int = 0) -> bool:
+func load_game(slot: int = 0) -> void:
 	var path = _slot_path(slot)
-
 	if not FileAccess.file_exists(path):
 		push_warning("SaveManager: no existe: %s" % path)
-		return false
+		return
 
 	var file = FileAccess.open(path, FileAccess.READ)
 	if not file:
 		push_error("SaveManager: no se pudo leer: %s" % path)
-		return false
+		return
 
 	var content = file.get_as_text()
 	file.close()
@@ -52,11 +49,36 @@ func load_game(slot: int = 0) -> bool:
 	var parsed = JSON.parse_string(content)
 	if parsed == null:
 		push_error("SaveManager: JSON inválido")
-		return false
+		return
 
-	await _apply_data(parsed)
-	print("📂 Partida cargada desde slot %d" % slot)
-	return true
+	_do_load(parsed)
+
+
+func _do_load(data: Dictionary) -> void:
+	var escena: String = data.get("escena", "")
+	if escena == "" or not FileAccess.file_exists(escena):
+		push_warning("SaveManager: escena no encontrada: %s" % escena)
+		return
+
+	# Aplicar stats antes del cambio de escena
+	_apply_stats(data)
+
+	# Fade out — cambio de escena — esperar tree_changed — fade in
+	await SceneManager._fade_out(0.5)
+	get_tree().change_scene_to_file(escena)
+	await get_tree().tree_changed
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_apply_world(data)
+	
+	await get_tree().create_timer(1.0).timeout
+	await SceneManager._fade_in(1.0)
+
+	# Limpiar bloqueo del SceneManager por si acaso
+	SceneManager._blocking.visible = false
+	SceneManager._is_transitioning = false
+
+	print("📂 Partida cargada")
 
 
 # =========================================================
@@ -66,7 +88,6 @@ func delete_save(slot: int = 0) -> void:
 	var path = _slot_path(slot)
 	if FileAccess.file_exists(path):
 		DirAccess.remove_absolute(path)
-		print("🗑️ Partida borrada en slot %d" % slot)
 
 
 # =========================================================
@@ -79,22 +100,18 @@ func slot_exists(slot: int) -> bool:
 func get_slot_info(slot: int) -> Dictionary:
 	if not slot_exists(slot):
 		return {}
-
 	var file = FileAccess.open(_slot_path(slot), FileAccess.READ)
 	if not file:
 		return {}
-
 	var parsed = JSON.parse_string(file.get_as_text())
 	file.close()
-
 	if parsed == null:
 		return {}
-
 	return {
-		"dia":    parsed.get("dia", 1),
-		"hora":   parsed.get("hora", 8.0),
-		"dinero": parsed.get("dinero", 0.0),
-		"escena": parsed.get("escena", ""),
+		"dia":       parsed.get("dia", 1),
+		"hora":      parsed.get("hora", 8.0),
+		"dinero":    parsed.get("dinero", 0.0),
+		"escena":    parsed.get("escena", ""),
 		"timestamp": parsed.get("timestamp", ""),
 	}
 
@@ -104,43 +121,45 @@ func get_slot_info(slot: int) -> Dictionary:
 # =========================================================
 func _collect_data() -> Dictionary:
 	var player = PlayerManager.player_instance
-	var pos = player.global_position if is_instance_valid(player) else Vector2.ZERO
+	var pos    = player.global_position if is_instance_valid(player) else Vector2.ZERO
 	var escena = get_tree().current_scene.scene_file_path if get_tree().current_scene else ""
 	var outfit = player.default_outfit if is_instance_valid(player) else "London"
-	
-	# DETECCIÓN DE INTERIOR
-	var esta_dentro = false
+
+	# Detectar interior — guardar path exacto del edificio y posición local
+	var en_interior: bool         = false
+	var inside_building_path: String = ""
+	var inside_local_x: float     = 0.0
+	var inside_local_y: float     = 0.0
+
 	for b in get_tree().get_nodes_in_group("buildings"):
 		var entrance = b.get_node_or_null("BuildingEntrance")
-		if is_instance_valid(entrance):
-			# CAMBIO CLAVE: Buscamos _inside, que es como se llama en tu script
-			if entrance._inside == true: 
-				esta_dentro = true
-				break
-	# Equipamiento: convertir enum keys a string
+		if is_instance_valid(entrance) and entrance._inside:
+			en_interior = true
+			inside_building_path = str(b.get_path())
+			var local_pos = b.to_local(pos)
+			inside_local_x = local_pos.x
+			inside_local_y = local_pos.y
+			break
+
 	var equipment_data: Dictionary = {}
 	for slot_key in InventoryManager.get_equipped_all():
 		var item: ItemData = InventoryManager.get_equipped_all()[slot_key]
 		equipment_data[str(slot_key)] = item.name if item else ""
 
 	return {
-		# Metadata
 		"version":   1,
 		"timestamp": Time.get_datetime_string_from_system(),
-
-		# Mundo
-		"escena":   escena,
-		"player_x": pos.x,
-		"player_y": pos.y,
-		"en_interior": esta_dentro,
-		"outfit":   outfit,
-		
-		# Tiempo
+		"escena":    escena,
+		"player_x":  pos.x,
+		"player_y":  pos.y,
+		"outfit":    outfit,
+		"en_interior":          en_interior,
+		"inside_building_path": inside_building_path,
+		"inside_local_x":       inside_local_x,
+		"inside_local_y":       inside_local_y,
 		"hora":             DayNightManager.hora_actual,
 		"tiempo_acumulado": DayNightManager.tiempo_acumulado,
 		"dia":              int(DayNightManager.tiempo_acumulado / (24.0 * 60.0)) + 1,
-
-		# Stats básicos
 		"miedo":      PlayerStats.miedo,
 		"estres":     PlayerStats.estres,
 		"felicidad":  PlayerStats.felicidad,
@@ -154,31 +173,23 @@ func _collect_data() -> Dictionary:
 		"stamina":    PlayerStats.stamina,
 		"enfermedad": PlayerStats.enfermedad,
 		"dinero":     PlayerStats.dinero,
-
-		# Estado enfermedad
-		"enferma":          PlayerStats.enferma,
-		"medicina_activa":  PlayerStats.medicina_activa,
-		"medicina_timer":   PlayerStats.medicina_timer,
-
-		# Economía
+		"enferma":               PlayerStats.enferma,
+		"medicina_activa":       PlayerStats.medicina_activa,
+		"medicina_timer":        PlayerStats.medicina_timer,
 		"dias_sin_pagar_hostal": PlayerStats.dias_sin_pagar_hostal,
-
-		# Inventario
 		"pocket":    InventoryManager.get_pocket(),
 		"equipment": equipment_data,
 	}
 
 
 # =========================================================
-# 📥 APLICAR DATOS
+# 📥 APLICAR STATS — no dependen de la escena
 # =========================================================
-func _apply_data(data: Dictionary) -> void:
-	# Tiempo
+func _apply_stats(data: Dictionary) -> void:
 	DayNightManager.hora_actual      = data.get("hora", 8.0)
 	DayNightManager.tiempo_acumulado = data.get("tiempo_acumulado", 0.0)
-	DayNightManager.pausado          = false  # siempre reanudar al cargar
+	DayNightManager.pausado          = false
 
-	# Stats básicos
 	PlayerStats.miedo      = data.get("miedo",      10.0)
 	PlayerStats.estres     = data.get("estres",      30.0)
 	PlayerStats.felicidad  = data.get("felicidad",   50.0)
@@ -192,21 +203,15 @@ func _apply_data(data: Dictionary) -> void:
 	PlayerStats.stamina    = data.get("stamina",     100.0)
 	PlayerStats.enfermedad = data.get("enfermedad",  0.0)
 	PlayerStats.dinero     = data.get("dinero",      5.0)
-
-	# Estado enfermedad
 	PlayerStats.enferma         = data.get("enferma",         false)
 	PlayerStats.medicina_activa = data.get("medicina_activa", false)
 	PlayerStats.medicina_timer  = data.get("medicina_timer",  0.0)
-
-	# Economía
 	PlayerStats.dias_sin_pagar_hostal = data.get("dias_sin_pagar_hostal", 0)
-
 	PlayerStats.actualizar_stats()
 
-	# Inventario — limpiar antes de cargar
-	# (evita duplicados si se carga sobre una partida en curso)
-	for item_id in InventoryManager.get_pocket().keys():
-		InventoryManager.remove_item(item_id, InventoryManager.get_pocket()[item_id])
+	# Limpiar inventario antes de cargar
+	for item_id in InventoryManager.get_pocket().keys().duplicate():
+		InventoryManager.remove_item(item_id, 999)
 
 	var pocket: Dictionary = data.get("pocket", {})
 	for item_id in pocket:
@@ -218,44 +223,52 @@ func _apply_data(data: Dictionary) -> void:
 		if item_id != "":
 			InventoryManager.equip(item_id)
 
-	# Escena y posición del player
-	var escena: String = data.get("escena", "")
-	var px: float = data.get("player_x", 0.0)
-	var py: float = data.get("player_y", 0.0)
+
+# =========================================================
+# 📥 APLICAR MUNDO — necesita que el player esté en el árbol
+# =========================================================
+func _apply_world(data: Dictionary) -> void:
+	var player = PlayerManager.player_instance
+	if not is_instance_valid(player):
+		push_warning("SaveManager: player no encontrado")
+		return
+
+	var px: float      = data.get("player_x", 0.0)
+	var py: float      = data.get("player_y", 0.0)
 	var outfit: String = data.get("outfit", "London")
-	var en_interior: bool = data.get("en_interior", false)
+	var en_interior: bool     = data.get("en_interior", false)
+	var building_path: String = data.get("inside_building_path", "")
+	var local_x: float        = data.get("inside_local_x", 0.0)
+	var local_y: float        = data.get("inside_local_y", 0.0)
 
-	if escena != "" and FileAccess.file_exists(escena):
-		await SceneManager._fade_out(0.3)
-		get_tree().change_scene_to_file(escena)
-		
-		# Damos 2 frames para que los edificios en el grupo "buildings" se registren
-		await get_tree().process_frame
-		await get_tree().process_frame
+	player.global_position = Vector2(px, py)
+	player.set_outfit(outfit)
 
-		var player = PlayerManager.player_instance
-		if is_instance_valid(player):
-			player.global_position = Vector2(px, py)
-			player.set_outfit(outfit)
-			if "velocity" in player: player.velocity = Vector2.ZERO
+	if player.has_node("Movement"):
+		player.get_node("Movement").enabled = true
+	if player.has_node("AnimationTree"):
+		player.get_node("AnimationTree").active = true
 
-			if en_interior:
-				var edificios = get_tree().get_nodes_in_group("buildings")
-				print("📂 Cargando interior. Edificios en escena: ", edificios.size())
-				
-				for b in edificios:
-					# Usamos una distancia amplia (800) porque a veces el origen del 
-					# edificio está lejos de donde aparece el jugador dentro
-					var distancia = b.global_position.distance_to(player.global_position)
-					
-					if distancia < 800:
-						var entrance = b.get_node_or_null("BuildingEntrance")
-						if is_instance_valid(entrance) and entrance.has_method("force_inside_state"):
-							print("✅ Edificio detectado para carga: ", b.name)
-							entrance.force_inside_state(true)
-							break
+	# Restaurar interior con path exacto
+	if en_interior and building_path != "":
+		var building = get_tree().current_scene.get_node_or_null(building_path)
+		if not is_instance_valid(building):
+			# Fallback: buscar por nombre
+			building = get_tree().current_scene.find_child(
+				NodePath(building_path).get_name(NodePath(building_path).get_name_count() - 1),
+				true, false
+			)
 
-		await SceneManager._fade_in(0.5)
+		if is_instance_valid(building):
+			var entrance = building.get_node_or_null("BuildingEntrance")
+			if is_instance_valid(entrance):
+				entrance.force_inside_state(true)
+				player.global_position = building.to_global(Vector2(local_x, local_y))
+				print("✅ Interior restaurado: ", building.name)
+		else:
+			push_warning("SaveManager: edificio no encontrado: %s" % building_path)
+
+	print("✅ Partida cargada — pos: ", player.global_position)
 
 
 # =========================================================
