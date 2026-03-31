@@ -108,6 +108,7 @@ func set_outfit(which: String) -> void:
 	var london = get_node_or_null("CharacterContainer/Skins/London")
 	if farm: farm.visible = (which == "Farm")
 	if london: london.visible = (which == "London")
+	default_outfit = which  # ← sincroniza siempre para que el save lo lea bien
 
 # ==========================
 # MOVEMENT CONTROL

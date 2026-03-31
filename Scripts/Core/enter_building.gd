@@ -396,36 +396,68 @@ func _glow_pulse(mat: ShaderMaterial) -> void:
 func force_inside_state(inside: bool) -> void:
 	print("🏠 FORZANDO ESTADO INTERIOR: ", inside, " en el edificio: ", _config.building_name)
 	_inside = inside
-	
+
 	# 1. Visibilidad y colisiones
 	if _interior:
 		_interior.visible = inside
 		_interior.modulate.a = 1.0 if inside else 0.0
-	
+
 	_set_walls_enabled(inside)
 	_freeze_world(inside)
-	
+
 	var exterior = get_parent().get_node_or_null("Exterior")
-	if exterior: 
+	if exterior:
 		exterior.visible = not inside
-	
-	# 2. Configurar cámara e interior_audio
-	if inside:
-		var player = PlayerManager.player_instance
-		if is_instance_valid(player):
-			var camera = player.get_node_or_null("Camera2D")
-			if camera:
+
+	# 2. Audio exterior — pausar al entrar, reanudar al salir
+	_set_exterior_audio_paused(inside)
+
+	# 3. Cámara
+	var player = PlayerManager.player_instance
+	if is_instance_valid(player):
+		var camera: Camera2D = player.get_node_or_null("Camera2D")
+		if camera:
+			if inside:
+				# Guardar límites originales ANTES de sobreescribirlos,
+				# igual que hace _enter() — necesario para que _exit() los restaure
+				_original_limit_enabled = camera.limit_enabled
+				_original_limits = {
+					"left":   camera.limit_left,
+					"top":    camera.limit_top,
+					"right":  camera.limit_right,
+					"bottom": camera.limit_bottom,
+				}
+
 				camera.zoom = _config.zoom_in
 				var limits = _config.get_interior_camera_limits()
 				if not limits.is_empty():
 					camera.limit_enabled = true
-					camera.limit_left = limits["left"]
-					camera.limit_top = limits["top"]
-					camera.limit_right = limits["right"]
+					camera.limit_left   = limits["left"]
+					camera.limit_top    = limits["top"]
+					camera.limit_right  = limits["right"]
 					camera.limit_bottom = limits["bottom"]
+					camera.reset_smoothing()      # ← evita deslizamiento fantasma
 					camera.force_update_scroll()
-		
-		# Arrancamos audio si existe
+			else:
+				camera.zoom = _config.zoom_out
+				if not _original_limits.is_empty():
+					camera.limit_left    = _original_limits["left"]
+					camera.limit_top     = _original_limits["top"]
+					camera.limit_right   = _original_limits["right"]
+					camera.limit_bottom  = _original_limits["bottom"]
+					camera.limit_enabled = _original_limit_enabled
+					camera.reset_smoothing()
+					camera.force_update_scroll()
+
+	# 4. Audio interior
+	if inside:
 		if not _interior_audio_started:
 			_interior_audio_started = true
 			_start_inside_audio()
+		else:
+			_set_inside_audio_paused(false)
+	else:
+		_set_inside_audio_paused(true)
+
+func is_transitioning() -> bool:
+	return _transitioning

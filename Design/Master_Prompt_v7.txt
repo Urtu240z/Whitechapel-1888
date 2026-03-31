@@ -1,0 +1,528 @@
+# MASTER PROMPT — WHITECHAPEL 1888
+# Godot 4.6 | GDScript | 2D Lateral
+# Actualizado: Sesión 31/03/2026
+
+================================================================
+## 🎮 CONCEPTO DEL JUEGO
+================================================================
+Juego de supervivencia 2D ambientado en el Londres victoriano de 1888.
+Eleanor "Nell" Finch, mujer de clase baja que llega a Whitechapel tras
+el suicidio de su marido Thomas, con su hija Emily enferma y sin recursos.
+Nell trabaja como prostituta para sobrevivir y recuperar a Emily,
+que ha sido internada en el Whitechapel Workhouse.
+
+OBJETIVO: Reunir 200 chelines para rescatar a Emily y escapar de Londres.
+
+HISTORIA (3 ACTOS):
+- Prólogo — La Granja (Essex, 1888): vida con Thomas y Emily, tutoriales
+- Acto I/II — Whitechapel: supervivencia, Jack the Ripper, ganar dinero
+- Acto III — Misión Final: infiltrarse en el workhouse, rescatar a Emily,
+  escapar en tren antes de que Jack aparezca esa noche
+
+AMENAZAS:
+- Hambre, higiene, cansancio degradan salud
+- Enfermedad de transmisión sexual (por clientes)
+- Jack the Ripper (FSM pendiente)
+- Dormir en la calle es peligroso
+
+================================================================
+## 📁 ESTRUCTURA DE CARPETAS
+================================================================
+res://
+├── Assets/
+│   ├── Audio/Player/Sick/ ← woman_cough_light_1/2, woman_cough_1/2/3/4,
+│   │                         woman_suffering_1/2
+│   ├── Fonts/             ← Cinzel.ttf, IMFellEnglish.ttf
+│   ├── Images/            ← Journal.png, Paper.png
+│   ├── Shaders/           ← blur.gdshader, vignette.gdshader,
+│   │                         distortion.gdshader, disease.gdshader,
+│   │                         player_shadow.gdshader
+│   ├── Sprites/
+│   └── Textures/
+├── Data/
+│   ├── Dialogic/          ← Whitechapel_Layout.tres
+│   ├── Game/game_config.tres
+│   ├── Pickups/           ← .tres con ItemData (UID corregidas)
+│   └── Translations/
+│       ├── translations.csv
+│       ├── translations.es.translation
+│       └── translations.en.translation
+├── Design/
+│   └── Master_Prompt_v7.txt ← ESTE ARCHIVO
+├── Dialogues/             ← npc_1.dtl
+├── Scenes/
+│   ├── Buildings/
+│   │   ├── Bar_Bells.tscn      ← Ten Bells (Commercial Street)
+│   │   └── Lodge_House.tscn    ← St. Jude's Refuge (hostal provisional)
+│   ├── Core/
+│   │   ├── Pickup.tscn
+│   │   ├── Scene_Changer.tscn
+│   │   ├── Sleep_Selection.tscn
+│   │   ├── Sleep_Screen.tscn
+│   │   └── UI_Stats.tscn
+│   ├── Exteriors/
+│   │   └── Comercial_Street.tscn ← escena activa
+│   ├── NPC/
+│   │   ├── NPC_Charger.tscn
+│   │   └── NPC_Ragdoll.tscn
+│   ├── Player/Player.tscn
+│   ├── Test/Prueba_Mecanicas.tscn
+│   └── UI/
+│       ├── Journal.tscn       ← basado en PageFlip2D
+│       ├── MainMenu.tscn
+│       └── Pause_Menu.tscn    ← NUEVO — menú de pausa con ESC
+└── Scripts/
+    ├── Core/
+    │   ├── building.gd         ← script raíz edificios
+    │   ├── enter_building.gd   ← sistema entrada/salida unificado
+    │   ├── pickup.gd
+    │   ├── scene_changer.gd
+    │   ├── sleep_screen.gd
+    │   ├── sleep_selection.gd
+    │   └── ui_stats.gd
+    ├── Data/
+    │   ├── game_config.gd
+    │   └── pickup_data.gd
+    ├── Managers/
+    │   ├── day_night_manager.gd
+    │   ├── effects_manager.gd
+    │   ├── game_manager.gd
+    │   ├── inventory_manager.gd
+    │   ├── player_manager.gd
+    │   ├── player_stats.gd
+    │   ├── save_manager.gd     ← sistema save/load completo
+    │   ├── scene_manager.gd
+    │   └── sleep_manager.gd
+    ├── NPC/
+    │   ├── npc_animation.gd
+    │   ├── npc_audio.gd
+    │   ├── npc_conversation.gd
+    │   ├── npc_main.gd
+    │   ├── npc_movement.gd
+    │   └── npc_skin.gd
+    ├── Player/
+    │   ├── player_animation.gd ← Faint, Rise, collapse_finished
+    │   ├── player_audio.gd
+    │   ├── player_controller.gd
+    │   ├── player_interaction.gd
+    │   └── player_movement.gd
+    ├── Story/
+    ├── UI/
+    │   ├── journal.gd          ← sin class_name, sin escuchar "stats"
+    │   ├── pause_menu.gd       ← NUEVO
+    │   ├── main_menu.gd
+    │   ├── fps_counter.gd
+    │   └── waypoint_marker.gd
+    └── Vehicles/
+        └── carriage_movement.gd
+
+================================================================
+## 🤖 AUTOLOADS (Singletons)
+================================================================
+- GameManager        → Ratón, journal, pausa, overlay oscuro (layer 9)
+- PlayerManager      → var player_instance: MainPlayer
+- PlayerStats        → Stats del jugador (sin class_name)
+- SceneManager       → Fade negro, _fade_out()/_fade_in() públicos
+- DayNightManager    → Ciclo día/noche
+- EffectsManager     → Efectos visuales
+- SleepManager       → Sistema de sueño
+- SaveManager        → Guardado/carga de partida (_busy guard)
+- InventoryManager   → Bolsillo + equipamiento
+- InteractionManager → Prioridades F (BUILDING=10, NPC=5, PICKUP=1)
+- Dialogic           → Plugin diálogos
+
+================================================================
+## 👤 PLAYER
+================================================================
+Nodo raíz: CharacterBody2D (class_name MainPlayer)
+Script: player_controller.gd
+
+PlayerManager.player_instance = self se asigna en _ready() de
+player_controller.gd automáticamente. NO hace falta en cada escena.
+
+Jerarquía Player.tscn:
+Player (player_controller.gd)
+├── Movement  (player_movement.gd)
+│   └── var enabled: bool — bloquea input de movimiento
+│   └── force_stop(), block_movement_input_until_release()
+├── Animation (player_animation.gd)
+├── Audio     (player_audio.gd)
+│   ├── StepPlayer
+│   ├── BreathRun
+│   └── CoughPlayer
+├── Interaction (player_interaction.gd)
+│   └── InteractionArea (Area2D, capa 5)
+├── CharacterContainer
+│   ├── Skins (London / Farm)
+│   ├── Bones
+│   ├── IK Targets
+│   └── Shadow
+│       └── ShadowRAY (RayCast2D, mask SOLO capa 2)
+├── Conversation (Area2D)
+├── Collision (CollisionShape2D)
+├── AnimationPlayer
+├── AnimationTree
+├── Camera2D (zoom actual: 1.445) ← dentro de Player.tscn
+│   └── OverlayBlack              ← make_current() en _ready()
+└── Shadow (hijo directo, fuera de CharacterContainer)
+
+OUTFIT:
+- set_outfit("London" | "Farm") en player_controller.gd
+- set_outfit() actualiza también default_outfit ← CORREGIDO
+- El save siempre refleja el outfit real
+
+================================================================
+## 💾 SISTEMA DE GUARDADO
+================================================================
+Autoload: SaveManager
+Ruta saves: user://saves/slot_N.sav (JSON)
+Slots: 0, 1, 2
+
+FLUJO CARGA:
+1. SaveManager.load_game(slot) → _busy=true → lee JSON → _apply_stats()
+   → change_scene_to_file()
+2. await get_tree().tree_changed → 2 frames → _apply_world()
+3. await create_timer(1.0) → fade in → _busy=false
+
+DATOS GUARDADOS:
+- Escena actual, posición global, outfit (real, no default_outfit)
+- En interior: inside_building_path (path exacto), inside_local_x/y
+- Todos los stats (miedo, estres, felicidad, nervios, hambre, higiene,
+  sueno, alcohol, laudano, salud, stamina, enfermedad, dinero)
+- enferma, medicina_activa, medicina_timer
+- dias_sin_pagar_hostal
+- pocket (inventario), equipment (equipado)
+- hora, tiempo_acumulado, dia
+
+ORDEN CORRECTO AL CARGAR INVENTARIO:
+1. unequip() todo el equipo actual  ← CORREGIDO (evita contaminación)
+2. vaciar bolsillo
+3. restaurar bolsillo guardado
+4. restaurar equipamiento guardado
+
+RESTAURACIÓN INTERIOR:
+- Se guarda get_path() exacto del edificio
+- Al cargar: get_node(building_path) → force_inside_state(true)
+- Posición restaurada con building.to_global(local_pos)
+- building.gd._ready() hace add_to_group("buildings") automáticamente
+- Probado y funcionando: guardar/cargar dentro de Ten Bells y Lodge ✅
+
+GUARD _busy:
+- save_game() y load_game() comprueban y activan _busy
+- is_busy() disponible para GameManager (bloquea journal/pausa en medio)
+
+================================================================
+## 🏠 SISTEMA DE EDIFICIOS
+================================================================
+SCRIPTS:
+- Scripts/Core/building.gd      → raíz del edificio (exports)
+- Scripts/Core/enter_building.gd → lógica entrada/salida
+
+ESTRUCTURA EDIFICIO:
+Edificio (Node2D) ← building.gd
+├── Exterior (Sprite2D/Node2D)
+├── Interior (Node2D)
+│   ├── TileMapLayer
+│   │   ├── Wall (StaticBody2D) ← metadata surface_type
+│   │   └── ExitArea (Area2D)  ← Layer/Mask capa 2
+│   └── CameraLimits (Node2D) ← OPCIONAL
+│       ├── TopLeft (Marker2D)
+│       └── BottomRight (Marker2D)
+├── Audio (Node2D) ← audio LOCAL del edificio (sin grupos globales)
+│   ├── Ambient (AudioStreamPlayer2D) ← SIN Autoplay
+│   └── Music (AudioStreamPlayer2D)   ← SIN Autoplay
+└── BuildingEntrance (Node2D) ← enter_building.gd
+    └── EnterArea (Area2D) ← Layer/Mask capa 2
+
+ESTRUCTURA ESCENA CALLE:
+Streets (Node2D)
+├── IluminacionAmbiental
+├── LightOverlay
+├── Exterior (Node2D)
+│   ├── Audio (Node2D) ← grupo global "audio_exterior"
+│   └── World (Node2D)
+│       ├── Street1, Parallax2D, Parallax2D2
+│       ├── NPCs (grupo "npcs_outside")
+│       ├── Ten_Bells (instancia Bar_Bells.tscn)
+│       └── Lodge (instancia Lodge_House.tscn)
+├── Journal
+└── Player
+
+building.gd _ready(): add_to_group("buildings") — automático
+
+FLUJO ENTRADA:
+1. F cerca EnterArea → on_enter() → mostrar building_name → fade negro
+2. Pausa audio_exterior, congela World
+3. Oculta Exterior del edificio, muestra Interior
+4. Activa Wall, zoom_in, límites cámara
+5. Fade vuelta → arranca audio local del edificio
+6. enable_movement()
+
+FLUJO SALIDA:
+1. F cerca ExitArea → on_exit() → mostrar street_name → fade negro
+2. Pausa audio local edificio
+3. Oculta Interior, desactiva Wall
+4. Restaura Exterior, descongela World
+5. zoom_out, límites cámara originales
+6. Fade vuelta → reanuda audio_exterior
+7. enable_movement()
+
+force_inside_state(inside): ← CORREGIDO
+- pausa/reanuda audio_exterior
+- guarda _original_limits + _original_limit_enabled antes de sobreescribir
+- llama reset_smoothing() + force_update_scroll()
+
+NOMBRES ACTUALES:
+- Ten Bells: building_name="The Ten Bells", street_name="Commercial Street"
+- Lodge: building_name="St. Jude's Refuge & Dispensary", street_name="Commercial Street"
+
+================================================================
+## 🗺️ MENÚ PRINCIPAL
+================================================================
+Escena: res://Scenes/UI/MainMenu.tscn
+Script: main_menu.gd (construido por código, sin nodos hijo)
+
+BOTONES: Continuar, Nueva Partida, Cargar (3 slots), Opciones, Salir
+NAVEGACIÓN: WASD + flechas, F/Enter para aceptar
+FONTS: Cinzel.ttf (título), IMFellEnglish.ttf (botones)
+TRADUCCIONES: MENU_CONTINUE, MENU_NEW_GAME, MENU_LOAD, MENU_OPTIONS,
+              MENU_QUIT, MENU_BACK, MENU_LANGUAGE, MENU_SLOT_EMPTY
+
+================================================================
+## ⏸️ MENÚ DE PAUSA
+================================================================
+Escena: res://Scenes/UI/Pause_Menu.tscn
+Script: Scripts/UI/pause_menu.gd
+Root: CanvasLayer → Control (PRESET_FULL_RECT)
+process_mode: PROCESS_MODE_ALWAYS (funciona con árbol pausado)
+
+APERTURA/CIERRE:
+- ESC abre pausa desde GameManager
+- ESC cierra pausa
+- Si journal está abierto al pulsar ESC → cierra journal primero, luego abre pausa
+- Usa get_tree().paused = true / false
+- NO toca player.can_move (no rompe estados de diálogo)
+
+SUBMENÚS:
+- Menú principal: Continuar, Guardar, Cargar, Opciones, Salir
+- Submenú Guardar: 3 slots con info (día, hora, dinero)
+  - Slot vacío → guarda directo
+  - Slot ocupado → confirmación de sobrescritura
+- Submenú Cargar: 3 slots, vacíos deshabilitados
+
+NAVEGACIÓN TECLADO:
+- ui_up / ui_down / ui_accept / ui_cancel / interact
+- call_deferred("_focus_first") al abrir/cambiar submenú
+
+GUARDS en GameManager para Q (journal):
+- NO abre durante: transición de escena, save/load (_busy),
+  transición de edificio, animación del journal, diálogo,
+  pausa activa, player.can_move == false
+
+================================================================
+## 📓 JOURNAL
+================================================================
+Escena: res://Scenes/UI/Journal.tscn
+Basado en PageFlip2D addon
+Instanciado como hijo de Player en la escena
+Grupo: "journal" (minúsculas)
+CanvasLayer layer=10
+Overlay oscuro en GameManager CanvasLayer layer=9
+
+CONTROL: GameManager es el ÚNICO dueño de abrir/cerrar
+- Q → GameManager._input() → toggle_journal()
+- journal.gd NO escucha "stats" ← CORREGIDO (doble control eliminado)
+- API del journal: open() / close() / is_open / is_transitioning()
+
+NAVEGACIÓN PÁGINAS:
+- flechas ← → + A/D (move_left/move_right añadidos a page_flip.gd) ← CORREGIDO
+
+PÁGINAS:
+- 1-2: Stats (atractivo+barra, dinero, hora, estado físico/mental)
+- 3-4: Inventario (grid 4x6) + Equipamiento (silueta + slots Marker2D)
+- 5-6: Mapa de Whitechapel + Objetivos (pendiente sistema quests)
+
+NOTA: class_name en journal.gd causa conflicto con Dialogic/addons.
+NO usar class_name en scripts de escenas que usen addons.
+Acceder siempre via duck typing o get() para propiedades desde autoloads.
+
+================================================================
+## 😴 SISTEMA DE SUEÑO
+================================================================
+FLUJO NORMAL: start_sleep("hostal"|"calle"|"callejon")
+FLUJO COLAPSO: sueno=0 → sueno_agotado → play_collapse (Faint) →
+               start_sleep_forced("calle") → Sleep_Screen →
+               play_rise → enable_movement
+
+RECUPERACIÓN:
+- Hostal: 8.5/hora sueño + 0.5/hora salud + -1.0/hora estrés
+- Calle normal: 4.5/hora sueño
+- Colapso forzado: 10.0/hora sueño (RECUPERACION_COLAPSO_POR_HORA)
+
+BLOQUEO DESPERTAR EN COLAPSO:
+- btn_cancelar deshabilitado hasta PlayerStats.sueno >= 40.0
+
+================================================================
+## 📊 PLAYER STATS
+================================================================
+Stats: miedo, estres, felicidad, nervios, hambre, higiene,
+       sueno, alcohol, laudano, salud, stamina, enfermedad
+Derivado: sex_appeal
+
+SEÑALES:
+- sueno_agotado() ← colapso involuntario
+- jugador_muerto()
+- stats_updated, sex_appeal_changed, dinero_changed
+- stamina_changed, atributo_critico, durmiendo_en_calle
+- objetivo_completado, enfermedad_cambiada
+
+================================================================
+## 🌙 DAY NIGHT MANAGER
+================================================================
+- CONFIG.duracion_hora_segundos (default 60)
+- hora_actual empieza en 8:00
+- Señal: hora_cambiada(hora_actual)
+- API: set_hora(), pausar(), reanudar()
+- IluminacionAmbiental: buscado como hijo de current_scene
+
+================================================================
+## 🎨 EFFECTS MANAGER
+================================================================
+CanvasLayer layer 10:
+- Blur + shake → Stamina < 50%
+- Viñeta oscura → Miedo > 50
+- Parpadeos → Sueño < 35
+- Distorsión → Alcohol+Laudano > 40
+- Viñeta verdosa → Enfermedad >= 60 (disease.gdshader)
+
+Camera2D: se obtiene via node_added signal (busca is_current())
+WARNING conocido: "Camera2D overridden to physics process mode" — no crítico, ignorar.
+
+================================================================
+## 🔊 AUDIO — PASOS POR SUPERFICIE
+================================================================
+Sistema en player_audio.gd — detecta via ShadowRAY.
+StaticBody2D → Inspector → Node → Metadata → surface_type (String)
+Valores: "stone", "wood", "dirt", "grass", "water"
+NOTA: poner en StaticBody2D, NO en CollisionShape2D hijo
+Ten Bells → Wall → surface_type: "wood" ✅
+
+================================================================
+## 💬 DIALOGIC
+================================================================
+Versión: 2.0-Alpha-19
+Layout: res://Data/Dialogic/Whitechapel_Layout.tres
+Variables: sex_appeal, hora, dinero, higiene, enfermedad
+_sync_dialogic_variables() conectada a stats_updated
+
+================================================================
+## ⚙️ GAME CONFIG
+================================================================
+Path: res://Data/Game/game_config.tres
+Parámetros: duracion_hora_segundos=60, recuperacion_hostal_por_hora=8.5,
+            recuperacion_calle_por_hora=4.5, horas_max_calle=8.0,
+            objetivo_dinero=200.0
+
+================================================================
+## 🌐 TRADUCCIONES
+================================================================
+Path: res://Data/Translations/translations.csv
+Idioma por defecto: es — reimportar tras editar
+Uso: tr("CLAVE_EN_MAYUSCULAS")
+
+================================================================
+## 🐙 GITHUB
+================================================================
+Repo: https://github.com/Urtu240z/Whitechapel-1888
+Rama: main
+
+================================================================
+## ✅ COMPLETADO — HISTORIAL
+================================================================
+- SaveManager completo con slots, interior, posición local ✅
+- building.gd: add_to_group("buildings") en _ready() ✅
+- Camera2D dentro de Player.tscn con make_current() ✅
+- Menú principal con navegación teclado ✅
+- PageFlip2D: eliminada Camera2D interna ✅
+- EffectsManager: usa is_current() para detectar cámara ✅
+- UIDs de .tres en Data/Pickups corregidas vía VS Code ✅
+- SceneManager: guard _is_transitioning ✅
+- PlayerManager: register_player() automático ✅
+- Journal páginas 1-4 funcionales ✅
+- Journal páginas 5-6: mapa visual listo, objetivos pendientes ✅
+- ZoneController: usa PlayerManager en vez de NodePath ✅
+- enter_building.gd: limit_enabled + reset_smoothing ✅
+- Lodge y Ten Bells: CameraLimits añadidos ✅
+- Ambos edificios: Audio con Ambient + Music ✅
+--- Sesión 31/03/2026 ---
+- force_inside_state(): audio exterior + _original_limits + reset_smoothing ✅
+- SaveManager: orden correcto unequip→vaciar→restaurar bolsillo→equipo ✅
+- SaveManager: _busy guard implementado de verdad ✅
+- set_outfit(): actualiza default_outfit → save siempre refleja outfit real ✅
+- Journal: doble control eliminado, GameManager único dueño ✅
+- Journal: navegación A/D añadida en page_flip.gd ✅
+- Menú de pausa con ESC: save/load por slot, confirmación sobrescritura ✅
+- Guards journal: no abre durante pausa/transición/diálogo/save/load ✅
+
+================================================================
+## 🚧 PENDIENTES IMPORTANTES
+================================================================
+1. Hostal/Lodge funcional:
+   - St. Jude's Refuge como placeholder de hostal
+   - cobra dinero al dormir
+   - integra con SleepManager
+   - siguiente paso recomendado ← PRÓXIMA SESIÓN
+
+2. Sistema de quests para página 6 del journal
+
+3. Diálogos reales con Dialogic (timelines, condiciones)
+
+4. Jack the Ripper FSM (Patrol, Chase, Attack, LosePlayer)
+
+5. Lógica especial edificios:
+   - Médico: cobra 15 chelines, cura enfermedad
+   - Ten Bells: interacción barman/clientes
+
+================================================================
+## 🚧 PENDIENTES FUTUROS
+================================================================
+6.  Prólogo — La Granja (tutoriales disfrazados):
+    - Escondite con Emily → tutorial sigilo
+    - Emily pide manta → tutorial costura
+    - Lavar ropa → tutorial lavado
+    - Pickpocket con Emily → tutorial robo
+7.  Minijuegos: costura, lavado, sigilo, pickpocket, negociación, cartas
+8.  Persistencia del mundo (pickups recogidos, flags, triggers)
+9.  Refactor player persistente global (no urgente)
+10. Más escenas Whitechapel: Buck's Row, Hanbury St, Mitre Square
+11. Escenas legacy limpiar: PROOF.tscn, Flashback_*.tscn, Level_1.tscn
+
+================================================================
+## ⚠️ BUGS CONOCIDOS ABIERTOS
+================================================================
+- force_inside_state(false) nunca se llama — edge case potencial
+  al cargar dentro → volver a guardar → recargar
+- F6/F7 de debug siguen en game_manager.gd — ELIMINAR antes de release
+- Warning Camera2D physics interpolation — no crítico, ignorar
+
+================================================================
+## ⚠️ NOTAS IMPORTANTES
+================================================================
+- PlayerStats sin class_name (evita conflicto autoload)
+- PlayerManager.player_instance: autoregistra en player_controller._ready()
+- ShadowRAY collision mask: SOLO capa 2
+- Shadow sprite: hijo DIRECTO del Player (no de CharacterContainer)
+- F = interact + ui_accept + ui_cancel para Dialogic
+- building.gd = nodo RAÍZ del edificio
+- enter_building.gd = nodo BuildingEntrance (hijo de raíz)
+- audio_exterior: grupo GLOBAL | audio interior: referencia LOCAL
+- Wall (StaticBody2D): metadata surface_type para pasos
+- Dialogic.start() → CanvasLayer → hide()/show()
+- zoom_out debe coincidir con zoom real de Camera2D (1.445)
+- FSM del player DESCARTADA — FSM reservada para Jack the Ripper
+- Grupos en minúsculas: "player", "journal", "buildings", "audio_exterior"
+- Acceso al player siempre via PlayerManager.player_instance
+- Saves en: user://saves/ → AppData/Roaming/Whitechapel 1888/saves/
+- NO usar class_name en scripts de escenas con addons (conflicto Dialogic)
+- Autoloads no pueden tipar variables con class_name de scripts de escena
+  → usar var x = null + duck typing + .get("propiedad") desde autoloads

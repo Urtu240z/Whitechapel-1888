@@ -58,7 +58,7 @@ func _build_slots() -> void:
 		_make_equipment_slot(slot_key, marker.position, equipped)
 
 
-func _make_equipment_slot(slot_key: String, pos: Vector2, item_data) -> void:
+func _make_equipment_slot(_slot_key: String, pos: Vector2, item_data) -> void:
 	var container = Control.new()
 	container.position = pos - SLOT_SIZE / 2.0
 	container.custom_minimum_size = SLOT_SIZE

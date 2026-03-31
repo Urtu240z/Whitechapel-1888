@@ -427,10 +427,10 @@ func _unhandled_input(event):
 			return
 		parent = parent.get_parent()
 
-	if event.is_action_pressed("ui_right"):
+	if event.is_action_pressed("ui_right") or event.is_action_pressed("move_right"):
 		next_page()
 		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("ui_left"):
+	elif event.is_action_pressed("ui_left") or event.is_action_pressed("move_left"):
 		prev_page()
 		get_viewport().set_input_as_handled()
 

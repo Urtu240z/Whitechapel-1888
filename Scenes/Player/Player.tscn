@@ -2257,14 +2257,14 @@ bone_angle = 42.711983
 
 [node name="LegR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=250582046]
 position = Vector2(-14.700328, 126.63689)
-rotation = -0.5327839
-scale = Vector2(0.99985033, 0.99985033)
+rotation = -0.5327837
+scale = Vector2(0.9998502, 0.9998502)
 rest = Transform2D(0.99116075, -0.1326665, 0.1326665, 0.99116075, -66, 103)
 
 [node name="KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegR" unique_id=1757211730]
 position = Vector2(1, 146)
-rotation = 0.54051197
-scale = Vector2(0.9998789, 0.9998789)
+rotation = 0.54051167
+scale = Vector2(0.99987894, 0.99987894)
 rest = Transform2D(0.9880616, 0.15405944, -0.15405944, 0.9880616, 1, 146)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -2278,14 +2278,14 @@ occluder = SubResource("OccluderPolygon2D_jbjyn")
 
 [node name="LegL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=1374812682]
 position = Vector2(55.522446, 115.97094)
-rotation = -0.3659167
-scale = Vector2(0.99984366, 0.99984366)
+rotation = -0.36591688
+scale = Vector2(0.99984384, 0.99984384)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegL" unique_id=278652099]
 position = Vector2(-7, 125)
-rotation = 0.28080952
-scale = Vector2(0.99984884, 0.99984884)
+rotation = 0.2808098
+scale = Vector2(0.9998486, 0.9998486)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
 length = 220.0
