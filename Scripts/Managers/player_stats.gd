@@ -450,11 +450,21 @@ func actualizar_stats(delta: float = 1.0) -> void:
 func _sync_dialogic_variables() -> void:
 	if not Engine.has_singleton("Dialogic"):
 		return
+
+	# Variables generales ya existentes
 	Dialogic.VAR.set_variable("sex_appeal", sex_appeal)
 	Dialogic.VAR.set_variable("hora", DayNightManager.hora_actual)
 	Dialogic.VAR.set_variable("dinero", dinero)
 	Dialogic.VAR.set_variable("higiene", higiene)
 	Dialogic.VAR.set_variable("enfermedad", enfermedad)
+
+	# Variables para el hostelero
+	var hora_actual := DayNightManager.hora_actual
+	var hostel_open := hora_actual >= SleepManager.HORA_APERTURA_HOSTAL or hora_actual < SleepManager.HORA_CIERRE_HOSTAL
+
+	Dialogic.VAR.set_variable("hostel.hostel_open", hostel_open)
+	Dialogic.VAR.set_variable("hostel.player_money", dinero)
+	Dialogic.VAR.set_variable("hostel.hostel_price", COSTE_HOSTAL_DIA)
 
 # ============================================================
 # 🎨 UTILS

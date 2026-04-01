@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://d1q5svthqkw2r" path="res://Assets/Audio/Buildings/Close_Door (3).wav" id="7_txu1n"]
 [ext_resource type="Texture2D" uid="uid://cbmf23b74kvf3" path="res://Assets/Sprites/Building/Lodging_House_1.png" id="8_i0ema"]
 [ext_resource type="Texture2D" uid="uid://dpv0wabl7sn2g" path="res://Assets/Tilesets/BuildingInterior.png" id="9_wtgbi"]
+[ext_resource type="PackedScene" uid="uid://cmmlvd8ng8chj" path="res://Scenes/NPC/NPC_Service.tscn" id="10_1wgdf"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="10_38y22"]
 [ext_resource type="Texture2D" uid="uid://c17ckhvb14w24" path="res://Assets/Sprites/Interiors/Bar Bells/Chair.png" id="10_yqv2o"]
 [ext_resource type="Texture2D" uid="uid://i15ak4bsfch8" path="res://Assets/Sprites/Interiors/Bar Bells/Table 2.png" id="12_w6o7l"]
@@ -107,11 +108,10 @@ street_name = "Commercial Street"
 
 [node name="Exterior" type="Sprite2D" parent="." unique_id=1915103148]
 position = Vector2(8.999985, 18.99997)
-scale = Vector2(1.8308128, 1.8308128)
+scale = Vector2(1.835, 1.835)
 texture = ExtResource("8_i0ema")
 
 [node name="Stairs" type="StaticBody2D" parent="." unique_id=589877159]
-visible = false
 collision_layer = 2
 collision_mask = 2
 
@@ -120,6 +120,8 @@ polygon = PackedVector2Array(169, 533, -106, 534, -52, 478, 113, 478)
 
 [node name="Interior" type="Node2D" parent="." unique_id=1238585940]
 visible = false
+position = Vector2(3.9999998, -5.000002)
+scale = Vector2(1.005, 1.005)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Interior" unique_id=897291406]
 z_index = 1
@@ -147,6 +149,13 @@ shape = SubResource("RectangleShape2D_vcas7")
 [node name="WallRight" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=394353619]
 position = Vector2(889, 329.25)
 shape = SubResource("RectangleShape2D_g8sw3")
+
+[node name="NPCService" parent="Interior/TileMapLayer" unique_id=1649721714 instance=ExtResource("10_1wgdf")]
+position = Vector2(260.5871, 507.33832)
+scale = Vector2(0.22421524, 0.22421524)
+npc_display_name = "Hostal Keeper"
+dialog_timeline = "uid://d3uvod4y3u4ho"
+service_id = "lodge_reception"
 
 [node name="Objects" type="Node2D" parent="Interior/TileMapLayer" unique_id=1834296797]
 position = Vector2(0, 145.99998)

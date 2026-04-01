@@ -186,8 +186,7 @@ open_sounds = Array[AudioStream]([ExtResource("12_vsjiw"), ExtResource("13_80ji7
 close_sounds = Array[AudioStream]([ExtResource("15_vkywb"), ExtResource("16_urswk"), ExtResource("17_0gjoy")])
 
 [node name="Lodge" parent="Exterior/World" unique_id=1878724243 groups=["buildings"] instance=ExtResource("14_1loxg")]
-position = Vector2(-2625.0002, -490)
-scale = Vector2(0.9, 0.9)
+position = Vector2(-2742, -548.6)
 zoom_in = Vector2(0.31, 0.31)
 
 [node name="Area2D" type="Area2D" parent="Exterior" unique_id=749285088]
@@ -228,6 +227,6 @@ color = Color(0, 0, 0, 1)
 [node name="Player" parent="." unique_id=1458210690 instance=ExtResource("17_rusfs")]
 modulate = Color(0.65834004, 0.6583399, 0.6583399, 1)
 y_sort_enabled = true
-position = Vector2(-1398, -504)
+position = Vector2(-13620, -894)
 
 [editable path="Exterior/Area2D/SceneChanger"]
