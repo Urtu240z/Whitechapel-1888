@@ -3,7 +3,10 @@
 [ext_resource type="Script" uid="uid://dbejg3n1avrk4" path="res://Scripts/UI/Journal/journal_page_3.gd" id="1_gxtst"]
 [ext_resource type="Texture2D" uid="uid://cfme643ymvbew" path="res://Assets/Images/Journal_L.png" id="2_wrqbj"]
 
-[node name="JournalPage3" type="Node2D" unique_id=478532696]
+[node name="JournalPage3" type="Control" unique_id=429405954]
+custom_minimum_size = Vector2(830, 1080)
+layout_mode = 3
+anchors_preset = 0
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_gxtst")
 
@@ -13,12 +16,14 @@ position = Vector2(279.5, 367.5)
 texture = ExtResource("2_wrqbj")
 
 [node name="LabelTitle" type="Label" parent="." unique_id=557474596]
+layout_mode = 0
 offset_left = 117.0
 offset_top = 53.0
 offset_right = 157.0
 offset_bottom = 76.0
 
 [node name="GridContainer" type="GridContainer" parent="." unique_id=691353943]
+layout_mode = 0
 offset_left = 115.33333
 offset_top = 187.0
 offset_right = 155.33333
@@ -27,6 +32,7 @@ theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 
 [node name="LabelCount" type="Label" parent="." unique_id=80127551]
+layout_mode = 0
 offset_left = 284.0
 offset_top = 615.0
 offset_right = 324.0

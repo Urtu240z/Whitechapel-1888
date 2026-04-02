@@ -53,16 +53,18 @@ var page_width: float
 
 var _runtime_pages: Array[String] = []
 
-var _slot_1: SubViewport  # Página izquierda estática
-var _slot_2: SubViewport  # Página derecha estática
-var _slot_3: SubViewport  # Cara A animación
-var _slot_4: SubViewport  # Cara B animación
+var _slot_1: SubViewport
+var _slot_2: SubViewport
+var _slot_3: SubViewport
+var _slot_4: SubViewport
 
 var _scene_cache = {}
 
 var _is_jumping: bool = false
 var _jump_target_spread: int = 0
 var _pending_target_spread_idx: int = 0
+
+var _interactive_slot: SubViewport = null
 
 
 signal started_page_flip_animation()
@@ -178,7 +180,6 @@ func _ready():
 
 	_prepare_book_content()
 
-	# Siempre empieza abierto en spread 0 (no hay portadas)
 	current_spread = 0
 
 	if dynamic_poly and not dynamic_poly.is_connected("change_page_requested", _on_midpoint_signal):
@@ -199,8 +200,9 @@ func _ready():
 func _initial_config():
 	page_width = target_page_size.x
 	_set_page_visible(dynamic_poly, false)
-	# Sin reposicionamiento automático: el nodo se coloca desde el editor
 	_update_static_visuals_immediate()
+	await get_tree().process_frame
+	_check_interactive_pages()
 
 
 # ==============================================================================
@@ -287,28 +289,21 @@ func _fit_camera_to_book():
 func _prepare_book_content():
 	_runtime_pages = pages_paths.duplicate()
 
-	# Rellena con página en blanco si el número es impar
 	if _runtime_pages.size() > 0 and _runtime_pages.size() % 2 != 0:
 		_runtime_pages.append("internal://blank_page")
 
 	var num = _runtime_pages.size()
-
-	# Sin portadas: total_spreads = páginas / 2
-	# spread 0 = páginas 1-2, spread 1 = páginas 3-4, etc.
 	total_spreads = max(1, num / 2)
 
 
 func _get_page_index_for_spread(spread_idx: int, is_left: bool) -> int:
-	# Sin portadas: spread 0 = páginas [0, 1], spread 1 = páginas [2, 3], etc.
 	var base = spread_idx * 2
 
 	if is_left:
-		# Página izquierda: base (par)
 		if base >= _runtime_pages.size():
 			return -999
 		return base
 	else:
-		# Página derecha: base + 1 (impar)
 		if base + 1 >= _runtime_pages.size():
 			return -999
 		return base + 1
@@ -325,7 +320,7 @@ func _update_slot_content(slot: SubViewport, content_index: int) -> void:
 			slot.remove_child(child)
 
 	if content_index == -999:
-		return  # Slot vacío / invisible
+		return
 
 	var resource_path = ""
 	if content_index >= 0 and content_index < _runtime_pages.size():
@@ -414,13 +409,32 @@ func _update_static_visuals_immediate():
 # ==============================================================================
 # INPUT
 # ==============================================================================
+func _input(event: InputEvent) -> void:
+	if Engine.is_editor_hint():
+		return
+	if _interactive_slot == null or not visible:
+		return
+
+	if event is InputEventMouse:
+		var poly = static_right if _interactive_slot == _slot_2 else static_left
+		var local_pos = poly.get_local_mouse_position()
+		# Convertir coordenadas locales del polígono a coordenadas del SubViewport
+		# El polígono empieza en (0, -h/2), el SubViewport en (0,0)
+		var viewport_pos = Vector2(local_pos.x, local_pos.y + target_page_size.y / 2.0)
+
+		var new_event = event.duplicate()
+		new_event.position = viewport_pos
+		new_event.global_position = viewport_pos
+		_interactive_slot.push_input(new_event)
+		get_viewport().set_input_as_handled()
+
+
 func _unhandled_input(event):
 	if Engine.is_editor_hint():
 		return
 	if not visible or is_animating:
 		return
 
-	# Bloquear input si el CanvasLayer padre no es visible
 	var parent = get_parent()
 	while parent:
 		if parent is CanvasLayer and not parent.visible:
@@ -479,6 +493,30 @@ func _pageflip_set_input_enabled(give_control_to_book: bool):
 
 
 # ==============================================================================
+# INTERACTIVIDAD — handshake con páginas que tienen manage_pageflip
+# ==============================================================================
+func _check_interactive_pages() -> void:
+	_interactive_slot = null
+	for slot in [_slot_1, _slot_2]:
+		if not slot:
+			continue
+		for child in slot.get_children():
+			if child.has_signal("manage_pageflip"):
+				if not child.is_connected("manage_pageflip", _on_page_manage_pageflip):
+					child.connect("manage_pageflip", _on_page_manage_pageflip)
+				_interactive_slot = slot
+				_pageflip_set_input_enabled(false)
+				return
+	_pageflip_set_input_enabled(true)
+
+
+func _on_page_manage_pageflip(give_control_to_book: bool) -> void:
+	if give_control_to_book:
+		_interactive_slot = null
+	_pageflip_set_input_enabled(give_control_to_book)
+
+
+# ==============================================================================
 # ANIMACIÓN
 # ==============================================================================
 func _set_flying_slots_active(is_active: bool) -> void:
@@ -500,7 +538,6 @@ func _start_animation(forward: bool) -> void:
 		target_spread_idx = _jump_target_spread
 	_pending_target_spread_idx = target_spread_idx
 
-	# --- Configuración de slots ---
 	var idx_static_left: int
 	var idx_static_right: int
 	var idx_anim_a: int
@@ -557,16 +594,13 @@ func _start_animation(forward: bool) -> void:
 
 	var motion_duration = anim_len / max(0.01, anim_player.speed_scale)
 
-	# Sombra shader
 	if dynamic_poly.material is ShaderMaterial:
-		# Leemos el max_shadow_spread configurado en el material para respetarlo
 		var target_spread_val = dynamic_poly.material.get_shader_parameter("max_shadow_spread")
 		if target_spread_val == null or target_spread_val == 0.0:
 			target_spread_val = 0.5
 
 		var shadow_tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 		shadow_tween.tween_property(dynamic_poly.material, "shader_parameter/shadow_intensity", 0.65, motion_duration * 0.5)
-		# max_shadow_spread ya está fijado en el material, no lo tocamos durante la animación
 		shadow_tween.set_ease(Tween.EASE_IN)
 		shadow_tween.tween_property(dynamic_poly.material, "shader_parameter/shadow_intensity", 0.0, motion_duration * 0.4)
 
@@ -575,7 +609,7 @@ func _start_animation(forward: bool) -> void:
 
 
 func _on_midpoint_signal():
-	pass  # El shader maneja el flip visual automáticamente
+	pass
 
 
 func _on_animation_finished(_anim_name: String):
@@ -595,6 +629,7 @@ func _on_animation_finished(_anim_name: String):
 	_update_static_visuals_immediate()
 	is_animating = false
 	ended_page_flip_animation.emit()
+	_check_interactive_pages()
 
 
 # ==============================================================================

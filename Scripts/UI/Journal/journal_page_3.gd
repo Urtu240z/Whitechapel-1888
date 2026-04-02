@@ -1,4 +1,7 @@
-extends Node2D
+extends Control
+
+signal manage_pageflip(give_control_to_book: bool)
+
 @onready var label_title    = $LabelTitle
 @onready var grid_container = $GridContainer
 @onready var label_count    = $LabelCount
@@ -79,6 +82,7 @@ func _make_slot(entry) -> Control:
 	# Contenedor relativo para posicionar icono y cantidad
 	var overlay = Control.new()
 	overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	slot.add_child(overlay)
 
 	# Icono centrado y grande
@@ -162,7 +166,7 @@ func _show_context_menu(item_data: ItemData, slot_rect: Rect2) -> void:
 	# Posicionar — intentar a la derecha, si no cabe a la izquierda
 	var _viewport_size = get_viewport().get_visible_rect().size
 	var menu_pos = slot_rect.position + Vector2(slot_rect.size.x + 4, 0)
-	menu.position = to_local(menu_pos)
+	menu.position = menu_pos - global_position
 
 func _add_menu_button(parent: Node, text: String, callback: Callable) -> void:
 	var btn = Button.new()
