@@ -10,9 +10,9 @@ extends Node
 #   SceneManager.change_scene("res://Scenes/Menu.tscn")
 #
 # Uso con player (desde PlayerManager):
-#   await SceneManager._fade_out()
+#   await SceneManager.fade_out()
 #   ... cambiar escena ...
-#   await SceneManager._fade_in()
+#   await SceneManager.fade_in()
 # =========================================================
 var _layer: CanvasLayer
 var _fade: ColorRect
@@ -53,10 +53,10 @@ func change_scene(target_path: String, fade_time: float = 0.5) -> void:
 
 func _do_change_scene(target_path: String, fade_time: float) -> void:
 	_is_transitioning = true
-	await _fade_out(fade_time)
+	await fade_out(fade_time)
 	get_tree().change_scene_to_file(target_path)
 	await get_tree().process_frame
-	await _fade_in(fade_time)
+	await fade_in(fade_time)
 	_is_transitioning = false
 
 
@@ -68,17 +68,20 @@ func is_transitioning() -> bool:
 
 
 # =========================================================
-# 🌑 Fade out / Fade in — públicos para uso desde PlayerManager
+# 🌑 Fade out / Fade in — públicos
+# Marcan _is_transitioning automáticamente.
+# Usar siempre estos en lugar de manipular el fade directamente.
 # =========================================================
-func _fade_out(duration: float = 0.5) -> void:
+func fade_out(duration: float = 0.5) -> void:
+	_is_transitioning = true
 	_blocking.visible = true
 	var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_property(_fade, "color:a", 1.0, duration)
 	await tw.finished
 
-
-func _fade_in(duration: float = 0.5) -> void:
+func fade_in(duration: float = 0.5) -> void:
 	var tw := create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_property(_fade, "color:a", 0.0, duration)
 	await tw.finished
 	_blocking.visible = false
+	_is_transitioning = false

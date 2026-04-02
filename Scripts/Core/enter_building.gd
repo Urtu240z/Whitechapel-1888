@@ -144,7 +144,7 @@ func _enter() -> void:
 
 	# Nombre en paralelo al fade total — centrado
 	_mostrar_nombre_con_fade(_config.building_name, nombre_margen, nombre_duracion)
-	await SceneManager._fade_out(fade_half)
+	await SceneManager.fade_out(fade_half)
 
 	# Cambios de escena
 	_freeze_world(true)
@@ -177,7 +177,7 @@ func _enter() -> void:
 			camera.reset_smoothing()
 			camera.force_update_scroll()
 
-	await SceneManager._fade_in(fade_half)
+	await SceneManager.fade_in(fade_half)
 
 	# Audio interior
 	if not _interior_audio_started:
@@ -211,7 +211,7 @@ func _exit() -> void:
 
 	# Nombre en paralelo al fade total — centrado
 	_mostrar_nombre_con_fade(_config.street_name, nombre_margen, nombre_duracion)
-	await SceneManager._fade_out(fade_half)
+	await SceneManager.fade_out(fade_half)
 
 	_set_inside_audio_paused(true)
 	if _interior:
@@ -233,7 +233,7 @@ func _exit() -> void:
 			camera.reset_smoothing()
 			camera.force_update_scroll()
 
-	await SceneManager._fade_in(fade_half)
+	await SceneManager.fade_in(fade_half)
 
 	player.enable_movement()
 

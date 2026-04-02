@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://w2jbko6gsfj8"]
 
 [ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="1_vj6ek"]
-[ext_resource type="Script" uid="uid://b5d8o54cdutgp" path="res://prueba_mecanicas.gd" id="1_wk82u"]
+[ext_resource type="Script" uid="uid://b5d8o54cdutgp" path="res://Scripts/_Archive/prueba_mecanicas.gd" id="1_wk82u"]
 [ext_resource type="PackedScene" uid="uid://b1nbpmgfq3kvk" path="res://Scenes/Core/UI_Stats.tscn" id="2_m4vru"]
 [ext_resource type="PackedScene" uid="uid://devl1udsex47w" path="res://Scenes/Core/Pickup.tscn" id="3_ju50u"]
 

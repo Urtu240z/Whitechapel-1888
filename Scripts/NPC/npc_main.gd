@@ -55,7 +55,6 @@ class_name NPC
 # ⚙️ INITIALIZATION
 # ===============================
 func _ready() -> void:
-	randomize()
 
 	# Randomize stats if not customized
 	if not personalize:

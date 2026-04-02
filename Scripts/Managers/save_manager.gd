@@ -86,7 +86,7 @@ func _do_load(data: Dictionary) -> void:
 	_apply_stats(data)
 
 	# Fade out — cambio de escena — esperar tree_changed — fade in
-	await SceneManager._fade_out(0.5)
+	await SceneManager.fade_out(0.5)
 	get_tree().change_scene_to_file(escena)
 	await get_tree().tree_changed
 	await get_tree().process_frame
@@ -95,11 +95,7 @@ func _do_load(data: Dictionary) -> void:
 	await _apply_world(data)
 
 	await get_tree().create_timer(1.0).timeout
-	await SceneManager._fade_in(1.0)
-
-	# Limpiar bloqueo del SceneManager por si acaso
-	SceneManager._blocking.visible = false
-	SceneManager._is_transitioning = false
+	await SceneManager.fade_in(1.0)
 
 	print("📂 Partida cargada")
 

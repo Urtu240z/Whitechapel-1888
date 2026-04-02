@@ -48,7 +48,6 @@ Dialogic="*uid://ds2q0uclmolvu"
 directories/dch_directory={}
 directories/dtl_directory={
 "hostelkeeper": "res://Dialogues/hostelkeeper.dtl",
-"hostelkeeper_room": "res://Dialogues/hostelkeeper_room.dtl",
 "npc_1": "res://Dialogues/npc_1.dtl"
 }
 layout/style_directory={
@@ -212,7 +211,7 @@ locale/fallback="es"
 
 [layer_names]
 
-2d_physics/layer_1="Backgropund"
+2d_physics/layer_1="Background"
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Foreground"
 2d_physics/layer_4="Attrezo"

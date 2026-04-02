@@ -64,7 +64,7 @@ func enter_building(
 		_play_sfx(open_sound)
 
 	# Fade out → cambio de escena → fade in (via SceneManager)
-	await SceneManager._fade_out(fade_time)
+	await SceneManager.fade_out(fade_time)
 	get_tree().change_scene_to_file(scene_path)
 	await get_tree().process_frame
 	ensure_player(get_tree().current_scene, spawn_position)
@@ -74,7 +74,7 @@ func enter_building(
 		await get_tree().create_timer(0.25).timeout
 		_play_sfx(close_sound)
 
-	await SceneManager._fade_in(fade_time)
+	await SceneManager.fade_in(fade_time)
 
 
 # =========================================================

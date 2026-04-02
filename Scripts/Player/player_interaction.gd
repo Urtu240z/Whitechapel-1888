@@ -79,6 +79,9 @@ func _start_dialog(npc) -> void:
 	npc.movement.freeze()
 	if npc.has_method("prepare_dialogic_variables"):
 		npc.prepare_dialogic_variables()
+
+	await get_tree().process_frame
+
 	Dialogic.start(timeline)
 	Dialogic.timeline_ended.connect(func():
 		player.enable_movement()

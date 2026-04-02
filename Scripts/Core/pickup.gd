@@ -2,7 +2,7 @@ extends Area2D
 class_name Pickup
 
 # ⚙️ Esta línea se actualiza automáticamente por el plugin
-@export_enum("client-medium", "client-poor", "client-rich", "cure-doctor", "cure-hostal", "cure-medicine", "cure-reset", "cure-street", "drink-absenta", "drink-cerveza", "drink-ginebra", "drink-ron", "drink-whisky", "drink-wine", "drug-eter", "drug-laudano", "food-arenque", "food-gachas", "food-pan", "food-patata", "food-sopa", "food-tocino", "health-ducha", "health-sleep-cama", "health-sleep-silla", "health-sleep-suelo", "liquid-agua", "liquid-cafe", "liquid-leche", "liquid-te", "scare-down", "scare-up", "sueño-down", "sueño-up") var pickup_type: String = "client-medium"
+@export_enum("client-medium", "client-poor", "client-rich", "cure-doctor", "cure-medicine", "cure-reset", "drink-absenta", "drink-cerveza", "drink-ginebra", "drink-ron", "drink-whisky", "drink-wine", "drug-eter", "drug-laudano", "food-arenque", "food-gachas", "food-pan", "food-patata", "food-sopa", "food-tocino", "health-ducha", "health-sleep-cama", "health-sleep-silla", "health-sleep-suelo", "liquid-agua", "liquid-cafe", "liquid-leche", "liquid-te", "scare-down", "scare-up", "sueño-down", "sueño-up") var pickup_type: String = "client-medium"
 @export var disappear_on_pickup: bool = true
 
 var data: ItemData
@@ -19,9 +19,6 @@ func _get_info() -> String:
 		match pickup_type:
 			"cure-medicine": return "💊 Medicina\n Mantiene la enfermedad a raya 2 días"
 			"cure-doctor":   return "🏥 Médico\n Cura completamente la enfermedad"
-			"cure-hostal":   return "🛏️ Descanso Hostal\n 3 días — 40% de curar"
-			"cure-street":   return "🌙 Descanso Calle\n 3 días — 15% de curar (gratis)"
-			"cure-laudano":  return "🧪 Laudano\n Enmascara síntomas graves"
 			"cure-reset": return "🔄 Reset\n Resetea todos los stats"
 	if data == null:
 		return "⚠️ Sin datos cargados"
@@ -73,9 +70,6 @@ func _on_body_entered(body: Node) -> void:
 		match pickup_type:
 			"cure-medicine": PlayerStats.comprar_medicina()
 			"cure-doctor":   PlayerStats.ir_al_medico()
-			"cure-hostal":   PlayerStats.descansar_hostal()
-			"cure-street":   PlayerStats.descansar_calle()
-			"cure-laudano":  PlayerStats.tomar_laudano()
 			"cure-reset":    PlayerStats.reset_stats() 
 		if disappear_on_pickup:
 			queue_free()

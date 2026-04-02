@@ -34,10 +34,16 @@ func _input(event: InputEvent) -> void:
 
 	# Navegar con WASD además de flechas
 	if event.is_action_pressed("move_left") or event.is_action_pressed("ui_left"):
-		if focused: focused.get_focus_neighbor(SIDE_LEFT)
+		if focused:
+			var neighbor = focused.get_focus_neighbor(SIDE_LEFT)
+			if neighbor:
+				neighbor.grab_focus()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("move_right") or event.is_action_pressed("ui_right"):
-		if focused: focused.get_focus_neighbor(SIDE_RIGHT)
+		if focused:
+			var neighbor = focused.get_focus_neighbor(SIDE_RIGHT)
+			if neighbor:
+				neighbor.grab_focus()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("hide") or event.is_action_pressed("ui_up"):
 		# W o flecha arriba → botón anterior
@@ -178,11 +184,17 @@ func _build_options_panel() -> void:
 	_options_panel.add_child(lang_hbox)
 
 	var btn_es = _make_button("Español")
-	btn_es.pressed.connect(func(): TranslationServer.set_locale("es"))
+	btn_es.pressed.connect(func():
+		TranslationServer.set_locale("es")
+		get_tree().root.propagate_notification(NOTIFICATION_TRANSLATION_CHANGED)
+	)
 	lang_hbox.add_child(btn_es)
 
 	var btn_en = _make_button("English")
-	btn_en.pressed.connect(func(): TranslationServer.set_locale("en"))
+	btn_en.pressed.connect(func():
+		TranslationServer.set_locale("en")
+		get_tree().root.propagate_notification(NOTIFICATION_TRANSLATION_CHANGED)
+	)
 	lang_hbox.add_child(btn_en)
 
 	_add_button(_options_panel, tr("MENU_BACK"), _on_back_pressed)

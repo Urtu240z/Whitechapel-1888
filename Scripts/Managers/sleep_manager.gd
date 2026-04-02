@@ -97,7 +97,7 @@ func start_sleep_forced(lugar_str: String, mensaje: String = "") -> void:
 	_forzado = true
 
 	_mostrar_mensaje_colapso(mensaje)
-	await SceneManager._fade_out(2.0)
+	await SceneManager.fade_out(2.0)
 	_limpiar_mensaje_colapso()
 	await _iniciar_sueno_directo()
 
@@ -153,7 +153,7 @@ func _iniciar_sueno_directo() -> void:
 	_screen.call("actualizar", DayNightManager.hora_actual, 0.0)
 	if _forzado:
 		_screen.call("set_forzado", true)
-	await SceneManager._fade_in(1.5)
+	await SceneManager.fade_in(1.5)
 	_tick_timer = Timer.new()
 	_tick_timer.wait_time = SEGUNDOS_POR_HORA
 	_tick_timer.one_shot = false
@@ -236,14 +236,14 @@ func _on_selection_cancelado() -> void:
 
 func _iniciar_sueno() -> void:
 	DayNightManager.pausar()
-	await SceneManager._fade_out(1.5)
+	await SceneManager.fade_out(1.5)
 	_screen = SCENE_SCREEN.instantiate()
 	get_tree().root.add_child(_screen)
 	_screen.connect("cancelado", _on_screen_cancelado)
 	_screen.connect("seguir_durmiendo", _on_seguir_durmiendo)
 	_screen.connect("salir_a_la_calle", _on_salir_a_la_calle)
 	_screen.call("actualizar", DayNightManager.hora_actual, 0.0)
-	await SceneManager._fade_in(1.5)
+	await SceneManager.fade_in(1.5)
 	_tick_timer = Timer.new()
 	_tick_timer.wait_time = SEGUNDOS_POR_HORA
 	_tick_timer.one_shot = false
@@ -331,19 +331,19 @@ func _finalizar_sueno() -> void:
 	_forzado = false
 	_limpiar_timer()
 	_aplicar_efectos_al_despertar()
-	await SceneManager._fade_out(1.5)
+	await SceneManager.fade_out(1.5)
 	if _screen:
 		_screen.queue_free()
 		_screen = null
 	DayNightManager.reanudar()
 	var player = PlayerManager.player_instance
 	if player:
-		await SceneManager._fade_in(1.5)
+		await SceneManager.fade_in(1.5)
 		player.animation.play_rise()
 		await player.animation.anim_tree.animation_finished
 		player.enable_movement()
 	else:
-		await SceneManager._fade_in(1.5)
+		await SceneManager.fade_in(1.5)
 	sleep_ended.emit(_horas_dormidas, not _cancelado)
 
 
