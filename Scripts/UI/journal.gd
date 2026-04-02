@@ -11,7 +11,7 @@ extends CanvasLayer
 # Solo controla visibilidad, pequeña animación de entrada/salida
 # y habilita/deshabilita input del libro cuando toca.
 # ================================================================
-
+signal journal_closing
 # ================================================================
 # NODOS
 # ================================================================
@@ -82,8 +82,9 @@ func close() -> void:
 
 	_transitioning = true
 	is_open = false
-
 	_set_book_input_enabled(false)
+	journal_closing.emit()
+	_close_inventory_menu()
 
 	var tw = create_tween().set_parallel(true)
 	tw.tween_property(overlay, "modulate:a", 0.0, 0.14)
@@ -117,3 +118,17 @@ func _go_to_first_spread_instant() -> void:
 
 func is_transitioning() -> bool:
 	return _transitioning
+
+func _close_inventory_menu() -> void:
+	var page_3 = book.find_child("JournalPage3", true, false)
+	if not is_instance_valid(page_3):
+		# Buscar en los SubViewports del addon
+		for slot in ["Slot1", "Slot2", "Slot3", "Slot4"]:
+			var sv = book.find_child(slot, true, false)
+			if sv:
+				for child in sv.get_children():
+					if child.has_method("_build_grid"):
+						if is_instance_valid(child._context_menu):
+							child._context_menu.queue_free()
+							child._context_menu = null
+						return

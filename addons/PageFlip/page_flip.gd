@@ -427,7 +427,8 @@ func _input(event: InputEvent) -> void:
 		new_event.global_position = viewport_pos
 		_interactive_slot.push_input(new_event)
 		get_viewport().set_input_as_handled()
-
+	elif event is InputEventKey:  # ← añadir esto
+		_interactive_slot.push_input(event)
 
 func _unhandled_input(event):
 	if Engine.is_editor_hint():

@@ -229,7 +229,7 @@ func _collect_data() -> Dictionary:
 		"medicina_timer":        PlayerStats.medicina_timer,
 		"dias_sin_pagar_hostal": PlayerStats.dias_sin_pagar_hostal,
 
-		"pocket":    InventoryManager.get_pocket(),
+		"pocket": InventoryManager.get_pocket_serializable(),
 		"equipment": equipment_data,
 	}
 
@@ -268,13 +268,13 @@ func _apply_stats(data: Dictionary) -> void:
 		InventoryManager.unequip(slot)
 
 	# 2) Limpiar inventario antes de cargar
-	for item_id in InventoryManager.get_pocket().keys().duplicate():
-		InventoryManager.remove_item(item_id, 999)
+	for i in range(InventoryManager.MAX_SLOTS):
+		if InventoryManager.get_slot(i) != {}:
+			InventoryManager.remove_item_from_slot(i, 999)
 
 	# 3) Restaurar bolsillo
-	var pocket: Dictionary = data.get("pocket", {})
-	for item_id in pocket:
-		InventoryManager.add_item(item_id, pocket[item_id])
+	var pocket: Array = data.get("pocket", [])
+	InventoryManager.restore_pocket_from_serializable(pocket)
 
 	# 4) Restaurar equipamiento
 	var equipment: Dictionary = data.get("equipment", {})

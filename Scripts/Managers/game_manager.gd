@@ -2,6 +2,8 @@ extends Node
 
 const PAUSE_MENU_SCENE := preload("res://Scenes/UI/Pause_Menu.tscn")
 
+signal journal_closed
+
 var _journal = null
 var _pause_menu = null
 
@@ -163,6 +165,7 @@ func _open_journal() -> void:
 
 func _close_journal() -> void:
 	hide_mouse()
+	journal_closed.emit()
 
 	var player = PlayerManager.player_instance
 	if is_instance_valid(player):
