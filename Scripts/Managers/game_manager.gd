@@ -22,6 +22,13 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("stats"):
 		toggle_journal()
 
+	if OS.is_debug_build() and event is InputEventKey and event.pressed:
+		if event.keycode == KEY_F6:
+			InventoryManager.add_item("pan", 2)
+			InventoryManager.add_item("drink-cerveza", 1)
+			InventoryManager.add_item("drug-laudano", 1)
+			print("🎒 Items de prueba añadidos")
+
 # ==============================================================================
 # ESC / PAUSA
 # ==============================================================================

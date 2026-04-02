@@ -149,7 +149,13 @@ func _build_load_panel() -> void:
 		if info.is_empty():
 			label = tr("MENU_SLOT_EMPTY") % (i + 1)
 		else:
-			label = "Slot %d — Día %d — %.0f s." % [i + 1, info.get("dia", 1), info.get("dinero", 0)]
+			label = tr("MENU_SAVE_SLOT") % [
+				i + 1,
+				info.get("dia", 1),
+				int(info.get("hora", 0)),
+				int(fmod(info.get("hora", 0) * 60, 60)),
+				info.get("dinero", 0)
+			]
 
 		var btn = _make_button(label)
 		if not info.is_empty():

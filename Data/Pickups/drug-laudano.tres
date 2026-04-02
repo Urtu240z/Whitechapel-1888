@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b5tefg3exuhda"]
 
 [ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_ctxsc"]
+[ext_resource type="Texture2D" uid="uid://ylkp51oksact" path="res://Assets/Sprites/Items/Drug-Laudanum.png" id="1_n30wr"]
 
 [resource]
 script = ExtResource("1_ctxsc")
@@ -17,3 +18,4 @@ effects = {
 "nervios": -15.0,
 "sueno": 10.0
 }
+icon = ExtResource("1_n30wr")

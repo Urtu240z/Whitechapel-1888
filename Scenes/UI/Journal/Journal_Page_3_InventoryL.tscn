@@ -19,10 +19,12 @@ offset_right = 157.0
 offset_bottom = 76.0
 
 [node name="GridContainer" type="GridContainer" parent="." unique_id=691353943]
-offset_left = 138.0
+offset_left = 115.33333
 offset_top = 187.0
-offset_right = 178.0
+offset_right = 155.33333
 offset_bottom = 227.0
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
 
 [node name="LabelCount" type="Label" parent="." unique_id=80127551]
 offset_left = 284.0

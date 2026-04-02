@@ -48,14 +48,8 @@ func process_interactions() -> void:
 # ==========================
 
 func register_npc(npc) -> void:
-	print("Registrando NPC: ", npc.name)
-	# Route specialized NPCs to their own interaction method
-	if npc.is_in_group("npc_hostelkeepers"):
-		InteractionManager.register(npc, InteractionManager.Priority.NPC,
-			func(): npc.start_hostel_interaction())
-	else:
-		InteractionManager.register(npc, InteractionManager.Priority.NPC,
-			func(): _start_dialog(npc))
+	InteractionManager.register(npc, InteractionManager.Priority.NPC,
+		func(): _start_dialog(npc))
 
 func unregister_npc(npc) -> void:
 	InteractionManager.unregister(npc)

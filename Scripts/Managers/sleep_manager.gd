@@ -24,7 +24,6 @@ const PROB_CURAR_CALLE: float = 0.15
 const PROB_EMPEORAR_CALLE: float = 0.15
 const EMPEORAMIENTO_CALLE: float = 10.0
 
-const SEGUNDOS_POR_HORA: float = 0.4
 
 # ── COLAPSO ──────────────────────────────────────────────────────
 const RECUPERACION_COLAPSO_POR_HORA: float = 10.0  # más rápido al caer desvanecida
@@ -155,7 +154,7 @@ func _iniciar_sueno_directo() -> void:
 		_screen.call("set_forzado", true)
 	await SceneManager.fade_in(1.5)
 	_tick_timer = Timer.new()
-	_tick_timer.wait_time = SEGUNDOS_POR_HORA
+	_tick_timer.wait_time = CONFIG.duracion_hora_segundos
 	_tick_timer.one_shot = false
 	_tick_timer.timeout.connect(_tick_hora)
 	add_child(_tick_timer)
@@ -245,7 +244,7 @@ func _iniciar_sueno() -> void:
 	_screen.call("actualizar", DayNightManager.hora_actual, 0.0)
 	await SceneManager.fade_in(1.5)
 	_tick_timer = Timer.new()
-	_tick_timer.wait_time = SEGUNDOS_POR_HORA
+	_tick_timer.wait_time = CONFIG.duracion_hora_segundos
 	_tick_timer.one_shot = false
 	_tick_timer.timeout.connect(_tick_hora)
 	add_child(_tick_timer)
@@ -296,7 +295,7 @@ func _on_seguir_durmiendo() -> void:
 	_horas_totales = horas_restantes
 	_horas_dormidas = 0.0
 	_tick_timer = Timer.new()
-	_tick_timer.wait_time = SEGUNDOS_POR_HORA
+	_tick_timer.wait_time = CONFIG.duracion_hora_segundos
 	_tick_timer.one_shot = false
 	_tick_timer.timeout.connect(_tick_hora)
 	add_child(_tick_timer)
