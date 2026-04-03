@@ -59,7 +59,6 @@ func _ready() -> void:
 	visibility_changed.connect(_on_visibility_changed)
 	set_service_enabled(is_visible_in_tree())
 
-	# Reset stock al inicio y cada nuevo día
 	_reset_stock_diario()
 	DayNightManager.hora_cambiada.connect(_on_hora_cambiada)
 
@@ -103,6 +102,15 @@ func set_service_enabled(value: bool) -> void:
 
 	if not value and animation:
 		animation.force_idle_counter()
+
+# ============================================================================
+# API STOCK — usada por SaveManager
+# ============================================================================
+func get_stock() -> Dictionary:
+	return _stock_actual.duplicate()
+
+func restore_stock(data: Dictionary) -> void:
+	_stock_actual = data.duplicate()
 
 # ============================================================================
 # SEÑALES

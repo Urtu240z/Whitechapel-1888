@@ -165,7 +165,7 @@ func _collect_data() -> Dictionary:
 	if current_scene:
 		escena = current_scene.scene_file_path
 
-	# Detectar interior — guardar path exacto del edificio y posición local
+	# Detectar interior
 	var en_interior: bool = false
 	var inside_building_path: String = ""
 	var inside_local_x: float = 0.0
@@ -192,6 +192,12 @@ func _collect_data() -> Dictionary:
 	for slot_key in equipped_now.keys():
 		var item: ItemData = equipped_now[slot_key]
 		equipment_data[str(slot_key)] = item.name if item else ""
+
+	# Recopilar stock de todos los vendedores
+	var shop_stocks: Dictionary = {}
+	for npc in get_tree().get_nodes_in_group("npc_service"):
+		if npc.shop_items.size() > 0 and not npc.service_id.is_empty():
+			shop_stocks[npc.service_id] = npc.get_stock()
 
 	return {
 		"version":   1,
@@ -229,8 +235,9 @@ func _collect_data() -> Dictionary:
 		"medicina_timer":        PlayerStats.medicina_timer,
 		"dias_sin_pagar_hostal": PlayerStats.dias_sin_pagar_hostal,
 
-		"pocket": InventoryManager.get_pocket_serializable(),
-		"equipment": equipment_data,
+		"pocket":      InventoryManager.get_pocket_serializable(),
+		"equipment":   equipment_data,
+		"shop_stocks": shop_stocks,
 	}
 
 
@@ -311,7 +318,7 @@ func _apply_world(data: Dictionary) -> void:
 	if player.has_node("AnimationTree"):
 		player.get_node("AnimationTree").active = true
 
-	# Restaurar interior con path exacto
+	# Restaurar interior
 	if en_interior and building_path != "":
 		var current_scene = get_tree().current_scene
 		var building = null
@@ -320,7 +327,6 @@ func _apply_world(data: Dictionary) -> void:
 			building = current_scene.get_node_or_null(NodePath(building_path))
 
 		if not is_instance_valid(building):
-			# Fallback: buscar por nombre
 			var last_name := building_path.get_file()
 			for b in get_tree().get_nodes_in_group("buildings"):
 				if b.name == last_name:
@@ -338,6 +344,12 @@ func _apply_world(data: Dictionary) -> void:
 				push_warning("SaveManager: BuildingEntrance no válido en %s" % building.name)
 		else:
 			push_warning("SaveManager: edificio no encontrado: %s" % building_path)
+
+	# Restaurar stock de vendedores
+	var shop_stocks: Dictionary = data.get("shop_stocks", {})
+	for npc in get_tree().get_nodes_in_group("npc_service"):
+		if shop_stocks.has(npc.service_id):
+			npc.restore_stock(shop_stocks[npc.service_id])
 
 	print("✅ Partida cargada — pos: ", player.global_position)
 

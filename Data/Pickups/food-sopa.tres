@@ -6,7 +6,7 @@
 script = ExtResource("1_hx4u6")
 name = "sopa"
 display_name = "Sopa"
-cost = 0.0
+cost = 2.0
 effects = {
 "estres": -5.0,
 "felicidad": 5.0,
