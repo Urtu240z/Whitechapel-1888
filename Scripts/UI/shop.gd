@@ -11,8 +11,6 @@ extends CanvasLayer
 #   { "id": "drink-cerveza", "max_qty": 5 }
 # ================================================================
 
-const SHOP_SCENE = preload("res://Scenes/UI/Shop.tscn")
-
 var font_title = preload("res://Assets/Fonts/Cinzel.ttf")
 var font_body  = preload("res://Assets/Fonts/IMFellEnglish.ttf")
 
@@ -21,9 +19,10 @@ var font_body  = preload("res://Assets/Fonts/IMFellEnglish.ttf")
 
 var _shop_name: String = ""
 var _items: Array = []
-var _quantities: Dictionary = {}  # item_id -> cantidad elegida
+var _quantities: Dictionary = {}
 
 signal shop_closed
+signal items_purchased(purchased: Dictionary)  # { item_id: cantidad }
 
 # ================================================================
 # OPEN
@@ -43,11 +42,9 @@ func open(shop_name: String, items: Array) -> void:
 # ================================================================
 
 func _build_ui() -> void:
-	# Limpiar panel anterior
 	for child in shop_panel.get_children():
 		child.queue_free()
 
-	# Estilo del panel
 	var panel_style = StyleBoxFlat.new()
 	panel_style.bg_color = Color("#1e1208f0")
 	panel_style.border_color = Color("#c8a45a")
@@ -64,7 +61,7 @@ func _build_ui() -> void:
 	vbox.add_theme_constant_override("separation", 0)
 	shop_panel.add_child(vbox)
 
-	# ── Cabecera ──────────────────────────────────────────────
+	# Cabecera
 	var header = PanelContainer.new()
 	var header_style = StyleBoxFlat.new()
 	header_style.bg_color = Color("#c8a45a")
@@ -84,12 +81,11 @@ func _build_ui() -> void:
 	header.add_child(title_lbl)
 	vbox.add_child(header)
 
-	# ── Separador ─────────────────────────────────────────────
 	var sep1 = HSeparator.new()
 	sep1.add_theme_color_override("color", Color("#c8a45a66"))
 	vbox.add_child(sep1)
 
-	# ── Lista de items ────────────────────────────────────────
+	# Lista de items
 	var items_vbox = VBoxContainer.new()
 	items_vbox.add_theme_constant_override("separation", 0)
 	var items_margin = MarginContainer.new()
@@ -107,12 +103,11 @@ func _build_ui() -> void:
 			continue
 		_add_item_row(items_vbox, item_data, item_entry.get("max_qty", 10))
 
-	# ── Separador ─────────────────────────────────────────────
 	var sep2 = HSeparator.new()
 	sep2.add_theme_color_override("color", Color("#c8a45a66"))
 	vbox.add_child(sep2)
 
-	# ── Total y dinero ────────────────────────────────────────
+	# Total y dinero
 	var footer_margin = MarginContainer.new()
 	footer_margin.add_theme_constant_override("margin_left", 16)
 	footer_margin.add_theme_constant_override("margin_right", 16)
@@ -138,7 +133,6 @@ func _build_ui() -> void:
 
 	_update_totals()
 
-	# ── Botones ───────────────────────────────────────────────
 	var sep3 = HSeparator.new()
 	sep3.add_theme_color_override("color", Color("#c8a45a66"))
 	vbox.add_child(sep3)
@@ -163,7 +157,6 @@ func _build_ui() -> void:
 	btn_cancel.pressed.connect(_on_cancel_pressed)
 	btn_hbox.add_child(btn_cancel)
 
-	# Centrar el panel en pantalla
 	await get_tree().process_frame
 	var viewport_size = get_viewport().get_visible_rect().size
 	shop_panel.position = (viewport_size - shop_panel.size) / 2.0
@@ -176,7 +169,6 @@ func _add_item_row(parent: Node, item_data: ItemData, max_qty: int) -> void:
 	var row = HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
 
-	# Icono
 	if item_data.icon:
 		var icon = TextureRect.new()
 		icon.texture = item_data.icon
@@ -185,25 +177,26 @@ func _add_item_row(parent: Node, item_data: ItemData, max_qty: int) -> void:
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		row.add_child(icon)
 
-	# Nombre
 	var name_lbl = Label.new()
 	name_lbl.text = item_data.display_name
 	name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_style_label(name_lbl, font_body, 17, Color("#e8d5a0"))
 	row.add_child(name_lbl)
 
-	# Precio
 	var price_lbl = Label.new()
 	var coste_chelines = item_data.cost / 12.0
 	price_lbl.text = "%.1f s." % coste_chelines
 	_style_label(price_lbl, font_body, 17, Color("#c8a45a"))
 	row.add_child(price_lbl)
 
-	# Botón -
+	var stock_lbl = Label.new()
+	stock_lbl.text = "(%d)" % max_qty
+	_style_label(stock_lbl, font_body, 15, Color("#9a806088"))
+	row.add_child(stock_lbl)
+
 	var btn_minus = _make_qty_btn("−")
 	row.add_child(btn_minus)
 
-	# Cantidad
 	var qty_lbl = Label.new()
 	qty_lbl.text = "0"
 	qty_lbl.custom_minimum_size = Vector2(28, 0)
@@ -211,24 +204,23 @@ func _add_item_row(parent: Node, item_data: ItemData, max_qty: int) -> void:
 	_style_label(qty_lbl, font_title, 17, Color("#f5e6c8"))
 	row.add_child(qty_lbl)
 
-	# Botón +
 	var btn_plus = _make_qty_btn("+")
 	row.add_child(btn_plus)
 
-	# Conectar botones
 	var item_id = item_data.name
 	btn_minus.pressed.connect(func():
 		_quantities[item_id] = max(0, _quantities[item_id] - 1)
 		qty_lbl.text = str(_quantities[item_id])
+		stock_lbl.text = "(%d)" % (max_qty - _quantities[item_id])
 		_update_totals()
 	)
 	btn_plus.pressed.connect(func():
 		_quantities[item_id] = min(max_qty, _quantities[item_id] + 1)
 		qty_lbl.text = str(_quantities[item_id])
+		stock_lbl.text = "(%d)" % (max_qty - _quantities[item_id])
 		_update_totals()
 	)
 
-	# Separador ligero entre filas
 	var row_margin = MarginContainer.new()
 	row_margin.add_theme_constant_override("margin_top", 6)
 	row_margin.add_theme_constant_override("margin_bottom", 6)
@@ -274,20 +266,17 @@ func _on_buy_pressed() -> void:
 		_show_error(tr("SHOP_NO_MONEY"))
 		return
 
-	# Comprobar espacio en inventario
 	var items_to_add = []
 	for item_id in _quantities:
 		var qty = _quantities[item_id]
 		if qty > 0:
 			items_to_add.append({"id": item_id, "qty": qty})
 
-	# Verificar que hay espacio para todos
 	var slots_libres = 0
 	for entry in InventoryManager.get_pocket():
 		if entry == null:
 			slots_libres += 1
 
-	# Contar items nuevos (que no están ya en inventario)
 	var slots_necesarios = 0
 	for item_entry in items_to_add:
 		if not InventoryManager.has_item(item_entry["id"]):
@@ -300,10 +289,13 @@ func _on_buy_pressed() -> void:
 	# Cobrar
 	PlayerStats.gastar_dinero(total)
 
-	# Añadir items
+	# Añadir items y registrar compra
+	var purchased: Dictionary = {}
 	for item_entry in items_to_add:
 		InventoryManager.add_item(item_entry["id"], item_entry["qty"])
+		purchased[item_entry["id"]] = item_entry["qty"]
 
+	items_purchased.emit(purchased)
 	_close()
 
 func _on_cancel_pressed() -> void:
@@ -323,18 +315,15 @@ func _show_error(message: String) -> void:
 		error_lbl.text = message
 		return
 
-	# Crear label de error si no existe
 	var lbl = Label.new()
 	lbl.name = "ErrorLabel"
 	lbl.text = message
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_style_label(lbl, font_body, 15, Color("#ff6b6b"))
-	# Insertarlo antes de los botones
 	var vbox = shop_panel.get_child(0)
 	vbox.add_child(lbl)
 	vbox.move_child(lbl, vbox.get_child_count() - 2)
 
-	# Auto-desaparecer tras 2 segundos
 	await get_tree().create_timer(2.0).timeout
 	if is_instance_valid(lbl):
 		lbl.queue_free()

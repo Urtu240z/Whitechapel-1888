@@ -19,6 +19,9 @@ const SHOP_SCENE = preload("res://Scenes/UI/Shop.tscn")
 @export var skin_name: String = "NPC_HostalKeeper"
 @export var initial_facing_right: bool = true
 
+@export_group("Shop")
+@export var shop_items: Array[ShopItemData] = []
+
 # ============================================================================
 # REFERENCIAS
 # ============================================================================
@@ -32,7 +35,8 @@ const SHOP_SCENE = preload("res://Scenes/UI/Shop.tscn")
 # ESTADO
 # ============================================================================
 var _service_enabled: bool = true
-var _stock_variable: Dictionary = {}
+var _stock_variable: Dictionary = {}   # item_id -> bool (disponible hoy)
+var _stock_actual: Dictionary = {}     # item_id -> unidades restantes hoy
 
 # ============================================================================
 # READY
@@ -54,6 +58,10 @@ func _ready() -> void:
 
 	visibility_changed.connect(_on_visibility_changed)
 	set_service_enabled(is_visible_in_tree())
+
+	# Reset stock al inicio y cada nuevo día
+	_reset_stock_diario()
+	DayNightManager.hora_cambiada.connect(_on_hora_cambiada)
 
 # ============================================================================
 # LOOP
@@ -102,6 +110,10 @@ func set_service_enabled(value: bool) -> void:
 func _on_visibility_changed() -> void:
 	set_service_enabled(is_visible_in_tree())
 
+func _on_hora_cambiada(hora: float) -> void:
+	if int(hora) == 0:
+		_reset_stock_diario()
+
 # ============================================================================
 # HELPERS
 # ============================================================================
@@ -144,32 +156,46 @@ func resolve_dialogic_result() -> void:
 			var result = str(Dialogic.VAR.get_variable("barman.barman_result"))
 			Dialogic.VAR.set_variable("barman.barman_result", "")
 			if result == "open_shop":
-				_open_barman_shop()
+				_open_shop()
 
 # ============================================================================
-# BARMAN — TIENDA
+# SHOP — STOCK DIARIO
 # ============================================================================
-func _open_barman_shop() -> void:
-	var items_fijos = [
-		{ "id": "drink-cerveza", "max_qty": 5 },
-		{ "id": "drink-ginebra", "max_qty": 5 },
-		{ "id": "drink-whisky",  "max_qty": 5 },
-		{ "id": "drink-ron",     "max_qty": 5 },
-		{ "id": "food-pan",      "max_qty": 5 },
-		{ "id": "food-sopa",     "max_qty": 5 },
-		{ "id": "food-patata",   "max_qty": 5 },
-	]
+func _reset_stock_diario() -> void:
+	_stock_variable.clear()
+	_stock_actual.clear()
+	for item_entry in shop_items:
+		if item_entry.item == null:
+			continue
+		var item_id = item_entry.item.name
+		if not item_entry.is_variable or _item_disponible_hoy(item_entry):
+			_stock_actual[item_id] = item_entry.max_qty
 
-	var items_variables = [
-		{ "id": "drink-wine",    "max_qty": 3 },
-		{ "id": "drink-absenta", "max_qty": 2 },
-		{ "id": "food-tocino",   "max_qty": 3 },
-	]
+func _item_disponible_hoy(item_entry: ShopItemData) -> bool:
+	var item_id = item_entry.item.name
+	if not _stock_variable.has(item_id):
+		_stock_variable[item_id] = randf() < item_entry.variable_chance
+	return _stock_variable[item_id]
 
-	var items_hoy: Array = items_fijos.duplicate()
-	for item in items_variables:
-		if _barman_tiene_hoy(item["id"]):
-			items_hoy.append(item)
+# ============================================================================
+# SHOP — ABRIR TIENDA
+# ============================================================================
+func _open_shop() -> void:
+	var items_hoy: Array = []
+	for item_entry in shop_items:
+		if item_entry.item == null:
+			continue
+		var item_id = item_entry.item.name
+		var stock = _stock_actual.get(item_id, 0)
+		if stock <= 0:
+			continue
+		items_hoy.append({
+			"id": item_id,
+			"max_qty": stock
+		})
+
+	if items_hoy.is_empty():
+		return
 
 	var shop = SHOP_SCENE.instantiate()
 	get_tree().root.add_child(shop)
@@ -180,13 +206,14 @@ func _open_barman_shop() -> void:
 	if player:
 		player.disable_movement()
 
+	shop.items_purchased.connect(func(purchased: Dictionary):
+		for item_id in purchased:
+			if _stock_actual.has(item_id):
+				_stock_actual[item_id] = max(0, _stock_actual[item_id] - purchased[item_id])
+	)
+
 	shop.shop_closed.connect(func():
 		GameManager.hide_mouse()
 		if is_instance_valid(player):
 			player.enable_movement()
 	)
-
-func _barman_tiene_hoy(item_id: String) -> bool:
-	if not _stock_variable.has(item_id):
-		_stock_variable[item_id] = randf() < 0.5
-	return _stock_variable[item_id]

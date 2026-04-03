@@ -5,18 +5,30 @@
 [ext_resource type="Texture2D" uid="uid://dpv0wabl7sn2g" path="res://Assets/Tilesets/BuildingInterior.png" id="2_n1eba"]
 [ext_resource type="PackedScene" uid="uid://cmmlvd8ng8chj" path="res://Scenes/NPC/NPC_Service.tscn" id="8_nqx5a"]
 [ext_resource type="Texture2D" uid="uid://blanr7qkp7rp5" path="res://Assets/Sprites/Building/Ten Bells.png" id="8_vcas7"]
+[ext_resource type="Script" uid="uid://bbc6r2ife4inn" path="res://Scripts/Data/shop_item_data.gd" id="9_2u12w"]
+[ext_resource type="Resource" uid="uid://gs43wgyqonvx" path="res://Data/Pickups/drink-cerveza.tres" id="10_rpjb7"]
 [ext_resource type="Texture2D" uid="uid://5ba0d6ipy0es" path="res://Assets/Sprites/Interiors/Bar Bells/Guitar.png" id="10_us83r"]
 [ext_resource type="Texture2D" uid="uid://diqys7o88lo7j" path="res://Assets/Sprites/Interiors/Bar Bells/Window 2.png" id="10_vr4xg"]
+[ext_resource type="Resource" uid="uid://80g2sajkewf5" path="res://Data/Pickups/drink-ginebra.tres" id="11_12l01"]
 [ext_resource type="PackedScene" uid="uid://cogp0xes7qceu" path="res://Scenes/NPC/NPC_Ragdoll.tscn" id="11_pn1s2"]
 [ext_resource type="Texture2D" uid="uid://bgki6hpx7xdl" path="res://Assets/Sprites/Interiors/Bar Bells/Counter.png" id="12_fq600"]
+[ext_resource type="Resource" uid="uid://varywclromyc" path="res://Data/Pickups/drink-whisky.tres" id="12_og1ct"]
+[ext_resource type="Resource" uid="uid://dgstrxsdm4kem" path="res://Data/Pickups/drink-ron.tres" id="13_cng8t"]
 [ext_resource type="Texture2D" uid="uid://b8sdm1a26ba4t" path="res://Assets/Sprites/Interiors/Bar Bells/Barrel 2.png" id="13_xaqf6"]
+[ext_resource type="Resource" uid="uid://dkdj8l60g2a0q" path="res://Data/Pickups/drink-wine.tres" id="14_2pu5j"]
 [ext_resource type="Texture2D" uid="uid://buonfsfbxmypm" path="res://Assets/Sprites/Interiors/Bar Bells/Lamp.png" id="14_8v4k0"]
 [ext_resource type="Texture2D" uid="uid://nk4snnxuhws8" path="res://Assets/Sprites/Interiors/Bar Bells/News.png" id="15_lqwpk"]
+[ext_resource type="Resource" uid="uid://bivakanld4sxt" path="res://Data/Pickups/drink-absenta.tres" id="15_mq3we"]
 [ext_resource type="Texture2D" uid="uid://de4aab67jjwum" path="res://Assets/Sprites/Interiors/Bar Bells/Fireplace.png" id="16_eim8j"]
+[ext_resource type="Resource" uid="uid://deaosjcdgf6g2" path="res://Data/Pickups/food-pan.tres" id="16_mwmft"]
+[ext_resource type="Resource" uid="uid://dpd2ytj5cxefx" path="res://Data/Pickups/food-sopa.tres" id="17_fh68x"]
 [ext_resource type="Texture2D" uid="uid://heo5ivxr5513" path="res://Assets/Sprites/Interiors/Bar Bells/Door.png" id="17_vr4xg"]
+[ext_resource type="Resource" uid="uid://cjcwttsvmba11" path="res://Data/Pickups/food-patata.tres" id="18_jhiha"]
 [ext_resource type="Texture2D" uid="uid://c17ckhvb14w24" path="res://Assets/Sprites/Interiors/Bar Bells/Chair.png" id="18_vcas7"]
+[ext_resource type="Resource" uid="uid://dt7uvasbw8bvm" path="res://Data/Pickups/food-tocino.tres" id="19_ckb2g"]
 [ext_resource type="Texture2D" uid="uid://bvtfhw633cm1q" path="res://Assets/Sprites/Interiors/Bar Bells/Table.png" id="19_xtf64"]
 [ext_resource type="Texture2D" uid="uid://i15ak4bsfch8" path="res://Assets/Sprites/Interiors/Bar Bells/Table 2.png" id="20_0xaki"]
+[ext_resource type="Resource" uid="uid://b8s1je1k7l3hl" path="res://Data/Pickups/food-gachas.tres" id="20_i4n63"]
 [ext_resource type="Texture2D" uid="uid://o33amalkxcxm" path="res://Assets/Sprites/Interiors/Bar Bells/Bottles.png" id="21_1nm8b"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="22_vcas7"]
 [ext_resource type="Texture2D" uid="uid://wd17qkaktr7w" path="res://Assets/Sprites/Interiors/Bar Bells/Bottle.png" id="22_x11pg"]
@@ -66,6 +78,72 @@ size = Vector2(45, 587)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vcas7"]
 size = Vector2(1730, 112)
+
+[sub_resource type="Resource" id="Resource_gkafe"]
+script = ExtResource("9_2u12w")
+item = ExtResource("10_rpjb7")
+max_qty = 15
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_gfjkd"]
+script = ExtResource("9_2u12w")
+item = ExtResource("11_12l01")
+max_qty = 10
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_0c17p"]
+script = ExtResource("9_2u12w")
+item = ExtResource("12_og1ct")
+max_qty = 10
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_17x7e"]
+script = ExtResource("9_2u12w")
+item = ExtResource("13_cng8t")
+max_qty = 10
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_2mo0p"]
+script = ExtResource("9_2u12w")
+item = ExtResource("14_2pu5j")
+is_variable = true
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_wbshs"]
+script = ExtResource("9_2u12w")
+item = ExtResource("15_mq3we")
+max_qty = 3
+is_variable = true
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_12ksu"]
+script = ExtResource("9_2u12w")
+item = ExtResource("16_mwmft")
+max_qty = 20
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_4vyom"]
+script = ExtResource("9_2u12w")
+item = ExtResource("17_fh68x")
+max_qty = 10
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_fgqt2"]
+script = ExtResource("9_2u12w")
+item = ExtResource("18_jhiha")
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_5uiak"]
+script = ExtResource("9_2u12w")
+item = ExtResource("19_ckb2g")
+is_variable = true
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_rrirq"]
+script = ExtResource("9_2u12w")
+item = ExtResource("20_i4n63")
+is_variable = true
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
 [sub_resource type="Gradient" id="Gradient_wl0l8"]
 offsets = PackedFloat32Array(0, 0.5466667)
@@ -200,7 +278,7 @@ scale = Vector2(0.9999999, 0.9999999)
 
 [node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="4" unique_id=1140063982]
 position = Vector2(118.73389, 533.22205)
-scale = Vector2(0.99999803, 0.99999803)
+scale = Vector2(0.999998, 0.999998)
 
 [node name="Mp1KneeL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="5" unique_id=1474959191]
 position = Vector2(117, 159.99976)
@@ -208,20 +286,20 @@ scale = Vector2(0.99999964, 0.99999964)
 
 [node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="6" unique_id=1015211277]
 position = Vector2(120.28613, 867.3673)
-scale = Vector2(0.99998957, 0.99998957)
+scale = Vector2(0.9999894, 0.9999894)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="7" unique_id=966757603]
 position = Vector2(-28.915527, 538.63574)
-scale = Vector2(0.99998677, 0.99998677)
+scale = Vector2(0.9999867, 0.9999867)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="8" unique_id=1961738744]
 position = Vector2(-3, 161.99976)
-scale = Vector2(0.9999904, 0.9999904)
+scale = Vector2(0.9999903, 0.9999903)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="9" unique_id=1346636835]
 position = Vector2(-53.35913, 893.8849)
-rotation = -0.060021102
-scale = Vector2(0.99998504, 0.99998504)
+rotation = -0.0600211
+scale = Vector2(0.99998486, 0.99998486)
 
 [node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="10" unique_id=1940891905]
 position = Vector2(80.47656, -294.79858)
@@ -242,7 +320,7 @@ visible = false
 position = Vector2(58, 139.99988)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-scale = Vector2(0.9999903, 0.9999903)
+scale = Vector2(0.9999902, 0.9999902)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
 scale = Vector2(0.9999965, 0.9999965)
@@ -252,7 +330,7 @@ rotation = -0.0924716
 scale = Vector2(0.9999982, 0.9999982)
 
 [node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL" parent_id_path=PackedInt32Array(1872631834, 607615665) index="1" unique_id=1135898689]
-scale = Vector2(0.9999983, 0.9999983)
+scale = Vector2(0.9999982, 0.9999982)
 
 [node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL/Mp1LegL" index="1" unique_id=909040570]
 scale = Vector2(0.99999154, 0.99999154)
@@ -277,6 +355,7 @@ dialog_timeline = "uid://50cluqdbukef"
 service_id = "barman"
 skin_name = "NPC_Barman"
 initial_facing_right = false
+shop_items = Array[ExtResource("9_2u12w")]([SubResource("Resource_gkafe"), SubResource("Resource_gfjkd"), SubResource("Resource_0c17p"), SubResource("Resource_17x7e"), SubResource("Resource_2mo0p"), SubResource("Resource_wbshs"), SubResource("Resource_12ksu"), SubResource("Resource_4vyom"), SubResource("Resource_fgqt2"), SubResource("Resource_5uiak"), SubResource("Resource_rrirq")])
 
 [node name="Counter" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1817256655]
 modulate = Color(0.35120526, 0.35120538, 0.35500652, 1)
@@ -391,16 +470,16 @@ scale = Vector2(0.999993, 0.999993)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="7" unique_id=966757603]
 position = Vector2(-28.915283, 538.6343)
-scale = Vector2(0.9999829, 0.9999829)
+scale = Vector2(0.99998283, 0.99998283)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="8" unique_id=1961738744]
 position = Vector2(-3, 162)
-scale = Vector2(0.9999858, 0.9999858)
+scale = Vector2(0.99998575, 0.99998575)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="9" unique_id=1346636835]
 position = Vector2(-53.35913, 893.8821)
-rotation = -0.060011595
-scale = Vector2(0.9999803, 0.9999803)
+rotation = -0.060011603
+scale = Vector2(0.9999801, 0.9999801)
 
 [node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="10" unique_id=1940891905]
 position = Vector2(80.47656, -294.79834)
@@ -421,14 +500,14 @@ visible = false
 position = Vector2(57.999756, 140)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-scale = Vector2(0.99998564, 0.99998564)
+scale = Vector2(0.9999856, 0.9999856)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
 scale = Vector2(0.9999972, 0.9999972)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR/Mp1LegR" index="0" unique_id=1973771377]
-rotation = -0.09246239
-scale = Vector2(0.9999973, 0.9999973)
+rotation = -0.0924624
+scale = Vector2(0.99999726, 0.99999726)
 
 [node name="Mp1KneeL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="2" unique_id=607615665]
 scale = Vector2(0.99999964, 0.99999964)
