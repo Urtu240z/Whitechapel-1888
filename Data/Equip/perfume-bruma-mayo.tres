@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cwur32724y8dv"]
+
+[ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_yllf5"]
+
+[resource]
+script = ExtResource("1_yllf5")
+name = "perfume-bruma-mayo"
+display_name = "Bruma de Mayo"
+cost = 24.0
+item_type = 1
+equip_slot = 3
+max_stack = 3
+duracion_horas = 16.0
+usos_max = 3
+sex_appeal_bonus = 10.0
+higiene_bonus = 20.0
+metadata/_custom_type_script = "uid://ckb87k7ubnui6"

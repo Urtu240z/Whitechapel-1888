@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cdjvk0atrrn85"]
+
+[ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_l8vrf"]
+
+[resource]
+script = ExtResource("1_l8vrf")
+name = "perfume-noche-oriente"
+display_name = "Noche de Oriente"
+cost = 60.0
+item_type = 1
+equip_slot = 3
+max_stack = 1
+duracion_horas = 16.0
+usos_max = 3
+sex_appeal_bonus = 40.0
+higiene_bonus = 15.0
+metadata/_custom_type_script = "uid://ckb87k7ubnui6"

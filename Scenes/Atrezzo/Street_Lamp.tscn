@@ -52,3 +52,6 @@ z_index = -1
 position = Vector2(-22.097408, 662.5949)
 scale = Vector2(0.6952765, 1.4898783)
 texture = ExtResource("3_cpk3j")
+
+[node name="LampBase" type="Marker2D" parent="." unique_id=682114682]
+position = Vector2(0, 663)

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://5cox3o6rs7ue"]
+
+[ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_fi1j1"]
+
+[resource]
+script = ExtResource("1_fi1j1")
+name = "perfume-susurro-seda"
+display_name = "Susurro de Seda"
+cost = 36.0
+item_type = 1
+equip_slot = 3
+max_stack = 3
+duracion_horas = 16.0
+usos_max = 3
+sex_appeal_bonus = 15.0
+higiene_bonus = 15.0
+metadata/_custom_type_script = "uid://ckb87k7ubnui6"

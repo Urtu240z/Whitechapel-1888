@@ -2559,5 +2559,8 @@ scale = Vector2(477.82428, 253.3199)
 texture = SubResource("GradientTexture2D_6rswy")
 
 [node name="ShadowProjection" type="Sprite2D" parent="." unique_id=739175199]
+position = Vector2(-15, 472)
+scale = Vector2(2, 0.5)
 texture = ExtResource("33_jbjyn")
+offset = Vector2(0, -409.035)
 script = ExtResource("34_lw74r")

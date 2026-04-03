@@ -229,6 +229,11 @@ color = Color(0, 0, 0, 1)
 [node name="Player" parent="." unique_id=1458210690 instance=ExtResource("17_rusfs")]
 modulate = Color(0.65834004, 0.6583399, 0.6583399, 1)
 y_sort_enabled = true
-position = Vector2(-4711, -564)
+position = Vector2(-4403, -564)
+shadow_max_distance = 1000.0
+shadow_base_alpha = 1.7
+shadow_max_rotation_left = 45.0
+shadow_max_rotation_right = -45.0
+shadow_max_skew = 0.05
 
 [editable path="Exterior/Area2D/SceneChanger"]

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://ck7xn236c2k8a"]
+
+[ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_7sat5"]
+
+[resource]
+script = ExtResource("1_7sat5")
+name = "perfume-pecado-carmesi"
+display_name = "Pecado Carmesí"
+cost = 98.0
+item_type = 1
+equip_slot = 3
+max_stack = 1
+duracion_horas = 16.0
+usos_max = 3
+sex_appeal_bonus = 60.0
+higiene_bonus = 15.0
+metadata/_custom_type_script = "uid://ckb87k7ubnui6"
