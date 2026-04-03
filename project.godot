@@ -47,6 +47,7 @@ Dialogic="*uid://ds2q0uclmolvu"
 
 directories/dch_directory={}
 directories/dtl_directory={
+"barman": "res://Dialogues/barman.dtl",
 "hostelkeeper": "res://Dialogues/hostelkeeper.dtl",
 "npc_1": "res://Dialogues/npc_1.dtl"
 }
@@ -57,6 +58,9 @@ glossary/default_case_sensitive=true
 layout/style_list=[]
 layout/default_style="res://Data/Dialogic/Whitechapel_Layout.tres"
 variables={
+"barman": {
+"barman_result": ""
+},
 "dinero": 5.0,
 "enfermedad": 0.0,
 "higiene": 70.0,

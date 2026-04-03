@@ -4,15 +4,10 @@ class_name NPCService
 # ============================================================================
 # NPC SERVICE
 # NPC fijo de servicio: hostelero, doctor, vendedor, etc.
-# No reutiliza la lógica de npc_charger.
 # ============================================================================
-#
-# RESPONSABILIDADES:
-# - Activar la skin correcta
-# - Inicializar módulos
-# - Desactivar interacción si el NPC no es visible en árbol
-# - Pasar al módulo de animación si el player está en rango
-# ============================================================================
+
+const CONFIG = preload("res://Data/Game/game_config.tres")
+const SHOP_SCENE = preload("res://Scenes/UI/Shop.tscn")
 
 # ============================================================================
 # DATOS DEL NPC
@@ -22,6 +17,7 @@ class_name NPCService
 @export_file("*.dtl") var dialog_timeline: String = ""
 @export var service_id: String = ""
 @export var skin_name: String = "NPC_HostalKeeper"
+@export var initial_facing_right: bool = true
 
 # ============================================================================
 # REFERENCIAS
@@ -36,31 +32,26 @@ class_name NPCService
 # ESTADO
 # ============================================================================
 var _service_enabled: bool = true
+var _stock_variable: Dictionary = {}
 
 # ============================================================================
 # READY
 # ============================================================================
 func _ready() -> void:
 	add_to_group("npc_service")
-
 	velocity = Vector2.ZERO
 
 	if skin:
 		skin.set_skin(skin_name)
-
 	if movement:
 		movement.initialize(self)
-
 	if animation:
-		animation.initialize(self)
-
+		animation.initialize(self, initial_facing_right)
 	if conversation:
 		conversation.initialize(self)
-
 	if audio:
 		audio.initialize(self)
 
-	# Si el NPC está dentro de un interior oculto, debe quedar desactivado.
 	visibility_changed.connect(_on_visibility_changed)
 	set_service_enabled(is_visible_in_tree())
 
@@ -102,7 +93,6 @@ func set_service_enabled(value: bool) -> void:
 	if conversation:
 		conversation.set_interaction_enabled(value)
 
-	# Al desactivar, lo devolvemos al estado base del mostrador.
 	if not value and animation:
 		animation.force_idle_counter()
 
@@ -118,37 +108,85 @@ func _on_visibility_changed() -> void:
 func _get_player() -> Node2D:
 	if PlayerManager and PlayerManager.player_instance:
 		return PlayerManager.player_instance as Node2D
-
 	return get_tree().get_first_node_in_group("player") as Node2D
 
+# ============================================================================
+# DIALOGIC — PREPARAR VARIABLES
+# ============================================================================
 func prepare_dialogic_variables() -> void:
-	if service_id != "lodge_reception":
-		return
+	match service_id:
+		"lodge_reception":
+			PlayerStats._sync_dialogic_variables()
+			Dialogic.VAR.set_variable("hostel.hostel_open", true)
+			Dialogic.VAR.set_variable("hostel.player_money", PlayerStats.dinero)
+			Dialogic.VAR.set_variable("hostel.hostel_price", CONFIG.coste_hostal)
+			Dialogic.VAR.set_variable("hostel.hostel_result", "")
+		"barman":
+			Dialogic.VAR.set_variable("barman.barman_result", "")
 
-	PlayerStats._sync_dialogic_variables()
-	Dialogic.VAR.set_variable("hostel.hostel_open", true)
-	Dialogic.VAR.set_variable("hostel.player_money", PlayerStats.dinero)
-	Dialogic.VAR.set_variable("hostel.hostel_price", PlayerStats.COSTE_HOSTAL_DIA)
-	Dialogic.VAR.set_variable("hostel.hostel_result", "")
-
+# ============================================================================
+# DIALOGIC — RESOLVER RESULTADO
+# ============================================================================
 func resolve_dialogic_result() -> void:
-	if service_id != "lodge_reception":
-		return
+	match service_id:
+		"lodge_reception":
+			var result = str(Dialogic.VAR.get_variable("hostel.hostel_result"))
+			Dialogic.VAR.set_variable("hostel.hostel_result", "")
+			if result != "rent_room":
+				return
+			var ok := PlayerStats.gastar_dinero(CONFIG.coste_hostal)
+			if not ok:
+				return
+			PlayerStats.dias_sin_pagar_hostal = 0
+			SleepManager.start_sleep("hostal")
 
-	var result = str(Dialogic.VAR.get_variable("hostel.hostel_result"))
+		"barman":
+			var result = str(Dialogic.VAR.get_variable("barman.barman_result"))
+			Dialogic.VAR.set_variable("barman.barman_result", "")
+			if result == "open_shop":
+				_open_barman_shop()
 
-	# Limpiamos para la próxima vez
-	Dialogic.VAR.set_variable("hostel.hostel_result", "")
+# ============================================================================
+# BARMAN — TIENDA
+# ============================================================================
+func _open_barman_shop() -> void:
+	var items_fijos = [
+		{ "id": "drink-cerveza", "max_qty": 5 },
+		{ "id": "drink-ginebra", "max_qty": 5 },
+		{ "id": "drink-whisky",  "max_qty": 5 },
+		{ "id": "drink-ron",     "max_qty": 5 },
+		{ "id": "food-pan",      "max_qty": 5 },
+		{ "id": "food-sopa",     "max_qty": 5 },
+		{ "id": "food-patata",   "max_qty": 5 },
+	]
 
-	if result != "rent_room":
-		return
+	var items_variables = [
+		{ "id": "drink-wine",    "max_qty": 3 },
+		{ "id": "drink-absenta", "max_qty": 2 },
+		{ "id": "food-tocino",   "max_qty": 3 },
+	]
 
-	# Gasta el dinero real del jugador
-	var ok := await PlayerStats.gastar_dinero(PlayerStats.COSTE_HOSTAL_DIA)
-	if not ok:
-		return
+	var items_hoy: Array = items_fijos.duplicate()
+	for item in items_variables:
+		if _barman_tiene_hoy(item["id"]):
+			items_hoy.append(item)
 
-	PlayerStats.dias_sin_pagar_hostal = 0
+	var shop = SHOP_SCENE.instantiate()
+	get_tree().root.add_child(shop)
+	shop.open(tr("BARMAN_SHOP_NAME"), items_hoy)
+	GameManager.show_mouse()
 
-	# Usa el sistema de sueño que ya tienes
-	SleepManager.start_sleep("hostal")
+	var player = PlayerManager.player_instance
+	if player:
+		player.disable_movement()
+
+	shop.shop_closed.connect(func():
+		GameManager.hide_mouse()
+		if is_instance_valid(player):
+			player.enable_movement()
+	)
+
+func _barman_tiene_hoy(item_id: String) -> bool:
+	if not _stock_variable.has(item_id):
+		_stock_variable[item_id] = randf() < 0.5
+	return _stock_variable[item_id]

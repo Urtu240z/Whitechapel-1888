@@ -319,7 +319,7 @@ func _aplicar_recuperacion_parcial() -> void:
 				else CONFIG.recuperacion_calle_por_hora
 			PlayerStats.sueno = minf(PlayerStats.sueno + recuperacion, 100.0)
 
-	PlayerStats.stats_updated.emit()
+	PlayerStats.actualizar_stats()
 
 # ================================================================
 # FINALIZACIÓN
@@ -358,7 +358,7 @@ func _aplicar_efectos_al_despertar() -> void:
 				PlayerStats.enfermedad = maxf(PlayerStats.enfermedad - 20.0, 0.0)
 			elif roll < PROB_CURAR_CALLE + PROB_EMPEORAR_CALLE:
 				PlayerStats.enfermedad = minf(PlayerStats.enfermedad + EMPEORAMIENTO_CALLE, 100.0)
-	PlayerStats.stats_updated.emit()
+	PlayerStats.actualizar_stats()
 
 # ================================================================
 # CÁLCULOS

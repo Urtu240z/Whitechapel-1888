@@ -10,7 +10,11 @@ var _pause_menu = null
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	_set_custom_cursor()
 
+func _set_custom_cursor() -> void:
+	var cursor = preload("res://Assets/Images/UI/cursor.png")
+	Input.set_custom_mouse_cursor(cursor, Input.CURSOR_ARROW, Vector2(78, 6))
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

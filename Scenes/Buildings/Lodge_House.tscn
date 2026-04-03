@@ -156,6 +156,8 @@ scale = Vector2(0.22421524, 0.22421524)
 npc_display_name = "Hostal Keeper"
 dialog_timeline = "uid://d3uvod4y3u4ho"
 service_id = "lodge_reception"
+skin_name = null
+initial_facing_right = false
 
 [node name="Objects" type="Node2D" parent="Interior/TileMapLayer" unique_id=1834296797]
 position = Vector2(0, 145.99998)

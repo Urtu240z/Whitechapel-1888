@@ -1,0 +1,7 @@
+¿Que te pongo?
+- Ver lo que tienes
+	set {barman.barman_result} = "open_shop"
+	[end_timeline]
+- Nada, gracias
+	Largate
+	[end_timeline]

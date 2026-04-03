@@ -10,7 +10,6 @@ class_name NPCServiceAnimation
 # - Player se va  -> Idle_to_Counter -> Idle_Counter
 #
 # La "mirada" se hace con flip horizontal del CharacterContainer.
-# No usa Head Target / Chest Target.
 # ============================================================================
 
 # ============================================================================
@@ -44,7 +43,7 @@ var _base_scale: Vector2 = Vector2.ONE
 # ============================================================================
 # INIT
 # ============================================================================
-func initialize(_owner_npc: CharacterBody2D) -> void:
+func initialize(_owner_npc: CharacterBody2D, facing_right: bool = true) -> void:
 	if character_container:
 		_base_scale = character_container.scale
 		_base_scale.x = abs(_base_scale.x)
@@ -59,6 +58,10 @@ func initialize(_owner_npc: CharacterBody2D) -> void:
 			playback.travel(initial_state)
 		else:
 			playback.travel("Idle")
+
+	# Orientación inicial — viene de npc_service.gd
+	if character_container:
+		character_container.scale.x = _base_scale.x if facing_right else -_base_scale.x
 
 # ============================================================================
 # UPDATE
@@ -101,12 +104,8 @@ func _update_counter_state(player_in_range: bool) -> void:
 	_player_near = player_in_range
 
 	if _player_near:
-		# Recorre:
-		# Idle_Counter -> Counter_to_Idle -> Idle
 		playback.travel("Idle")
 	else:
-		# Recorre:
-		# Idle -> Idle_to_Counter -> Idle_Counter
 		playback.travel("Idle_Counter")
 
 # ============================================================================
@@ -120,8 +119,6 @@ func _update_body_flip(player: Node2D, player_in_range: bool) -> void:
 	if not character_container:
 		return
 
-	# Si solo queremos que mire al player cuando está cerca,
-	# fuera de rango conserva la última orientación.
 	if face_player_only_when_in_range and not player_in_range and not _state_locked:
 		return
 

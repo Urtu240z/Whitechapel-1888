@@ -438,7 +438,6 @@ func _detectar_colapso() -> void:
 func actualizar_stats_diferido(delta: float = 1.0) -> void:
 	actualizar_stats(delta)
 	await get_tree().process_frame
-	stats_updated.emit()
 
 # ============================================================
 # 🔁 SYNC CON DIALOGIC
