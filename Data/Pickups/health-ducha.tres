@@ -14,3 +14,4 @@ effects = {
 "nervios": -20.0,
 "sueno": -10.0
 }
+quita_perfume = true

@@ -24,16 +24,11 @@ const CONFIG = preload("res://Data/Game/game_config.tres")
 
 # ============================================================
 # 🦠 ENFERMEDAD (0–100)
-# 0 = sana, 100 = muerte inminente
-# Solo sube con clientes o con el tiempo si ya está infectada
-# Solo baja con tratamiento
 # ============================================================
 @export var enfermedad: float = 0.0
 
-# Estado de enfermedad activa
 var enferma: bool = false
 
-# ⏱️ Medicina activa — impide que suba durante 2 días de juego
 var medicina_activa: bool = false
 var medicina_timer: float = 0.0
 const MEDICINA_DURACION_DIAS: float = 2.0
@@ -48,6 +43,7 @@ const MEDICINA_DURACION_DIAS: float = 2.0
 # 💋 DERIVED ATTRIBUTES
 # ============================================================
 var sex_appeal: float = 50.0
+var sex_appeal_bonus: float = 0.0  # bonus temporal de perfumes
 
 # ============================================================
 # 💸 COST CONSTANTS
@@ -58,27 +54,26 @@ const COSTE_ALCOHOL: float = 0.2
 const COSTE_LAUDANO: float = 1.0
 
 # ============================================================
-# 🦠 PROBABILIDADES DE INFECCIÓN POR TIPO DE CLIENTE
+# 🦠 PROBABILIDADES DE INFECCIÓN
 # ============================================================
-const PROB_INFECCION_POOR: float = 0.15    # 15%
-const PROB_INFECCION_MEDIUM: float = 0.05  # 5%
-const PROB_INFECCION_RICH: float = 0.01    # 1%
+const PROB_INFECCION_POOR: float = 0.15
+const PROB_INFECCION_MEDIUM: float = 0.05
+const PROB_INFECCION_RICH: float = 0.01
 
 # ============================================================
-# ⏱️ DEGRADACIÓN CON EL TIEMPO
-# Valores por minuto de juego real
+# ⏱️ DEGRADACIÓN
 # ============================================================
 const HAMBRE_POR_MINUTO: float = 0.5
 const HIGIENE_POR_MINUTO: float = -0.3
 const SUENO_POR_MINUTO: float = -0.2
 const ALCOHOL_POR_MINUTO: float = -1.0
 const LAUDANO_POR_MINUTO: float = -0.5
-const ENFERMEDAD_POR_MINUTO: float = 0.3  # sube lentamente si está infectada
+const ENFERMEDAD_POR_MINUTO: float = 0.3
 
 var _degradacion_timer: float = 0.0
 const DEGRADACION_INTERVALO: float = 60.0
-var _sueno_anterior: float = 80.0  # Rastrea el sueno del frame anterior para detectar llegada a 0
-var _colapso_activo: bool = false  # Evita disparar sueno_agotado múltiples veces
+var _sueno_anterior: float = 80.0
+var _colapso_activo: bool = false
 
 # ============================================================
 # 🎯 GOAL
@@ -97,7 +92,7 @@ signal objetivo_completado()
 signal stats_updated
 signal enfermedad_cambiada(estado: bool)
 signal jugador_muerto()
-signal sueno_agotado()  # Emitida cuando sueno llega a 0 — colapso involuntario
+signal sueno_agotado()
 
 # ============================================================
 # ⚙️ READY
@@ -107,7 +102,7 @@ func _ready() -> void:
 	stats_updated.connect(_sync_dialogic_variables)
 
 # ============================================================
-# ⏱️ PROCESS — degradación con el tiempo
+# ⏱️ PROCESS
 # ============================================================
 func _process(delta: float) -> void:
 	_degradacion_timer += delta
@@ -115,7 +110,6 @@ func _process(delta: float) -> void:
 		_degradacion_timer = 0.0
 		_aplicar_degradacion()
 
-	# Medicina activa — cuenta el tiempo
 	if medicina_activa:
 		medicina_timer += delta
 		var dias_jugados = medicina_timer / DEGRADACION_INTERVALO
@@ -130,7 +124,6 @@ func _aplicar_degradacion() -> void:
 	alcohol = clamp(alcohol + ALCOHOL_POR_MINUTO, 0, 100)
 	laudano = clamp(laudano + LAUDANO_POR_MINUTO, 0, 100)
 
-	# Enfermedad sube sola solo si está infectada y sin medicina
 	if enferma and not medicina_activa:
 		enfermedad = clamp(enfermedad + ENFERMEDAD_POR_MINUTO, 0, 100)
 		_check_enfermedad_efectos()
@@ -138,7 +131,7 @@ func _aplicar_degradacion() -> void:
 	actualizar_stats_diferido(1.0)
 
 # ============================================================
-# 🦠 ENFERMEDAD — efectos progresivos
+# 🦠 ENFERMEDAD
 # ============================================================
 func _check_enfermedad_efectos() -> void:
 	if enfermedad >= 100:
@@ -149,10 +142,9 @@ func _check_enfermedad_efectos() -> void:
 		salud = max(0, salud - 1.0)
 
 func infectar(probabilidad: float) -> bool:
-	"""Intenta infectar al jugador con la probabilidad dada. Devuelve true si se infecta."""
 	if randf() < probabilidad:
 		if enfermedad == 0:
-			enfermedad = 20.0  # empieza en 20
+			enfermedad = 20.0
 		enferma = true
 		enfermedad_cambiada.emit(true)
 		actualizar_stats()
@@ -177,9 +169,10 @@ func calcular_sex_appeal() -> float:
 	appeal -= (hambre - 50) * 0.3
 	appeal -= max(0, alcohol - 50) * 0.5
 	appeal -= laudano * 0.6
-
-	# Enfermedad penaliza fuertemente el sex appeal
 	appeal -= enfermedad * 0.5
+
+	# Bonus temporal de perfumes
+	appeal += sex_appeal_bonus
 
 	sex_appeal = clamp(appeal, 0.0, 100.0)
 	sex_appeal_changed.emit(sex_appeal)
@@ -263,10 +256,9 @@ func tomar_laudano() -> bool:
 	return false
 
 # ============================================================
-# 💊 TRATAMIENTOS DE ENFERMEDAD
+# 💊 TRATAMIENTOS
 # ============================================================
 func comprar_medicina() -> bool:
-	"""Impide que la enfermedad suba durante 2 días. No cura."""
 	if dinero >= CONFIG.coste_medicina:
 		gastar_dinero(CONFIG.coste_medicina)
 		medicina_activa = true
@@ -276,7 +268,6 @@ func comprar_medicina() -> bool:
 	return false
 
 func ir_al_medico() -> bool:
-	"""Cura completamente la enfermedad."""
 	if dinero >= CONFIG.coste_medico:
 		gastar_dinero(CONFIG.coste_medico)
 		enfermedad = 0.0
@@ -288,14 +279,12 @@ func ir_al_medico() -> bool:
 	return false
 
 func descansar_hostal() -> bool:
-	"""3 días en el hostal — 40% de curar la enfermedad."""
 	if dinero >= CONFIG.coste_hostal * 3:
 		gastar_dinero(CONFIG.coste_hostal * 3)
 		sueno   = 100.0
 		stamina = 100.0
 		estres  = max(0, estres - 30)
 		dias_sin_pagar_hostal = 0
-		# 40% de curar
 		if randf() < 0.4:
 			enfermedad = 0.0
 			enferma = false
@@ -305,7 +294,6 @@ func descansar_hostal() -> bool:
 	return false
 
 func descansar_calle() -> void:
-	"""3 días en la calle — 15% curar, 15% empeorar (+10), 70% sin cambio."""
 	sueno    = 60.0
 	stamina  = min(100, stamina + 40)
 	estres   = min(100, estres + 30)
@@ -446,14 +434,12 @@ func _sync_dialogic_variables() -> void:
 	if not Engine.has_singleton("Dialogic"):
 		return
 
-	# Variables generales ya existentes
 	Dialogic.VAR.set_variable("sex_appeal", sex_appeal)
 	Dialogic.VAR.set_variable("hora", DayNightManager.hora_actual)
 	Dialogic.VAR.set_variable("dinero", dinero)
 	Dialogic.VAR.set_variable("higiene", higiene)
 	Dialogic.VAR.set_variable("enfermedad", enfermedad)
 
-	# Variables para el hostelero
 	var hora_actual := DayNightManager.hora_actual
 	var hostel_open := hora_actual >= SleepManager.HORA_APERTURA_HOSTAL or hora_actual < SleepManager.HORA_CIERRE_HOSTAL
 
@@ -515,5 +501,6 @@ func reset_stats() -> void:
 	enferma   = false
 	medicina_activa = false
 	dinero    = 5.0
+	sex_appeal_bonus = 0.0
 	enfermedad_cambiada.emit(false)
 	actualizar_stats()

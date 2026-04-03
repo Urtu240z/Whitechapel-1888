@@ -215,7 +215,9 @@ func _add_item_row(parent: Node, item_data: ItemData, max_qty: int) -> void:
 		_update_totals()
 	)
 	btn_plus.pressed.connect(func():
-		_quantities[item_id] = min(max_qty, _quantities[item_id] + 1)
+		var item_data_check = InventoryManager.get_item_data(item_id)
+		var max_allowed = min(max_qty, item_data_check.max_stack if item_data_check.max_stack > 0 else max_qty)
+		_quantities[item_id] = min(max_allowed, _quantities[item_id] + 1)
 		qty_lbl.text = str(_quantities[item_id])
 		stock_lbl.text = "(%d)" % (max_qty - _quantities[item_id])
 		_update_totals()
@@ -292,7 +294,9 @@ func _on_buy_pressed() -> void:
 	# Añadir items y registrar compra
 	var purchased: Dictionary = {}
 	for item_entry in items_to_add:
-		InventoryManager.add_item(item_entry["id"], item_entry["qty"])
+		var item_data = InventoryManager.get_item_data(item_entry["id"])
+		var qty_inicial = item_data.usos_max if item_data.usos_max > 0 else item_entry["qty"]
+		InventoryManager.add_item(item_entry["id"], qty_inicial)
 		purchased[item_entry["id"]] = item_entry["qty"]
 
 	items_purchased.emit(purchased)

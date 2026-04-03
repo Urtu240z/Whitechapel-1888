@@ -1,0 +1,7 @@
+¿Qué desea, querida? Tengo los mejores perfumes del East End.
+- Ver lo que tienes
+	set {perfume_vendor.result} = "open_shop"
+	[end_timeline]
+- Nada, gracias
+	Que pase un buen día.
+	[end_timeline]

@@ -35,6 +35,9 @@ func _ready() -> void:
 	if not InventoryManager.inventory_changed.is_connected(_update):
 		InventoryManager.inventory_changed.connect(_update)
 	GameManager.journal_closed.connect(_on_journal_closing)
+	InventoryManager.perfume_already_active.connect(func():
+		_show_popup("¿Más perfume? Ya hueles como un burdel francés en llamas.")
+	)
 
 # ================================================================
 # UPDATE
@@ -132,7 +135,6 @@ func _make_slot(entry, slot_index: int) -> Control:
 
 	var qty = entry["qty"]
 
-	# Overlay para icono y cantidad
 	var overlay = Control.new()
 	overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
 	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -172,7 +174,6 @@ func _make_slot(entry, slot_index: int) -> Control:
 		qty_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		overlay.add_child(qty_lbl)
 
-	# Hover con pulso — solo si no hay selección activa
 	slot.mouse_filter = Control.MOUSE_FILTER_STOP
 	slot.mouse_entered.connect(func():
 		if _selected_slot != -1:
@@ -195,7 +196,6 @@ func _make_slot(entry, slot_index: int) -> Control:
 	slot.gui_input.connect(func(event: InputEvent):
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			if _selected_slot != -1:
-				# Hay selección activa — intercambiar o cancelar
 				if _selected_slot != slot_index:
 					InventoryManager.move_item(_selected_slot, slot_index)
 				_selected_slot = -1
@@ -241,6 +241,45 @@ func _fade_overlay(slot_index: int) -> void:
 		InventoryManager.inventory_changed.connect(_update)
 
 # ================================================================
+# POPUP
+# ================================================================
+
+func _show_popup(message: String) -> void:
+	var existing = get_node_or_null("PopupMessage")
+	if existing:
+		existing.queue_free()
+
+	var popup = PanelContainer.new()
+	popup.name = "PopupMessage"
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color("#1e1208f0")
+	style.border_color = Color("#c8a45a")
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(6)
+	style.content_margin_left = 16
+	style.content_margin_right = 16
+	style.content_margin_top = 12
+	style.content_margin_bottom = 12
+	popup.add_theme_stylebox_override("panel", style)
+
+	var lbl = Label.new()
+	lbl.text = message
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+	lbl.custom_minimum_size = Vector2(300, 0)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_style_label(lbl, font_body, 22, Color("#e8d5a0"))
+	popup.add_child(lbl)
+	add_child(popup)
+
+	await get_tree().process_frame
+	var grid_rect = grid_container.get_rect()
+	popup.position = grid_rect.get_center() - popup.size / 2.0
+
+	await get_tree().create_timer(3.0).timeout
+	if is_instance_valid(popup):
+		popup.queue_free()
+
+# ================================================================
 # CONTEXT MENU
 # ================================================================
 
@@ -278,7 +317,7 @@ func _show_context_menu(item_data: ItemData, slot_index: int, qty: int) -> void:
 		_add_menu_button(vbox, tr("ITEM_EQUIP"), func():
 			_context_menu = null
 			menu.queue_free()
-			InventoryManager.equip_from_slot(slot_index)
+			InventoryManager.use_item_from_slot(slot_index)
 		)
 	else:
 		_add_menu_button(vbox, tr("ITEM_USE"), func():

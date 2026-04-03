@@ -49,7 +49,8 @@ directories/dch_directory={}
 directories/dtl_directory={
 "barman": "res://Dialogues/barman.dtl",
 "hostelkeeper": "res://Dialogues/hostelkeeper.dtl",
-"npc_1": "res://Dialogues/npc_1.dtl"
+"npc_1": "res://Dialogues/npc_1.dtl",
+"perfume_vendor": "res://Dialogues/perfume_vendor.dtl"
 }
 layout/style_directory={
 "": "res://Data/Dialogic/Whitechapel_Layout.tres"
@@ -70,6 +71,9 @@ variables={
 "hostel_price": 2.0,
 "hostel_result": "",
 "player_money": 0.0
+},
+"perfume_vendor": {
+"result": ""
 },
 "sex_appeal": 50.0
 }

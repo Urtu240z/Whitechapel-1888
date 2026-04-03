@@ -8,18 +8,14 @@ signal inventory_changed
 signal item_equipped(slot: ItemData.EquipSlot, item: ItemData)
 signal item_unequipped(slot: ItemData.EquipSlot)
 signal item_used(item: ItemData)
+signal perfume_already_active
 
 const MAX_SLOTS: int = 12
 
-# Bolsillo posicional: Array de MAX_SLOTS entradas
-# Cada entrada es null o { "id": String, "qty": int }
 var _pocket: Array = []
-
-# Base de datos de items: { id -> ItemData }
 var _item_db: Dictionary = {}
-
-# Equipamiento: { EquipSlot -> ItemData }
 var _equipped: Dictionary = {}
+var _equip_timers: Dictionary = {}
 
 # ================================================================
 # INIT
@@ -28,19 +24,47 @@ var _equipped: Dictionary = {}
 func _ready() -> void:
 	_pocket.resize(MAX_SLOTS)
 	_load_item_database()
+	DayNightManager.hora_cambiada.connect(_on_hora_cambiada)
 
 func _load_item_database() -> void:
-	var dir := DirAccess.open("res://Data/Pickups/")
+	_load_items_from_folder("res://Data/Pickups/")
+	_load_items_from_folder("res://Data/Equip/")
+
+func _load_items_from_folder(path: String) -> void:
+	var dir := DirAccess.open(path)
 	if not dir:
 		return
 	dir.list_dir_begin()
 	var file := dir.get_next()
 	while file != "":
 		if file.ends_with(".tres"):
-			var item := load("res://Data/Pickups/" + file) as ItemData
+			var item := load(path + file) as ItemData
 			if item and not item.name.is_empty():
 				_item_db[item.name] = item
 		file = dir.get_next()
+
+# ================================================================
+# HORA — decrementar timers de equipamiento
+# ================================================================
+
+func _on_hora_cambiada(_hora: float) -> void:
+	var slots_a_quitar: Array = []
+	for slot in _equip_timers.keys():
+		_equip_timers[slot] -= 1
+		if _equip_timers[slot] <= 0:
+			slots_a_quitar.append(slot)
+	for slot in slots_a_quitar:
+		_equip_timers.erase(slot)
+		_unequip_temporal(slot)
+
+func _unequip_temporal(slot: ItemData.EquipSlot) -> void:
+	if not _equipped.has(slot):
+		return
+	var item: ItemData = _equipped[slot]
+	_remove_equip_bonuses(item)
+	_equipped.erase(slot)
+	item_unequipped.emit(slot)
+	inventory_changed.emit()
 
 # ================================================================
 # BOLSILLO POSICIONAL
@@ -52,7 +76,6 @@ func add_item(item_id: String, quantity: int = 1) -> bool:
 		push_warning("InventoryManager: item '%s' no existe en la DB." % item_id)
 		return false
 
-	# Si ya existe en algún slot, apilar ahí
 	for i in range(MAX_SLOTS):
 		if _pocket[i] != null and _pocket[i]["id"] == item_id:
 			var current: int = _pocket[i]["qty"]
@@ -62,7 +85,6 @@ func add_item(item_id: String, quantity: int = 1) -> bool:
 			inventory_changed.emit()
 			return true
 
-	# Buscar primer slot libre
 	for i in range(MAX_SLOTS):
 		if _pocket[i] == null:
 			_pocket[i] = { "id": item_id, "qty": quantity }
@@ -111,7 +133,6 @@ func move_item(from_slot: int, to_slot: int) -> bool:
 		return false
 	if to_slot < 0 or to_slot >= MAX_SLOTS:
 		return false
-	# Intercambiar los dos slots
 	var temp = _pocket[to_slot]
 	_pocket[to_slot] = _pocket[from_slot]
 	_pocket[from_slot] = temp
@@ -139,8 +160,16 @@ func use_item_from_slot(slot_index: int) -> bool:
 	var item := get_item_data(item_id)
 	if not item:
 		return false
+
+	# Perfume — flujo especial
+	if item.equip_slot == ItemData.EquipSlot.NECK_PERFUME:
+		return _apply_perfume(slot_index, item)
+
+	# Equipable normal
 	if item.item_type == ItemData.ItemType.EQUIPPABLE:
 		return equip_from_slot(slot_index)
+
+	# Consumable
 	_apply_effects(item)
 	remove_item_from_slot(slot_index, 1)
 	item_used.emit(item)
@@ -158,6 +187,30 @@ func _pocket_count() -> int:
 		if _pocket[i] != null:
 			count += 1
 	return count
+
+# ================================================================
+# PERFUME — flujo especial
+# ================================================================
+
+func _apply_perfume(slot_index: int, item: ItemData) -> bool:
+	# Si ya hay un perfume activo, avisar y no hacer nada
+	if _equipped.has(ItemData.EquipSlot.NECK_PERFUME):
+		perfume_already_active.emit()
+		return false
+
+	# Restar 1 uso del botellín
+	remove_item_from_slot(slot_index, 1)
+
+	# Activar efecto en slot de equipamiento
+	_equipped[ItemData.EquipSlot.NECK_PERFUME] = item
+	_equip_timers[ItemData.EquipSlot.NECK_PERFUME] = int(item.duracion_horas)
+
+	# Aplicar bonuses
+	_apply_equip_bonuses(item)
+
+	item_equipped.emit(ItemData.EquipSlot.NECK_PERFUME, item)
+	inventory_changed.emit()
+	return true
 
 # ================================================================
 # EQUIPAMIENTO
@@ -193,16 +246,26 @@ func unequip(slot: ItemData.EquipSlot) -> bool:
 	var item: ItemData = _equipped[slot]
 	_remove_effects(item)
 	_equipped.erase(slot)
+	_equip_timers.erase(slot)
 	add_item(item.name, 1)
 	item_unequipped.emit(slot)
 	inventory_changed.emit()
 	return true
 
+func unequip_perfume_on_shower() -> void:
+	if not _equipped.has(ItemData.EquipSlot.NECK_PERFUME):
+		return
+	_unequip_temporal(ItemData.EquipSlot.NECK_PERFUME)
+	_equip_timers.erase(ItemData.EquipSlot.NECK_PERFUME)
+
 func get_equipped(slot: ItemData.EquipSlot) -> ItemData:
 	return _equipped.get(slot, null)
 
+func get_perfume_horas_restantes() -> int:
+	return _equip_timers.get(ItemData.EquipSlot.NECK_PERFUME, 0)
+
 # ================================================================
-# EFECTOS
+# EFECTOS — consumables
 # ================================================================
 
 func _apply_effects(item: ItemData) -> void:
@@ -212,6 +275,9 @@ func _apply_effects(item: ItemData) -> void:
 			push_warning("InventoryManager: stat '%s' no existe en PlayerStats." % stat_name)
 			continue
 		PlayerStats.set(stat_name, clamp(PlayerStats.get(stat_name) + valor, 0.0, 100.0))
+	# Si el item quita perfume (ducha)
+	if item.get("quita_perfume") == true:
+		unequip_perfume_on_shower()
 	PlayerStats.actualizar_stats()
 
 func _remove_effects(item: ItemData) -> void:
@@ -220,6 +286,24 @@ func _remove_effects(item: ItemData) -> void:
 		if not PlayerStats.has(stat_name):
 			continue
 		PlayerStats.set(stat_name, clamp(PlayerStats.get(stat_name) - valor, 0.0, 100.0))
+	PlayerStats.actualizar_stats()
+
+# ================================================================
+# BONUSES — equipables temporales (perfumes)
+# ================================================================
+
+func _apply_equip_bonuses(item: ItemData) -> void:
+	PlayerStats.sex_appeal_bonus += item.sex_appeal_bonus
+	PlayerStats.higiene = clamp(PlayerStats.higiene + item.higiene_bonus, 0.0, 100.0)
+	if item.nervios_bonus != 0.0:
+		PlayerStats.nervios = clamp(PlayerStats.nervios + item.nervios_bonus, 0.0, 100.0)
+	PlayerStats.actualizar_stats()
+
+func _remove_equip_bonuses(item: ItemData) -> void:
+	PlayerStats.sex_appeal_bonus -= item.sex_appeal_bonus
+	PlayerStats.higiene = clamp(PlayerStats.higiene - item.higiene_bonus, 0.0, 100.0)
+	if item.nervios_bonus != 0.0:
+		PlayerStats.nervios = clamp(PlayerStats.nervios - item.nervios_bonus, 0.0, 100.0)
 	PlayerStats.actualizar_stats()
 
 # ================================================================
@@ -235,7 +319,6 @@ func get_pocket() -> Array:
 func get_equipped_all() -> Dictionary:
 	return _equipped.duplicate()
 
-# Compatibilidad con save_manager — devuelve formato serializable
 func get_pocket_serializable() -> Array:
 	var result: Array = []
 	for i in range(MAX_SLOTS):

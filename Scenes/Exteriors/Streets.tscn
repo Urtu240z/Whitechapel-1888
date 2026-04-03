@@ -21,6 +21,49 @@
 [ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="17_1loxg"]
 [ext_resource type="Script" uid="uid://crm7wt4vyued" path="res://Scripts/Core/scene_changer.gd" id="17_e1isi"]
 [ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="17_rusfs"]
+[ext_resource type="PackedScene" uid="uid://cmmlvd8ng8chj" path="res://Scenes/NPC/NPC_Service.tscn" id="19_80ji7"]
+[ext_resource type="Script" uid="uid://bbc6r2ife4inn" path="res://Scripts/Data/shop_item_data.gd" id="20_35ndy"]
+[ext_resource type="Texture2D" uid="uid://b8u1b1yp6fn43" path="res://Assets/Sprites/Building/Perfume Store.png" id="20_evs4v"]
+[ext_resource type="Resource" uid="uid://cwur32724y8dv" path="res://Data/Equip/perfume-bruma-mayo.tres" id="21_6skcy"]
+[ext_resource type="Resource" uid="uid://5cox3o6rs7ue" path="res://Data/Equip/perfume-susurro-seda.tres" id="22_mlx1v"]
+[ext_resource type="Resource" uid="uid://cdjvk0atrrn85" path="res://Data/Equip/perfume-noche-oriente.tres" id="23_wl6bi"]
+[ext_resource type="Resource" uid="uid://cn103i3guppjr" path="res://Data/Equip/perfume-jardin-secreto.tres" id="24_mjtkt"]
+[ext_resource type="Resource" uid="uid://ck7xn236c2k8a" path="res://Data/Equip/perfume-pecado-carmesi.tres" id="25_b0nva"]
+
+[sub_resource type="Resource" id="Resource_k7r8x"]
+script = ExtResource("20_35ndy")
+item = ExtResource("21_6skcy")
+max_qty = 3
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_l83om"]
+script = ExtResource("20_35ndy")
+item = ExtResource("22_mlx1v")
+max_qty = 3
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_v1jka"]
+script = ExtResource("20_35ndy")
+item = ExtResource("23_wl6bi")
+max_qty = 2
+is_variable = true
+variable_chance = 0.6
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_keg7c"]
+script = ExtResource("20_35ndy")
+item = ExtResource("24_mjtkt")
+max_qty = 2
+is_variable = true
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_ubdd7"]
+script = ExtResource("20_35ndy")
+item = ExtResource("25_b0nva")
+max_qty = 1
+is_variable = true
+variable_chance = 0.3
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rusfs"]
 size = Vector2(532, 2155)
@@ -51,6 +94,7 @@ scale = Vector2(1, 1)
 [node name="Parallax2D" type="Parallax2D" parent="Exterior/World" unique_id=1782976723]
 z_index = 3
 scroll_scale = Vector2(1.01, 1)
+scroll_offset = Vector2(-203.4, 0)
 
 [node name="Lights_background" type="Node2D" parent="Exterior/World/Parallax2D" unique_id=317355705]
 
@@ -73,6 +117,7 @@ scale = Vector2(0.23765433, 0.23765434)
 [node name="Parallax2D2" type="Parallax2D" parent="Exterior/World" unique_id=238859678]
 z_index = 5
 scroll_scale = Vector2(1.3, 1)
+scroll_offset = Vector2(79.799995, 0)
 
 [node name="Lights_Foreground" type="Node2D" parent="Exterior/World/Parallax2D2" unique_id=314579702]
 
@@ -190,6 +235,25 @@ close_sounds = Array[AudioStream]([ExtResource("15_vkywb"), ExtResource("16_ursw
 [node name="Lodge" parent="Exterior/World" unique_id=1878724243 groups=["buildings"] instance=ExtResource("14_1loxg")]
 position = Vector2(-2742, -548.6)
 zoom_in = Vector2(0.31, 0.31)
+
+[node name="PerfumeStore" type="Node2D" parent="Exterior/World" unique_id=663088643]
+
+[node name="NPCService" parent="Exterior/World/PerfumeStore" unique_id=1649721714 instance=ExtResource("19_80ji7")]
+position = Vector2(-119.80002, -143)
+scale = Vector2(0.19999999, 0.19999999)
+npc_display_name = "Madame Colette"
+dialog_timeline = "uid://bv2dnetct8j1v"
+service_id = "perfume_vendor"
+skin_name = "NPC_PerfumeVendor"
+initial_facing_right = false
+shop_items = Array[ExtResource("20_35ndy")]([SubResource("Resource_k7r8x"), SubResource("Resource_l83om"), SubResource("Resource_v1jka"), SubResource("Resource_keg7c"), SubResource("Resource_ubdd7")])
+shop_name_key = "PERFUME_VENDOR_SHOP_NAME"
+
+[node name="PerfumeStall" type="Sprite2D" parent="Exterior/World/PerfumeStore" unique_id=709910960]
+modulate = Color(0.7162962, 0.7162962, 0.7162962, 1)
+position = Vector2(-125.799995, -162.2)
+scale = Vector2(0.31999996, 0.31999996)
+texture = ExtResource("20_evs4v")
 
 [node name="Area2D" type="Area2D" parent="Exterior" unique_id=749285088]
 position = Vector2(10242, -23)

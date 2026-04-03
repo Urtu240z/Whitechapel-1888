@@ -17,6 +17,7 @@ enum EquipSlot { NONE, HEAD, NECK_COLLAR, NECK_PERFUME, BODY, HAND_LEFT, HAND_RI
 @export var equip_slot: EquipSlot = EquipSlot.NONE
 @export var max_stack: int = 5
 @export var can_pickup_to_inventory: bool = false
+@export var quita_perfume: bool = false
 
 # — Campos de equipamiento (solo para EQUIPPABLE) —
 @export_group("Equippable")

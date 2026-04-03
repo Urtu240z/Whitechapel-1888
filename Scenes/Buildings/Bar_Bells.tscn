@@ -278,28 +278,28 @@ scale = Vector2(0.9999999, 0.9999999)
 
 [node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="4" unique_id=1140063982]
 position = Vector2(118.73389, 533.22205)
-scale = Vector2(0.999998, 0.999998)
+scale = Vector2(0.9999979, 0.9999979)
 
 [node name="Mp1KneeL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="5" unique_id=1474959191]
 position = Vector2(117, 159.99976)
 scale = Vector2(0.99999964, 0.99999964)
 
 [node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="6" unique_id=1015211277]
-position = Vector2(120.28613, 867.3673)
+position = Vector2(120.28638, 867.3673)
 scale = Vector2(0.9999894, 0.9999894)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="7" unique_id=966757603]
 position = Vector2(-28.915527, 538.63574)
-scale = Vector2(0.9999867, 0.9999867)
+scale = Vector2(0.99998665, 0.99998665)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="8" unique_id=1961738744]
 position = Vector2(-3, 161.99976)
-scale = Vector2(0.9999903, 0.9999903)
+scale = Vector2(0.9999902, 0.9999902)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="9" unique_id=1346636835]
 position = Vector2(-53.35913, 893.8849)
-rotation = -0.0600211
-scale = Vector2(0.99998486, 0.99998486)
+rotation = -0.060021106
+scale = Vector2(0.9999848, 0.9999848)
 
 [node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="10" unique_id=1940891905]
 position = Vector2(80.47656, -294.79858)
@@ -320,7 +320,7 @@ visible = false
 position = Vector2(58, 139.99988)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-scale = Vector2(0.9999902, 0.9999902)
+scale = Vector2(0.9999901, 0.9999901)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
 scale = Vector2(0.9999965, 0.9999965)
@@ -356,6 +356,7 @@ service_id = "barman"
 skin_name = "NPC_Barman"
 initial_facing_right = false
 shop_items = Array[ExtResource("9_2u12w")]([SubResource("Resource_gkafe"), SubResource("Resource_gfjkd"), SubResource("Resource_0c17p"), SubResource("Resource_17x7e"), SubResource("Resource_2mo0p"), SubResource("Resource_wbshs"), SubResource("Resource_12ksu"), SubResource("Resource_4vyom"), SubResource("Resource_fgqt2"), SubResource("Resource_5uiak"), SubResource("Resource_rrirq")])
+shop_name_key = "BARMAN_SHOP_NAME"
 
 [node name="Counter" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1817256655]
 modulate = Color(0.35120526, 0.35120538, 0.35500652, 1)
@@ -466,20 +467,20 @@ position = Vector2(116.999756, 160)
 
 [node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="6" unique_id=1015211277]
 position = Vector2(120.28613, 867.36743)
-scale = Vector2(0.999993, 0.999993)
+scale = Vector2(0.99999297, 0.99999297)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="7" unique_id=966757603]
 position = Vector2(-28.915283, 538.6343)
-scale = Vector2(0.99998283, 0.99998283)
+scale = Vector2(0.99998266, 0.99998266)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="8" unique_id=1961738744]
 position = Vector2(-3, 162)
-scale = Vector2(0.99998575, 0.99998575)
+scale = Vector2(0.99998564, 0.99998564)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="9" unique_id=1346636835]
-position = Vector2(-53.35913, 893.8821)
-rotation = -0.060011603
-scale = Vector2(0.9999801, 0.9999801)
+position = Vector2(-53.358643, 893.8821)
+rotation = -0.060011107
+scale = Vector2(0.99997985, 0.99997985)
 
 [node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="10" unique_id=1940891905]
 position = Vector2(80.47656, -294.79834)
@@ -500,14 +501,14 @@ visible = false
 position = Vector2(57.999756, 140)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-scale = Vector2(0.9999856, 0.9999856)
+scale = Vector2(0.99998546, 0.99998546)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
 scale = Vector2(0.9999972, 0.9999972)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR/Mp1LegR" index="0" unique_id=1973771377]
-rotation = -0.0924624
-scale = Vector2(0.99999726, 0.99999726)
+rotation = -0.09246132
+scale = Vector2(0.9999972, 0.9999972)
 
 [node name="Mp1KneeL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="2" unique_id=607615665]
 scale = Vector2(0.99999964, 0.99999964)
@@ -516,7 +517,7 @@ scale = Vector2(0.99999964, 0.99999964)
 scale = Vector2(0.9999981, 0.9999981)
 
 [node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL/Mp1LegL" index="1" unique_id=909040570]
-scale = Vector2(0.9999953, 0.9999953)
+scale = Vector2(0.99999523, 0.99999523)
 
 [node name="Mp1ArmR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle" parent_id_path=PackedInt32Array(2027052352, 793221498) index="0" unique_id=31757731]
 scale = Vector2(0.99999845, 0.99999845)

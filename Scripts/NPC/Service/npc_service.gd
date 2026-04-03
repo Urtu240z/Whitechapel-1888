@@ -21,6 +21,7 @@ const SHOP_SCENE = preload("res://Scenes/UI/Shop.tscn")
 
 @export_group("Shop")
 @export var shop_items: Array[ShopItemData] = []
+@export var shop_name_key: String = ""
 
 # ============================================================================
 # REFERENCIAS
@@ -143,6 +144,8 @@ func prepare_dialogic_variables() -> void:
 			Dialogic.VAR.set_variable("hostel.hostel_result", "")
 		"barman":
 			Dialogic.VAR.set_variable("barman.barman_result", "")
+		"perfume_vendor":
+			Dialogic.VAR.set_variable("perfume_vendor.result", "")
 
 # ============================================================================
 # DIALOGIC — RESOLVER RESULTADO
@@ -163,6 +166,12 @@ func resolve_dialogic_result() -> void:
 		"barman":
 			var result = str(Dialogic.VAR.get_variable("barman.barman_result"))
 			Dialogic.VAR.set_variable("barman.barman_result", "")
+			if result == "open_shop":
+				_open_shop()
+
+		"perfume_vendor":
+			var result = str(Dialogic.VAR.get_variable("perfume_vendor.result"))
+			Dialogic.VAR.set_variable("perfume_vendor.result", "")
 			if result == "open_shop":
 				_open_shop()
 
@@ -207,7 +216,7 @@ func _open_shop() -> void:
 
 	var shop = SHOP_SCENE.instantiate()
 	get_tree().root.add_child(shop)
-	shop.open(tr("BARMAN_SHOP_NAME"), items_hoy)
+	shop.open(tr(shop_name_key) if not shop_name_key.is_empty() else npc_display_name, items_hoy)
 	GameManager.show_mouse()
 
 	var player = PlayerManager.player_instance

@@ -60,7 +60,9 @@ func _on_area_body_entered(body: Node) -> void:
 		return
 	if not body.has_node("Conversation"):
 		return
-	var other_convo: NPCConversation = body.get_node("Conversation")
+	var other_convo = body.get_node("Conversation")
+	if not other_convo is NPCConversation:
+		return
 	if not other_convo or other_convo.active or active:
 		return
 	if randf() > conversation_chance:
