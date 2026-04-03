@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://ba2v08t1pk8cw"]
+[gd_scene format=3 uid="uid://cdw5206hogyb5"]
 
 [ext_resource type="Script" uid="uid://phjexahufixg" path="res://Scripts/Player/player_controller.gd" id="1_0u84n"]
 [ext_resource type="Texture2D" uid="uid://y2ksnj8f1jnb" path="res://Assets/Sprites/Player/Parts_London/London_Pieces.png" id="2_5noyr"]
@@ -2527,6 +2527,11 @@ position = Vector2(-9.002001, 481)
 scale = Vector2(0.39, 0.39)
 texture = ExtResource("35_bmii2")
 
+[node name="ShadowProjection" type="Sprite2D" parent="." unique_id=504659056]
+z_index = -1
+texture = ExtResource("33_jbjyn")
+script = ExtResource("34_lw74r")
+
 [node name="Journal" parent="." unique_id=1260495271 instance=ExtResource("33_6rswy")]
 visible = false
 
@@ -2557,7 +2562,3 @@ z_index = -1
 position = Vector2(1429.5552, 101.49237)
 scale = Vector2(477.82428, 253.3199)
 texture = SubResource("GradientTexture2D_6rswy")
-
-[node name="ShadowProjection" type="Sprite2D" parent="." unique_id=739175199]
-texture = ExtResource("33_jbjyn")
-script = ExtResource("34_lw74r")

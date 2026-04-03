@@ -121,16 +121,7 @@ func _force_unregister_player() -> void:
 	_player_in_range = false
 	_player = null
 
-func _resolve_player_from_interaction_area(area: Area2D) -> Node2D:
-	if area == null:
-		return null
-
-	var interaction_node := area.get_parent()
-	if interaction_node == null:
-		return null
-
-	var player := interaction_node.get_parent()
-	if player is Node2D:
-		return player as Node2D
-
+func _resolve_player_from_interaction_area(_area: Area2D) -> Node2D:
+	if PlayerManager and PlayerManager.player_instance:
+		return PlayerManager.player_instance as Node2D
 	return null

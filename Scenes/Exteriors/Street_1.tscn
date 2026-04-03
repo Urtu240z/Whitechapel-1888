@@ -278,7 +278,7 @@ texture = ExtResource("12_3552v")
 texture_scale = 0.5
 
 [node name="CPUParticles2D2" type="CPUParticles2D" parent="." unique_id=1152003967]
-z_index = 5
+z_index = 6
 material = SubResource("CanvasItemMaterial_j3y8p")
 position = Vector2(1925.9999, -117)
 scale = Vector2(0.20099764, 0.20099767)

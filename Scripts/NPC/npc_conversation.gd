@@ -30,7 +30,7 @@ func _ready() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.name != "InteractionArea":
 		return
-	var player = area.get_parent().get_parent() # InteractionArea → Interaction → Player
+	var player = PlayerManager.player_instance
 	if not player is MainPlayer:
 		return
 	var interaction = player.get_node_or_null("Interaction")
@@ -40,7 +40,7 @@ func _on_area_entered(area: Area2D) -> void:
 func _on_area_exited(area: Area2D) -> void:
 	if area.name != "InteractionArea":
 		return
-	var player = area.get_parent().get_parent()
+	var player = PlayerManager.player_instance
 	if not player is MainPlayer:
 		return
 	var interaction = player.get_node_or_null("Interaction")

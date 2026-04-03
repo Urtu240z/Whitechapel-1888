@@ -7,7 +7,7 @@
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u5ynd"]
 blend_mode = 1
 
-[node name="Street_Lamp" type="Sprite2D" unique_id=1667577496]
+[node name="Street_Lamp" type="Sprite2D" unique_id=1667577496 groups=["street_lamp"]]
 light_mask = 2
 visibility_layer = 2
 z_index = 2
