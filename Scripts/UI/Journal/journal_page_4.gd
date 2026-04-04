@@ -60,16 +60,19 @@ func _build_slots() -> void:
 
 func _make_equipment_slot(_slot_key: String, pos: Vector2, item_data) -> void:
 	var container = Control.new()
+	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	container.position = pos - SLOT_SIZE / 2.0
 	container.custom_minimum_size = SLOT_SIZE
 	container.size = SLOT_SIZE
 
 	var bg = ColorRect.new()
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bg.size  = SLOT_SIZE
 	bg.color = color_equipped if item_data else color_slot_bg
 	container.add_child(bg)
 
 	var border = ReferenceRect.new()
+	border.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	border.size = SLOT_SIZE
 	border.border_color = color_slot_border
 	border.border_width = 3.0
@@ -78,6 +81,7 @@ func _make_equipment_slot(_slot_key: String, pos: Vector2, item_data) -> void:
 
 	if item_data and item_data.icon:
 		var icon = TextureRect.new()
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		icon.texture = item_data.icon
 		icon.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -86,6 +90,7 @@ func _make_equipment_slot(_slot_key: String, pos: Vector2, item_data) -> void:
 		container.add_child(icon)
 	elif item_data:
 		var lbl = Label.new()
+		lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		lbl.text = item_data.display_name.left(4)
 		_style_label(lbl, font_body, 11, color_ink)
 		lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

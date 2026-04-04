@@ -17,7 +17,6 @@ var color_slot_border = Color("#5a3a1aee")
 var color_slot_hover  = Color("#c8a45a")
 
 const GRID_COLS   = 3
-const TOTAL_SLOTS = 12
 const SLOT_SIZE   = Vector2(100, 100)
 
 var _drop_qty: int = 1
@@ -37,6 +36,12 @@ func _ready() -> void:
 	if not InventoryManager.inventory_changed.is_connected(_update):
 		InventoryManager.inventory_changed.connect(_update)
 	GameManager.journal_closed.connect(_on_journal_closing)
+	StateManager.state_changed.connect(func(from, to):
+		if to == StateManager.State.JOURNAL:
+			if not InventoryManager.inventory_changed.is_connected(_update):
+				InventoryManager.inventory_changed.connect(_update)
+			_update()
+	)
 	InventoryManager.perfume_already_active.connect(func():
 		if _perfume_index == 0:
 			_perfume_claves = [
@@ -57,22 +62,36 @@ func _ready() -> void:
 # ================================================================
 
 func _update() -> void:
+	if not StateManager.is_state(StateManager.State.JOURNAL):
+		var total = 0
+		for entry in InventoryManager.get_pocket():
+			if entry != null:
+				total += entry["qty"]
+		label_count.text = str(total) + " / " + str(InventoryManager.get_slots_activos())
+		return
 	_build_grid()
 	var total = 0
 	for entry in InventoryManager.get_pocket():
 		if entry != null:
 			total += entry["qty"]
-	label_count.text = str(total) + " / " + str(TOTAL_SLOTS)
+	label_count.text = str(total) + " / " + str(InventoryManager.get_slots_activos())
 
 # ================================================================
 # JOURNAL CLOSING
 # ================================================================
 
 func _on_journal_closing() -> void:
+	_release_local_gui_state()
+	for child in grid_container.get_children():
+		if child.has_meta("hover_tween"):
+			child.get_meta("hover_tween").kill()
+			child.remove_meta("hover_tween")
 	if is_instance_valid(_context_menu):
 		_context_menu.queue_free()
 		_context_menu = null
 	_selected_slot = -1
+	if InventoryManager.inventory_changed.is_connected(_update):
+		InventoryManager.inventory_changed.disconnect(_update)
 
 # ================================================================
 # GRID
@@ -84,11 +103,14 @@ func _build_grid() -> void:
 		_context_menu = null
 
 	for child in grid_container.get_children():
+		if child.has_meta("hover_tween"):
+			child.get_meta("hover_tween").kill()
+			child.remove_meta("hover_tween")
 		child.queue_free()
 	grid_container.columns = GRID_COLS
 
 	var pocket = InventoryManager.get_pocket()
-	for i in range(TOTAL_SLOTS):
+	for i in range(InventoryManager.get_slots_activos()):
 		var entry = pocket[i] if i < pocket.size() else null
 		grid_container.add_child(_make_slot(entry, i))
 
@@ -110,9 +132,12 @@ func _make_slot(entry, slot_index: int) -> Control:
 	var slot = PanelContainer.new()
 	slot.custom_minimum_size = SLOT_SIZE
 
+	var bg_color = color_slot_bg if slot_index < InventoryManager.MAX_SLOTS_BASE else Color("#8a2a1a66")
+	var border_color = color_slot_border if slot_index < InventoryManager.MAX_SLOTS_BASE else Color("#8a2a1aee")
+
 	var style_normal = StyleBoxFlat.new()
-	style_normal.bg_color = color_slot_bg
-	style_normal.border_color = color_slot_border
+	style_normal.bg_color = bg_color
+	style_normal.border_color = border_color
 	style_normal.set_border_width_all(3)
 	style_normal.set_corner_radius_all(3)
 
@@ -124,7 +149,6 @@ func _make_slot(entry, slot_index: int) -> Control:
 
 	slot.add_theme_stylebox_override("panel", style_normal)
 
-	# Slot vacío — solo acepta drops
 	if entry == null:
 		slot.mouse_filter = Control.MOUSE_FILTER_STOP
 		slot.mouse_entered.connect(func():
@@ -330,7 +354,7 @@ func _show_context_menu(item_data: ItemData, slot_index: int, qty: int) -> void:
 		_add_menu_button(vbox, tr("ITEM_EQUIP"), func():
 			_context_menu = null
 			menu.queue_free()
-			InventoryManager.use_item_from_slot(slot_index)
+			_equip_from_context_safe(slot_index)
 		)
 	else:
 		_add_menu_button(vbox, tr("ITEM_USE"), func():
@@ -366,6 +390,18 @@ func _show_context_menu(item_data: ItemData, slot_index: int, qty: int) -> void:
 	await get_tree().process_frame
 	var grid_rect = grid_container.get_rect()
 	menu.position = grid_rect.get_center() - menu.size / 2.0
+
+func _equip_from_context_safe(slot_index: int) -> void:
+	_release_local_gui_state()
+	call_deferred("_equip_from_context_deferred", slot_index)
+
+func _equip_from_context_deferred(slot_index: int) -> void:
+	InventoryManager.use_item_from_slot(slot_index)
+
+func _release_local_gui_state() -> void:
+	var vp := get_viewport()
+	if vp:
+		vp.gui_release_focus()
 
 func _on_drop_some(slot_index: int, max_qty: int, menu: Node) -> void:
 	_drop_qty = 1
@@ -455,6 +491,7 @@ func _add_menu_button(parent: Node, text: String, callback: Callable) -> void:
 	var btn = Button.new()
 	btn.text = text
 	btn.flat = true
+	btn.focus_mode = Control.FOCUS_NONE
 	btn.custom_minimum_size = Vector2(180, 40)
 	btn.add_theme_color_override("font_color", Color("#e8d5a0"))
 	btn.add_theme_color_override("font_hover_color", Color("#c8a45a"))
@@ -475,6 +512,7 @@ func _add_menu_button(parent: Node, text: String, callback: Callable) -> void:
 	parent.add_child(btn)
 
 func _style_qty_btn(btn: Button) -> void:
+	btn.focus_mode = Control.FOCUS_NONE
 	btn.add_theme_font_override("font", font_title)
 	btn.add_theme_font_size_override("font_size", 20)
 	btn.add_theme_color_override("font_color", Color("#e8d5a0"))

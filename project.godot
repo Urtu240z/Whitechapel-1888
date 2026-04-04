@@ -30,6 +30,7 @@ buses/size/mode=0
 
 [autoload]
 
+StateManager="*res://Scripts/Managers/state_manager.gd"
 SceneManager="*res://Scripts/Managers/scene_manager.gd"
 GameManager="*res://Scripts/Managers/game_manager.gd"
 EffectsManager="*uid://vxabxav6ef78"

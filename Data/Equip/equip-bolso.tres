@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://btf4cqiava1u3"]
+
+[ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_u5nyu"]
+
+[resource]
+script = ExtResource("1_u5nyu")
+name = "equip-bolso"
+display_name = "Bolso de cuero"
+cost = 1.0
+item_type = 1
+equip_slot = 4
+max_stack = 1
+amplia_slots = true
+metadata/_custom_type_script = "uid://ckb87k7ubnui6"

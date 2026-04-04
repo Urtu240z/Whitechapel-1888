@@ -6,12 +6,9 @@ extends CanvasLayer
 # - open()
 # - close()
 # - is_open
-#
-# NO sustituye al addon PageFlip.
-# Solo controla visibilidad, pequeña animación de entrada/salida
-# y habilita/deshabilita input del libro cuando toca.
 # ================================================================
 signal journal_closing
+
 # ================================================================
 # NODOS
 # ================================================================
@@ -41,9 +38,10 @@ func _ready() -> void:
 
 	overlay.visible = true
 	overlay.modulate.a = 0.0
-
 	book_root.modulate.a = 0.0
 
+	# Muy importante: dejar el PageFlip completamente desactivado
+	# mientras el journal está cerrado. Invisible no basta.
 	_set_book_input_enabled(false)
 
 # ================================================================
@@ -56,6 +54,9 @@ func open() -> void:
 	_transitioning = true
 	is_open = true
 	visible = true
+
+	# Reactivar input real del libro ANTES de abrir.
+	_set_book_input_enabled(true)
 
 	if reset_to_first_spread_on_open:
 		_go_to_first_spread_instant()
@@ -71,8 +72,6 @@ func open() -> void:
 	tw.tween_property(book_root, "modulate:a", 1.0, 0.18)
 
 	await tw.finished
-
-	_set_book_input_enabled(true)
 	_transitioning = false
 
 
@@ -82,7 +81,10 @@ func close() -> void:
 
 	_transitioning = true
 	is_open = false
+
+	# Cortar input YA, antes de la animación de cierre.
 	_set_book_input_enabled(false)
+	_release_all_viewport_focus()
 	journal_closing.emit()
 	_close_inventory_menu()
 
@@ -102,8 +104,68 @@ func close() -> void:
 # HELPERS
 # ================================================================
 func _set_book_input_enabled(enabled: bool) -> void:
+	# 1) Intentar la API del addon si existe
 	if is_instance_valid(book) and book.has_method("_pageflip_set_input_enabled"):
 		book._pageflip_set_input_enabled(enabled)
+
+	# 2) Blindaje real: aunque el addon falle, desactivamos el nodo
+	#    y los SubViewports para que no sigan tragando input ocultos.
+	if is_instance_valid(book):
+		book.process_mode = Node.PROCESS_MODE_INHERIT if enabled else Node.PROCESS_MODE_DISABLED
+		book.set_process(enabled)
+		book.set_physics_process(enabled)
+		book.set_process_input(enabled)
+		book.set_process_unhandled_input(enabled)
+		book.set_process_unhandled_key_input(enabled)
+		book.set_process_shortcut_input(enabled)
+
+	for sv in _get_pageflip_subviewports():
+		sv.gui_disable_input = not enabled
+		sv.physics_object_picking = enabled
+		sv.process_mode = Node.PROCESS_MODE_INHERIT if enabled else Node.PROCESS_MODE_DISABLED
+		sv.set_process(enabled)
+		sv.set_physics_process(enabled)
+		sv.set_process_input(enabled)
+		sv.set_process_unhandled_input(enabled)
+		sv.set_process_unhandled_key_input(enabled)
+		sv.set_process_shortcut_input(enabled)
+
+		for child in sv.get_children():
+			_set_node_input_enabled_recursive(child, enabled)
+
+	if OS.is_debug_build():
+		print("📖 Journal PageFlip input enabled:", enabled)
+		for sv in _get_pageflip_subviewports():
+			print("   - ", sv.name, " gui_disable_input=", sv.gui_disable_input, " process_mode=", sv.process_mode)
+
+
+func _set_node_input_enabled_recursive(node: Node, enabled: bool) -> void:
+	node.process_mode = Node.PROCESS_MODE_INHERIT if enabled else Node.PROCESS_MODE_DISABLED
+	node.set_process(enabled)
+	node.set_physics_process(enabled)
+	node.set_process_input(enabled)
+	node.set_process_unhandled_input(enabled)
+	node.set_process_unhandled_key_input(enabled)
+	node.set_process_shortcut_input(enabled)
+	for child in node.get_children():
+		_set_node_input_enabled_recursive(child, enabled)
+
+
+func _get_pageflip_subviewports() -> Array:
+	var result: Array = []
+	if not is_instance_valid(book):
+		return result
+	for slot_name in ["Slot1", "Slot2", "Slot3", "Slot4"]:
+		var sv = book.find_child(slot_name, true, false)
+		if sv is SubViewport:
+			result.append(sv)
+	return result
+
+
+func _release_all_viewport_focus() -> void:
+	get_viewport().gui_release_focus()
+	for sv in _get_pageflip_subviewports():
+		sv.gui_release_focus()
 
 
 func _go_to_first_spread_instant() -> void:
@@ -116,19 +178,24 @@ func _go_to_first_spread_instant() -> void:
 	if book.has_method("_update_static_visuals_immediate"):
 		book._update_static_visuals_immediate()
 
+
 func is_transitioning() -> bool:
 	return _transitioning
 
+
 func _close_inventory_menu() -> void:
 	var page_3 = book.find_child("JournalPage3", true, false)
-	if not is_instance_valid(page_3):
-		# Buscar en los SubViewports del addon
-		for slot in ["Slot1", "Slot2", "Slot3", "Slot4"]:
-			var sv = book.find_child(slot, true, false)
-			if sv:
-				for child in sv.get_children():
-					if child.has_method("_build_grid"):
-						if is_instance_valid(child._context_menu):
-							child._context_menu.queue_free()
-							child._context_menu = null
-						return
+	if is_instance_valid(page_3):
+		if is_instance_valid(page_3._context_menu):
+			page_3._context_menu.queue_free()
+			page_3._context_menu = null
+		return
+
+	# Buscar en los SubViewports del addon
+	for sv in _get_pageflip_subviewports():
+		for child in sv.get_children():
+			if child.has_method("_build_grid"):
+				if is_instance_valid(child._context_menu):
+					child._context_menu.queue_free()
+					child._context_menu = null
+				return

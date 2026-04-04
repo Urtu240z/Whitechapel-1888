@@ -172,6 +172,7 @@ func _hostal_abierto(hora: float) -> bool:
 # ================================================================
 
 func _mostrar_selection() -> void:
+	StateManager.enter(StateManager.State.SLEEPING)
 	var player = PlayerManager.player_instance
 	if player:
 		player.disable_movement()
@@ -224,6 +225,7 @@ func _on_selection_confirmado(horas: float) -> void:
 	_iniciar_sueno()
 
 func _on_selection_cancelado() -> void:
+	StateManager.exit(StateManager.State.SLEEPING)
 	var player = PlayerManager.player_instance
 	if player:
 		player.enable_movement()
@@ -340,9 +342,11 @@ func _finalizar_sueno() -> void:
 		await SceneManager.fade_in(1.5)
 		player.animation.play_rise()
 		await player.animation.anim_tree.animation_finished
+		StateManager.exit(StateManager.State.SLEEPING)
 		player.enable_movement()
 	else:
 		await SceneManager.fade_in(1.5)
+		StateManager.exit(StateManager.State.SLEEPING)
 	sleep_ended.emit(_horas_dormidas, not _cancelado)
 
 

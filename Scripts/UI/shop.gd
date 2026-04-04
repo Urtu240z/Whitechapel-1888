@@ -1,14 +1,6 @@
 extends CanvasLayer
 # ================================================================
 # SHOP — shop.gd
-# UI de tienda genérica para cualquier vendedor.
-# Uso:
-#   var shop = SHOP_SCENE.instantiate()
-#   get_tree().root.add_child(shop)
-#   shop.open(shop_name, items)
-#
-# items es un Array de Dictionaries:
-#   { "id": "drink-cerveza", "max_qty": 5 }
 # ================================================================
 
 var font_title = preload("res://Assets/Fonts/Cinzel.ttf")
@@ -20,28 +12,43 @@ var font_body  = preload("res://Assets/Fonts/IMFellEnglish.ttf")
 var _shop_name: String = ""
 var _items: Array = []
 var _quantities: Dictionary = {}
+var _overlay: ColorRect = null
 
 signal shop_closed
-signal items_purchased(purchased: Dictionary)  # { item_id: cantidad }
+signal items_purchased(purchased: Dictionary)
 
 # ================================================================
 # OPEN
 # ================================================================
 
 func open(shop_name: String, items: Array) -> void:
+	layer = 20
 	_shop_name = shop_name
 	_items = items
 	_quantities.clear()
 	for item in items:
 		_quantities[item["id"]] = 0
-	_build_ui()
 	visible = true
+	_build_ui()
 
 # ================================================================
 # BUILD UI
 # ================================================================
 
 func _build_ui() -> void:
+	shop_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	shop_panel.modulate.a = 0.0
+	shop_panel.scale = Vector2(0.85, 0.85)
+
+	if is_instance_valid(_overlay):
+		_overlay.queue_free()
+	_overlay = ColorRect.new()
+	_overlay.color = Color(0, 0, 0, 0)
+	_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	background.add_child(_overlay)
+	background.move_child(_overlay, 0)
+
 	for child in shop_panel.get_children():
 		child.queue_free()
 
@@ -61,7 +68,6 @@ func _build_ui() -> void:
 	vbox.add_theme_constant_override("separation", 0)
 	shop_panel.add_child(vbox)
 
-	# Cabecera
 	var header = PanelContainer.new()
 	var header_style = StyleBoxFlat.new()
 	header_style.bg_color = Color("#c8a45a")
@@ -85,7 +91,6 @@ func _build_ui() -> void:
 	sep1.add_theme_color_override("color", Color("#c8a45a66"))
 	vbox.add_child(sep1)
 
-	# Lista de items
 	var items_vbox = VBoxContainer.new()
 	items_vbox.add_theme_constant_override("separation", 0)
 	var items_margin = MarginContainer.new()
@@ -107,7 +112,6 @@ func _build_ui() -> void:
 	sep2.add_theme_color_override("color", Color("#c8a45a66"))
 	vbox.add_child(sep2)
 
-	# Total y dinero
 	var footer_margin = MarginContainer.new()
 	footer_margin.add_theme_constant_override("margin_left", 16)
 	footer_margin.add_theme_constant_override("margin_right", 16)
@@ -158,8 +162,26 @@ func _build_ui() -> void:
 	btn_hbox.add_child(btn_cancel)
 
 	await get_tree().process_frame
+	await get_tree().process_frame
+
 	var viewport_size = get_viewport().get_visible_rect().size
 	shop_panel.position = (viewport_size - shop_panel.size) / 2.0
+	shop_panel.pivot_offset = shop_panel.size / 2.0
+
+	var tw = create_tween().set_parallel(true).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_property(_overlay, "color:a", 0.6, 1.0)
+	tw.tween_property(shop_panel, "modulate:a", 1.0, 0.25)
+	tw.tween_property(shop_panel, "scale", Vector2(1.0, 1.0), 0.3)
+	await tw.finished
+
+	print("🛒 Animación completada, shop listo para input")
+	print("🛒 shop_panel visible: ", shop_panel.visible)
+	print("🛒 shop_panel modulate.a: ", shop_panel.modulate.a)
+	print("🛒 shop_panel scale: ", shop_panel.scale)
+	print("🛒 CanvasLayer visible: ", visible)
+	print("🛒 Input mouse mode: ", Input.mouse_mode)
+	print("🛒 CanvasLayer layer: ", layer)
+	print("🛒 get_viewport().gui_get_focus_owner(): ", get_viewport().gui_get_focus_owner())
 
 # ================================================================
 # FILA DE ITEM
@@ -270,10 +292,11 @@ func _update_totals() -> void:
 # ================================================================
 
 func _on_buy_pressed() -> void:
+	print("🛒 _on_buy_pressed llamado")
 	var total = _calculate_total()
 
 	if total <= 0:
-		_close()
+		await _animate_close()
 		return
 
 	if PlayerStats.dinero < total:
@@ -296,23 +319,27 @@ func _on_buy_pressed() -> void:
 		if not InventoryManager.has_item(item_entry["id"]):
 			slots_necesarios += 1
 
+	print("slots_libres: ", slots_libres)
+	print("slots_necesarios: ", slots_necesarios)
+	print("items_to_add: ", items_to_add)
+	print("pocket size: ", InventoryManager.get_pocket().size())
+	print("slots_activos: ", InventoryManager.get_slots_activos())
 	if slots_necesarios > slots_libres:
 		_show_error(tr("SHOP_NO_SPACE"))
 		return
 
-	# Verificar que no se supera max_stack con lo ya poseído
 	for item_entry in items_to_add:
 		var item_data = InventoryManager.get_item_data(item_entry["id"])
 		var owned: int = _get_owned(item_entry["id"])
-		var qty_a_añadir: int = item_data.usos_max if item_data.usos_max > 0 else item_entry["qty"]
+		var qty_a_añadir: int = item_entry["qty"]
+		print("owned: ", owned, " qty_a_añadir: ", qty_a_añadir, " max_stack: ", item_data.max_stack, " usos_max: ", item_data.usos_max)
+			
 		if owned + qty_a_añadir > item_data.max_stack:
 			_show_error(tr("SHOP_NO_SPACE"))
 			return
 
-	# Cobrar
 	PlayerStats.gastar_dinero(total)
 
-	# Añadir items y registrar compra
 	var purchased: Dictionary = {}
 	for item_entry in items_to_add:
 		var item_data = InventoryManager.get_item_data(item_entry["id"])
@@ -321,12 +348,24 @@ func _on_buy_pressed() -> void:
 		purchased[item_entry["id"]] = item_entry["qty"]
 
 	items_purchased.emit(purchased)
-	_close()
+	await _animate_close()
 
 func _on_cancel_pressed() -> void:
-	_close()
+	print("🛒 _on_cancel_pressed llamado")
+	await _animate_close()
 
-func _close() -> void:
+# ================================================================
+# ANIMACIÓN CIERRE
+# ================================================================
+
+func _animate_close() -> void:
+	print("🛒 _animate_close llamado, is_instance_valid: ", is_instance_valid(self))
+	var tw = create_tween().set_parallel(true).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+	if is_instance_valid(_overlay):
+		tw.tween_property(_overlay, "color:a", 0.0, 1)
+	tw.tween_property(shop_panel, "modulate:a", 0.0, 0.6)
+	tw.tween_property(shop_panel, "scale", Vector2(0.85, 0.85), 0.6)
+	await tw.finished
 	shop_closed.emit()
 	queue_free()
 
@@ -361,6 +400,7 @@ func _make_button(text: String, primary: bool) -> Button:
 	var btn = Button.new()
 	btn.text = text
 	btn.custom_minimum_size = Vector2(120, 40)
+	btn.focus_mode = Control.FOCUS_NONE
 	btn.add_theme_font_override("font", font_body)
 	btn.add_theme_font_size_override("font_size", 18)
 
@@ -391,6 +431,7 @@ func _make_qty_btn(text: String) -> Button:
 	var btn = Button.new()
 	btn.text = text
 	btn.custom_minimum_size = Vector2(28, 28)
+	btn.focus_mode = Control.FOCUS_NONE
 	btn.add_theme_font_override("font", font_title)
 	btn.add_theme_font_size_override("font_size", 16)
 	btn.add_theme_color_override("font_color", Color("#e8d5a0"))

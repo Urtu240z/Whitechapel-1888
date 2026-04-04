@@ -29,6 +29,7 @@
 [ext_resource type="Resource" uid="uid://cdjvk0atrrn85" path="res://Data/Equip/perfume-noche-oriente.tres" id="23_wl6bi"]
 [ext_resource type="Resource" uid="uid://cn103i3guppjr" path="res://Data/Equip/perfume-jardin-secreto.tres" id="24_mjtkt"]
 [ext_resource type="Resource" uid="uid://ck7xn236c2k8a" path="res://Data/Equip/perfume-pecado-carmesi.tres" id="25_b0nva"]
+[ext_resource type="Resource" uid="uid://btf4cqiava1u3" path="res://Data/Equip/equip-bolso.tres" id="26_6skcy"]
 
 [sub_resource type="Resource" id="Resource_k7r8x"]
 script = ExtResource("20_35ndy")
@@ -63,6 +64,12 @@ item = ExtResource("25_b0nva")
 max_qty = 1
 is_variable = true
 variable_chance = 0.3
+metadata/_custom_type_script = "uid://bbc6r2ife4inn"
+
+[sub_resource type="Resource" id="Resource_mlx1v"]
+script = ExtResource("20_35ndy")
+item = ExtResource("26_6skcy")
+max_qty = 1
 metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rusfs"]
@@ -246,7 +253,7 @@ dialog_timeline = "uid://bv2dnetct8j1v"
 service_id = "perfume_vendor"
 skin_name = "NPC_PerfumeVendor"
 initial_facing_right = false
-shop_items = Array[ExtResource("20_35ndy")]([SubResource("Resource_k7r8x"), SubResource("Resource_l83om"), SubResource("Resource_v1jka"), SubResource("Resource_keg7c"), SubResource("Resource_ubdd7")])
+shop_items = Array[ExtResource("20_35ndy")]([SubResource("Resource_k7r8x"), SubResource("Resource_l83om"), SubResource("Resource_v1jka"), SubResource("Resource_keg7c"), SubResource("Resource_ubdd7"), SubResource("Resource_mlx1v")])
 shop_name_key = "PERFUME_VENDOR_SHOP_NAME"
 
 [node name="PerfumeStall" type="Sprite2D" parent="Exterior/World/PerfumeStore" unique_id=709910960]

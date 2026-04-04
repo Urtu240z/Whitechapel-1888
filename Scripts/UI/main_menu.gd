@@ -19,20 +19,19 @@ var _options_panel: VBoxContainer
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
+	StateManager.enter(StateManager.State.MENU)
 	_build_ui()
 
 
 func _input(event: InputEvent) -> void:
 	var focused = get_viewport().gui_get_focus_owner()
 
-	# Aceptar con F (interact) o Enter
 	if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
 		if focused is Button:
 			focused.emit_signal("pressed")
 			get_viewport().set_input_as_handled()
 			return
 
-	# Navegar con WASD además de flechas
 	if event.is_action_pressed("move_left") or event.is_action_pressed("ui_left"):
 		if focused:
 			var neighbor = focused.get_focus_neighbor(SIDE_LEFT)
@@ -46,13 +45,11 @@ func _input(event: InputEvent) -> void:
 				neighbor.grab_focus()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("hide") or event.is_action_pressed("ui_up"):
-		# W o flecha arriba → botón anterior
 		if focused:
 			var prev = focused.find_prev_valid_focus()
 			if prev: prev.grab_focus()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("crouch") or event.is_action_pressed("ui_down"):
-		# S o flecha abajo → botón siguiente
 		if focused:
 			var next = focused.find_next_valid_focus()
 			if next: next.grab_focus()
@@ -257,6 +254,7 @@ func _focus_first(panel: VBoxContainer) -> void:
 # 🔘 CALLBACKS
 # =========================================================
 func _on_continue_pressed() -> void:
+	StateManager.exit(StateManager.State.MENU)
 	for i in range(3):
 		if SaveManager.slot_exists(i):
 			SaveManager.load_game(i)
@@ -264,6 +262,7 @@ func _on_continue_pressed() -> void:
 
 
 func _on_new_game_pressed() -> void:
+	StateManager.exit(StateManager.State.MENU)
 	SceneManager.change_scene(GAME_SCENE)
 
 
@@ -287,6 +286,7 @@ func _on_back_pressed() -> void:
 
 
 func _on_slot_load_pressed(slot: int) -> void:
+	StateManager.exit(StateManager.State.MENU)
 	SaveManager.load_game(slot)
 
 

@@ -211,9 +211,14 @@ func _open_shop() -> void:
 	if items_hoy.is_empty():
 		return
 
+	if not StateManager.can_enter(StateManager.State.SHOP):
+		return
+
 	var shop = SHOP_SCENE.instantiate()
 	get_tree().root.add_child(shop)
-	shop.open(tr(shop_name_key) if not shop_name_key.is_empty() else npc_display_name, items_hoy)
+
+	# Estado y movimiento ANTES de open() para evitar race conditions con el await interno
+	StateManager.enter(StateManager.State.SHOP)
 	GameManager.show_mouse()
 
 	var player = PlayerManager.player_instance
@@ -227,7 +232,11 @@ func _open_shop() -> void:
 	)
 
 	shop.shop_closed.connect(func():
+		StateManager.exit(StateManager.State.SHOP)
 		GameManager.hide_mouse()
 		if is_instance_valid(player):
 			player.enable_movement()
 	)
+
+	# open() al final porque internamente tiene await
+	shop.open(tr(shop_name_key) if not shop_name_key.is_empty() else npc_display_name, items_hoy)

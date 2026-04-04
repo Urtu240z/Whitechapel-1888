@@ -36,7 +36,6 @@ var color_hover  = Color("#c8a45a")
 func _ready() -> void:
 	if not is_in_group("pause_menu"):
 		add_to_group("pause_menu")
-
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	visible = false
 	_build_ui()
@@ -56,31 +55,25 @@ func _input(event: InputEvent) -> void:
 				_rebuild_menu(MenuMode.SAVE)
 			_:
 				_rebuild_menu(MenuMode.MAIN)
-
 		get_viewport().set_input_as_handled()
 		return
 
 	var focused = get_viewport().gui_get_focus_owner()
-
-	# Si por lo que sea no hay foco, forzamos uno
 	if focused == null:
 		call_deferred("_focus_first")
 		return
 
-	# Aceptar con F o Enter
 	if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
 		if focused is Button:
 			focused.emit_signal("pressed")
 			get_viewport().set_input_as_handled()
 			return
 
-	# Navegar con arriba/abajo
 	if event.is_action_pressed("ui_up") or event.is_action_pressed("hide"):
 		var prev = focused.find_prev_valid_focus()
 		if prev:
 			prev.grab_focus()
 		get_viewport().set_input_as_handled()
-
 	elif event.is_action_pressed("ui_down") or event.is_action_pressed("crouch"):
 		var next = focused.find_next_valid_focus()
 		if next:
@@ -91,29 +84,23 @@ func _input(event: InputEvent) -> void:
 func open() -> void:
 	if is_open:
 		return
-
 	is_open = true
 	_pending_save_slot = -1
 	_rebuild_menu(MenuMode.MAIN)
-
 	visible = true
 	get_tree().paused = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
 	call_deferred("_focus_first")
 
 
 func close() -> void:
 	if not is_open:
 		return
-
 	is_open = false
 	_pending_save_slot = -1
 	visible = false
 	get_tree().paused = false
-	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	StateManager.exit(StateManager.State.PAUSED)
 
-	# Evita que el player siga andando si se estaba manteniendo una tecla
 	var player = PlayerManager.player_instance
 	if is_instance_valid(player):
 		player.velocity = Vector2.ZERO
@@ -179,7 +166,6 @@ func _rebuild_menu(new_mode: int) -> void:
 		MenuMode.MAIN:
 			_title.text = "PAUSA"
 			_subtitle.text = "Whitechapel 1888"
-
 			_btn_continue = _add_button("Continuar", _on_continue_pressed)
 			_btn_save = _add_button("Guardar", _on_save_pressed)
 			_btn_load = _add_button("Cargar", _on_load_pressed)
@@ -189,34 +175,28 @@ func _rebuild_menu(new_mode: int) -> void:
 		MenuMode.SAVE:
 			_title.text = "GUARDAR PARTIDA"
 			_subtitle.text = "Elige un slot"
-
 			for i in range(SaveManager.MAX_SLOTS):
 				var slot_index := i
 				_add_button(_get_save_slot_text(slot_index), func(): _on_save_slot_selected(slot_index))
-
 			_add_button("Volver", _on_back_pressed)
 
 		MenuMode.LOAD:
 			_title.text = "CARGAR PARTIDA"
 			_subtitle.text = "Elige un slot"
-
 			for i in range(SaveManager.MAX_SLOTS):
 				var slot_index := i
 				var btn := _add_button(_get_load_slot_text(slot_index), func(): await _load_from_slot(slot_index))
 				btn.disabled = not SaveManager.slot_exists(slot_index)
-
 			_add_button("Volver", _on_back_pressed)
 
 		MenuMode.SAVE_CONFIRM:
 			var slot_num := _pending_save_slot + 1
 			_title.text = "SOBRESCRIBIR SLOT %d" % slot_num
-
 			if SaveManager.slot_exists(_pending_save_slot):
 				var info := SaveManager.get_slot_info(_pending_save_slot)
 				_subtitle.text = "Ya existe una partida en este slot.\n%s" % _format_slot_info(info)
 			else:
 				_subtitle.text = "Este slot está vacío."
-
 			_add_button("Sí, sobrescribir", _confirm_save_overwrite)
 			_add_button("No, volver", _cancel_save_overwrite)
 
@@ -226,7 +206,6 @@ func _rebuild_menu(new_mode: int) -> void:
 func _clear_buttons() -> void:
 	for child in _buttons_box.get_children():
 		child.queue_free()
-
 	_btn_continue = null
 	_btn_save = null
 	_btn_load = null
@@ -249,7 +228,6 @@ func _add_button(text: String, callback: Callable) -> Button:
 	btn.focus_mode = Control.FOCUS_ALL
 	btn.flat = true
 	btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-
 	btn.add_theme_font_override("font", font_body)
 	btn.add_theme_font_size_override("font_size", 22)
 	btn.add_theme_color_override("font_color", color_button)
@@ -304,18 +282,15 @@ func _format_slot_info(info: Dictionary) -> String:
 	var dia: int = info.get("dia", 1)
 	var hora: float = info.get("hora", 8.0)
 	var dinero: float = info.get("dinero", 0.0)
-
 	return "Día %d | %s | £%s" % [dia, _format_hour(hora), str(snapped(dinero, 0.01))]
 
 
 func _format_hour(hora_float: float) -> String:
 	var horas: int = int(floor(hora_float))
 	var minutos: int = int(round((hora_float - float(horas)) * 60.0))
-
 	if minutos >= 60:
 		minutos = 0
 		horas += 1
-
 	horas = horas % 24
 	return "%02d:%02d" % [horas, minutos]
 
@@ -323,19 +298,15 @@ func _format_hour(hora_float: float) -> String:
 func _on_continue_pressed() -> void:
 	close()
 
-
 func _on_save_pressed() -> void:
 	_rebuild_menu(MenuMode.SAVE)
-
 
 func _on_load_pressed() -> void:
 	_rebuild_menu(MenuMode.LOAD)
 
-
 func _on_back_pressed() -> void:
 	_pending_save_slot = -1
 	_rebuild_menu(MenuMode.MAIN)
-
 
 func _on_save_slot_selected(slot: int) -> void:
 	if SaveManager.slot_exists(slot):
@@ -346,35 +317,28 @@ func _on_save_slot_selected(slot: int) -> void:
 		print("💾 Guardado en slot %d" % slot)
 		_rebuild_menu(MenuMode.SAVE)
 
-
 func _confirm_save_overwrite() -> void:
 	if _pending_save_slot < 0:
 		_rebuild_menu(MenuMode.SAVE)
 		return
-
 	SaveManager.save_game(_pending_save_slot)
 	print("💾 Sobrescrito slot %d" % _pending_save_slot)
 	_pending_save_slot = -1
 	_rebuild_menu(MenuMode.SAVE)
 
-
 func _cancel_save_overwrite() -> void:
 	_pending_save_slot = -1
 	_rebuild_menu(MenuMode.SAVE)
 
-
 func _load_from_slot(slot: int) -> void:
 	if not SaveManager.slot_exists(slot):
 		return
-
 	close()
 	await SaveManager.load_game(slot)
-
 
 func _on_main_menu_pressed() -> void:
 	close()
 	SceneManager.change_scene(MAIN_MENU_SCENE)
-
 
 func _on_quit_pressed() -> void:
 	get_tree().paused = false
