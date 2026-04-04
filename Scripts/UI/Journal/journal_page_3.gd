@@ -23,6 +23,8 @@ const SLOT_SIZE   = Vector2(100, 100)
 var _drop_qty: int = 1
 var _context_menu: Node = null
 var _selected_slot: int = -1
+var _perfume_claves: Array = []
+var _perfume_index: int = 0
 
 # ================================================================
 # READY
@@ -36,7 +38,18 @@ func _ready() -> void:
 		InventoryManager.inventory_changed.connect(_update)
 	GameManager.journal_closed.connect(_on_journal_closing)
 	InventoryManager.perfume_already_active.connect(func():
-		_show_popup("¿Más perfume? Ya hueles como un burdel francés en llamas.")
+		if _perfume_index == 0:
+			_perfume_claves = [
+				"PERFUME_POPUP_1",
+				"PERFUME_POPUP_2",
+				"PERFUME_POPUP_3",
+				"PERFUME_POPUP_4",
+				"PERFUME_POPUP_5",
+				"PERFUME_POPUP_6",
+			]
+			_perfume_claves.shuffle()
+		_show_popup(tr(_perfume_claves[_perfume_index]))
+		_perfume_index = (_perfume_index + 1) % _perfume_claves.size()
 	)
 
 # ================================================================

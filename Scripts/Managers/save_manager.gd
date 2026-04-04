@@ -38,6 +38,7 @@ func save_game(slot: int = 0) -> bool:
 
 	_busy = false
 	print("💾 Partida guardada en slot %d" % slot)
+	_log_stats("SAVE")
 	return true
 
 
@@ -186,12 +187,23 @@ func _collect_data() -> Dictionary:
 			inside_local_y = local_pos.y
 			break
 
+	# Calcular stats base SIN bonuses de equipamiento
+	var higiene_base := PlayerStats.higiene
+	var nervios_base := PlayerStats.nervios
+	var sex_appeal_bonus_base := PlayerStats.sex_appeal_bonus
+
 	var equipment_data: Dictionary = {}
 	var equipped_now: Dictionary = InventoryManager.get_equipped_all()
-
 	for slot_key in equipped_now.keys():
 		var item: ItemData = equipped_now[slot_key]
-		equipment_data[str(slot_key)] = item.name if item else ""
+		if item:
+			higiene_base -= item.higiene_bonus
+			nervios_base -= item.nervios_bonus
+			sex_appeal_bonus_base -= item.sex_appeal_bonus
+			equipment_data[str(slot_key)] = {
+				"id": item.name,
+				"horas": InventoryManager.get_perfume_horas_restantes()
+			}
 
 	# Recopilar stock de todos los vendedores
 	var shop_stocks: Dictionary = {}
@@ -216,19 +228,20 @@ func _collect_data() -> Dictionary:
 		"tiempo_acumulado": DayNightManager.tiempo_acumulado,
 		"dia":              int(DayNightManager.tiempo_acumulado / (24.0 * 60.0)) + 1,
 
-		"miedo":      PlayerStats.miedo,
-		"estres":     PlayerStats.estres,
-		"felicidad":  PlayerStats.felicidad,
-		"nervios":    PlayerStats.nervios,
-		"hambre":     PlayerStats.hambre,
-		"higiene":    PlayerStats.higiene,
-		"sueno":      PlayerStats.sueno,
-		"alcohol":    PlayerStats.alcohol,
-		"laudano":    PlayerStats.laudano,
-		"salud":      PlayerStats.salud,
-		"stamina":    PlayerStats.stamina,
-		"enfermedad": PlayerStats.enfermedad,
-		"dinero":     PlayerStats.dinero,
+		"miedo":            PlayerStats.miedo,
+		"estres":           PlayerStats.estres,
+		"felicidad":        PlayerStats.felicidad,
+		"nervios":          nervios_base,
+		"hambre":           PlayerStats.hambre,
+		"higiene":          higiene_base,
+		"sueno":            PlayerStats.sueno,
+		"alcohol":          PlayerStats.alcohol,
+		"laudano":          PlayerStats.laudano,
+		"salud":            PlayerStats.salud,
+		"stamina":          PlayerStats.stamina,
+		"enfermedad":       PlayerStats.enfermedad,
+		"dinero":           PlayerStats.dinero,
+		"sex_appeal_bonus": sex_appeal_bonus_base,
 
 		"enferma":               PlayerStats.enferma,
 		"medicina_activa":       PlayerStats.medicina_activa,
@@ -249,32 +262,30 @@ func _apply_stats(data: Dictionary) -> void:
 	DayNightManager.tiempo_acumulado = data.get("tiempo_acumulado", 0.0)
 	DayNightManager.pausado          = false
 
-	PlayerStats.miedo      = data.get("miedo", 10.0)
-	PlayerStats.estres     = data.get("estres", 30.0)
-	PlayerStats.felicidad  = data.get("felicidad", 50.0)
-	PlayerStats.nervios    = data.get("nervios", 20.0)
-	PlayerStats.hambre     = data.get("hambre", 50.0)
-	PlayerStats.higiene    = data.get("higiene", 70.0)
-	PlayerStats.sueno      = data.get("sueno", 80.0)
-	PlayerStats.alcohol    = data.get("alcohol", 0.0)
-	PlayerStats.laudano    = data.get("laudano", 0.0)
-	PlayerStats.salud      = data.get("salud", 100.0)
-	PlayerStats.stamina    = data.get("stamina", 100.0)
-	PlayerStats.enfermedad = data.get("enfermedad", 0.0)
-	PlayerStats.dinero     = data.get("dinero", 5.0)
+	PlayerStats.miedo            = data.get("miedo", 10.0)
+	PlayerStats.estres           = data.get("estres", 30.0)
+	PlayerStats.felicidad        = data.get("felicidad", 50.0)
+	PlayerStats.nervios          = data.get("nervios", 20.0)
+	PlayerStats.hambre           = data.get("hambre", 50.0)
+	PlayerStats.higiene          = data.get("higiene", 70.0)
+	PlayerStats.sueno            = data.get("sueno", 80.0)
+	PlayerStats.alcohol          = data.get("alcohol", 0.0)
+	PlayerStats.laudano          = data.get("laudano", 0.0)
+	PlayerStats.salud            = data.get("salud", 100.0)
+	PlayerStats.stamina          = data.get("stamina", 100.0)
+	PlayerStats.enfermedad       = data.get("enfermedad", 0.0)
+	PlayerStats.dinero           = data.get("dinero", 5.0)
+	PlayerStats.sex_appeal_bonus = data.get("sex_appeal_bonus", 0.0)
 
 	PlayerStats.enferma               = data.get("enferma", false)
 	PlayerStats.medicina_activa       = data.get("medicina_activa", false)
 	PlayerStats.medicina_timer        = data.get("medicina_timer", 0.0)
 	PlayerStats.dias_sin_pagar_hostal = data.get("dias_sin_pagar_hostal", 0)
 
-	PlayerStats.actualizar_stats()
+	# 1) Limpiar equipamiento
+	InventoryManager.clear_all_equipped()
 
-	# 1) Limpiar slots equipados antes de restaurar
-	for slot in InventoryManager.get_equipped_all().keys().duplicate():
-		InventoryManager.unequip(slot)
-
-	# 2) Limpiar inventario antes de cargar
+	# 2) Limpiar inventario
 	for i in range(InventoryManager.MAX_SLOTS):
 		if InventoryManager.get_slot(i) != {}:
 			InventoryManager.remove_item_from_slot(i, 999)
@@ -283,12 +294,17 @@ func _apply_stats(data: Dictionary) -> void:
 	var pocket: Array = data.get("pocket", [])
 	InventoryManager.restore_pocket_from_serializable(pocket)
 
-	# 4) Restaurar equipamiento
+	# 4) Restaurar equipamiento — aplica bonuses encima de los valores base
 	var equipment: Dictionary = data.get("equipment", {})
 	for slot_str in equipment:
-		var item_id: String = equipment[slot_str]
+		var entry: Dictionary = equipment[slot_str]
+		var item_id: String = entry.get("id", "")
+		var horas: int = entry.get("horas", 0)
 		if item_id != "":
-			InventoryManager.equip(item_id)
+			InventoryManager.restore_equipped_from_save(int(slot_str), item_id, horas)
+
+	PlayerStats.actualizar_stats()
+	_log_stats("LOAD")
 
 
 # =========================================================
@@ -362,3 +378,13 @@ func _slot_path(slot: int) -> String:
 
 func is_busy() -> bool:
 	return _busy
+
+func _log_stats(label: String) -> void:
+	print("📊 [%s] dinero: %.1f | higiene: %.1f | sex_appeal: %.1f | sex_appeal_bonus: %.1f | perfume: %s" % [
+		label,
+		PlayerStats.dinero,
+		PlayerStats.higiene,
+		PlayerStats.sex_appeal,
+		PlayerStats.sex_appeal_bonus,
+		str(InventoryManager.get_equipped(ItemData.EquipSlot.NECK_PERFUME))
+	])

@@ -112,7 +112,7 @@ func _process(delta: float) -> void:
 
 	if medicina_activa:
 		medicina_timer += delta
-		var dias_jugados = medicina_timer / DEGRADACION_INTERVALO
+		var dias_jugados = medicina_timer / (DEGRADACION_INTERVALO * 24.0)
 		if dias_jugados >= MEDICINA_DURACION_DIAS:
 			medicina_activa = false
 			medicina_timer = 0.0
@@ -431,7 +431,7 @@ func actualizar_stats_diferido(delta: float = 1.0) -> void:
 # 🔁 SYNC CON DIALOGIC
 # ============================================================
 func _sync_dialogic_variables() -> void:
-	if not Engine.has_singleton("Dialogic"):
+	if not get_tree().root.has_node("Dialogic"):
 		return
 
 	Dialogic.VAR.set_variable("sex_appeal", sex_appeal)

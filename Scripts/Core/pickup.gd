@@ -2,7 +2,7 @@ extends Area2D
 class_name Pickup
 
 # ⚙️ Esta línea se actualiza automáticamente por el plugin
-@export_enum("client-medium", "client-poor", "client-rich", "cure-doctor", "cure-hostal", "cure-medicine", "cure-reset", "cure-street", "drink-absenta", "drink-cerveza", "drink-ginebra", "drink-ron", "drink-whisky", "drink-wine", "drug-eter", "drug-laudano", "food-arenque", "food-gachas", "food-pan", "food-patata", "food-sopa", "food-tocino", "health-ducha", "health-sleep-cama", "health-sleep-silla", "health-sleep-suelo", "liquid-agua", "liquid-cafe", "liquid-leche", "liquid-te", "scare-down", "scare-up", "sueño-down", "sueño-up") var pickup_type: String = "client-medium"
+@export_enum("client-medium", "client-poor", "client-rich", "cure-doctor", "cure-hostal", "cure-medicine", "cure-reset", "cure-street", "drink-absenta", "drink-cerveza", "drink-ginebra", "drink-ron", "drink-whisky", "drink-wine", "drug-eter", "drug-laudano", "food-arenque", "food-gachas", "food-pan", "food-patata", "food-sopa", "food-tocino", "health-ducha", "health-sleep-cama", "health-sleep-silla", "health-sleep-suelo", "liquid-agua", "liquid-cafe", "liquid-leche", "liquid-te", "scare-down", "scare-up", "sueno-down", "sueno-up") var pickup_type: String = "client-medium"
 @export var disappear_on_pickup: bool = true
 
 var data: ItemData

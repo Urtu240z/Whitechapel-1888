@@ -264,6 +264,11 @@ func get_equipped(slot: ItemData.EquipSlot) -> ItemData:
 func get_perfume_horas_restantes() -> int:
 	return _equip_timers.get(ItemData.EquipSlot.NECK_PERFUME, 0)
 
+func clear_all_equipped() -> void:
+	for slot in _equipped.keys().duplicate():
+		_unequip_temporal(slot)
+		_equip_timers.erase(slot)
+
 # ================================================================
 # EFECTOS — consumables
 # ================================================================
@@ -335,4 +340,16 @@ func restore_pocket_from_serializable(data: Array) -> void:
 			_pocket[i] = { "id": data[i]["id"], "qty": data[i]["qty"] }
 		else:
 			_pocket[i] = null
+	inventory_changed.emit()
+
+func restore_equipped_from_save(slot_int: int, item_id: String, horas_restantes: int) -> void:
+	var slot := slot_int as ItemData.EquipSlot
+	var item := get_item_data(item_id)
+	if not item:
+		return
+	_equipped[slot] = item
+	if horas_restantes > 0:
+		_equip_timers[slot] = horas_restantes
+	_apply_equip_bonuses(item)
+	item_equipped.emit(slot, item)
 	inventory_changed.emit()

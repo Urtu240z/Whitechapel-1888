@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://ddqbeo6xjwtwq"]
+
+[ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_sxmfi"]
+
+[resource]
+script = ExtResource("1_sxmfi")
+name = "sueno-up"
+display_name = "Sueño Up"
+effects = {
+"sueno": -40.0
+}

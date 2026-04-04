@@ -165,6 +165,13 @@ func _build_ui() -> void:
 # FILA DE ITEM
 # ================================================================
 
+func _get_owned(item_id: String) -> int:
+	var total: int = 0
+	for slot in InventoryManager.get_pocket():
+		if slot != null and slot["id"] == item_id:
+			total += slot["qty"]
+	return total
+
 func _add_item_row(parent: Node, item_data: ItemData, max_qty: int) -> void:
 	var row = HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
@@ -216,8 +223,13 @@ func _add_item_row(parent: Node, item_data: ItemData, max_qty: int) -> void:
 	)
 	btn_plus.pressed.connect(func():
 		var item_data_check = InventoryManager.get_item_data(item_id)
-		var max_allowed = min(max_qty, item_data_check.max_stack if item_data_check.max_stack > 0 else max_qty)
-		_quantities[item_id] = min(max_allowed, _quantities[item_id] + 1)
+		var owned: int = _get_owned(item_id)
+		var stack_max: int = item_data_check.max_stack if item_data_check.max_stack > 0 else max_qty
+		var max_allowed: int = max(0, min(max_qty, stack_max - owned))
+		if _quantities[item_id] >= max_allowed:
+			_show_error(tr("SHOP_MAX_STACK"))
+			return
+		_quantities[item_id] += 1
 		qty_lbl.text = str(_quantities[item_id])
 		stock_lbl.text = "(%d)" % (max_qty - _quantities[item_id])
 		_update_totals()
@@ -287,6 +299,15 @@ func _on_buy_pressed() -> void:
 	if slots_necesarios > slots_libres:
 		_show_error(tr("SHOP_NO_SPACE"))
 		return
+
+	# Verificar que no se supera max_stack con lo ya poseído
+	for item_entry in items_to_add:
+		var item_data = InventoryManager.get_item_data(item_entry["id"])
+		var owned: int = _get_owned(item_entry["id"])
+		var qty_a_añadir: int = item_data.usos_max if item_data.usos_max > 0 else item_entry["qty"]
+		if owned + qty_a_añadir > item_data.max_stack:
+			_show_error(tr("SHOP_NO_SPACE"))
+			return
 
 	# Cobrar
 	PlayerStats.gastar_dinero(total)

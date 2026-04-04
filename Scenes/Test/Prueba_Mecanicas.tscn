@@ -251,12 +251,12 @@ disappear_on_pickup = false
 
 [node name="Pickup3" parent="Labels" unique_id=655813595 instance=ExtResource("3_ju50u")]
 position = Vector2(-3231.2139, -459.04434)
-pickup_type = "sueño-down"
+pickup_type = "sueno-down"
 disappear_on_pickup = false
 
 [node name="Pickup4" parent="Labels" unique_id=758704612 instance=ExtResource("3_ju50u")]
 position = Vector2(-2657.0327, -199.65869)
-pickup_type = "sueño-up"
+pickup_type = "sueno-up"
 disappear_on_pickup = false
 
 [node name="Pickup5" parent="Labels" unique_id=1327025623 instance=ExtResource("3_ju50u")]

@@ -138,9 +138,6 @@ func prepare_dialogic_variables() -> void:
 	match service_id:
 		"lodge_reception":
 			PlayerStats._sync_dialogic_variables()
-			Dialogic.VAR.set_variable("hostel.hostel_open", true)
-			Dialogic.VAR.set_variable("hostel.player_money", PlayerStats.dinero)
-			Dialogic.VAR.set_variable("hostel.hostel_price", CONFIG.coste_hostal)
 			Dialogic.VAR.set_variable("hostel.hostel_result", "")
 		"barman":
 			Dialogic.VAR.set_variable("barman.barman_result", "")

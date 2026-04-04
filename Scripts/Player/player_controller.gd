@@ -82,7 +82,6 @@ func _ready() -> void:
 	interaction.initialize(self)
 	audio.initialize(self)
 	set_outfit(default_outfit)
-	# Conectar colapso por agotamiento
 	PlayerStats.sueno_agotado.connect(_on_sueno_agotado)
 
 # ==========================
