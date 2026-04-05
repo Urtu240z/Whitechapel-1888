@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_64x66")
-name = "pan"
+name = "food-pan"
 display_name = "Pan"
 cost = 1.0
 effects = {

@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cdjvk0atrrn85"]
 
+[ext_resource type="Texture2D" uid="uid://shiay40axkvv" path="res://Assets/Sprites/Items/Perfume-Noche.png" id="1_gw21n"]
 [ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_l8vrf"]
 
 [resource]
@@ -7,6 +8,7 @@ script = ExtResource("1_l8vrf")
 name = "perfume-noche-oriente"
 display_name = "Noche de Oriente"
 cost = 60.0
+icon = ExtResource("1_gw21n")
 item_type = 1
 equip_slot = 3
 max_stack = 1

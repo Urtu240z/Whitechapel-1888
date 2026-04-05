@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://btf4cqiava1u3"]
 
+[ext_resource type="Texture2D" uid="uid://gcmu0wksxlv8" path="res://Assets/Sprites/Items/Equip-Bolso.png" id="1_fhwlo"]
 [ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_u5nyu"]
 
 [resource]
@@ -7,6 +8,7 @@ script = ExtResource("1_u5nyu")
 name = "equip-bolso"
 display_name = "Bolso de cuero"
 cost = 1.0
+icon = ExtResource("1_fhwlo")
 item_type = 1
 equip_slot = 4
 max_stack = 1

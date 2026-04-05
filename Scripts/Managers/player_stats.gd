@@ -314,34 +314,46 @@ func descansar_calle() -> void:
 	actualizar_stats()
 
 # ============================================================
-# 💋 ACCIÓN — Sexo con cliente
+# 💋 ACTO CON CLIENTE — reemplaza tener_sexo_poor/medium/rich
+# acto:  "mano" | "oral" | "completo"
+# tipo:  "poor" | "medium" | "rich"
 # ============================================================
-func tener_sexo_poor() -> void:
-	higiene  = max(0, higiene - 25)
-	sueno    = max(0, sueno - 15)
-	estres   = min(100, estres + 20)
-	nervios  = min(100, nervios + 10)
-	hambre   = min(100, hambre + 10)
-	infectar(PROB_INFECCION_POOR)
-	añadir_dinero(1.0)
 
-func tener_sexo_medium() -> void:
-	higiene  = max(0, higiene - 20)
-	sueno    = max(0, sueno - 12)
-	estres   = min(100, estres + 15)
-	nervios  = min(100, nervios + 8)
-	hambre   = min(100, hambre + 8)
-	infectar(PROB_INFECCION_MEDIUM)
-	añadir_dinero(3.0)
+# Tabla de datos por acto y tipo de cliente
+const _ACTOS: Dictionary = {
+	"mano": {
+		"poor":   { "pago": 0.5, "higiene": -5,  "nervios": 5,  "sueno": -3,  "estres": 5,  "infeccion": 0.00 },
+		"medium": { "pago": 1.0, "higiene": -4,  "nervios": 4,  "sueno": -2,  "estres": 4,  "infeccion": 0.00 },
+		"rich":   { "pago": 2.0, "higiene": -2,  "nervios": 2,  "sueno": -1,  "estres": 2,  "infeccion": 0.00 },
+	},
+	"oral": {
+		"poor":   { "pago": 1.0, "higiene": -12, "nervios": 10, "sueno": -5,  "estres": 10, "infeccion": 0.05 },
+		"medium": { "pago": 2.0, "higiene": -8,  "nervios": 7,  "sueno": -4,  "estres": 7,  "infeccion": 0.02 },
+		"rich":   { "pago": 4.0, "higiene": -4,  "nervios": 4,  "sueno": -2,  "estres": 4,  "infeccion": 0.01 },
+	},
+	"completo": {
+		"poor":   { "pago": 2.0, "higiene": -25, "nervios": 20, "sueno": -10, "estres": 20, "infeccion": PROB_INFECCION_POOR   },
+		"medium": { "pago": 4.0, "higiene": -18, "nervios": 14, "sueno": -8,  "estres": 14, "infeccion": PROB_INFECCION_MEDIUM },
+		"rich":   { "pago": 8.0, "higiene": -8,  "nervios": 6,  "sueno": -4,  "estres": 6,  "infeccion": PROB_INFECCION_RICH   },
+	},
+}
 
-func tener_sexo_rich() -> void:
-	higiene  = max(0, higiene - 10)
-	sueno    = max(0, sueno - 8)
-	estres   = min(100, estres + 5)
-	nervios  = min(100, nervios + 3)
-	hambre   = min(100, hambre + 5)
-	infectar(PROB_INFECCION_RICH)
-	añadir_dinero(8.0)
+func tener_acto(acto: String, tipo: String) -> void:
+	if not _ACTOS.has(acto) or not _ACTOS[acto].has(tipo):
+		push_warning("PlayerStats.tener_acto: combinación inválida '%s'/'%s'" % [acto, tipo])
+		return
+
+	var d: Dictionary = _ACTOS[acto][tipo]
+
+	higiene  = clamp(higiene  + d["higiene"],  0, 100)
+	nervios  = clamp(nervios  + d["nervios"],  0, 100)
+	sueno    = clamp(sueno    + d["sueno"],    0, 100)
+	estres   = clamp(estres   + d["estres"],   0, 100)
+	hambre   = clamp(hambre   + 5.0,           0, 100)  # siempre da algo de hambre
+
+	infectar(d["infeccion"])
+	añadir_dinero(d["pago"])
+	actualizar_stats()
 
 # ============================================================
 # 💤 SLEEP

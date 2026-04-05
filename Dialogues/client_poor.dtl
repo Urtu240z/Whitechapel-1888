@@ -1,0 +1,21 @@
+Eh, tú... ¿Cuánto cobras?
+- ¿Qué quieres?
+	Tengo {client.precio_mano} chelín si me haces una mano... O te doy {client.precio_oral} por la boca. Y {client.precio_completo} si quiero lo de verdad.
+	- Mano — {client.precio_mano}£
+		Vamos...
+		set {client.result} = "mano"
+		[end_timeline]
+	- Oral — {client.precio_oral}£
+		Agachate...
+		set {client.result} = "oral"
+		[end_timeline]
+	- Completo — {client.precio_completo}£
+		Te haré disfrutar...
+		set {client.result} = "completo"
+		[end_timeline]
+	- No me interesas
+		Largate calienta braguetas!
+		[end_timeline]
+- Lárgate.
+	Zorra!
+	[end_timeline]

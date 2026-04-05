@@ -49,6 +49,7 @@ Dialogic="*uid://ds2q0uclmolvu"
 directories/dch_directory={}
 directories/dtl_directory={
 "barman": "res://Dialogues/barman.dtl",
+"client_poor": "res://Dialogues/client_poor.dtl",
 "hostelkeeper": "res://Dialogues/hostelkeeper.dtl",
 "npc_1": "res://Dialogues/npc_1.dtl",
 "perfume_vendor": "res://Dialogues/perfume_vendor.dtl"
@@ -62,6 +63,12 @@ layout/default_style="res://Data/Dialogic/Whitechapel_Layout.tres"
 variables={
 "barman": {
 "barman_result": ""
+},
+"client": {
+"precio_completo": 0.0,
+"precio_mano": 0.0,
+"precio_oral": 0.0,
+"result": ""
 },
 "dinero": 5.0,
 "enfermedad": 0.0,

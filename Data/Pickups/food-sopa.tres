@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dpd2ytj5cxefx"]
 
 [ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_hx4u6"]
+[ext_resource type="Texture2D" uid="uid://dcgpndidbho2d" path="res://Assets/Sprites/Items/Food-Sopa.png" id="1_r8joh"]
 
 [resource]
 script = ExtResource("1_hx4u6")
-name = "sopa"
+name = "food-sopa"
 display_name = "Sopa"
 cost = 2.0
 effects = {
@@ -14,3 +15,4 @@ effects = {
 "nervios": -2.0,
 "sueno": 5.0
 }
+icon = ExtResource("1_r8joh")

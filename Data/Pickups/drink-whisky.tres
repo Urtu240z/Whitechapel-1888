@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://varywclromyc"]
 
+[ext_resource type="Texture2D" uid="uid://b1yjmitx0mnno" path="res://Assets/Sprites/Items/Drink-Whisky.png" id="1_7fod3"]
 [ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_mm521"]
 
 [resource]
@@ -17,3 +18,4 @@ effects = {
 "nervios": -10.0,
 "sueno": -5.0
 }
+icon = ExtResource("1_7fod3")

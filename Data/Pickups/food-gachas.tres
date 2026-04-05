@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b8s1je1k7l3hl"]
 
 [ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_awrjl"]
+[ext_resource type="Texture2D" uid="uid://bebne5yatrdmo" path="res://Assets/Sprites/Items/Food-Gachas.png" id="1_h44la"]
 
 [resource]
 script = ExtResource("1_awrjl")
-name = "gachas"
+name = "food-gachas"
 display_name = "Gachas"
 cost = 1.0
 effects = {
@@ -14,3 +15,4 @@ effects = {
 "higiene": -5.0,
 "sueno": 10.0
 }
+icon = ExtResource("1_h44la")

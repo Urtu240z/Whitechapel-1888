@@ -30,6 +30,7 @@
 [ext_resource type="Resource" uid="uid://cn103i3guppjr" path="res://Data/Equip/perfume-jardin-secreto.tres" id="24_mjtkt"]
 [ext_resource type="Resource" uid="uid://ck7xn236c2k8a" path="res://Data/Equip/perfume-pecado-carmesi.tres" id="25_b0nva"]
 [ext_resource type="Resource" uid="uid://btf4cqiava1u3" path="res://Data/Equip/equip-bolso.tres" id="26_6skcy"]
+[ext_resource type="PackedScene" uid="uid://oebyjtwwcxhx" path="res://Scenes/NPC/NPC_Client.tscn" id="31_mlx1v"]
 
 [sub_resource type="Resource" id="Resource_k7r8x"]
 script = ExtResource("20_35ndy")
@@ -306,5 +307,9 @@ shadow_base_alpha = 1.7
 shadow_max_rotation_left = 45.0
 shadow_max_rotation_right = -45.0
 shadow_max_skew = 0.05
+
+[node name="NPCClient" parent="." unique_id=232242800 instance=ExtResource("31_mlx1v")]
+position = Vector2(283, -592)
+dialog_timeline = "uid://c38evy5q65a84"
 
 [editable path="Exterior/Area2D/SceneChanger"]

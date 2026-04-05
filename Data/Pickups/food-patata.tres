@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cjcwttsvmba11"]
 
+[ext_resource type="Texture2D" uid="uid://cykg4vgxl4c68" path="res://Assets/Sprites/Items/Food-Patata.png" id="1_dwtvy"]
 [ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_xw276"]
 
 [resource]
 script = ExtResource("1_xw276")
-name = "patata"
+name = "food-patata"
 display_name = "Patatas"
 cost = 2.0
 effects = {
@@ -12,3 +13,4 @@ effects = {
 "hambre": -40.0,
 "higiene": -2.0
 }
+icon = ExtResource("1_dwtvy")

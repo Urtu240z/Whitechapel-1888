@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dkdj8l60g2a0q"]
 
+[ext_resource type="Texture2D" uid="uid://cfpr104b08efp" path="res://Assets/Sprites/Items/Drink-Wine.png" id="1_814aa"]
 [ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_wwhyb"]
 
 [resource]
@@ -7,3 +8,4 @@ script = ExtResource("1_wwhyb")
 name = "drink-wine"
 display_name = "Vino"
 cost = 3.0
+icon = ExtResource("1_814aa")

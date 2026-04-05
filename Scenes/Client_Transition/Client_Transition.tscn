@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://jxaejuy08pbs"]
+
+[ext_resource type="Texture2D" uid="uid://cnj6a0du1p7m6" path="res://Assets/Sprites/Scenes/Scene_1_p2.png" id="1_vufck"]
+[ext_resource type="Texture2D" uid="uid://d046qlky05sps" path="res://Assets/Sprites/Effects/Smoke.png" id="2_sf564"]
+[ext_resource type="Texture2D" uid="uid://oigwjm4yre2l" path="res://Assets/Sprites/Scenes/Scene_1_p1.png" id="3_2w4j2"]
+[ext_resource type="Texture2D" uid="uid://b38snj6t625s5" path="res://Assets/Sprites/Effects/Fog.png" id="4_gsbgl"]
+
+[sub_resource type="Gradient" id="Gradient_tcn34"]
+offsets = PackedFloat32Array(0, 0.6528926)
+colors = PackedColorArray(1, 1, 1, 0.08235294, 0.816975, 0.37342674, 0.15170373, 0.65500003)
+
+[node name="ClientTransition" type="Node2D" unique_id=1045312548]
+
+[node name="Scene1P2" type="Sprite2D" parent="." unique_id=1703450751]
+modulate = Color(0.556953, 0.556953, 0.556953, 1)
+position = Vector2(650, 350)
+texture = ExtResource("1_vufck")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=279508853]
+modulate = Color(1, 1, 1, 0.34509805)
+light_mask = 4
+visibility_layer = 4
+position = Vector2(1301, 554.00006)
+scale = Vector2(1.8132648, 1.8132645)
+amount = 1500
+texture = ExtResource("2_sf564")
+lifetime = 4.0
+preprocess = 0.05
+speed_scale = 0.4
+emission_shape = 2
+emission_sphere_radius = 11.09
+spread = 52.89
+gravity = Vector2(-90, 0)
+initial_velocity_max = 35.08
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.0
+scale_amount_max = 0.3
+color = Color(0.6204995, 0.56294864, 0.41551143, 0.120000005)
+color_ramp = SubResource("Gradient_tcn34")
+
+[node name="Scene1P1" type="Sprite2D" parent="." unique_id=1755246720]
+modulate = Color(0.33715135, 0.33715135, 0.33715135, 1)
+position = Vector2(650, 360)
+texture = ExtResource("3_2w4j2")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=385557121]
+position = Vector2(394, 454)
+color = Color(1, 0.8238249, 0.5220287, 1)
+energy = 5.64
+blend_mode = 2
+texture = ExtResource("4_gsbgl")
+texture_scale = 0.52
+
+[node name="PointLight2D2" type="PointLight2D" parent="." unique_id=1085350174]
+position = Vector2(917, 241)
+color = Color(1, 0.8238249, 0.5220287, 1)
+energy = 5.64
+blend_mode = 2
+texture = ExtResource("4_gsbgl")
+texture_scale = 0.52

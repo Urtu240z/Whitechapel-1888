@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dt7uvasbw8bvm"]
 
+[ext_resource type="Texture2D" uid="uid://b2afnpb8awhd1" path="res://Assets/Sprites/Items/Food-Tocino.png" id="1_04h5f"]
 [ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_sx7vm"]
 
 [resource]
 script = ExtResource("1_sx7vm")
-name = "tocino"
+name = "food-tocino"
 display_name = "Tocino"
 cost = 2.0
 effects = {
@@ -13,3 +14,4 @@ effects = {
 "hambre": -25.0,
 "higiene": -5.0
 }
+icon = ExtResource("1_04h5f")

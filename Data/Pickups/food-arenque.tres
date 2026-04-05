@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bltpj1hhpvmum"]
 
+[ext_resource type="Texture2D" uid="uid://bi1uh8eaxhy5b" path="res://Assets/Sprites/Items/Food-Arenque.png" id="1_46hlu"]
 [ext_resource type="Script" uid="uid://ckb87k7ubnui6" path="res://Scripts/Data/item_data.gd" id="1_lpj03"]
 
 [resource]
 script = ExtResource("1_lpj03")
-name = "arenque"
+name = "food-arenque"
 display_name = "Arenque ahumado"
 cost = 1.0
 effects = {
@@ -14,3 +15,4 @@ effects = {
 "higiene": -6.0,
 "nervios": 2.0
 }
+icon = ExtResource("1_46hlu")
