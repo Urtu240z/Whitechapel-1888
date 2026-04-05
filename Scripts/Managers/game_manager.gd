@@ -20,8 +20,12 @@ func _set_custom_cursor() -> void:
 	Input.set_custom_mouse_cursor(cursor, Input.CURSOR_ARROW, Vector2(78, 6))
 
 func _input(event: InputEvent) -> void:
+	if StateManager.is_state(StateManager.State.CLIENT_SERVICE):
+		return
+
 	if event is InputEventMouseButton and event.pressed:
 		print("🖱️ Click recibido en GameManager, estado: ", StateManager.State.keys()[StateManager.current()])
+
 	if event.is_action_pressed("ui_cancel"):
 		_handle_cancel()
 		return
@@ -44,6 +48,9 @@ func _input(event: InputEvent) -> void:
 # ESC / PAUSA
 # ==============================================================================
 func _handle_cancel() -> void:
+	if StateManager.is_state(StateManager.State.CLIENT_SERVICE):
+		return
+
 	_refresh_pause_menu()
 	_refresh_journal()
 
@@ -61,8 +68,10 @@ func _handle_cancel() -> void:
 
 	_open_pause_menu()
 
-
 func _open_pause_menu() -> void:
+	if StateManager.is_state(StateManager.State.CLIENT_SERVICE):
+		return
+
 	_refresh_pause_menu()
 
 	if _pause_menu == null:
@@ -82,24 +91,28 @@ func _open_pause_menu() -> void:
 	StateManager.enter(StateManager.State.PAUSED)
 	_pause_menu.open()
 
-
 func _refresh_pause_menu() -> void:
 	if _pause_menu != null and is_instance_valid(_pause_menu):
 		return
+
 	_pause_menu = get_tree().get_first_node_in_group("pause_menu")
 	if _pause_menu != null and is_instance_valid(_pause_menu):
 		return
+
 	var current_scene = get_tree().current_scene
 	if current_scene == null:
 		return
+
 	_pause_menu = PAUSE_MENU_SCENE.instantiate()
 	current_scene.add_child(_pause_menu)
-
 
 # ==============================================================================
 # JOURNAL
 # ==============================================================================
 func toggle_journal() -> void:
+	if StateManager.is_state(StateManager.State.CLIENT_SERVICE):
+		return
+
 	_refresh_journal()
 
 	if _journal == null:
@@ -121,18 +134,23 @@ func toggle_journal() -> void:
 
 	_open_journal()
 
-
 func _open_journal() -> void:
+	if StateManager.is_state(StateManager.State.CLIENT_SERVICE):
+		return
+
 	var player = PlayerManager.player_instance
 	if is_instance_valid(player):
 		player.disable_movement()
 		player.velocity = Vector2.ZERO
+
 		if player.has_node("Movement"):
 			var movement = player.get_node("Movement")
 			movement.enabled = false
 			movement.force_stop()
+
 		if player.has_node("AnimationTree"):
 			player.get_node("AnimationTree").active = false
+
 		if player.has_node("Audio"):
 			var audio = player.get_node("Audio")
 			if audio.has_node("StepPlayer"):
@@ -142,7 +160,6 @@ func _open_journal() -> void:
 
 	StateManager.enter(StateManager.State.JOURNAL)
 	_journal.open()
-
 
 func _close_journal() -> void:
 	# Importante: cerrar primero el journal para que deje de procesar input
@@ -155,11 +172,13 @@ func _close_journal() -> void:
 	if is_instance_valid(player):
 		player.enable_movement()
 		player.velocity = Vector2.ZERO
+
 		if player.has_node("Movement"):
 			var movement = player.get_node("Movement")
 			movement.force_stop()
 			movement.block_movement_input_until_release()
 			movement.enabled = true
+
 		if player.has_node("AnimationTree"):
 			player.get_node("AnimationTree").active = true
 
@@ -167,19 +186,18 @@ func _close_journal() -> void:
 	await get_tree().process_frame
 	get_viewport().gui_release_focus()
 
-
 func _refresh_journal() -> void:
 	if _journal == null or not is_instance_valid(_journal):
 		_journal = get_tree().get_first_node_in_group("journal")
 
-
 func _is_journal_transitioning() -> bool:
 	if _journal == null:
 		return false
+
 	if _journal.has_method("is_transitioning"):
 		return _journal.is_transitioning()
-	return bool(_journal.get("_transitioning"))
 
+	return bool(_journal.get("_transitioning"))
 
 # ==============================================================================
 # RATÓN — mantenemos las funciones para compatibilidad

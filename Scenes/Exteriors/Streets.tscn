@@ -31,6 +31,7 @@
 [ext_resource type="Resource" uid="uid://ck7xn236c2k8a" path="res://Data/Equip/perfume-pecado-carmesi.tres" id="25_b0nva"]
 [ext_resource type="Resource" uid="uid://btf4cqiava1u3" path="res://Data/Equip/equip-bolso.tres" id="26_6skcy"]
 [ext_resource type="PackedScene" uid="uid://oebyjtwwcxhx" path="res://Scenes/NPC/NPC_Client.tscn" id="31_mlx1v"]
+[ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="32_wl6bi"]
 
 [sub_resource type="Resource" id="Resource_k7r8x"]
 script = ExtResource("20_35ndy")
@@ -83,12 +84,12 @@ size = Vector2(532, 2155)
 [node name="Audio" type="Node2D" parent="Exterior" unique_id=1091310372 groups=["audio_exterior"]]
 position = Vector2(-1135, -107)
 
-[node name="FireflyAudioAtmosphereOfAStreetWhitoutCarsAtNight,CrowVariation1" type="AudioStreamPlayer" parent="Exterior/Audio" unique_id=278960691]
+[node name="FireflyAudioAtmosphereOfAStreetWhitoutCarsAtNight,CrowVariation1" type="AudioStreamPlayer" parent="Exterior/Audio" unique_id=278960691 groups=["world_ambience"]]
 stream = ExtResource("7_nb0nf")
 volume_db = -10.275
 autoplay = true
 
-[node name="ShadowsBeneathTheVeilV2" type="AudioStreamPlayer" parent="Exterior/Audio" unique_id=2081144783]
+[node name="ShadowsBeneathTheVeilV2" type="AudioStreamPlayer" parent="Exterior/Audio" unique_id=2081144783 groups=["world_music"]]
 stream = ExtResource("10_va4r7")
 volume_db = 9.892
 autoplay = true
@@ -298,6 +299,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
+[node name="NPCClient" parent="." unique_id=232242800 instance=ExtResource("31_mlx1v")]
+z_index = 3
+position = Vector2(933, -613)
+scale = Vector2(1.16, 1.16)
+dialog_timeline = "uid://c38evy5q65a84"
+initial_facing_right = false
+
 [node name="Player" parent="." unique_id=1458210690 instance=ExtResource("17_rusfs")]
 modulate = Color(0.65834004, 0.6583399, 0.6583399, 1)
 y_sort_enabled = true
@@ -308,8 +316,6 @@ shadow_max_rotation_left = 45.0
 shadow_max_rotation_right = -45.0
 shadow_max_skew = 0.05
 
-[node name="NPCClient" parent="." unique_id=232242800 instance=ExtResource("31_mlx1v")]
-position = Vector2(283, -592)
-dialog_timeline = "uid://c38evy5q65a84"
+[node name="HUD" parent="." unique_id=3512527 instance=ExtResource("32_wl6bi")]
 
 [editable path="Exterior/Area2D/SceneChanger"]

@@ -85,3 +85,13 @@ func fade_in(duration: float = 0.5) -> void:
 	await tw.finished
 	_blocking.visible = false
 	_is_transitioning = false
+
+func snap_black() -> void:
+	_is_transitioning = true
+	_blocking.visible = true
+	_fade.color.a = 1.0
+
+func snap_clear() -> void:
+	_fade.color.a = 0.0
+	_blocking.visible = false
+	_is_transitioning = false

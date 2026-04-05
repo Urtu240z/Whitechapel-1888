@@ -13,6 +13,7 @@ enum State {
 	SLEEPING,
 	SHOP,
 	TRANSITIONING,
+	CLIENT_SERVICE,
 }
 
 signal state_changed(from: State, to: State)
@@ -28,7 +29,7 @@ func _on_state_changed(_from: State, to: State) -> void:
 	match to:
 		State.MENU, State.PAUSED, State.JOURNAL, State.SHOP:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		State.GAMEPLAY, State.TRANSITIONING, State.SLEEPING, State.DIALOG:
+		State.GAMEPLAY, State.TRANSITIONING, State.SLEEPING, State.DIALOG, State.CLIENT_SERVICE:
 			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 # ================================================================
@@ -49,7 +50,7 @@ func can_enter(state: State) -> bool:
 		State.MENU:
 			return true
 		State.GAMEPLAY:
-			return _current == State.MENU or _current == State.TRANSITIONING
+			return _current == State.MENU or _current == State.TRANSITIONING or _current == State.CLIENT_SERVICE
 		State.PAUSED:
 			return _current == State.GAMEPLAY
 		State.JOURNAL:
@@ -62,6 +63,8 @@ func can_enter(state: State) -> bool:
 			return _current == State.GAMEPLAY or _current == State.DIALOG
 		State.TRANSITIONING:
 			return _current != State.SLEEPING
+		State.CLIENT_SERVICE:
+			return _current == State.DIALOG or _current == State.GAMEPLAY
 	return false
 
 func enter(state: State) -> bool:
@@ -87,16 +90,22 @@ func exit(state: State) -> bool:
 		])
 		return false
 
+	_previous = _current
 	_current = State.GAMEPLAY
-	state_changed.emit(state, _current)
+	state_changed.emit(_previous, _current)
 
 	if OS.is_debug_build():
-		print("🎮 Estado: %s → GAMEPLAY" % State.keys()[state])
+		print("🎮 Estado: %s → %s" % [State.keys()[_previous], State.keys()[_current]])
 
 	return true
 
 func force_gameplay() -> void:
 	var prev = _current
+	_previous = prev
 	_current = State.GAMEPLAY
 	state_changed.emit(prev, _current)
+
+	if OS.is_debug_build():
+		print("🎮 Estado: %s → %s" % [State.keys()[prev], State.keys()[_current]])
+
 	push_warning("StateManager: forzado a GAMEPLAY desde %s" % State.keys()[prev])

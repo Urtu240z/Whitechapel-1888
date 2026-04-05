@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_rsnob")
+duracion_hora_segundos = 10.0
 horas_max_calle = 24.0

@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://clflwletildwn"]
+
+[ext_resource type="Script" uid="uid://1umgccb0doq7" path="res://Scripts/UI/hud.gd" id="1_omqfp"]
+
+[node name="HUD" type="CanvasLayer" unique_id=3512527]
+script = ExtResource("1_omqfp")
+
+[node name="TopBar" type="MarginContainer" parent="." unique_id=1479734654]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Panel" type="PanelContainer" parent="TopBar" unique_id=205202392]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TopBar/Panel" unique_id=1618727681]
+layout_mode = 2
+
+[node name="SundialClock" type="Control" parent="TopBar/Panel/HBoxContainer" unique_id=1463997808]
+layout_mode = 2
+
+[node name="VBoxStats" type="VBoxContainer" parent="TopBar/Panel/HBoxContainer" unique_id=858561093]
+layout_mode = 2
+
+[node name="TimeLabel" type="Label" parent="TopBar/Panel/HBoxContainer/VBoxStats" unique_id=1249847384]
+layout_mode = 2
+
+[node name="MoneyLabel" type="Label" parent="TopBar/Panel/HBoxContainer/VBoxStats" unique_id=237023564]
+layout_mode = 2
+
+[node name="HealthBar" type="ProgressBar" parent="TopBar/Panel/HBoxContainer/VBoxStats" unique_id=1503032172]
+layout_mode = 2
+
+[node name="HungerBar" type="ProgressBar" parent="TopBar/Panel/HBoxContainer/VBoxStats" unique_id=87783850]
+layout_mode = 2
+
+[node name="SleepBar" type="ProgressBar" parent="TopBar/Panel/HBoxContainer/VBoxStats" unique_id=2120440181]
+layout_mode = 2
+
+[node name="HygieneBar" type="ProgressBar" parent="TopBar/Panel/HBoxContainer/VBoxStats" unique_id=218727294]
+layout_mode = 2

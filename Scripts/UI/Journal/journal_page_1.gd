@@ -21,7 +21,7 @@ var color_bar_fill = Color("#5c7a3088")
 
 const BAR_WIDTH  = 140
 const BAR_HEIGHT = 10
-
+const CONFIG = preload("res://Data/Game/game_config.tres")
 
 func _ready() -> void:
 	label_title.text       = tr("JOURNAL_TITLE")
@@ -122,5 +122,5 @@ func _format_hour(h: float) -> String:
 
 
 func _calcular_dia() -> int:
-	var segundos_por_dia = 24.0 * 60.0
-	return int(DayNightManager.tiempo_acumulado / segundos_por_dia) + 1
+	var segundos_por_dia = CONFIG.duracion_hora_segundos * 24.0
+	return int(floor(DayNightManager.tiempo_acumulado / segundos_por_dia)) + 1

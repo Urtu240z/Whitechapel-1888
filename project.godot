@@ -37,6 +37,8 @@ EffectsManager="*uid://vxabxav6ef78"
 SleepManager="*uid://c1rkvqxyuem0"
 PlayerManager="*res://Scripts/Managers/player_manager.gd"
 SaveManager="*uid://djycmrpqx6jom"
+ClientServiceManager="*uid://dqy8kg5mr3v6n"
+WorldAudioManager="*uid://c0j8gm13ntulv"
 DayNightManager="*res://Scripts/Managers/day_night_manager.gd"
 InventoryManager="*uid://dy7hx75blrap1"
 InteractionManager="*uid://28eacuhmdtha"
@@ -146,6 +148,8 @@ enabled=PackedStringArray("res://addons/curved_lines_2d/plugin.cfg", "res://addo
 player=""
 audio_exterior=""
 street_lamp=""
+world_music=""
+world_ambience=""
 
 [gui]
 

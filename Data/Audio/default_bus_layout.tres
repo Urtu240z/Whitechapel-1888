@@ -2,15 +2,15 @@
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_j3pel"]
 resource_name = "Reverb"
-room_size = 0.3
-spread = 0.35
-dry = 0.0
-wet = 0.6
+room_size = 0.05
+damping = 0.13
+spread = 0.2
+wet = 0.15
 
 [sub_resource type="AudioEffectDelay" id="AudioEffectDelay_j3pel"]
 resource_name = "Delay"
-tap1_delay_ms = 38.0
-tap2_delay_ms = 126.0
+tap1_delay_ms = 13.0
+tap2_delay_ms = 52.0
 
 [sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_j3pel"]
 resource_name = "Amplify"

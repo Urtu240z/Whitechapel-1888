@@ -338,21 +338,30 @@ const _ACTOS: Dictionary = {
 	},
 }
 
-func tener_acto(acto: String, tipo: String) -> void:
+# ============================================================
+# Reemplaza tener_acto() en player_stats.gd
+# satisfaction: 0.25 a 1.0 según ronda del minijuego
+# ============================================================
+ 
+func tener_acto(acto: String, tipo: String, satisfaction: float = 1.0) -> void:
 	if not _ACTOS.has(acto) or not _ACTOS[acto].has(tipo):
 		push_warning("PlayerStats.tener_acto: combinación inválida '%s'/'%s'" % [acto, tipo])
 		return
-
+ 
 	var d: Dictionary = _ACTOS[acto][tipo]
-
-	higiene  = clamp(higiene  + d["higiene"],  0, 100)
-	nervios  = clamp(nervios  + d["nervios"],  0, 100)
-	sueno    = clamp(sueno    + d["sueno"],    0, 100)
-	estres   = clamp(estres   + d["estres"],   0, 100)
-	hambre   = clamp(hambre   + 5.0,           0, 100)  # siempre da algo de hambre
-
+ 
+	higiene = clamp(higiene  + d["higiene"],  0, 100)
+	nervios = clamp(nervios  + d["nervios"],  0, 100)
+	sueno   = clamp(sueno    + d["sueno"],    0, 100)
+	estres  = clamp(estres   + d["estres"],   0, 100)
+	hambre  = clamp(hambre   + 5.0,           0, 100)
+ 
 	infectar(d["infeccion"])
-	añadir_dinero(d["pago"])
+ 
+	# El pago se escala con la satisfacción del minijuego
+	var pago_final: float = d["pago"] * satisfaction
+	añadir_dinero(pago_final)
+ 
 	actualizar_stats()
 
 # ============================================================

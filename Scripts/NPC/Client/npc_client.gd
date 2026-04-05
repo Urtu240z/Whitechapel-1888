@@ -112,6 +112,9 @@ func prepare_dialogic_variables() -> void:
 # ============================================================================
 # DIALOGIC — RESOLVER RESULTADO
 # ============================================================================
+
+const CLIENT_TRANSITION_SCENE = preload("res://Scenes/Client_Transition/Client_Transition.tscn")
+
 func resolve_dialogic_result() -> void:
 	if not get_tree().root.has_node("Dialogic"):
 		return
@@ -120,10 +123,15 @@ func resolve_dialogic_result() -> void:
 	Dialogic.VAR.set_variable("client.result", "")
 
 	if result.is_empty():
-		return  # Jugador rechazó
+		return
 
 	var tipo: String = _get_tipo_string()
-	PlayerStats.tener_acto(result, tipo)
+
+	var data: Dictionary = await ClientServiceManager.start_service(result, tipo)
+	if data.is_empty():
+		return
+
+	PlayerStats.tener_acto(data["acto"], data["tipo"], data["satisfaction"])
 
 # ============================================================================
 # HELPERS
