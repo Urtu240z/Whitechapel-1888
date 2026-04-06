@@ -135,52 +135,53 @@ func _get_player() -> Node2D:
 # DIALOGIC — PREPARAR VARIABLES
 # ============================================================================
 func prepare_dialogic_variables() -> void:
+	var dialogic_root := get_tree().root.get_node_or_null("Dialogic")
+	if dialogic_root == null:
+		return
+
+	var dialogic_var = dialogic_root.get_node_or_null("VAR")
+	if dialogic_var == null:
+		return
+
 	match service_id:
 		"lodge_reception":
 			PlayerStats.sync_dialogic_variables_now()
-			Dialogic.VAR.set_variable("hostel.hostel_result", "")
+			dialogic_var.set_variable("hostel.hostel_result", "")
 		"barman":
-			Dialogic.VAR.set_variable("barman.barman_result", "")
+			dialogic_var.set_variable("barman.barman_result", "")
 		"perfume_vendor":
-			Dialogic.VAR.set_variable("perfume_vendor.result", "")
+			dialogic_var.set_variable("perfume_vendor.result", "")
 
 # ============================================================================
 # DIALOGIC — RESOLVER RESULTADO
 # ============================================================================
 func resolve_dialogic_result() -> void:
+	var dialogic_root := get_tree().root.get_node_or_null("Dialogic")
+	if dialogic_root == null:
+		return
+
+	var dialogic_var = dialogic_root.get_node_or_null("VAR")
+	if dialogic_var == null:
+		return
+
 	match service_id:
 		"lodge_reception":
-			var result = str(Dialogic.VAR.get_variable("hostel.hostel_result"))
-			Dialogic.VAR.set_variable("hostel.hostel_result", "")
+			var result = str(dialogic_var.get_variable("hostel.hostel_result"))
+			dialogic_var.set_variable("hostel.hostel_result", "")
 			if result != "rent_room":
 				return
 
-			var hora_actual: float = DayNightManager.get_hour_float()
-
-			if not SleepManager.is_hostel_open(hora_actual):
-				SleepManager.start_sleep("hostal")
-				return
-
-			if SleepManager.get_hostel_hours_until_close(hora_actual) < 1.0:
-				SleepManager.start_sleep("hostal")
-				return
-
-			var ok: bool = PlayerStats.gastar_dinero(CONFIG.coste_hostal)
-			if not ok:
-				return
-
-			PlayerStats.dias_sin_pagar_hostal = 0
-			SleepManager.start_sleep("hostal")
+			SleepManager.start_hostel_rental_flow(CONFIG.coste_hostal)
 
 		"barman":
-			var result = str(Dialogic.VAR.get_variable("barman.barman_result"))
-			Dialogic.VAR.set_variable("barman.barman_result", "")
+			var result = str(dialogic_var.get_variable("barman.barman_result"))
+			dialogic_var.set_variable("barman.barman_result", "")
 			if result == "open_shop":
 				_open_shop()
 
 		"perfume_vendor":
-			var result = str(Dialogic.VAR.get_variable("perfume_vendor.result"))
-			Dialogic.VAR.set_variable("perfume_vendor.result", "")
+			var result = str(dialogic_var.get_variable("perfume_vendor.result"))
+			dialogic_var.set_variable("perfume_vendor.result", "")
 			if result == "open_shop":
 				_open_shop()
 

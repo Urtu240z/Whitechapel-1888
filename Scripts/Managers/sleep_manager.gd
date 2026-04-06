@@ -42,6 +42,8 @@ var _horas_dormidas: float = 0.0
 var _durmiendo: bool = false
 var _cancelado: bool = false
 var _forzado: bool = false
+var _hostel_payment_required: bool = false
+var _pending_hostel_payment: float = 0.0
 
 var _selection: Node = null
 var _screen: Node = null
@@ -123,6 +125,72 @@ func get_hostel_hours_until_close(hora: float = -1.0) -> float:
 	return _horas_entre(h, CONFIG.hora_cierre_hostal)
 
 
+func can_rent_hostel_room(hora: float = -1.0) -> bool:
+	return bool(get_hostel_rent_status(hora).get("can_rent", false))
+
+
+func get_hostel_rent_status(hora: float = -1.0) -> Dictionary:
+	var h: float = hora
+	if h < 0.0:
+		h = DayNightManager.get_hour_float()
+
+	if not is_hostel_open(h):
+		return {
+			"can_rent": false,
+			"reason": "closed",
+			"hours_left": 0.0
+		}
+
+	var horas_restantes: float = get_hostel_hours_until_close(h)
+	if horas_restantes < 1.0:
+		return {
+			"can_rent": false,
+			"reason": "not_enough_time",
+			"hours_left": horas_restantes
+		}
+
+	return {
+		"can_rent": true,
+		"reason": "ok",
+		"hours_left": horas_restantes
+	}
+
+
+func start_hostel_rental_flow(coste: float) -> Dictionary:
+	if _durmiendo or _selection != null or _screen != null:
+		return {
+			"success": false,
+			"reason": "busy"
+		}
+
+	_lugar = Lugar.HOSTAL
+	_hora_inicio = DayNightManager.get_hour_float()
+
+	var rent_status: Dictionary = get_hostel_rent_status(_hora_inicio)
+	if not bool(rent_status.get("can_rent", false)):
+		match str(rent_status.get("reason", "")):
+			"closed":
+				_mostrar_aviso_hostal_cerrado()
+			"not_enough_time":
+				_mostrar_aviso_poco_tiempo()
+			_:
+				_mostrar_aviso_poco_tiempo()
+
+		return {
+			"success": false,
+			"reason": rent_status.get("reason", "invalid")
+		}
+
+	_hostel_payment_required = true
+	_pending_hostel_payment = maxf(coste, 0.0)
+	_mostrar_selection()
+
+	return {
+		"success": true,
+		"reason": "ok"
+	}
+
+
 # ================================================================
 # MENSAJE DE COLAPSO
 # ================================================================
@@ -171,7 +239,7 @@ func _iniciar_sueno_directo() -> void:
 	_screen.connect("cancelado", _on_screen_cancelado)
 	_screen.connect("seguir_durmiendo", _on_seguir_durmiendo)
 	_screen.connect("salir_a_la_calle", _on_salir_a_la_calle)
-	_screen.call("actualizar", DayNightManager.get_hour_float(), 0.0)
+	_screen.call("actualizar", DayNightManager.get_hour_float(), 0.0, true)
 
 	if _forzado:
 		_screen.call("set_forzado", true)
@@ -186,6 +254,7 @@ func _iniciar_sueno_directo() -> void:
 
 func _mostrar_selection() -> void:
 	StateManager.enter(StateManager.State.SLEEPING)
+	DayNightManager.pausar()
 
 	var player = PlayerManager.player_instance
 	if player:
@@ -211,6 +280,9 @@ func _mostrar_selection() -> void:
 
 
 func _mostrar_aviso_hostal_cerrado() -> void:
+	StateManager.enter(StateManager.State.SLEEPING)
+	DayNightManager.pausar()
+
 	var player = PlayerManager.player_instance
 	if player:
 		player.disable_movement()
@@ -222,6 +294,9 @@ func _mostrar_aviso_hostal_cerrado() -> void:
 
 
 func _mostrar_aviso_poco_tiempo() -> void:
+	StateManager.enter(StateManager.State.SLEEPING)
+	DayNightManager.pausar()
+
 	var player = PlayerManager.player_instance
 	if player:
 		player.disable_movement()
@@ -233,6 +308,17 @@ func _mostrar_aviso_poco_tiempo() -> void:
 
 
 func _on_selection_confirmado(horas: float) -> void:
+	if _lugar == Lugar.HOSTAL and _hostel_payment_required:
+		var ok: bool = PlayerStats.gastar_dinero(_pending_hostel_payment)
+		if not ok:
+			_limpiar_pago_hostal_pendiente()
+			_on_selection_cancelado()
+			return
+
+		PlayerStats.dias_sin_pagar_hostal = 0
+		PlayerStats.sync_dialogic_variables_now()
+		_limpiar_pago_hostal_pendiente()
+
 	_horas_totales = horas
 	_hora_fin = fmod(_hora_inicio + horas, 24.0)
 	_horas_dormidas = 0.0
@@ -243,7 +329,9 @@ func _on_selection_confirmado(horas: float) -> void:
 
 
 func _on_selection_cancelado() -> void:
+	_limpiar_pago_hostal_pendiente()
 	StateManager.exit(StateManager.State.SLEEPING)
+	DayNightManager.reanudar()
 
 	var player = PlayerManager.player_instance
 	if player:
@@ -266,7 +354,7 @@ func _iniciar_sueno() -> void:
 	_screen.connect("cancelado", _on_screen_cancelado)
 	_screen.connect("seguir_durmiendo", _on_seguir_durmiendo)
 	_screen.connect("salir_a_la_calle", _on_salir_a_la_calle)
-	_screen.call("actualizar", DayNightManager.get_hour_float(), 0.0)
+	_screen.call("actualizar", DayNightManager.get_hour_float(), 0.0, true)
 
 	await SceneManager.fade_in(1.5)
 	_crear_tick_timer()
@@ -334,7 +422,7 @@ func _on_seguir_durmiendo() -> void:
 	_horas_dormidas = 0.0
 
 	if _screen:
-		_screen.call("actualizar", hora_actual, 0.0)
+		_screen.call("actualizar", hora_actual, 0.0, true)
 
 	_crear_tick_timer()
 
@@ -456,6 +544,11 @@ func _limpiar_timer() -> void:
 	if _tick_timer != null and is_instance_valid(_tick_timer):
 		_tick_timer.queue_free()
 	_tick_timer = null
+
+
+func _limpiar_pago_hostal_pendiente() -> void:
+	_hostel_payment_required = false
+	_pending_hostel_payment = 0.0
 
 
 # ================================================================

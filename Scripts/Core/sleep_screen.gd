@@ -25,6 +25,7 @@ var _progreso_actual: float = 0.0
 var _progreso_objetivo: float = 0.0
 var _activo: bool = false
 var _forzado: bool = false  # si es colapso, bloquea despertar hasta sueño >= 40%
+var _ui_inicializada: bool = false
 
 const VELOCIDAD_HORA: float = 2.0
 const VELOCIDAD_PROGRESO: float = 2.0
@@ -37,6 +38,8 @@ func _ready() -> void:
 	btn_cancelar.pressed.connect(_on_cancelar_pressed)
 	btn_seguir.pressed.connect(_on_seguir_pressed)
 	btn_salir.pressed.connect(_on_salir_pressed)
+	$UI.visible = true
+	celestial_body.visible = true
 	post_panel.visible = false
 	btn_cancelar.grab_focus()
 	_activo = true
@@ -70,9 +73,15 @@ func _process(delta: float) -> void:
 # API PÚBLICA
 # ================================================================
 
-func actualizar(hora: float, progreso: float) -> void:
-	_hora_objetivo = hora
-	_progreso_objetivo = progreso
+func actualizar(hora: float, progreso: float, snap: bool = false) -> void:
+	_hora_objetivo = fposmod(hora, 24.0)
+	_progreso_objetivo = clampf(progreso, 0.0, 1.0)
+
+	if snap or not _ui_inicializada:
+		_hora_actual = _hora_objetivo
+		_progreso_actual = _progreso_objetivo
+		_ui_inicializada = true
+		_actualizar_ui(_hora_actual, _progreso_actual)
 
 func mostrar_panel_post(hora: float) -> void:
 	_activo = false
@@ -96,26 +105,25 @@ func fade_out() -> void:
 # ================================================================
 
 func _actualizar_ui(hora: float, progreso: float) -> void:
+	var progreso_clamped: float = clampf(progreso, 0.0, 1.0)
 	var horas_int = int(hora)
 	var minutos = int(fmod(hora, 1.0) * 60.0)
 	lbl_hora.text = "%02d:%02d" % [horas_int, minutos]
-	progress_bar.value = progreso
-	_actualizar_cuerpo_celeste(hora, progreso)
+	progress_bar.value = progreso_clamped
+	_actualizar_cuerpo_celeste(progreso_clamped)
 
-func _actualizar_cuerpo_celeste(hora: float, progreso: float) -> void:
-	var es_noche: bool = hora >= 20.0 or hora < 6.0
-
-	if es_noche:
-		celestial_body.modulate = Color(0.85, 0.9, 1.0, celestial_body.modulate.a)
-	else:
-		celestial_body.modulate = Color(1.0, 0.85, 0.2, celestial_body.modulate.a)
-
+func _actualizar_cuerpo_celeste(progreso: float) -> void:
 	var t: float = clampf(progreso, 0.0, 1.0)
 
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var x: float = lerpf(120.0, vp.x - 120.0, t)
-	var y: float = vp.y * 0.4 - sin(t * PI) * vp.y * 0.25
+	var y: float = vp.y * 0.42 - sin(t * PI) * vp.y * 0.24
 	celestial_body.position = Vector2(x, y)
+
+	var dawn_mix: float = clampf((t - 0.72) / 0.28, 0.0, 1.0)
+	var color_noche := Color(0.85, 0.9, 1.0, celestial_body.modulate.a)
+	var color_amanecer := Color(1.0, 0.78, 0.45, celestial_body.modulate.a)
+	celestial_body.modulate = color_noche.lerp(color_amanecer, dawn_mix)
 
 func _interpolar_hora(actual: float, objetivo: float, t: float) -> float:
 	var diff = objetivo - actual

@@ -2,8 +2,9 @@
 
 [ext_resource type="FontFile" uid="uid://d31qwad02oajf" path="res://Assets/Fonts/IMFellEnglish.ttf" id="1_3ulk7"]
 [ext_resource type="Script" uid="uid://bkq1k32cd6l03" path="res://Scripts/Core/sleep_screen.gd" id="1_xc5w1"]
-[ext_resource type="VideoStream" uid="uid://db7s0tf2051gi" path="res://Assets/Videos/Sleep_time.ogv" id="3_yrtv8"]
-[ext_resource type="Shader" uid="uid://cyd5j1jvb6x40" path="res://Assets/Shaders/sleep_watercolor.gdshader" id="4_4t6l4"]
+[ext_resource type="Texture2D" uid="uid://c70npdrstan30" path="res://addons/kenney_particle_pack/smoke_08.png" id="3_a0bes"]
+[ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="4_anjnj"]
+[ext_resource type="Texture2D" uid="uid://b1ryuwgxikqcc" path="res://Assets/Sprites/Background/Background_1.png" id="5_32u10"]
 
 [sub_resource type="Gradient" id="Gradient_xc5w1"]
 offsets = PackedFloat32Array(0.275, 0.54375)
@@ -16,16 +17,7 @@ height = 256
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a0bes"]
-shader = ExtResource("4_4t6l4")
-shader_parameter/reveal_progress = 0.5890000279775
-shader_parameter/blur_amount = 0.9890000469775
-shader_parameter/poster_levels = 8.800000322999999
-shader_parameter/edge_strength = 1.6210000769975
-shader_parameter/wash_strength = 0.0530000025175
-shader_parameter/paper_strength = 0.590000028025
-shader_parameter/stroke_jitter = 0.1290000061275
-shader_parameter/paper_tint = Color(0.2840418, 0.24455673, 0.20510232, 1)
+[sub_resource type="Gradient" id="Gradient_lgkhu"]
 
 [node name="SleepScreen" type="CanvasLayer" unique_id=1347689957]
 script = ExtResource("1_xc5w1")
@@ -160,21 +152,42 @@ theme_override_fonts/font = ExtResource("1_3ulk7")
 theme_override_font_sizes/font_size = 16
 text = "Despertar"
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=365513183]
-texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stream = ExtResource("3_yrtv8")
-speed_scale = 0.5
-autoplay = true
-
 [node name="WatercolorFX" type="ColorRect" parent="." unique_id=1436898214]
-material = SubResource("ShaderMaterial_a0bes")
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.0253638, 0.0253638, 0.025363795, 1)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=355810388]
+z_index = 1
+position = Vector2(1571, 763)
+amount = 200
+texture = ExtResource("3_a0bes")
+lifetime = 6.0
+preprocess = 10.0
+speed_scale = 0.2
+randomness = 1.0
+gravity = Vector2(-150, 0)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_max = 2.0
+color = Color(0.31521547, 0.31521547, 0.31521547, 0.36200002)
+color_ramp = SubResource("Gradient_lgkhu")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2133926769]
+light_mask = 67
+visibility_layer = 3
+z_index = 4
+position = Vector2(-193, 544)
+energy = 16.0
+range_item_cull_mask = 495
+texture = ExtResource("4_anjnj")
+texture_scale = 2.84
+
+[node name="Background1" type="Sprite2D" parent="." unique_id=645477747]
+modulate = Color(0.19544229, 0.07646892, 0.016979579, 1)
+position = Vector2(646, 359)
+texture = ExtResource("5_32u10")

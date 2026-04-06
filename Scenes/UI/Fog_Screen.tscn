@@ -1,0 +1,203 @@
+[gd_scene format=3 uid="uid://cxjsj1xgaa34c"]
+
+[ext_resource type="Texture2D" uid="uid://c70npdrstan30" path="res://addons/kenney_particle_pack/smoke_08.png" id="1_nliha"]
+[ext_resource type="Texture2D" uid="uid://bqnvtebgmeqbd" path="res://addons/kenney_particle_pack/muzzle_02.png" id="2_2ytwl"]
+[ext_resource type="Texture2D" uid="uid://b0di18ir6lv2r" path="res://addons/kenney_particle_pack/light_01.png" id="2_dkedj"]
+[ext_resource type="Texture2D" uid="uid://dxy1hrkrjnend" path="res://Assets/Sprites/Scenes/Skyline_City.png" id="4_v5kga"]
+[ext_resource type="Shader" uid="uid://c6r1sk7eo7rtv" path="res://Assets/Shaders/River_Reflection.gdshader" id="5_k7eh8"]
+[ext_resource type="Texture2D" uid="uid://bx0u5jhov14wn" path="res://Assets/Sprites/Scenes/Skyline_River.png" id="6_0efko"]
+
+[sub_resource type="Gradient" id="Gradient_j7ng5"]
+offsets = PackedFloat32Array(0, 0.56666666, 1)
+colors = PackedColorArray(0.101960786, 0.101960786, 0.101960786, 0, 0.26293266, 0.2629324, 0.26293245, 1, 0, 0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_2ytwl"]
+offsets = PackedFloat32Array(0, 0.77878785)
+colors = PackedColorArray(0.103743516, 0.10374353, 0.103743516, 1, 0, 0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_uktra"]
+offsets = PackedFloat32Array(0, 0.4939394)
+colors = PackedColorArray(0.103743516, 0.10374353, 0.103743516, 1, 0, 0, 0, 0)
+
+[sub_resource type="Gradient" id="Gradient_k63ma"]
+offsets = PackedFloat32Array(0.44242424, 0.9060606)
+colors = PackedColorArray(0.103743516, 0.10374353, 0.103743516, 1, 0, 0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mh2u6"]
+shader = ExtResource("5_k7eh8")
+shader_parameter/shimmer_speed = 3.0
+shader_parameter/shimmer_intensity = 1.0
+shader_parameter/shimmer_scale = 13.058000572755
+shader_parameter/wave_speed = 1.51800006884512
+shader_parameter/wave_amount = 0.0050000002375
+shader_parameter/wave_scale = 2.0000000475
+shader_parameter/brightness_threshold = 0.0
+shader_parameter/modulate_color = Color(0.50758046, 0.47464764, 0.41060644, 1)
+
+[sub_resource type="Gradient" id="Gradient_cmpmy"]
+colors = PackedColorArray(0, 0, 0, 1, 0.1584723, 0.15847233, 0.1584723, 0)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_svh7a"]
+frequency = 0.0009
+offset = Vector3(-1000, 0, 0)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vu4o4"]
+width = 1349
+height = 641
+noise = SubResource("FastNoiseLite_svh7a")
+color_ramp = SubResource("Gradient_cmpmy")
+
+[sub_resource type="Animation" id="Animation_2ytwl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:noise:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1000, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_v5kga"]
+resource_name = "Sleep"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture:noise:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1000, 0, 0), Vector3(17.86, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k7eh8"]
+_data = {
+&"RESET": SubResource("Animation_2ytwl"),
+&"Sleep": SubResource("Animation_v5kga")
+}
+
+[node name="FogScreen" type="CanvasLayer" unique_id=1301525315]
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1163745171]
+z_index = 2
+position = Vector2(1571, 763)
+amount = 200
+texture = ExtResource("1_nliha")
+lifetime = 6.0
+preprocess = 10.0
+speed_scale = 0.2
+randomness = 1.0
+gravity = Vector2(-150, 0)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_max = 2.0
+color = Color(0.3137255, 0.3137255, 0.3137255, 0.25882354)
+color_ramp = SubResource("Gradient_j7ng5")
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="." unique_id=1032580351]
+position = Vector2(181, 510)
+amount = 500
+texture = ExtResource("2_2ytwl")
+lifetime = 6.0
+preprocess = 10.0
+speed_scale = 0.2
+gravity = Vector2(-15, -50)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.0
+scale_amount_max = 0.05
+color = Color(0.3137255, 0.3137255, 0.3137255, 0.5568628)
+color_ramp = SubResource("Gradient_2ytwl")
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="." unique_id=703138875]
+position = Vector2(963, 485)
+amount = 500
+texture = ExtResource("2_2ytwl")
+lifetime = 6.0
+preprocess = 10.0
+speed_scale = 0.2
+gravity = Vector2(-15, -50)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.0
+scale_amount_max = 0.05
+color = Color(0.3137255, 0.3137255, 0.3137255, 0.5568628)
+color_ramp = SubResource("Gradient_uktra")
+
+[node name="CPUParticles2D4" type="CPUParticles2D" parent="." unique_id=757450651]
+position = Vector2(1155, 490)
+amount = 500
+texture = ExtResource("2_2ytwl")
+lifetime = 6.0
+preprocess = 10.0
+speed_scale = 0.2
+gravity = Vector2(-15, -50)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.0
+scale_amount_max = 0.1
+color = Color(0.3137255, 0.3137255, 0.3137255, 0.5568628)
+color_ramp = SubResource("Gradient_k63ma")
+
+[node name="CPUParticles2D5" type="CPUParticles2D" parent="." unique_id=1543326321]
+position = Vector2(71, 511)
+amount = 500
+texture = ExtResource("2_2ytwl")
+lifetime = 6.0
+preprocess = 10.0
+speed_scale = 0.2
+gravity = Vector2(-15, -50)
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.0
+scale_amount_max = 0.1
+color = Color(0.3137255, 0.3137255, 0.3137255, 0.5568628)
+color_ramp = SubResource("Gradient_2ytwl")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=809345750]
+light_mask = 67
+visibility_layer = 3
+z_index = 4
+position = Vector2(565, 104)
+color = Color(0.5691031, 0.23147461, 0.14717513, 1)
+energy = 16.0
+blend_mode = 2
+range_layer_max = 10
+texture = ExtResource("2_dkedj")
+texture_scale = 4.94
+
+[node name="City" type="Sprite2D" parent="." unique_id=700848936]
+modulate = Color(0.34547743, 0.2117509, 0.1930758, 1)
+z_index = 1
+position = Vector2(646, 359)
+texture = ExtResource("4_v5kga")
+
+[node name="River" type="Sprite2D" parent="." unique_id=340520307]
+modulate = Color(0.5658114, 0.3690266, 0.34115523, 1)
+material = SubResource("ShaderMaterial_mh2u6")
+position = Vector2(646, 354)
+texture = ExtResource("6_0efko")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=685022018]
+position = Vector2(640, 277)
+texture = SubResource("NoiseTexture2D_vu4o4")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=601877819]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.072842635, 0.072842635, 0.072842635, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=90984534]
+libraries/ = SubResource("AnimationLibrary_k7eh8")
