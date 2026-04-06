@@ -1,26 +1,30 @@
 if {hostel.hostel_open} == true:
-	Buenas noches.
-	- Buenas noches.
-		Quiere algo?
+	if {hostel.hostel_can_rent} == true:
+		Buenas noches. Quiere algo?
 		jump negotiation
-	label negotiation
-	- Quisiera una habitación.
-		if {hostel.player_money} >= {hostel.hostel_price}:
-			Una habitación cuesta {hostel.hostel_price} shillings.
-			- Tengo {hostel.player_money} shillings. Me la quedo.
-				De acuerdo...\
-				Suba las escaleras, tercera habitación. \
-				Comportese por favor.
-				set {hostel.hostel_result} = "rent_room"
+		
+		label negotiation
+		- Quisiera una habitación.
+			if {hostel.player_money} >= {hostel.hostel_price}:
+				Una habitación cuesta {hostel.hostel_price} shillings.
+				- Tengo {hostel.player_money} shillings. Me la quedo.
+					De acuerdo...\
+					Suba las escaleras, tercera habitación. \
+					Comportese por favor.
+					set {hostel.hostel_result} = "rent_room"
+					[end_timeline]
+				- No puedo permitirmelo...
+					No me molestes si no quieres nada.
+					[end_timeline]
+			else:
+				No tienes pinta de poder permitirtelo, no me hagas perder el tiempo.
 				[end_timeline]
-			- No puedo permitirmelo...
-				No me molestes si no quieres nada.
-				[end_timeline]
-		else:
-			No tienes pinta de poder permitirtelo, no me hagas perder el tiempo.
-	- Nada...
-		No me molestes si no quieres nada.
+		- Nada...
+			No me molestes si no quieres nada.
+			[end_timeline]
+	else:
+		Ya es demasiado tarde. No queda tiempo suficiente para alquilar una habitación.
 		[end_timeline]
 else:
-	El hostal esta cerrado hasta mañana a las 10 pm.
+	El hostal esta cerrado hasta mañana a las 10 de la noche.
 	[end_timeline]

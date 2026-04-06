@@ -137,7 +137,7 @@ func _get_player() -> Node2D:
 func prepare_dialogic_variables() -> void:
 	match service_id:
 		"lodge_reception":
-			PlayerStats._sync_dialogic_variables()
+			PlayerStats.sync_dialogic_variables_now()
 			Dialogic.VAR.set_variable("hostel.hostel_result", "")
 		"barman":
 			Dialogic.VAR.set_variable("barman.barman_result", "")
@@ -154,9 +154,21 @@ func resolve_dialogic_result() -> void:
 			Dialogic.VAR.set_variable("hostel.hostel_result", "")
 			if result != "rent_room":
 				return
-			var ok := PlayerStats.gastar_dinero(CONFIG.coste_hostal)
+
+			var hora_actual: float = DayNightManager.get_hour_float()
+
+			if not SleepManager.is_hostel_open(hora_actual):
+				SleepManager.start_sleep("hostal")
+				return
+
+			if SleepManager.get_hostel_hours_until_close(hora_actual) < 1.0:
+				SleepManager.start_sleep("hostal")
+				return
+
+			var ok: bool = PlayerStats.gastar_dinero(CONFIG.coste_hostal)
 			if not ok:
 				return
+
 			PlayerStats.dias_sin_pagar_hostal = 0
 			SleepManager.start_sleep("hostal")
 

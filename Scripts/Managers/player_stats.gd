@@ -556,12 +556,16 @@ func _sync_dialogic_variables() -> void:
 	dialogic_var.set_variable("enfermedad", enfermedad)
 
 	var hora_actual: float = DayNightManager.get_hour_float()
-	var hostel_open: bool = hora_actual >= CONFIG.hora_apertura_hostal or hora_actual < CONFIG.hora_cierre_hostal
+	var hostel_open: bool = SleepManager.is_hostel_open(hora_actual)
+	var hostel_can_rent: bool = hostel_open and SleepManager.get_hostel_hours_until_close(hora_actual) >= 1.0
 
 	dialogic_var.set_variable("hostel.hostel_open", hostel_open)
+	dialogic_var.set_variable("hostel.hostel_can_rent", hostel_can_rent)
 	dialogic_var.set_variable("hostel.player_money", dinero)
 	dialogic_var.set_variable("hostel.hostel_price", CONFIG.coste_hostal)
 
+func sync_dialogic_variables_now() -> void:
+	_sync_dialogic_variables()
 
 # ============================================================
 # 🎨 UTILS

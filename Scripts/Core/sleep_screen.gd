@@ -100,23 +100,21 @@ func _actualizar_ui(hora: float, progreso: float) -> void:
 	var minutos = int(fmod(hora, 1.0) * 60.0)
 	lbl_hora.text = "%02d:%02d" % [horas_int, minutos]
 	progress_bar.value = progreso
-	_actualizar_cuerpo_celeste(hora)
+	_actualizar_cuerpo_celeste(hora, progreso)
 
-func _actualizar_cuerpo_celeste(hora: float) -> void:
-	var es_noche = hora >= 20.0 or hora < 6.0
+func _actualizar_cuerpo_celeste(hora: float, progreso: float) -> void:
+	var es_noche: bool = hora >= 20.0 or hora < 6.0
+
 	if es_noche:
 		celestial_body.modulate = Color(0.85, 0.9, 1.0, celestial_body.modulate.a)
 	else:
 		celestial_body.modulate = Color(1.0, 0.85, 0.2, celestial_body.modulate.a)
-	var t: float
-	if es_noche:
-		t = fmod(hora - 20.0 + 24.0, 24.0) / 10.0
-	else:
-		t = (hora - 6.0) / 14.0
-	t = clampf(t, 0.0, 1.0)
-	var vp = get_viewport().get_visible_rect().size
-	var x = lerp(120.0, vp.x - 120.0, t)
-	var y = vp.y * 0.4 - sin(t * PI) * vp.y * 0.25
+
+	var t: float = clampf(progreso, 0.0, 1.0)
+
+	var vp: Vector2 = get_viewport().get_visible_rect().size
+	var x: float = lerpf(120.0, vp.x - 120.0, t)
+	var y: float = vp.y * 0.4 - sin(t * PI) * vp.y * 0.25
 	celestial_body.position = Vector2(x, y)
 
 func _interpolar_hora(actual: float, objetivo: float, t: float) -> float:

@@ -2,6 +2,8 @@
 
 [ext_resource type="FontFile" uid="uid://d31qwad02oajf" path="res://Assets/Fonts/IMFellEnglish.ttf" id="1_3ulk7"]
 [ext_resource type="Script" uid="uid://bkq1k32cd6l03" path="res://Scripts/Core/sleep_screen.gd" id="1_xc5w1"]
+[ext_resource type="VideoStream" uid="uid://db7s0tf2051gi" path="res://Assets/Videos/Sleep_time.ogv" id="3_yrtv8"]
+[ext_resource type="Shader" uid="uid://cyd5j1jvb6x40" path="res://Assets/Shaders/sleep_watercolor.gdshader" id="4_4t6l4"]
 
 [sub_resource type="Gradient" id="Gradient_xc5w1"]
 offsets = PackedFloat32Array(0.275, 0.54375)
@@ -14,10 +16,22 @@ height = 256
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a0bes"]
+shader = ExtResource("4_4t6l4")
+shader_parameter/reveal_progress = 0.5890000279775
+shader_parameter/blur_amount = 0.9890000469775
+shader_parameter/poster_levels = 8.800000322999999
+shader_parameter/edge_strength = 1.6210000769975
+shader_parameter/wash_strength = 0.0530000025175
+shader_parameter/paper_strength = 0.590000028025
+shader_parameter/stroke_jitter = 0.1290000061275
+shader_parameter/paper_tint = Color(0.2840418, 0.24455673, 0.20510232, 1)
+
 [node name="SleepScreen" type="CanvasLayer" unique_id=1347689957]
 script = ExtResource("1_xc5w1")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1303486457]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,10 +40,12 @@ grow_vertical = 2
 color = Color(0.22091639, 0.22091639, 0.3491902, 1)
 
 [node name="CelestialBody" type="Sprite2D" parent="." unique_id=1032793033]
+visible = false
 position = Vector2(200, 200)
 texture = SubResource("GradientTexture2D_yrtv8")
 
 [node name="UI" type="Control" parent="." unique_id=1369622114]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -143,3 +159,22 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("1_3ulk7")
 theme_override_font_sizes/font_size = 16
 text = "Despertar"
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=365513183]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("3_yrtv8")
+speed_scale = 0.5
+autoplay = true
+
+[node name="WatercolorFX" type="ColorRect" parent="." unique_id=1436898214]
+material = SubResource("ShaderMaterial_a0bes")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
