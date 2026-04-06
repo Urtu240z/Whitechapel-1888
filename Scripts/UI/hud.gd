@@ -113,8 +113,4 @@ func _get_time_info() -> Dictionary:
 	}
 
 func _get_current_day() -> int:
-	var seconds_per_day: float = CONFIG.duracion_hora_segundos * 24.0
-	if seconds_per_day <= 0.0:
-		seconds_per_day = 24.0 * 60.0
-
-	return int(floor(DayNightManager.tiempo_acumulado / seconds_per_day)) + 1
+	return DayNightManager.get_current_day()

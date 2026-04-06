@@ -8,6 +8,7 @@ extends Node
 const SAVE_DIR   := "user://saves/"
 const SAVE_EXT   := ".sav"
 const MAX_SLOTS  := 3
+const CONFIG = preload("res://Data/Game/game_config.tres")
 
 var _busy: bool = false
 
@@ -135,8 +136,13 @@ func get_slot_info(slot: int) -> Dictionary:
 	if parsed == null:
 		return {}
 
+	var tiempo_guardado := float(parsed.get("tiempo_acumulado", 0.0))
+	var dia_guardado := parsed.get("dia", 1)
+	if parsed.has("tiempo_acumulado"):
+		dia_guardado = int(floor(tiempo_guardado / (CONFIG.duracion_hora_segundos * 24.0))) + 1
+
 	return {
-		"dia":       parsed.get("dia", 1),
+		"dia":       dia_guardado,
 		"hora":      parsed.get("hora", 8.0),
 		"dinero":    parsed.get("dinero", 0.0),
 		"escena":    parsed.get("escena", ""),
@@ -212,7 +218,7 @@ func _collect_data() -> Dictionary:
 			shop_stocks[npc.service_id] = npc.get_stock()
 
 	return {
-		"version":   1,
+		"version":   2,
 		"timestamp": Time.get_datetime_string_from_system(),
 		"escena":    escena,
 		"player_x":  pos.x,
@@ -226,7 +232,7 @@ func _collect_data() -> Dictionary:
 
 		"hora":             DayNightManager.hora_actual,
 		"tiempo_acumulado": DayNightManager.tiempo_acumulado,
-		"dia":              int(DayNightManager.tiempo_acumulado / (24.0 * 60.0)) + 1,
+		"dia":              DayNightManager.get_current_day(),
 
 		"miedo":            PlayerStats.miedo,
 		"estres":           PlayerStats.estres,
@@ -258,9 +264,8 @@ func _collect_data() -> Dictionary:
 # 📥 APLICAR STATS — no dependen de la escena
 # =========================================================
 func _apply_stats(data: Dictionary) -> void:
-	DayNightManager.hora_actual      = data.get("hora", 8.0)
-	DayNightManager.tiempo_acumulado = data.get("tiempo_acumulado", 0.0)
-	DayNightManager.pausado          = false
+	DayNightManager.set_total_time(data.get("tiempo_acumulado", 0.0), false)
+	DayNightManager.pausado = false
 
 	PlayerStats.miedo            = data.get("miedo", 10.0)
 	PlayerStats.estres           = data.get("estres", 30.0)
@@ -279,7 +284,7 @@ func _apply_stats(data: Dictionary) -> void:
 
 	PlayerStats.enferma               = data.get("enferma", false)
 	PlayerStats.medicina_activa       = data.get("medicina_activa", false)
-	PlayerStats.medicina_timer        = data.get("medicina_timer", 0.0)
+	PlayerStats.medicina_timer        = _convert_medicina_timer_from_save(data)
 	PlayerStats.dias_sin_pagar_hostal = data.get("dias_sin_pagar_hostal", 0)
 
 	# 1) Limpiar equipamiento
@@ -303,8 +308,18 @@ func _apply_stats(data: Dictionary) -> void:
 		if item_id != "":
 			InventoryManager.restore_equipped_from_save(int(slot_str), item_id, horas)
 
+	PlayerStats.sincronizar_reloj()
 	PlayerStats.actualizar_stats()
 	_log_stats("LOAD")
+
+
+func _convert_medicina_timer_from_save(data: Dictionary) -> float:
+	var timer := float(data.get("medicina_timer", 0.0))
+	var version := int(data.get("version", 1))
+	if version <= 1:
+		# Saves antiguos guardaban segundos reales; ahora usamos horas de juego.
+		timer = timer / CONFIG.duracion_hora_segundos
+	return timer
 
 
 # =========================================================

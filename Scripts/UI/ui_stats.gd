@@ -52,6 +52,7 @@ func _ready() -> void:
 		bar.max_value = 100
 
 	_actualizar_todo()
+	_on_hora_cambiada(DayNightManager.hora_actual)
 
 # ----------------------------------------
 # INPUT: Toggle con tecla Q ("stats")

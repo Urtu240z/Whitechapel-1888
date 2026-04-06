@@ -30,8 +30,8 @@ const CONFIG = preload("res://Data/Game/game_config.tres")
 var enferma: bool = false
 
 var medicina_activa: bool = false
-var medicina_timer: float = 0.0
-const MEDICINA_DURACION_DIAS: float = 2.0
+var medicina_timer: float = 0.0  # horas de juego transcurridas desde que se tomó
+const MEDICINA_DURACION_HORAS: float = 48.0
 
 # ============================================================
 # 💰 ECONOMY
@@ -63,15 +63,14 @@ const PROB_INFECCION_RICH: float = 0.01
 # ============================================================
 # ⏱️ DEGRADACIÓN
 # ============================================================
-const HAMBRE_POR_MINUTO: float = 0.5
-const HIGIENE_POR_MINUTO: float = -0.3
-const SUENO_POR_MINUTO: float = -0.2
-const ALCOHOL_POR_MINUTO: float = -1.0
-const LAUDANO_POR_MINUTO: float = -0.5
-const ENFERMEDAD_POR_MINUTO: float = 0.3
+const HAMBRE_POR_HORA: float = 0.5
+const HIGIENE_POR_HORA: float = -0.3
+const SUENO_POR_HORA: float = -0.2
+const ALCOHOL_POR_HORA: float = -1.0
+const LAUDANO_POR_HORA: float = -0.5
+const ENFERMEDAD_POR_HORA: float = 0.3
 
-var _degradacion_timer: float = 0.0
-const DEGRADACION_INTERVALO: float = 60.0
+var _ultima_hora_procesada: int = -1
 var _sueno_anterior: float = 80.0
 var _colapso_activo: bool = false
 
@@ -100,35 +99,42 @@ signal sueno_agotado()
 func _ready() -> void:
 	calcular_sex_appeal()
 	stats_updated.connect(_sync_dialogic_variables)
+	if not DayNightManager.hora_cambiada.is_connected(_on_hora_cambiada):
+		DayNightManager.hora_cambiada.connect(_on_hora_cambiada)
+	sincronizar_reloj()
 
 # ============================================================
-# ⏱️ PROCESS
+# ⏱️ RELOJ DEL JUEGO
 # ============================================================
-func _process(delta: float) -> void:
-	_degradacion_timer += delta
-	if _degradacion_timer >= DEGRADACION_INTERVALO:
-		_degradacion_timer = 0.0
-		_aplicar_degradacion()
+func sincronizar_reloj() -> void:
+	_ultima_hora_procesada = int(floor(DayNightManager.hora_actual))
+
+func _on_hora_cambiada(hora: float) -> void:
+	var hora_int := int(floor(hora))
+	if hora_int == _ultima_hora_procesada:
+		return
+
+	_ultima_hora_procesada = hora_int
+	_aplicar_degradacion()
 
 	if medicina_activa:
-		medicina_timer += delta
-		var dias_jugados = medicina_timer / (DEGRADACION_INTERVALO * 24.0)
-		if dias_jugados >= MEDICINA_DURACION_DIAS:
+		medicina_timer += 1.0
+		if medicina_timer >= MEDICINA_DURACION_HORAS:
 			medicina_activa = false
 			medicina_timer = 0.0
 
 func _aplicar_degradacion() -> void:
-	hambre  = clamp(hambre  + HAMBRE_POR_MINUTO,  0, 100)
-	higiene = clamp(higiene + HIGIENE_POR_MINUTO, 0, 100)
-	sueno   = clamp(sueno   + SUENO_POR_MINUTO,   0, 100)
-	alcohol = clamp(alcohol + ALCOHOL_POR_MINUTO, 0, 100)
-	laudano = clamp(laudano + LAUDANO_POR_MINUTO, 0, 100)
+	hambre  = clamp(hambre  + HAMBRE_POR_HORA,  0, 100)
+	higiene = clamp(higiene + HIGIENE_POR_HORA, 0, 100)
+	sueno   = clamp(sueno   + SUENO_POR_HORA,   0, 100)
+	alcohol = clamp(alcohol + ALCOHOL_POR_HORA, 0, 100)
+	laudano = clamp(laudano + LAUDANO_POR_HORA, 0, 100)
 
 	if enferma and not medicina_activa:
-		enfermedad = clamp(enfermedad + ENFERMEDAD_POR_MINUTO, 0, 100)
+		enfermedad = clamp(enfermedad + ENFERMEDAD_POR_HORA, 0, 100)
 		_check_enfermedad_efectos()
 
-	actualizar_stats_diferido(1.0)
+	actualizar_stats(1.0)
 
 # ============================================================
 # 🦠 ENFERMEDAD
@@ -521,7 +527,9 @@ func reset_stats() -> void:
 	enfermedad = 0.0
 	enferma   = false
 	medicina_activa = false
+	medicina_timer = 0.0
 	dinero    = 5.0
 	sex_appeal_bonus = 0.0
 	enfermedad_cambiada.emit(false)
+	sincronizar_reloj()
 	actualizar_stats()

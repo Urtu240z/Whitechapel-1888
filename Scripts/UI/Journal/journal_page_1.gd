@@ -32,6 +32,13 @@ func _ready() -> void:
 	_update()
 	if not PlayerStats.stats_updated.is_connected(_update):
 		PlayerStats.stats_updated.connect(_update)
+	if not DayNightManager.hora_cambiada.is_connected(_on_hora_cambiada):
+		DayNightManager.hora_cambiada.connect(_on_hora_cambiada)
+
+
+
+func _on_hora_cambiada(_hora: float) -> void:
+	_update()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -122,5 +129,4 @@ func _format_hour(h: float) -> String:
 
 
 func _calcular_dia() -> int:
-	var segundos_por_dia = CONFIG.duracion_hora_segundos * 24.0
-	return int(floor(DayNightManager.tiempo_acumulado / segundos_por_dia)) + 1
+	return DayNightManager.get_current_day()

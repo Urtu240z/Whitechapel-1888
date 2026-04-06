@@ -56,9 +56,9 @@ func _on_body_entered(body: Node) -> void:
 	# =====================================================
 	if pickup_type.begins_with("client-"):
 		match pickup_type:
-			"client-poor":   PlayerStats.tener_sexo_poor()
-			"client-medium": PlayerStats.tener_sexo_medium()
-			"client-rich":   PlayerStats.tener_sexo_rich()
+			"client-poor":   PlayerStats.tener_acto("completo", "poor")
+			"client-medium": PlayerStats.tener_acto("completo", "medium")
+			"client-rich":   PlayerStats.tener_acto("completo", "rich")
 		if disappear_on_pickup:
 			queue_free()
 		return

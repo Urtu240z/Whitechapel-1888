@@ -94,6 +94,7 @@ func start_sleep_forced(lugar_str: String, mensaje: String = "") -> void:
 	_cancelado = false
 	_durmiendo = true
 	_forzado = true
+	StateManager.enter(StateManager.State.SLEEPING)
 
 	_mostrar_mensaje_colapso(mensaje)
 	await SceneManager.fade_out(2.0)
@@ -259,8 +260,8 @@ func _tick_hora() -> void:
 		return
 
 	_horas_dormidas += 1.0
-	var nueva_hora = fmod(_hora_inicio + _horas_dormidas, 24.0)
-	DayNightManager.set_hora(nueva_hora)
+	DayNightManager.advance_hours(1.0)
+	var nueva_hora = DayNightManager.hora_actual
 	_aplicar_recuperacion_parcial()
 
 	var progreso = _horas_dormidas / _horas_totales if _horas_totales > 0 else 0.0
@@ -288,6 +289,7 @@ func _on_screen_cancelado() -> void:
 	_finalizar_sueno()
 
 func _on_seguir_durmiendo() -> void:
+	_limpiar_timer()
 	var hora_actual = DayNightManager.hora_actual
 	var horas_restantes = _horas_entre(hora_actual, HORA_CIERRE_HOSTAL)
 	if horas_restantes <= 0.0:
