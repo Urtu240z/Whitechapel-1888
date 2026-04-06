@@ -9,6 +9,10 @@ const CONFIG = preload("res://Data/Game/game_config.tres")
 
 # ============================================================
 # 🧍 BASIC ATTRIBUTES (0–100)
+# IMPORTANTE:
+# - hambre alto = peor (más hambre)
+# - higiene bajo = peor
+# - sueno bajo = peor
 # ============================================================
 @export var miedo: float = 10.0
 @export var estres: float = 30.0
@@ -48,7 +52,6 @@ var sex_appeal_bonus: float = 0.0  # bonus temporal de perfumes
 # ============================================================
 # 💸 COST CONSTANTS
 # ============================================================
-const COSTE_COMIDA: float = 0.5
 const COSTE_BANO: float = 0.3
 const COSTE_ALCOHOL: float = 0.2
 const COSTE_LAUDANO: float = 1.0
@@ -75,11 +78,6 @@ var _sueno_anterior: float = 80.0
 var _colapso_activo: bool = false
 
 # ============================================================
-# 🎯 GOAL
-# ============================================================
-const DINERO_PARA_ESCAPAR: float = 200.0
-
-# ============================================================
 # 📢 SIGNALS
 # ============================================================
 signal sex_appeal_changed(new_value)
@@ -99,18 +97,23 @@ signal sueno_agotado()
 func _ready() -> void:
 	calcular_sex_appeal()
 	stats_updated.connect(_sync_dialogic_variables)
+
 	if not DayNightManager.hora_cambiada.is_connected(_on_hora_cambiada):
 		DayNightManager.hora_cambiada.connect(_on_hora_cambiada)
+
 	sincronizar_reloj()
+	call_deferred("_post_ready_init")
+
 
 # ============================================================
 # ⏱️ RELOJ DEL JUEGO
 # ============================================================
 func sincronizar_reloj() -> void:
-	_ultima_hora_procesada = int(floor(DayNightManager.hora_actual))
+	_ultima_hora_procesada = int(floor(DayNightManager.get_hour_float()))
+
 
 func _on_hora_cambiada(hora: float) -> void:
-	var hora_int := int(floor(hora))
+	var hora_int: int = int(floor(hora))
 	if hora_int == _ultima_hora_procesada:
 		return
 
@@ -123,33 +126,36 @@ func _on_hora_cambiada(hora: float) -> void:
 			medicina_activa = false
 			medicina_timer = 0.0
 
+
 func _aplicar_degradacion() -> void:
-	hambre  = clamp(hambre  + HAMBRE_POR_HORA,  0, 100)
-	higiene = clamp(higiene + HIGIENE_POR_HORA, 0, 100)
-	sueno   = clamp(sueno   + SUENO_POR_HORA,   0, 100)
-	alcohol = clamp(alcohol + ALCOHOL_POR_HORA, 0, 100)
-	laudano = clamp(laudano + LAUDANO_POR_HORA, 0, 100)
+	hambre = clampf(hambre + HAMBRE_POR_HORA, 0.0, 100.0)
+	higiene = clampf(higiene + HIGIENE_POR_HORA, 0.0, 100.0)
+	sueno = clampf(sueno + SUENO_POR_HORA, 0.0, 100.0)
+	alcohol = clampf(alcohol + ALCOHOL_POR_HORA, 0.0, 100.0)
+	laudano = clampf(laudano + LAUDANO_POR_HORA, 0.0, 100.0)
 
 	if enferma and not medicina_activa:
-		enfermedad = clamp(enfermedad + ENFERMEDAD_POR_HORA, 0, 100)
+		enfermedad = clampf(enfermedad + ENFERMEDAD_POR_HORA, 0.0, 100.0)
 		_check_enfermedad_efectos()
 
-	actualizar_stats(1.0)
+	# La salud se actualiza SOLO por tiempo aquí.
+	actualizar_salud()
+	actualizar_stats()
+
 
 # ============================================================
 # 🦠 ENFERMEDAD
 # ============================================================
 func _check_enfermedad_efectos() -> void:
-	if enfermedad >= 100:
-		salud = max(0, salud - 5.0)
-		if salud <= 0:
-			morir()
-	elif enfermedad >= 70:
-		salud = max(0, salud - 1.0)
+	if enfermedad >= CONFIG.salud_umbral_enfermedad_terminal:
+		damage_health(CONFIG.salud_dano_enfermedad_terminal)
+	elif enfermedad >= CONFIG.salud_umbral_enfermedad_critica:
+		damage_health(CONFIG.salud_dano_enfermedad_critica)
+
 
 func infectar(probabilidad: float) -> bool:
 	if randf() < probabilidad:
-		if enfermedad == 0:
+		if enfermedad == 0.0:
 			enfermedad = 20.0
 		enferma = true
 		enfermedad_cambiada.emit(true)
@@ -157,109 +163,166 @@ func infectar(probabilidad: float) -> bool:
 		return true
 	return false
 
+
 # ============================================================
 # ❤️ SEX APPEAL
 # ============================================================
 func calcular_sex_appeal() -> float:
 	var appeal: float = 50.0
 
-	appeal += (higiene - 50) * 0.5
-	appeal += (felicidad - 50) * 0.3
-	appeal += (100 - hambre) * 0.2
-	appeal += (sueno - 50) * 0.2
+	appeal += (higiene - 50.0) * 0.5
+	appeal += (felicidad - 50.0) * 0.3
+	appeal += (100.0 - hambre) * 0.2
+	appeal += (sueno - 50.0) * 0.2
 	appeal += alcohol * 0.15
 
 	appeal -= miedo * 0.25
 	appeal -= estres * 0.4
 	appeal -= nervios * 0.3
-	appeal -= (hambre - 50) * 0.3
-	appeal -= max(0, alcohol - 50) * 0.5
+	appeal -= maxf(0.0, hambre - 50.0) * 0.3
+	appeal -= maxf(0.0, alcohol - 50.0) * 0.5
 	appeal -= laudano * 0.6
 	appeal -= enfermedad * 0.5
 
 	# Bonus temporal de perfumes
 	appeal += sex_appeal_bonus
 
-	sex_appeal = clamp(appeal, 0.0, 100.0)
+	sex_appeal = clampf(appeal, 0.0, 100.0)
 	sex_appeal_changed.emit(sex_appeal)
 
-	if higiene < 20:
+	if higiene < 20.0:
 		atributo_critico.emit("higiene")
-	if hambre > 80:
+	if hambre > 80.0:
 		atributo_critico.emit("hambre")
-	if sueno < 20:
+	if sueno < 20.0:
 		atributo_critico.emit("sueno")
-	if enfermedad >= 70:
+	if enfermedad >= 70.0:
 		atributo_critico.emit("enfermedad")
 
 	return sex_appeal
 
+
 # ============================================================
 # 🩺 SALUD
+# IMPORTANTE:
+# - Esta función es para el desgaste suave por tiempo.
+# - Se llama en el tick horario.
+# - Se mantiene firma compatible con llamadas antiguas.
 # ============================================================
-func actualizar_salud(delta: float = 1.0) -> void:
-	var daño := 0.0
-	var curacion := 0.0
+func actualizar_salud(_delta: float = 1.0) -> void:
+	var delta_salud: float = 0.0
 
-	daño += hambre * 0.02 * delta
-	daño += estres * 0.015 * delta
-	daño += miedo * 0.01 * delta
-	daño += nervios * 0.015 * delta
-	daño += max(0, alcohol - 50) * 0.04 * delta
-	daño += laudano * 0.06 * delta
-	daño += max(0, 30 - higiene) * 0.05 * delta
+	# Hambre alta = malo
+	if hambre >= CONFIG.salud_umbral_hambre_3:
+		delta_salud -= CONFIG.salud_dano_hambre_3
+	elif hambre >= CONFIG.salud_umbral_hambre_2:
+		delta_salud -= CONFIG.salud_dano_hambre_2
+	elif hambre >= CONFIG.salud_umbral_hambre_1:
+		delta_salud -= CONFIG.salud_dano_hambre_1
 
-	curacion += max(0, felicidad - 50) * 0.02 * delta
-	curacion += max(0, sueno - 60) * 0.03 * delta
+	# Higiene baja = malo
+	if higiene <= CONFIG.salud_umbral_higiene_3:
+		delta_salud -= CONFIG.salud_dano_higiene_3
+	elif higiene <= CONFIG.salud_umbral_higiene_2:
+		delta_salud -= CONFIG.salud_dano_higiene_2
+	elif higiene <= CONFIG.salud_umbral_higiene_1:
+		delta_salud -= CONFIG.salud_dano_higiene_1
 
-	salud = clamp(salud - daño + curacion, 0, 100)
+	# Enfermedad sostenida = castigo moderado
+	if enfermedad >= CONFIG.salud_umbral_enfermedad_3:
+		delta_salud -= CONFIG.salud_dano_enfermedad_3
+	elif enfermedad >= CONFIG.salud_umbral_enfermedad_2:
+		delta_salud -= CONFIG.salud_dano_enfermedad_2
+	elif enfermedad >= CONFIG.salud_umbral_enfermedad_1:
+		delta_salud -= CONFIG.salud_dano_enfermedad_1
 
-	if salud <= 0:
+	# Recuperación suave
+	if sueno >= CONFIG.salud_umbral_sueno_2:
+		delta_salud += CONFIG.salud_recuperacion_sueno_2
+	elif sueno >= CONFIG.salud_umbral_sueno_1:
+		delta_salud += CONFIG.salud_recuperacion_sueno_1
+
+	if felicidad >= CONFIG.salud_umbral_felicidad_2:
+		delta_salud += CONFIG.salud_recuperacion_felicidad_2
+	elif felicidad >= CONFIG.salud_umbral_felicidad_1:
+		delta_salud += CONFIG.salud_recuperacion_felicidad_1
+
+	salud = clampf(salud + delta_salud, 0.0, 100.0)
+
+	if salud <= 0.0:
 		morir()
+
+
+# ============================================================
+# 💥 DAÑO / CURA INSTANTÁNEA
+# Para golpes, agresiones, eventos, medicina instantánea, etc.
+# ============================================================
+func damage_health(amount: float) -> void:
+	if amount <= 0.0:
+		return
+
+	salud = clampf(salud - amount, 0.0, 100.0)
+	actualizar_stats()
+
+	if salud <= 0.0:
+		morir()
+
+
+func heal_health(amount: float) -> void:
+	if amount <= 0.0:
+		return
+
+	salud = clampf(salud + amount, 0.0, 100.0)
+	actualizar_stats()
+
 
 # ============================================================
 # 🍞 BASIC ACTIONS
 # ============================================================
 func comer() -> bool:
-	if dinero >= COSTE_COMIDA:
-		gastar_dinero(COSTE_COMIDA)
-		hambre    = max(0, hambre - 40)
-		felicidad = min(100, felicidad + 5)
+	if dinero >= CONFIG.coste_comida:
+		gastar_dinero(CONFIG.coste_comida)
+		hambre = maxf(0.0, hambre - 40.0)
+		felicidad = minf(100.0, felicidad + 5.0)
 		actualizar_stats()
 		return true
 	return false
+
 
 func banarse() -> bool:
 	if dinero >= COSTE_BANO:
 		gastar_dinero(COSTE_BANO)
-		higiene   = 100.0
-		felicidad = min(100, felicidad + 10)
-		estres    = max(0, estres - 5)
+		higiene = 100.0
+		felicidad = minf(100.0, felicidad + 10.0)
+		estres = maxf(0.0, estres - 5.0)
 		actualizar_stats()
 		return true
 	return false
+
 
 func beber_alcohol() -> bool:
 	if dinero >= COSTE_ALCOHOL:
 		gastar_dinero(COSTE_ALCOHOL)
-		alcohol   = min(100, alcohol + 30)
-		nervios   = max(0, nervios - 20)
-		estres    = max(0, estres - 15)
-		felicidad = min(100, felicidad + 10)
+		alcohol = minf(100.0, alcohol + 30.0)
+		nervios = maxf(0.0, nervios - 20.0)
+		estres = maxf(0.0, estres - 15.0)
+		felicidad = minf(100.0, felicidad + 10.0)
 		actualizar_stats()
 		return true
 	return false
 
+
 func tomar_laudano() -> bool:
 	if dinero >= COSTE_LAUDANO:
 		gastar_dinero(COSTE_LAUDANO)
-		laudano   = min(100, laudano + 40)
-		estres    = max(0, estres - 40)
-		nervios   = max(0, nervios - 30)
-		felicidad = min(100, felicidad + 20)
+		laudano = minf(100.0, laudano + 40.0)
+		estres = maxf(0.0, estres - 40.0)
+		nervios = maxf(0.0, nervios - 30.0)
+		felicidad = minf(100.0, felicidad + 20.0)
 		actualizar_stats()
 		return true
 	return false
+
 
 # ============================================================
 # 💊 TRATAMIENTOS
@@ -273,6 +336,7 @@ func comprar_medicina() -> bool:
 		return true
 	return false
 
+
 func ir_al_medico() -> bool:
 	if dinero >= CONFIG.coste_medico:
 		gastar_dinero(CONFIG.coste_medico)
@@ -284,40 +348,45 @@ func ir_al_medico() -> bool:
 		return true
 	return false
 
+
 func descansar_hostal() -> bool:
-	if dinero >= CONFIG.coste_hostal * 3:
-		gastar_dinero(CONFIG.coste_hostal * 3)
-		sueno   = 100.0
+	if dinero >= CONFIG.coste_hostal * 3.0:
+		gastar_dinero(CONFIG.coste_hostal * 3.0)
+		sueno = 100.0
 		stamina = 100.0
-		estres  = max(0, estres - 30)
+		estres = maxf(0.0, estres - 30.0)
 		dias_sin_pagar_hostal = 0
+
 		if randf() < 0.4:
 			enfermedad = 0.0
 			enferma = false
 			enfermedad_cambiada.emit(false)
+
 		actualizar_stats()
 		return true
 	return false
 
+
 func descansar_calle() -> void:
-	sueno    = 60.0
-	stamina  = min(100, stamina + 40)
-	estres   = min(100, estres + 30)
-	higiene  = max(0, higiene - 30)
-	felicidad = max(0, felicidad - 20)
-	nervios  = min(100, nervios + 20)
+	sueno = 60.0
+	stamina = minf(100.0, stamina + 40.0)
+	estres = minf(100.0, estres + 30.0)
+	higiene = maxf(0.0, higiene - 30.0)
+	felicidad = maxf(0.0, felicidad - 20.0)
+	nervios = minf(100.0, nervios + 20.0)
 	durmiendo_en_calle.emit()
 
-	var tirada := randf()
+	var tirada: float = randf()
 	if tirada < 0.15:
 		enfermedad = 0.0
 		enferma = false
 		enfermedad_cambiada.emit(false)
 	elif tirada < 0.30:
-		enfermedad = min(100, enfermedad + 10)
+		enfermedad = minf(100.0, enfermedad + 10.0)
 		_check_enfermedad_efectos()
 
 	actualizar_stats()
+
 
 # ============================================================
 # 💋 ACTO CON CLIENTE — reemplaza tener_sexo_poor/medium/rich
@@ -325,7 +394,6 @@ func descansar_calle() -> void:
 # tipo:  "poor" | "medium" | "rich"
 # ============================================================
 
-# Tabla de datos por acto y tipo de cliente
 const _ACTOS: Dictionary = {
 	"mano": {
 		"poor":   { "pago": 0.5, "higiene": -5,  "nervios": 5,  "sueno": -3,  "estres": 5,  "infeccion": 0.00 },
@@ -344,31 +412,26 @@ const _ACTOS: Dictionary = {
 	},
 }
 
-# ============================================================
-# Reemplaza tener_acto() en player_stats.gd
-# satisfaction: 0.25 a 1.0 según ronda del minijuego
-# ============================================================
- 
 func tener_acto(acto: String, tipo: String, satisfaction: float = 1.0) -> void:
 	if not _ACTOS.has(acto) or not _ACTOS[acto].has(tipo):
 		push_warning("PlayerStats.tener_acto: combinación inválida '%s'/'%s'" % [acto, tipo])
 		return
- 
+
 	var d: Dictionary = _ACTOS[acto][tipo]
- 
-	higiene = clamp(higiene  + d["higiene"],  0, 100)
-	nervios = clamp(nervios  + d["nervios"],  0, 100)
-	sueno   = clamp(sueno    + d["sueno"],    0, 100)
-	estres  = clamp(estres   + d["estres"],   0, 100)
-	hambre  = clamp(hambre   + 5.0,           0, 100)
- 
-	infectar(d["infeccion"])
- 
-	# El pago se escala con la satisfacción del minijuego
-	var pago_final: float = d["pago"] * satisfaction
+
+	higiene = clampf(higiene + float(d["higiene"]), 0.0, 100.0)
+	nervios = clampf(nervios + float(d["nervios"]), 0.0, 100.0)
+	sueno = clampf(sueno + float(d["sueno"]), 0.0, 100.0)
+	estres = clampf(estres + float(d["estres"]), 0.0, 100.0)
+	hambre = clampf(hambre + 5.0, 0.0, 100.0)
+
+	infectar(float(d["infeccion"]))
+
+	var pago_final: float = float(d["pago"]) * satisfaction
 	añadir_dinero(pago_final)
- 
+
 	actualizar_stats()
+
 
 # ============================================================
 # 💤 SLEEP
@@ -376,9 +439,9 @@ func tener_acto(acto: String, tipo: String, satisfaction: float = 1.0) -> void:
 func dormir_hostal() -> bool:
 	if dinero >= CONFIG.coste_hostal:
 		gastar_dinero(CONFIG.coste_hostal)
-		sueno   = 100.0
+		sueno = 100.0
 		stamina = 100.0
-		estres  = max(0, estres - 20)
+		estres = maxf(0.0, estres - 20.0)
 		dias_sin_pagar_hostal = 0
 		actualizar_stats()
 		return true
@@ -387,15 +450,17 @@ func dormir_hostal() -> bool:
 		dormir_calle()
 		return false
 
+
 func dormir_calle() -> void:
-	sueno    = 60.0
-	stamina  = min(100, stamina + 40)
-	estres   = min(100, estres + 30)
-	higiene  = max(0, higiene - 30)
-	felicidad = max(0, felicidad - 20)
-	nervios  = min(100, nervios + 20)
+	sueno = 60.0
+	stamina = minf(100.0, stamina + 40.0)
+	estres = minf(100.0, estres + 30.0)
+	higiene = maxf(0.0, higiene - 30.0)
+	felicidad = maxf(0.0, felicidad - 20.0)
+	nervios = minf(100.0, nervios + 20.0)
 	durmiendo_en_calle.emit()
 	actualizar_stats()
+
 
 # ============================================================
 # 💸 ECONOMY
@@ -403,9 +468,10 @@ func dormir_calle() -> void:
 func añadir_dinero(cantidad: float) -> void:
 	dinero += cantidad
 	dinero_changed.emit(dinero)
-	if dinero >= DINERO_PARA_ESCAPAR:
+	if dinero >= CONFIG.objetivo_dinero:
 		objetivo_completado.emit()
 	actualizar_stats()
+
 
 func gastar_dinero(cantidad: float) -> bool:
 	if dinero >= cantidad:
@@ -415,91 +481,116 @@ func gastar_dinero(cantidad: float) -> bool:
 		return true
 	return false
 
+
 func puede_escapar() -> bool:
-	return dinero >= DINERO_PARA_ESCAPAR
+	return dinero >= CONFIG.objetivo_dinero
+
 
 # ============================================================
 # 🧠 STATE MANAGEMENT
 # ============================================================
 func clamp_all() -> void:
-	for prop in ["miedo", "estres", "felicidad", "nervios", "hambre",
-				 "higiene", "sueno", "alcohol", "laudano", "salud",
-				 "stamina", "enfermedad"]:
-		self.set(prop, clamp(self.get(prop), 0, 100))
+	for prop_name in [
+		"miedo", "estres", "felicidad", "nervios", "hambre",
+		"higiene", "sueno", "alcohol", "laudano", "salud",
+		"stamina", "enfermedad"
+	]:
+		self.set(prop_name, clampf(float(self.get(prop_name)), 0.0, 100.0))
+
 
 # ============================================================
 # 🔄 UPDATE & SIGNAL EMIT
+# IMPORTANTE:
+# - Ya NO recalcula salud aquí.
+# - actualizar_salud() va en el tick horario.
 # ============================================================
-func actualizar_stats(delta: float = 1.0) -> void:
+func actualizar_stats(_delta: float = 1.0) -> void:
 	clamp_all()
 	calcular_sex_appeal()
-	actualizar_salud(delta)
 	stamina_changed.emit(stamina)
 	_detectar_colapso()
 	stats_updated.emit()
+
 	if debug_mode:
-		print("📣 stats — hambre:", hambre, " higiene:", higiene,
-			  " salud:", salud, " enfermedad:", enfermedad,
-			  " sex_appeal:", sex_appeal)
+		print(
+			"📣 stats — hambre:", hambre,
+			" higiene:", higiene,
+			" salud:", salud,
+			" enfermedad:", enfermedad,
+			" sex_appeal:", sex_appeal
+		)
+
 
 func _detectar_colapso() -> void:
-	if sueno > 0 and _colapso_activo:
+	if sueno > 0.0 and _colapso_activo:
 		_colapso_activo = false
-	if sueno <= 0 and _sueno_anterior > 0 and not _colapso_activo:
+
+	if sueno <= 0.0 and _sueno_anterior > 0.0 and not _colapso_activo:
 		_colapso_activo = true
 		sueno_agotado.emit()
+
 	_sueno_anterior = sueno
 
-func actualizar_stats_diferido(delta: float = 1.0) -> void:
-	actualizar_stats(delta)
+
+func actualizar_stats_diferido(_delta: float = 1.0) -> void:
+	actualizar_stats()
 	await get_tree().process_frame
+
 
 # ============================================================
 # 🔁 SYNC CON DIALOGIC
 # ============================================================
 func _sync_dialogic_variables() -> void:
-	if not get_tree().root.has_node("Dialogic"):
+	var dialogic_root := get_tree().root.get_node_or_null("Dialogic")
+	if dialogic_root == null:
 		return
 
-	Dialogic.VAR.set_variable("sex_appeal", sex_appeal)
-	Dialogic.VAR.set_variable("hora", DayNightManager.hora_actual)
-	Dialogic.VAR.set_variable("dinero", dinero)
-	Dialogic.VAR.set_variable("higiene", higiene)
-	Dialogic.VAR.set_variable("enfermedad", enfermedad)
+	var dialogic_var = dialogic_root.get_node_or_null("VAR")
+	if dialogic_var == null:
+		return
 
-	var hora_actual := DayNightManager.hora_actual
-	var hostel_open := hora_actual >= SleepManager.HORA_APERTURA_HOSTAL or hora_actual < SleepManager.HORA_CIERRE_HOSTAL
+	dialogic_var.set_variable("sex_appeal", sex_appeal)
+	dialogic_var.set_variable("hora", DayNightManager.get_hour_float())
+	dialogic_var.set_variable("dinero", dinero)
+	dialogic_var.set_variable("higiene", higiene)
+	dialogic_var.set_variable("enfermedad", enfermedad)
 
-	Dialogic.VAR.set_variable("hostel.hostel_open", hostel_open)
-	Dialogic.VAR.set_variable("hostel.player_money", dinero)
-	Dialogic.VAR.set_variable("hostel.hostel_price", CONFIG.coste_hostal)
+	var hora_actual: float = DayNightManager.get_hour_float()
+	var hostel_open: bool = hora_actual >= CONFIG.hora_apertura_hostal or hora_actual < CONFIG.hora_cierre_hostal
+
+	dialogic_var.set_variable("hostel.hostel_open", hostel_open)
+	dialogic_var.set_variable("hostel.player_money", dinero)
+	dialogic_var.set_variable("hostel.hostel_price", CONFIG.coste_hostal)
+
 
 # ============================================================
 # 🎨 UTILS
 # ============================================================
 func obtener_color_atributo(valor: float) -> Color:
-	if valor >= 70:
+	if valor >= 70.0:
 		return Color.GREEN
-	elif valor >= 40:
+	elif valor >= 40.0:
 		return Color.YELLOW
 	else:
 		return Color.RED
 
+
 func obtener_estado_general() -> String:
-	if enfermedad >= 70:
+	if enfermedad >= 70.0:
 		return "😷 Estás gravemente enferma..."
-	elif enfermedad >= 20:
+	elif enfermedad >= 20.0:
 		return "🤒 Te encuentras mal..."
-	elif sex_appeal >= 80:
+	elif sex_appeal >= 80.0:
 		return "Estás en tu mejor momento"
-	elif sex_appeal >= 60:
+	elif sex_appeal >= 60.0:
 		return "Te sientes atractiva"
-	elif sex_appeal >= 40:
+	elif sex_appeal >= 40.0:
 		return "Podrías estar mejor"
-	elif sex_appeal >= 20:
+	elif sex_appeal >= 20.0:
 		return "Necesitas cuidarte urgentemente"
 	else:
 		return "Estás al límite..."
+
 
 func has(stat_name: String) -> bool:
 	for prop in get_property_list():
@@ -507,29 +598,36 @@ func has(stat_name: String) -> bool:
 			return true
 	return false
 
+
 func morir() -> void:
 	jugador_muerto.emit()
 	if debug_mode:
 		print("☠️ El jugador ha muerto.")
 
+
 func reset_stats() -> void:
-	miedo     = 10.0
-	estres    = 30.0
+	miedo = 10.0
+	estres = 30.0
 	felicidad = 50.0
-	nervios   = 20.0
-	hambre    = 50.0
-	higiene   = 70.0
-	sueno     = 80.0
-	alcohol   = 0.0
-	laudano   = 0.0
-	salud     = 100.0
-	stamina   = 100.0
+	nervios = 20.0
+	hambre = 50.0
+	higiene = 70.0
+	sueno = 80.0
+	alcohol = 0.0
+	laudano = 0.0
+	salud = 100.0
+	stamina = 100.0
 	enfermedad = 0.0
-	enferma   = false
+	enferma = false
 	medicina_activa = false
 	medicina_timer = 0.0
-	dinero    = 5.0
+	dinero = 5.0
 	sex_appeal_bonus = 0.0
+
 	enfermedad_cambiada.emit(false)
 	sincronizar_reloj()
 	actualizar_stats()
+
+func _post_ready_init() -> void:
+	actualizar_stats()
+	_sync_dialogic_variables()

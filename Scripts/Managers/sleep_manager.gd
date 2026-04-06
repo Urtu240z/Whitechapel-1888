@@ -11,9 +11,6 @@ const CONFIG = preload("res://Data/Game/game_config.tres")
 # CONSTANTES
 # ================================================================
 
-const HORA_APERTURA_HOSTAL: float = 22.0
-const HORA_CIERRE_HOSTAL: float = 10.0
-
 const SALUD_HOSTAL_POR_HORA: float = 0.5
 const ESTRES_HOSTAL_POR_HORA: float = 1.0
 
@@ -74,7 +71,7 @@ func start_sleep(lugar_str: String) -> void:
 		return
 
 	if _lugar == Lugar.HOSTAL:
-		var horas_restantes = _horas_entre(_hora_inicio, HORA_CIERRE_HOSTAL)
+		var horas_restantes = _horas_entre(_hora_inicio, CONFIG.hora_cierre_hostal)
 		if horas_restantes < 1.0:
 			_mostrar_aviso_poco_tiempo()
 			return
@@ -155,7 +152,7 @@ func _iniciar_sueno_directo() -> void:
 		_screen.call("set_forzado", true)
 	await SceneManager.fade_in(1.5)
 	_tick_timer = Timer.new()
-	_tick_timer.wait_time = CONFIG.duracion_hora_segundos
+	_tick_timer.wait_time = CONFIG.duracion_hora_sueno_segundos
 	_tick_timer.one_shot = false
 	_tick_timer.timeout.connect(_tick_hora)
 	add_child(_tick_timer)
@@ -166,7 +163,7 @@ func _iniciar_sueno_directo() -> void:
 # ================================================================
 
 func _hostal_abierto(hora: float) -> bool:
-	return hora >= HORA_APERTURA_HOSTAL or hora < HORA_CIERRE_HOSTAL
+	return hora >= CONFIG.hora_apertura_hostal or hora < CONFIG.hora_cierre_hostal
 
 # ================================================================
 # PANEL DE SELECCIÓN
@@ -247,7 +244,7 @@ func _iniciar_sueno() -> void:
 	_screen.call("actualizar", DayNightManager.hora_actual, 0.0)
 	await SceneManager.fade_in(1.5)
 	_tick_timer = Timer.new()
-	_tick_timer.wait_time = CONFIG.duracion_hora_segundos
+	_tick_timer.wait_time = CONFIG.duracion_hora_sueno_segundos
 	_tick_timer.one_shot = false
 	_tick_timer.timeout.connect(_tick_hora)
 	add_child(_tick_timer)
@@ -276,7 +273,7 @@ func _tick_hora() -> void:
 func _al_terminar_sueno() -> void:
 	if _lugar == Lugar.HOSTAL:
 		var hora_actual = DayNightManager.hora_actual
-		var antes_cierre = hora_actual < HORA_CIERRE_HOSTAL or hora_actual >= HORA_APERTURA_HOSTAL
+		var antes_cierre = hora_actual < CONFIG.hora_cierre_hostal or hora_actual >= CONFIG.hora_apertura_hostal
 		if antes_cierre and _screen:
 			_screen.call("mostrar_panel_post", hora_actual)
 			return
@@ -291,7 +288,7 @@ func _on_screen_cancelado() -> void:
 func _on_seguir_durmiendo() -> void:
 	_limpiar_timer()
 	var hora_actual = DayNightManager.hora_actual
-	var horas_restantes = _horas_entre(hora_actual, HORA_CIERRE_HOSTAL)
+	var horas_restantes = _horas_entre(hora_actual, CONFIG.hora_cierre_hostal)
 	if horas_restantes <= 0.0:
 		_finalizar_sueno()
 		return
@@ -299,7 +296,7 @@ func _on_seguir_durmiendo() -> void:
 	_horas_totales = horas_restantes
 	_horas_dormidas = 0.0
 	_tick_timer = Timer.new()
-	_tick_timer.wait_time = CONFIG.duracion_hora_segundos
+	_tick_timer.wait_time = CONFIG.duracion_hora_sueno_segundos
 	_tick_timer.one_shot = false
 	_tick_timer.timeout.connect(_tick_hora)
 	add_child(_tick_timer)
@@ -390,7 +387,7 @@ func _calcular_horas_maximas() -> float:
 	var horas_para_recuperar = _calcular_horas_para_recuperar()
 	match _lugar:
 		Lugar.HOSTAL:
-			var horas_hasta_cierre = _horas_entre(_hora_inicio, HORA_CIERRE_HOSTAL)
+			var horas_hasta_cierre = _horas_entre(_hora_inicio, CONFIG.hora_cierre_hostal)
 			return minf(horas_para_recuperar, horas_hasta_cierre)
 		_:
 			return minf(horas_para_recuperar, CONFIG.horas_max_calle)

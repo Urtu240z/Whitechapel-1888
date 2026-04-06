@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bslh8f2alrkb5"
+path="res://.godot/imported/Fog Over Whitechapel.mp3-9225e62480a111fd428b270a9ecbbd1e.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Fog Over Whitechapel.mp3"
+dest_files=["res://.godot/imported/Fog Over Whitechapel.mp3-9225e62480a111fd428b270a9ecbbd1e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

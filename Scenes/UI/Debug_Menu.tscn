@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cs8v7ugw7yjlr"]
+
+[ext_resource type="Script" uid="uid://dfq145yybs3t3" path="res://Scripts/UI/debug_menu.gd" id="1_ehall"]
+
+[node name="DebugMenu" type="CanvasLayer" unique_id=1038777979]
+script = ExtResource("1_ehall")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=285674580]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=606800198]
+layout_mode = 2
+
+[node name="InfoLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1966755544]
+layout_mode = 2
+
+[node name="HoursRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=521626196]
+layout_mode = 2
+
+[node name="BtnPlus1" type="Button" parent="PanelContainer/VBoxContainer/HoursRow" unique_id=1350855552]
+layout_mode = 2
+
+[node name="BtnPlus6" type="Button" parent="PanelContainer/VBoxContainer/HoursRow" unique_id=1203878866]
+layout_mode = 2
+
+[node name="BtnPlus12" type="Button" parent="PanelContainer/VBoxContainer/HoursRow" unique_id=1449486049]
+layout_mode = 2
+
+[node name="SetHourRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=597894838]
+layout_mode = 2
+
+[node name="HourSpin" type="SpinBox" parent="PanelContainer/VBoxContainer/SetHourRow" unique_id=1603556831]
+layout_mode = 2
+
+[node name="BtnSetHour" type="Button" parent="PanelContainer/VBoxContainer/SetHourRow" unique_id=2143602710]
+layout_mode = 2

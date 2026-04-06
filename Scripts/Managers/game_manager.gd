@@ -5,15 +5,18 @@ extends Node
 # ================================================================
 
 const PAUSE_MENU_SCENE := preload("res://Scenes/UI/Pause_Menu.tscn")
+const DEBUG_MENU_SCENE := preload("res://Scenes/UI/Debug_Menu.tscn")
 
 signal journal_closed
 
 var _journal = null
 var _pause_menu = null
+var _debug_menu = null
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_set_custom_cursor()
+	_ensure_debug_menu()
 
 func _set_custom_cursor() -> void:
 	var cursor = preload("res://Assets/Images/UI/cursor.png")
@@ -23,7 +26,7 @@ func _input(event: InputEvent) -> void:
 	if StateManager.is_state(StateManager.State.CLIENT_SERVICE):
 		return
 
-	if event is InputEventMouseButton and event.pressed:
+	if OS.is_debug_build() and event is InputEventMouseButton and event.pressed:
 		print("🖱️ Click recibido en GameManager, estado: ", StateManager.State.keys()[StateManager.current()])
 
 	if event.is_action_pressed("ui_cancel"):
@@ -208,3 +211,13 @@ func hide_mouse() -> void:
 
 func show_mouse() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func _ensure_debug_menu() -> void:
+	if not OS.is_debug_build():
+		return
+
+	if _debug_menu != null and is_instance_valid(_debug_menu):
+		return
+
+	_debug_menu = DEBUG_MENU_SCENE.instantiate()
+	get_tree().root.add_child.call_deferred(_debug_menu)

@@ -137,7 +137,7 @@ func get_slot_info(slot: int) -> Dictionary:
 		return {}
 
 	var tiempo_guardado := float(parsed.get("tiempo_acumulado", 0.0))
-	var dia_guardado := parsed.get("dia", 1)
+	var dia_guardado: int = int(parsed.get("dia", 1))
 	if parsed.has("tiempo_acumulado"):
 		dia_guardado = int(floor(tiempo_guardado / (CONFIG.duracion_hora_segundos * 24.0))) + 1
 

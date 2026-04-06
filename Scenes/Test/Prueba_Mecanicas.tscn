@@ -266,7 +266,7 @@ disappear_on_pickup = false
 
 [node name="Pickup6" parent="Labels" unique_id=595805131 instance=ExtResource("3_ju50u")]
 position = Vector2(2177.264, -440.27304)
-pickup_type = "drink-absenta"
+pickup_type = "client-medium"
 disappear_on_pickup = false
 
 [node name="Pickup7" parent="Labels" unique_id=2061915409 instance=ExtResource("3_ju50u")]

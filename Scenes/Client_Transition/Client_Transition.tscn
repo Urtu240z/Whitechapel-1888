@@ -23,7 +23,7 @@
 [ext_resource type="Script" uid="uid://cfjrgt1p8oofr" path="res://Scripts/Client_Transition/client_minigame.gd" id="21_apikc"]
 [ext_resource type="AudioStream" uid="uid://b28544a5ucfqp" path="res://Assets/Audio/WAVS/footsteps_with_heels_on_cobblestone_pavem_variation3.wav" id="22_4idvv"]
 [ext_resource type="AudioStream" uid="uid://d7e5nakf36ad" path="res://Assets/Audio/WAVS/Man_Talk.wav" id="23_kdocs"]
-[ext_resource type="AudioStream" uid="uid://ns7xfcicm3jb" path="res://Assets/Audio/Ambience/Atmosphere_of_a_Whitechapel_street_in_the_year_188_variation1.wav" id="24_lf7i0"]
+[ext_resource type="AudioStream" uid="uid://bslh8f2alrkb5" path="res://Assets/Music/Fog Over Whitechapel.mp3" id="24_4idvv"]
 
 [sub_resource type="Gradient" id="Gradient_a15mn"]
 offsets = PackedFloat32Array(0.8773842, 0.94550407)
@@ -380,10 +380,10 @@ tracks/18/path = NodePath("Audio/Ambient:playing")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
-"times": PackedFloat32Array(0, 5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true, false]
+"values": [true]
 }
 tracks/19/type = "value"
 tracks/19/imported = false
@@ -428,10 +428,10 @@ tracks/22/path = NodePath("Audio/Ambient:volume_db")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
-"times": PackedFloat32Array(0, 0.36817124, 3.9333334, 5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.36817124, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [-80.0, -3.728, -3.728, -80.0]
+"values": [-80.0, -3.728, -3.728]
 }
 
 [sub_resource type="Animation" id="Animation_6q4g3"]
@@ -1065,15 +1065,15 @@ visible = false
 modification_stack = SubResource("SkeletonModificationStack2D_g3snf")
 
 [node name="Hip" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D" unique_id=856557574]
-position = Vector2(10, 37)
+position = Vector2(66, -5)
 rotation = -0.01682433
 scale = Vector2(0.9998779, 0.9998779)
 rest = Transform2D(0.9996896, -0.016820693, 0.016820693, 0.9996896, 0, 0)
 
 [node name="Chest" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip" unique_id=36364004]
 position = Vector2(-7.0579405, -56.13615)
-rotation = 0.393564
-scale = Vector2(0.99969256, 0.99969256)
+rotation = 0.09077557
+scale = Vector2(0.99969333, 0.99969333)
 rest = Transform2D(0.97370666, 0.22645162, -0.22645162, 0.97370666, -7.0579405, -56.13615)
 
 [node name="Neck" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest" unique_id=1004495660]
@@ -1081,8 +1081,8 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Head" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest/Neck" unique_id=1851533722]
 position = Vector2(-21.552269, -163.67763)
-rotation = -0.10189524
-scale = Vector2(0.9997016, 0.9997016)
+rotation = 0.30925778
+scale = Vector2(0.99970156, 0.99970156)
 rest = Transform2D(0.99658036, 0.07903025, -0.07903025, 0.99658036, -21.552269, -163.67763)
 auto_calculate_length_and_angle = false
 length = 73.964
@@ -1090,14 +1090,14 @@ bone_angle = -72.84197
 
 [node name="ArmR" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest" unique_id=1931602525]
 position = Vector2(-86.79408, -102.488594)
-rotation = 0.4545981
-scale = Vector2(0.99984634, 0.99984634)
+rotation = 0.3806745
+scale = Vector2(0.99984664, 0.99984664)
 rest = Transform2D(0.83090454, 0.556137, -0.556137, 0.83090454, -86.79408, -102.488594)
 
 [node name="ForeArmR" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest/ArmR" unique_id=1164801619]
 position = Vector2(103.411964, 108.07965)
-rotation = 0.66189075
-scale = Vector2(0.999841, 0.999841)
+rotation = 0.707453
+scale = Vector2(0.9998409, 0.9998409)
 rest = Transform2D(0.6211967, 0.7834735, -0.7834735, 0.6211967, 103.411964, 108.07965)
 auto_calculate_length_and_angle = false
 length = 139.5
@@ -1105,14 +1105,14 @@ bone_angle = -40.055992
 
 [node name="ArmL" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest" unique_id=278888673]
 position = Vector2(49.899414, -105.89192)
-rotation = 2.489383
-scale = Vector2(0.9998395, 0.9998395)
+rotation = 1.7490596
+scale = Vector2(0.99983966, 0.99983966)
 rest = Transform2D(0.32011485, 0.94722396, -0.94722396, 0.32011485, 49.899414, -105.89192)
 
 [node name="ForeArmL" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest/ArmL" unique_id=1595351540]
 position = Vector2(129.2485, -20.424229)
-rotation = -1.5391028
-scale = Vector2(0.99985695, 0.99985695)
+rotation = -0.92244333
+scale = Vector2(0.99985677, 0.99985677)
 rest = Transform2D(0.9884388, 0.15055905, -0.15055905, 0.9884388, 129.2485, -20.424229)
 auto_calculate_length_and_angle = false
 length = 145.667
@@ -1120,14 +1120,14 @@ bone_angle = -33.018
 
 [node name="LegR" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip" unique_id=1817741692]
 position = Vector2(-44.77522, 45.260902)
-rotation = -1.1771846
-scale = Vector2(0.99984735, 0.99984735)
+rotation = -1.0527309
+scale = Vector2(0.9998477, 0.9998477)
 rest = Transform2D(0.44403812, -0.8958404, 0.8958404, 0.44403812, -44.77522, 45.260902)
 
 [node name="KneeR" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/LegR" unique_id=1755587305]
 position = Vector2(-130.53163, 94.41959)
-rotation = 1.2960123
-scale = Vector2(0.99983877, 0.99983877)
+rotation = 1.116954
+scale = Vector2(0.99983865, 0.99983865)
 rest = Transform2D(0.35090968, 0.93623465, -0.93623465, 0.35090968, -130.53163, 94.41959)
 auto_calculate_length_and_angle = false
 length = 223.384
@@ -1135,8 +1135,8 @@ bone_angle = 91.99996
 
 [node name="LegL" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip" unique_id=455040614]
 position = Vector2(29.15951, 50.506165)
-rotation = 0.07556506
-scale = Vector2(0.99983954, 0.99983954)
+rotation = -0.18810754
+scale = Vector2(0.9998395, 0.9998395)
 rest = Transform2D(0.99983424, -0.0044851624, 0.0044851624, 0.99983424, 29.15951, 50.506165)
 auto_calculate_length_and_angle = false
 length = 311.968
@@ -1144,8 +1144,8 @@ bone_angle = 93.20517
 
 [node name="KneeL" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/LegL" unique_id=1804634219]
 position = Vector2(3.5310373, 166.55461)
-rotation = 0.048179507
-scale = Vector2(0.9998569, 0.9998569)
+rotation = 0.39867842
+scale = Vector2(0.9998567, 0.9998567)
 rest = Transform2D(0.9876027, 0.15605146, -0.15605146, 0.9876027, 3.5310373, 166.55461)
 auto_calculate_length_and_angle = false
 length = 190.287
@@ -1345,13 +1345,14 @@ visible = false
 modification_stack = SubResource("SkeletonModificationStack2D_5vvyl")
 
 [node name="Hip" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D" unique_id=744143180]
+position = Vector2(0, 52.22229)
 rotation = 0.17889677
 scale = Vector2(0.9998805, 0.9998805)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Chest" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=1113128428]
 position = Vector2(-2, -53)
-rotation = -0.14760226
+rotation = -0.083582364
 scale = Vector2(0.99982417, 0.99982417)
 rest = Transform2D(0.99793434, 0.06424214, -0.06424214, 0.99793434, -2, -53)
 
@@ -1360,8 +1361,8 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Head" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest/Neck" unique_id=167744916]
 position = Vector2(-11, -162)
-rotation = 0.19494957
-scale = Vector2(0.999838, 0.999838)
+rotation = 0.6792297
+scale = Vector2(0.9998377, 0.9998377)
 rest = Transform2D(0.9999851, -0.00547044, 0.00547044, 0.9999851, -11, -162)
 auto_calculate_length_and_angle = false
 length = 53.297
@@ -1369,14 +1370,14 @@ bone_angle = -80.11498
 
 [node name="ArmR" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest" unique_id=992144047]
 position = Vector2(-72, -117)
-rotation = 0.24734426
-scale = Vector2(0.99983174, 0.99983174)
+rotation = 0.5092337
+scale = Vector2(0.9998318, 0.9998318)
 rest = Transform2D(0.99997807, 0.0066213235, -0.0066213235, 0.99997807, -72, -117)
 
 [node name="ForeArmR" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest/ArmR" unique_id=589080583]
 position = Vector2(-7, 135)
-rotation = 0.7348703
-scale = Vector2(0.9998429, 0.9998429)
+rotation = -0.43395278
+scale = Vector2(0.9998427, 0.9998427)
 rest = Transform2D(0.89776886, 0.44046685, -0.44046685, 0.89776886, -7, 135)
 auto_calculate_length_and_angle = false
 length = 155.0
@@ -1384,14 +1385,14 @@ bone_angle = 23.196201
 
 [node name="ArmL" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest" unique_id=1433338527]
 position = Vector2(29.69851, -130.1768)
-rotation = 0.17711999
-scale = Vector2(0.99983805, 0.99983805)
+rotation = 0.7441922
+scale = Vector2(0.9998382, 0.9998382)
 rest = Transform2D(1, 0, 0, 1, 47, -121)
 
 [node name="ForeArmL" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest/ArmL" unique_id=2026602526]
 position = Vector2(22, 120)
-rotation = -0.056592748
-scale = Vector2(0.99983925, 0.99983925)
+rotation = -0.9523032
+scale = Vector2(0.9998395, 0.9998395)
 rest = Transform2D(0.99988055, 0.015455957, -0.015455957, 0.99988055, 22, 120)
 auto_calculate_length_and_angle = false
 length = 125.0
@@ -1399,14 +1400,14 @@ bone_angle = 42.711983
 
 [node name="LegR" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=1565375585]
 position = Vector2(-14.700328, 126.63689)
-rotation = -0.34270373
-scale = Vector2(0.9998664, 0.9998664)
+rotation = -0.8368718
+scale = Vector2(0.99986637, 0.99986637)
 rest = Transform2D(0.99116075, -0.1326665, 0.1326665, 0.99116075, -66, 103)
 
 [node name="KneeR" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/LegR" unique_id=1599005355]
 position = Vector2(1, 146)
-rotation = 0.63316864
-scale = Vector2(0.99987566, 0.99987566)
+rotation = 1.157898
+scale = Vector2(0.9998754, 0.9998754)
 rest = Transform2D(0.9880616, 0.15405944, -0.15405944, 0.9880616, 1, 146)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -1420,14 +1421,14 @@ occluder = SubResource("OccluderPolygon2D_pyfus")
 
 [node name="LegL" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=2087565263]
 position = Vector2(55.522446, 115.97094)
-rotation = -0.7411184
-scale = Vector2(0.9998451, 0.9998451)
+rotation = -0.6357419
+scale = Vector2(0.9998453, 0.9998453)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/LegL" unique_id=57242182]
 position = Vector2(-7, 125)
-rotation = 0.37460896
-scale = Vector2(0.99984074, 0.99984074)
+rotation = 0.64584726
+scale = Vector2(0.999841, 0.999841)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -1442,13 +1443,13 @@ occluder = SubResource("OccluderPolygon2D_kgy3h")
 [node name="SkirtL" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=1451246380]
 visible = false
 position = Vector2(-19.953075, 7.672987)
-rotation = -0.32751438
+rotation = -0.3046016
 scale = Vector2(0.9998451, 0.9998451)
 rest = Transform2D(1, 0, 0, 1, -68, 10)
 
 [node name="SkirtL2" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/SkirtL" unique_id=764267554]
 position = Vector2(-54.593754, 151.47455)
-rotation = 0.25865656
+rotation = 0.26098794
 scale = Vector2(0.9998754, 0.9998754)
 rest = Transform2D(1, 0, 0, 1, -47, 168)
 auto_calculate_length_and_angle = false
@@ -1458,14 +1459,14 @@ bone_angle = 95.0
 [node name="SkirtC" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=1175930771]
 visible = false
 position = Vector2(-1, 23)
-rotation = -0.18051071
+rotation = -0.18656965
 scale = Vector2(0.9998471, 0.9998471)
 rest = Transform2D(1, 0, 0, 1, -1, 23)
 
 [node name="SkirtC2" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/SkirtC" unique_id=1612768243]
 position = Vector2(7, 173)
-rotation = -0.12770653
-scale = Vector2(0.9998646, 0.9998646)
+rotation = -0.1277068
+scale = Vector2(0.99986464, 0.99986464)
 rest = Transform2D(1, 0, 0, 1, 7, 173)
 auto_calculate_length_and_angle = false
 length = 90.0
@@ -1474,14 +1475,14 @@ bone_angle = 95.0
 [node name="SkirtR" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=1781024200]
 visible = false
 position = Vector2(59.01034, 22.864365)
-rotation = 1.0278493
-scale = Vector2(0.999861, 0.999861)
+rotation = 0.8760628
+scale = Vector2(0.99986094, 0.99986094)
 rest = Transform2D(1, 0, 0, 1, 43, 10)
 
 [node name="SkirtR2" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/SkirtR" unique_id=633965446]
 position = Vector2(184.16289, 43.428574)
-rotation = -1.4264778
-scale = Vector2(0.99985933, 0.99985933)
+rotation = -1.1202098
+scale = Vector2(0.99985945, 0.99985945)
 rest = Transform2D(1, 0, 0, 1, 27, 186)
 auto_calculate_length_and_angle = false
 length = 90.0
@@ -1669,5 +1670,5 @@ stream = ExtResource("23_kdocs")
 pitch_scale = 0.75
 
 [node name="Ambient" type="AudioStreamPlayer" parent="Audio" unique_id=566522386]
-stream = ExtResource("24_lf7i0")
+stream = ExtResource("24_4idvv")
 volume_db = -3.728
