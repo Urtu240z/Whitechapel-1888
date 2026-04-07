@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://druaputhau1q1"
-path="res://.godot/imported/NPC_Poor_2_Pieces.png-602c9ce5ee30efa77e5574a70b15e569.ctex"
+uid="uid://b6jse7s2dxk7w"
+path="res://.godot/imported/Moon.png-252b55288b20fa551d45627c67667b1d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/NPC/Man Poor/NPC_Poor_2_Pieces.png"
-dest_files=["res://.godot/imported/NPC_Poor_2_Pieces.png-602c9ce5ee30efa77e5574a70b15e569.ctex"]
+source_file="res://Assets/Sprites/Background/Moon.png"
+dest_files=["res://.godot/imported/Moon.png-252b55288b20fa551d45627c67667b1d.ctex"]
 
 [params]
 

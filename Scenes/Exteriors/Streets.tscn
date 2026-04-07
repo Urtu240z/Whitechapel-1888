@@ -304,6 +304,7 @@ z_index = 3
 position = Vector2(933, -613)
 scale = Vector2(1.16, 1.16)
 dialog_timeline = "uid://c38evy5q65a84"
+skin_name = "NPC_ClientPoor2"
 initial_facing_right = false
 
 [node name="Player" parent="." unique_id=1458210690 instance=ExtResource("17_rusfs")]
@@ -317,5 +318,10 @@ shadow_max_rotation_right = -45.0
 shadow_max_skew = 0.05
 
 [node name="HUD" parent="." unique_id=3512527 instance=ExtResource("32_wl6bi")]
+
+[node name="NPCClient2" parent="." unique_id=1100192978 instance=ExtResource("31_mlx1v")]
+position = Vector2(468.99994, -604)
+scale = Vector2(1.16, 1.16)
+skin_name = "NPC_ClientPoor5"
 
 [editable path="Exterior/Area2D/SceneChanger"]

@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://oigwjm4yre2l" path="res://Assets/Sprites/Scenes/Scene_1_p1.png" id="3_2w4j2"]
 [ext_resource type="Texture2D" uid="uid://b38snj6t625s5" path="res://Assets/Sprites/Effects/Fog.png" id="4_gsbgl"]
 [ext_resource type="Script" uid="uid://dx87qkd75ne1c" path="res://Scripts/Core/Flame_Flicker.gd" id="5_6q4g3"]
-[ext_resource type="Texture2D" uid="uid://dxy5o2ua2u643" path="res://Assets/Sprites/NPC/Man Poor/NPC_Poor_1_Pieces.png" id="5_xa27h"]
-[ext_resource type="Texture2D" uid="uid://ctqh0sstagorg" path="res://Assets/Sprites/NPC/Man Poor/NPC_Poor_1_Pieces_n.png" id="6_8lfdw"]
+[ext_resource type="Texture2D" uid="uid://dxy5o2ua2u643" path="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_1_Pieces.png" id="5_xa27h"]
+[ext_resource type="Texture2D" uid="uid://ctqh0sstagorg" path="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_1_Pieces_n.png" id="6_8lfdw"]
 [ext_resource type="Texture2D" uid="uid://b0y5oeotay27s" path="res://Assets/Sprites/Lights/180 Light.png" id="6_nfifr"]
 [ext_resource type="Texture2D" uid="uid://s8scfgb1j2yq" path="res://Assets/Sprites/NPC/Services/Barman_Pieces.png" id="7_srx27"]
 [ext_resource type="Texture2D" uid="uid://dj1csacbig6yj" path="res://Assets/Sprites/NPC/Services/Barman_Pieces_n.png" id="8_6q4g3"]
@@ -1352,7 +1352,7 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Chest" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=1113128428]
 position = Vector2(-2, -53)
-rotation = -0.083582364
+rotation = -0.08358239
 scale = Vector2(0.99982417, 0.99982417)
 rest = Transform2D(0.99793434, 0.06424214, -0.06424214, 0.99793434, -2, -53)
 
@@ -1465,7 +1465,7 @@ rest = Transform2D(1, 0, 0, 1, -1, 23)
 
 [node name="SkirtC2" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/SkirtC" unique_id=1612768243]
 position = Vector2(7, 173)
-rotation = -0.1277068
+rotation = -0.12770684
 scale = Vector2(0.99986464, 0.99986464)
 rest = Transform2D(1, 0, 0, 1, 7, 173)
 auto_calculate_length_and_angle = false

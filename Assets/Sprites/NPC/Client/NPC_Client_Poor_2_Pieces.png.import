@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxy5o2ua2u643"
-path="res://.godot/imported/NPC_Poor_1_Pieces.png-9fbe7ab227f6baa4b1c793649a7a74ed.ctex"
+uid="uid://druaputhau1q1"
+path="res://.godot/imported/NPC_Client_Poor_2_Pieces.png-b37fd989ac366dafd992d166ecf445eb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/NPC/Man Poor/NPC_Poor_1_Pieces.png"
-dest_files=["res://.godot/imported/NPC_Poor_1_Pieces.png-9fbe7ab227f6baa4b1c793649a7a74ed.ctex"]
+source_file="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_2_Pieces.png"
+dest_files=["res://.godot/imported/NPC_Client_Poor_2_Pieces.png-b37fd989ac366dafd992d166ecf445eb.ctex"]
 
 [params]
 

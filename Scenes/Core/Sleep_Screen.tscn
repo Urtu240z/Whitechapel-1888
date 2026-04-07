@@ -2,9 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://d31qwad02oajf" path="res://Assets/Fonts/IMFellEnglish.ttf" id="1_3ulk7"]
 [ext_resource type="Script" uid="uid://bkq1k32cd6l03" path="res://Scripts/Core/sleep_screen.gd" id="1_xc5w1"]
-[ext_resource type="Texture2D" uid="uid://c70npdrstan30" path="res://addons/kenney_particle_pack/smoke_08.png" id="3_a0bes"]
-[ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="4_anjnj"]
-[ext_resource type="Texture2D" uid="uid://b1ryuwgxikqcc" path="res://Assets/Sprites/Background/Background_1.png" id="5_32u10"]
+[ext_resource type="PackedScene" uid="uid://cxjsj1xgaa34c" path="res://Scenes/UI/Fog_Screen.tscn" id="2_yrtv8"]
 
 [sub_resource type="Gradient" id="Gradient_xc5w1"]
 offsets = PackedFloat32Array(0.275, 0.54375)
@@ -17,10 +15,10 @@ height = 256
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="Gradient" id="Gradient_lgkhu"]
-
 [node name="SleepScreen" type="CanvasLayer" unique_id=1347689957]
 script = ExtResource("1_xc5w1")
+
+[node name="FogScreen" parent="." unique_id=1301525315 instance=ExtResource("2_yrtv8")]
 
 [node name="Background" type="ColorRect" parent="." unique_id=1303486457]
 visible = false
@@ -37,7 +35,7 @@ position = Vector2(200, 200)
 texture = SubResource("GradientTexture2D_yrtv8")
 
 [node name="UI" type="Control" parent="." unique_id=1369622114]
-visible = false
+z_index = 20
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,6 +45,7 @@ grow_vertical = 2
 
 [node name="PostSleepPanel" type="PanelContainer" parent="UI" unique_id=626694488]
 visible = false
+z_index = 20
 custom_minimum_size = Vector2(380, 180)
 layout_mode = 1
 anchors_preset = 8
@@ -62,6 +61,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Margins" type="MarginContainer" parent="UI/PostSleepPanel" unique_id=1329279896]
+z_index = 20
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -69,10 +69,12 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/PostSleepPanel/Margins" unique_id=1563534859]
+z_index = 20
 layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="LblPost" type="Label" parent="UI/PostSleepPanel/Margins/VBoxContainer" unique_id=1192768137]
+z_index = 20
 custom_minimum_size = Vector2(340, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_3ulk7")
@@ -82,23 +84,27 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="Botones" type="HBoxContainer" parent="UI/PostSleepPanel/Margins/VBoxContainer" unique_id=1101804690]
+z_index = 20
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
 [node name="BtnSeguir" type="Button" parent="UI/PostSleepPanel/Margins/VBoxContainer/Botones" unique_id=916542954]
+z_index = 20
 custom_minimum_size = Vector2(160, 36)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_3ulk7")
 text = "Esperar"
 
 [node name="BtnSalir" type="Button" parent="UI/PostSleepPanel/Margins/VBoxContainer/Botones" unique_id=628148068]
+z_index = 20
 custom_minimum_size = Vector2(160, 36)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_3ulk7")
 text = "Salir"
 
 [node name="LblHora" type="Label" parent="UI" unique_id=1368552440]
+z_index = 20
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 1
 anchors_preset = 7
@@ -118,6 +124,7 @@ text = "22:00"
 horizontal_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="UI" unique_id=23267156]
+z_index = 20
 custom_minimum_size = Vector2(400, 20)
 layout_mode = 1
 anchors_preset = 8
@@ -135,6 +142,7 @@ max_value = 1.0
 value = 0.5
 
 [node name="BtnCancelar" type="Button" parent="UI" unique_id=1297983470]
+z_index = 20
 custom_minimum_size = Vector2(160, 40)
 layout_mode = 1
 anchors_preset = 8
@@ -151,43 +159,3 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("1_3ulk7")
 theme_override_font_sizes/font_size = 16
 text = "Despertar"
-
-[node name="WatercolorFX" type="ColorRect" parent="." unique_id=1436898214]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0253638, 0.0253638, 0.025363795, 1)
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=355810388]
-z_index = 1
-position = Vector2(1571, 763)
-amount = 200
-texture = ExtResource("3_a0bes")
-lifetime = 6.0
-preprocess = 10.0
-speed_scale = 0.2
-randomness = 1.0
-gravity = Vector2(-150, 0)
-angle_min = -720.0
-angle_max = 720.0
-scale_amount_max = 2.0
-color = Color(0.31521547, 0.31521547, 0.31521547, 0.36200002)
-color_ramp = SubResource("Gradient_lgkhu")
-
-[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2133926769]
-light_mask = 67
-visibility_layer = 3
-z_index = 4
-position = Vector2(-193, 544)
-energy = 16.0
-range_item_cull_mask = 495
-texture = ExtResource("4_anjnj")
-texture_scale = 2.84
-
-[node name="Background1" type="Sprite2D" parent="." unique_id=645477747]
-modulate = Color(0.19544229, 0.07646892, 0.016979579, 1)
-position = Vector2(646, 359)
-texture = ExtResource("5_32u10")

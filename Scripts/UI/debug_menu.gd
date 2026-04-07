@@ -55,8 +55,19 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event.is_action_pressed("debug_toggle_menu"):
+		if not _can_toggle_menu():
+			return
+
 		_toggle_menu()
 		get_viewport().set_input_as_handled()
+
+
+func _can_toggle_menu() -> bool:
+	var dialogic_node := get_node_or_null("/root/Dialogic")
+	if dialogic_node and dialogic_node.visible:
+		return false
+
+	return true
 
 
 func _toggle_menu() -> void:
