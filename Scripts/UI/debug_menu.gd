@@ -63,11 +63,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _can_toggle_menu() -> bool:
-	var dialogic_node := get_node_or_null("/root/Dialogic")
-	if dialogic_node and dialogic_node.visible:
-		return false
-
-	return true
+	return StateManager.current() == StateManager.State.GAMEPLAY
 
 
 func _toggle_menu() -> void:
@@ -81,7 +77,6 @@ func _toggle_menu() -> void:
 		_recenter_panel()
 	else:
 		Input.mouse_mode = _mouse_mode_before_open
-
 
 # ================================================================
 # UI

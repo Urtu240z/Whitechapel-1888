@@ -19,7 +19,7 @@ func _ready() -> void:
 func is_active() -> bool:
 	return _active
 
-func start_service(acto: String, tipo: String) -> Dictionary:
+func start_service(acto: String, tipo: String, client_skin_name: String = "NPC_ClientPoor") -> Dictionary:
 	if _active:
 		return {}
 
@@ -63,7 +63,7 @@ func start_service(acto: String, tipo: String) -> Dictionary:
 	SceneManager.snap_clear()
 
 	# 6. Arrancar transición
-	transition.begin(acto, tipo)
+	transition.begin(acto, tipo, client_skin_name)
 
 	# 7. Esperar resultado
 	data = await transition.finished

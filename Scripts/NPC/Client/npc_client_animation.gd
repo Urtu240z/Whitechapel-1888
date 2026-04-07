@@ -1,3 +1,4 @@
+@tool
 extends Node
 class_name NPCClientAnimation
 
@@ -36,13 +37,22 @@ var _locked_facing_right: bool = true
 var _base_scale: Vector2 = Vector2.ONE
 
 # ============================================================================
+# READY
+# ============================================================================
+func _ready() -> void:
+	if character_container:
+		_refresh_base_scale()
+
+	if Engine.is_editor_hint():
+		set_process(false)
+		return
+
+# ============================================================================
 # INIT
 # ============================================================================
 func initialize(_owner_npc: CharacterBody2D, facing_right: bool = true) -> void:
 	if character_container:
-		_base_scale = character_container.scale
-		_base_scale.x = abs(_base_scale.x)
-		_base_scale.y = abs(_base_scale.y)
+		_refresh_base_scale()
 
 	if anim_tree:
 		anim_tree.active = true
@@ -51,8 +61,7 @@ func initialize(_owner_npc: CharacterBody2D, facing_right: bool = true) -> void:
 	if playback:
 		playback.travel(initial_state)
 
-	if character_container:
-		character_container.scale.x = _base_scale.x if facing_right else -_base_scale.x
+	_apply_facing(facing_right)
 
 # ============================================================================
 # UPDATE
@@ -62,6 +71,16 @@ func update_service(_delta: float, player: Node2D, player_in_range: bool) -> voi
 		_update_counter_state(player_in_range)
 
 	_update_body_flip(player, player_in_range)
+
+# ============================================================================
+# EDITOR PREVIEW
+# ============================================================================
+func preview_facing(facing_right: bool) -> void:
+	if character_container == null:
+		return
+
+	_refresh_base_scale()
+	_apply_facing(facing_right)
 
 # ============================================================================
 # API
@@ -74,10 +93,7 @@ func force_idle_counter() -> void:
 func lock_facing(facing_right: bool) -> void:
 	_state_locked = true
 	_locked_facing_right = facing_right
-
-	if character_container:
-		character_container.scale.x = _base_scale.x if facing_right else -_base_scale.x
-		character_container.scale.y = _base_scale.y
+	_apply_facing(facing_right)
 
 func unlock_facing() -> void:
 	_state_locked = false
@@ -108,7 +124,7 @@ func _update_body_flip(player: Node2D, player_in_range: bool) -> void:
 	if not is_instance_valid(player):
 		return
 	if not character_container:
-		return
+			return
 
 	if face_player_only_when_in_range and not player_in_range and not _state_locked:
 		return
@@ -118,5 +134,27 @@ func _update_body_flip(player: Node2D, player_in_range: bool) -> void:
 	if not _state_locked:
 		face_right = player.global_position.x > npc.global_position.x
 
-	character_container.scale.x = _base_scale.x if face_right else -_base_scale.x
+	_apply_facing(face_right)
+
+# ============================================================================
+# HELPERS
+# ============================================================================
+func _refresh_base_scale() -> void:
+	if character_container == null:
+		return
+
+	_base_scale = character_container.scale
+	_base_scale.x = abs(_base_scale.x)
+	_base_scale.y = abs(_base_scale.y)
+
+	if is_zero_approx(_base_scale.x):
+		_base_scale.x = 1.0
+	if is_zero_approx(_base_scale.y):
+		_base_scale.y = 1.0
+
+func _apply_facing(facing_right: bool) -> void:
+	if character_container == null:
+		return
+
+	character_container.scale.x = _base_scale.x if facing_right else -_base_scale.x
 	character_container.scale.y = _base_scale.y
