@@ -47,7 +47,12 @@ var _pending_hostel_payment: float = 0.0
 
 var _selection: Node = null
 var _screen: Node = null
-var _tick_timer: Timer = null
+
+# Tramo visual actual
+var _segment_started_at_sec: float = 0.0
+var _segment_visual_duration: float = 0.0
+var _segment_hours_total: float = 0.0
+var _segment_sleep_start: float = 0.0
 
 # ================================================================
 # SEÑALES
@@ -55,6 +60,30 @@ var _tick_timer: Timer = null
 
 signal sleep_interrupted(motivo: String)
 signal sleep_ended(horas_dormidas: float, completado: bool)
+
+# ================================================================
+# READY / PROCESS
+# ================================================================
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	set_process(true)
+
+func _process(_delta: float) -> void:
+	if not _durmiendo:
+		return
+	if not _forzado:
+		return
+	if _screen == null:
+		return
+	if _segment_visual_duration <= 0.0:
+		return
+
+	if _screen.has_method("set_sleep_preview"):
+		var t := _get_segment_progress_01()
+		var recuperacion_total := RECUPERACION_COLAPSO_POR_HORA * _segment_hours_total
+		var sueno_preview := minf(_segment_sleep_start + recuperacion_total * t, 100.0)
+		_screen.call("set_sleep_preview", sueno_preview)
 
 # ================================================================
 # API PÚBLICA
@@ -106,7 +135,7 @@ func interrupt_sleep(motivo: String) -> void:
 
 	_cancelado = true
 	sleep_interrupted.emit(motivo)
-	_finalizar_sueno()
+	_on_screen_cancelado()
 
 
 func is_hostel_open(hora: float = -1.0) -> bool:
@@ -190,7 +219,6 @@ func start_hostel_rental_flow(coste: float) -> Dictionary:
 		"reason": "ok"
 	}
 
-
 # ================================================================
 # MENSAJE DE COLAPSO
 # ================================================================
@@ -220,12 +248,10 @@ func _mostrar_mensaje_colapso(mensaje: String) -> void:
 	_collapse_label.add_child(lbl)
 	get_tree().root.add_child(_collapse_label)
 
-
 func _limpiar_mensaje_colapso() -> void:
 	if _collapse_label != null and is_instance_valid(_collapse_label):
 		_collapse_label.queue_free()
 		_collapse_label = null
-
 
 # ================================================================
 # INICIO DE SUEÑO DIRECTO (sin Selection)
@@ -239,14 +265,17 @@ func _iniciar_sueno_directo() -> void:
 	_screen.connect("cancelado", _on_screen_cancelado)
 	_screen.connect("seguir_durmiendo", _on_seguir_durmiendo)
 	_screen.connect("salir_a_la_calle", _on_salir_a_la_calle)
+	_screen.connect("tramo_visual_terminado", _on_tramo_visual_terminado)
 	_screen.call("actualizar", DayNightManager.get_hour_float(), 0.0, true)
 
 	if _forzado:
 		_screen.call("set_forzado", true)
+		if _screen.has_method("set_sleep_preview"):
+			_screen.call("set_sleep_preview", PlayerStats.sueno)
 
 	await SceneManager.fade_in(1.5)
-	_crear_tick_timer()
 
+	_arrancar_tramo_visual(_hora_inicio, _hora_fin, _horas_totales)
 
 # ================================================================
 # PANEL DE SELECCIÓN
@@ -278,7 +307,6 @@ func _mostrar_selection() -> void:
 	_selection.connect("confirmado", _on_selection_confirmado)
 	_selection.connect("cancelado", _on_selection_cancelado)
 
-
 func _mostrar_aviso_hostal_cerrado() -> void:
 	StateManager.enter(StateManager.State.SLEEPING)
 	DayNightManager.pausar()
@@ -292,7 +320,6 @@ func _mostrar_aviso_hostal_cerrado() -> void:
 	_selection.call("mostrar_aviso_cerrado")
 	_selection.connect("cancelado", _on_selection_cancelado)
 
-
 func _mostrar_aviso_poco_tiempo() -> void:
 	StateManager.enter(StateManager.State.SLEEPING)
 	DayNightManager.pausar()
@@ -305,7 +332,6 @@ func _mostrar_aviso_poco_tiempo() -> void:
 	get_tree().root.add_child(_selection)
 	_selection.call("mostrar_aviso_poco_tiempo")
 	_selection.connect("cancelado", _on_selection_cancelado)
-
 
 func _on_selection_confirmado(horas: float) -> void:
 	if _lugar == Lugar.HOSTAL and _hostel_payment_required:
@@ -324,9 +350,9 @@ func _on_selection_confirmado(horas: float) -> void:
 	_horas_dormidas = 0.0
 	_cancelado = false
 	_durmiendo = true
-	_selection = null
-	_iniciar_sueno()
 
+	_cerrar_selection()
+	_iniciar_sueno()
 
 func _on_selection_cancelado() -> void:
 	_limpiar_pago_hostal_pendiente()
@@ -337,8 +363,7 @@ func _on_selection_cancelado() -> void:
 	if player:
 		player.enable_movement()
 
-	_selection = null
-
+	_cerrar_selection()
 
 # ================================================================
 # PANTALLA DE SUEÑO
@@ -354,45 +379,65 @@ func _iniciar_sueno() -> void:
 	_screen.connect("cancelado", _on_screen_cancelado)
 	_screen.connect("seguir_durmiendo", _on_seguir_durmiendo)
 	_screen.connect("salir_a_la_calle", _on_salir_a_la_calle)
+	_screen.connect("tramo_visual_terminado", _on_tramo_visual_terminado)
 	_screen.call("actualizar", DayNightManager.get_hour_float(), 0.0, true)
 
+	if _forzado:
+		_screen.call("set_forzado", true)
+		if _screen.has_method("set_sleep_preview"):
+			_screen.call("set_sleep_preview", PlayerStats.sueno)
+
 	await SceneManager.fade_in(1.5)
-	_crear_tick_timer()
 
+	_arrancar_tramo_visual(_hora_inicio, _hora_fin, _horas_totales)
 
-func _crear_tick_timer() -> void:
-	_limpiar_timer()
-
-	_tick_timer = Timer.new()
-	_tick_timer.wait_time = CONFIG.duracion_hora_sueno_segundos
-	_tick_timer.one_shot = false
-	_tick_timer.timeout.connect(_tick_hora)
-	add_child(_tick_timer)
-	_tick_timer.start()
-
-
-func _tick_hora() -> void:
-	if _cancelado:
-		_limpiar_timer()
+func _arrancar_tramo_visual(hora_inicio: float, hora_fin: float, horas_tramo: float) -> void:
+	if _screen == null:
 		return
 
-	_horas_dormidas += 1.0
-	DayNightManager.advance_hours(1.0)
+	_segment_started_at_sec = Time.get_ticks_msec() / 1000.0
+	_segment_hours_total = maxf(horas_tramo, 0.0)
+	_segment_sleep_start = PlayerStats.sueno
 
-	var nueva_hora: float = DayNightManager.get_hour_float()
-	_aplicar_recuperacion_parcial()
+	_screen.call("iniciar_tramo_visual", hora_inicio, hora_fin, 0.0, 1.0)
 
-	var progreso: float = _horas_dormidas / _horas_totales if _horas_totales > 0.0 else 0.0
-	if _screen:
-		_screen.call("actualizar", nueva_hora, progreso)
+	if _screen.has_method("get_duracion_visual_actual"):
+		_segment_visual_duration = float(_screen.call("get_duracion_visual_actual"))
+	else:
+		_segment_visual_duration = 20.0
 
-	if _horas_dormidas >= _horas_totales:
-		_limpiar_timer()
-		_al_terminar_sueno()
+func _on_tramo_visual_terminado() -> void:
+	if _cancelado:
+		return
 
+	_aplicar_tramo_completo()
 
-func _al_terminar_sueno() -> void:
-	if _lugar == Lugar.HOSTAL:
+func _aplicar_tramo_completo() -> void:
+	if _segment_hours_total <= 0.0:
+		_al_terminar_tramo_real()
+		return
+
+	_horas_dormidas += _segment_hours_total
+	DayNightManager.advance_hours(_segment_hours_total)
+	_aplicar_recuperacion_por_horas(_segment_hours_total)
+
+	_al_terminar_tramo_real()
+
+func _aplicar_tramo_parcial() -> void:
+	var t := _get_segment_progress_01()
+	var horas_parciales := _segment_hours_total * t
+
+	if horas_parciales <= 0.0:
+		return
+
+	_horas_dormidas += horas_parciales
+	DayNightManager.advance_hours(horas_parciales)
+	_aplicar_recuperacion_por_horas(horas_parciales)
+
+func _al_terminar_tramo_real() -> void:
+	_reset_segment_state()
+
+	if _lugar == Lugar.HOSTAL and not _forzado:
 		var hora_actual: float = DayNightManager.get_hour_float()
 		if is_hostel_open(hora_actual) and _screen:
 			_screen.call("mostrar_panel_post", hora_actual)
@@ -400,16 +445,12 @@ func _al_terminar_sueno() -> void:
 
 	_finalizar_sueno()
 
-
 func _on_screen_cancelado() -> void:
 	_cancelado = true
-	_limpiar_timer()
+	_aplicar_tramo_parcial()
 	_finalizar_sueno()
 
-
 func _on_seguir_durmiendo() -> void:
-	_limpiar_timer()
-
 	var hora_actual: float = DayNightManager.get_hour_float()
 	var horas_restantes: float = get_hostel_hours_until_close(hora_actual)
 
@@ -419,34 +460,48 @@ func _on_seguir_durmiendo() -> void:
 
 	_hora_inicio = hora_actual
 	_horas_totales = horas_restantes
-	_horas_dormidas = 0.0
+	_hora_fin = fmod(_hora_inicio + _horas_totales, 24.0)
 
 	if _screen:
 		_screen.call("actualizar", hora_actual, 0.0, true)
 
-	_crear_tick_timer()
-
+	_arrancar_tramo_visual(_hora_inicio, _hora_fin, _horas_totales)
 
 func _on_salir_a_la_calle() -> void:
 	_finalizar_sueno()
 
+func _get_segment_progress_01() -> float:
+	if _segment_visual_duration <= 0.0:
+		return 1.0
+
+	var now_sec := Time.get_ticks_msec() / 1000.0
+	var elapsed := maxf(0.0, now_sec - _segment_started_at_sec)
+	return clampf(elapsed / _segment_visual_duration, 0.0, 1.0)
+
+func _reset_segment_state() -> void:
+	_segment_started_at_sec = 0.0
+	_segment_visual_duration = 0.0
+	_segment_hours_total = 0.0
+	_segment_sleep_start = 0.0
 
 # ================================================================
 # RECUPERACIÓN PROGRESIVA
 # ================================================================
 
-func _aplicar_recuperacion_parcial() -> void:
+func _aplicar_recuperacion_por_horas(horas: float) -> void:
+	if horas <= 0.0:
+		return
+
 	match _lugar:
 		Lugar.HOSTAL:
-			PlayerStats.sueno = minf(PlayerStats.sueno + CONFIG.recuperacion_hostal_por_hora, 100.0)
-			PlayerStats.salud = minf(PlayerStats.salud + SALUD_HOSTAL_POR_HORA, 100.0)
-			PlayerStats.estres = maxf(PlayerStats.estres - ESTRES_HOSTAL_POR_HORA, 0.0)
+			PlayerStats.sueno = minf(PlayerStats.sueno + CONFIG.recuperacion_hostal_por_hora * horas, 100.0)
+			PlayerStats.salud = minf(PlayerStats.salud + SALUD_HOSTAL_POR_HORA * horas, 100.0)
+			PlayerStats.estres = maxf(PlayerStats.estres - ESTRES_HOSTAL_POR_HORA * horas, 0.0)
 		_:
 			var recuperacion: float = RECUPERACION_COLAPSO_POR_HORA if _forzado else CONFIG.recuperacion_calle_por_hora
-			PlayerStats.sueno = minf(PlayerStats.sueno + recuperacion, 100.0)
+			PlayerStats.sueno = minf(PlayerStats.sueno + recuperacion * horas, 100.0)
 
 	PlayerStats.actualizar_stats()
-
 
 # ================================================================
 # FINALIZACIÓN
@@ -455,7 +510,7 @@ func _aplicar_recuperacion_parcial() -> void:
 func _finalizar_sueno() -> void:
 	_durmiendo = false
 	_forzado = false
-	_limpiar_timer()
+	_reset_segment_state()
 	_aplicar_efectos_al_despertar()
 
 	await SceneManager.fade_out(1.5)
@@ -479,7 +534,6 @@ func _finalizar_sueno() -> void:
 
 	sleep_ended.emit(_horas_dormidas, not _cancelado)
 
-
 func _aplicar_efectos_al_despertar() -> void:
 	match _lugar:
 		Lugar.HOSTAL:
@@ -496,7 +550,6 @@ func _aplicar_efectos_al_despertar() -> void:
 
 	PlayerStats.actualizar_stats()
 
-
 # ================================================================
 # CÁLCULOS
 # ================================================================
@@ -509,14 +562,12 @@ func _calcular_horas_para_recuperar() -> float:
 	var recuperacion: float = CONFIG.recuperacion_hostal_por_hora if _lugar == Lugar.HOSTAL else CONFIG.recuperacion_calle_por_hora
 	return ceilf(sueno_faltante / recuperacion)
 
-
 func _calcular_horas_para_recuperar_forzado() -> float:
 	var sueno_faltante: float = 100.0 - PlayerStats.sueno
 	if sueno_faltante <= 0.0:
 		return 1.0
 
 	return ceilf(sueno_faltante / RECUPERACION_COLAPSO_POR_HORA)
-
 
 func _calcular_horas_maximas() -> float:
 	var horas_para_recuperar: float = _calcular_horas_para_recuperar()
@@ -528,28 +579,24 @@ func _calcular_horas_maximas() -> float:
 		_:
 			return minf(horas_para_recuperar, CONFIG.horas_max_calle)
 
-
 func _horas_entre(desde: float, hasta: float) -> float:
 	if hasta > desde:
 		return hasta - desde
 	else:
 		return (24.0 - desde) + hasta
 
-
 # ================================================================
 # LIMPIEZA
 # ================================================================
-
-func _limpiar_timer() -> void:
-	if _tick_timer != null and is_instance_valid(_tick_timer):
-		_tick_timer.queue_free()
-	_tick_timer = null
-
 
 func _limpiar_pago_hostal_pendiente() -> void:
 	_hostel_payment_required = false
 	_pending_hostel_payment = 0.0
 
+func _cerrar_selection() -> void:
+	if _selection != null and is_instance_valid(_selection):
+		_selection.queue_free()
+	_selection = null
 
 # ================================================================
 # HELPERS
@@ -563,7 +610,6 @@ func _parsear_lugar(lugar_str: String) -> Lugar:
 			return Lugar.CALLEJON
 		_:
 			return Lugar.CALLE
-
 
 func _lugar_a_string(lugar: Lugar) -> String:
 	match lugar:
