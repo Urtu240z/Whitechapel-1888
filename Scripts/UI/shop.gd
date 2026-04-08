@@ -188,11 +188,12 @@ func _build_ui() -> void:
 # ================================================================
 
 func _get_owned(item_id: String) -> int:
-	var total: int = 0
+	# Cuenta botellas (presencia), no usos (qty).
+	# Un perfume con 3 usos restantes sigue siendo 1 botella.
 	for slot in InventoryManager.get_pocket():
 		if slot != null and slot["id"] == item_id:
-			total += slot["qty"]
-	return total
+			return 1
+	return 0
 
 func _add_item_row(parent: Node, item_data: ItemData, max_qty: int) -> void:
 	var row = HBoxContainer.new()

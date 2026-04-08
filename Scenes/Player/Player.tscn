@@ -2017,6 +2017,7 @@ cough_sounds_heavy = Array[AudioStream]([ExtResource("18_6rswy"), ExtResource("1
 [node name="CoughPlayer" type="AudioStreamPlayer" parent="Audio" unique_id=531224860]
 
 [node name="Interaction" type="Node2D" parent="." unique_id=495061018]
+visible = false
 script = ExtResource("13_g66pu")
 
 [node name="InteractionArea" type="Area2D" parent="Interaction" unique_id=902202576]
@@ -2205,15 +2206,14 @@ visible = false
 modification_stack = SubResource("SkeletonModificationStack2D_qdq1f")
 
 [node name="Hip" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D" unique_id=597663585]
-position = Vector2(6.6406994, -2.4192452)
 rotation = 0.17889677
 scale = Vector2(0.9998805, 0.9998805)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Chest" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=326213532]
 position = Vector2(-2, -53)
-rotation = -0.14970036
-scale = Vector2(0.99983114, 0.99983114)
+rotation = -0.12630393
+scale = Vector2(0.9998317, 0.9998317)
 rest = Transform2D(0.99793434, 0.06424214, -0.06424214, 0.99793434, -2, -53)
 
 [node name="Neck" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest" unique_id=432818330]
@@ -2221,8 +2221,8 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Head" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/Neck" unique_id=1471978912]
 position = Vector2(-11, -162)
-rotation = -0.012737384
-scale = Vector2(0.9998276, 0.9998276)
+rotation = -0.13348791
+scale = Vector2(0.99982613, 0.99982613)
 rest = Transform2D(0.9999851, -0.00547044, 0.00547044, 0.9999851, -11, -162)
 auto_calculate_length_and_angle = false
 length = 53.297
@@ -2230,14 +2230,14 @@ bone_angle = -80.11498
 
 [node name="ArmR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest" unique_id=1761835730]
 position = Vector2(-72, -117)
-rotation = 0.22712903
-scale = Vector2(0.999835, 0.999835)
+rotation = 0.08872369
+scale = Vector2(0.99983495, 0.99983495)
 rest = Transform2D(0.99997807, 0.0066213235, -0.0066213235, 0.99997807, -72, -117)
 
 [node name="ForeArmR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/ArmR" unique_id=513871701]
 position = Vector2(-7, 135)
-rotation = 1.2177516
-scale = Vector2(0.9998478, 0.9998478)
+rotation = 1.2177517
+scale = Vector2(0.99984777, 0.99984777)
 rest = Transform2D(0.89776886, 0.44046685, -0.44046685, 0.89776886, -7, 135)
 auto_calculate_length_and_angle = false
 length = 155.0
@@ -2245,14 +2245,14 @@ bone_angle = 23.196201
 
 [node name="ArmL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest" unique_id=1310672979]
 position = Vector2(29.69851, -130.1768)
-rotation = 0.08817605
-scale = Vector2(0.999837, 0.999837)
+rotation = 0.15037209
+scale = Vector2(0.9998373, 0.9998373)
 rest = Transform2D(1, 0, 0, 1, 47, -121)
 
 [node name="ForeArmL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/ArmL" unique_id=808976861]
 position = Vector2(22, 120)
-rotation = 0.17469062
-scale = Vector2(0.9998315, 0.9998315)
+rotation = 0.49766436
+scale = Vector2(0.99983174, 0.99983174)
 rest = Transform2D(0.99988055, 0.015455957, -0.015455957, 0.99988055, 22, 120)
 auto_calculate_length_and_angle = false
 length = 125.0
@@ -2260,14 +2260,14 @@ bone_angle = 42.711983
 
 [node name="LegR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=250582046]
 position = Vector2(-14.700328, 126.63689)
-rotation = -1.2497644
-scale = Vector2(0.9998555, 0.9998555)
+rotation = -0.5327809
+scale = Vector2(0.99985576, 0.99985576)
 rest = Transform2D(0.99116075, -0.1326665, 0.1326665, 0.99116075, -66, 103)
 
 [node name="KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegR" unique_id=1757211730]
 position = Vector2(1, 146)
-rotation = 1.3916504
-scale = Vector2(0.99986476, 0.99986476)
+rotation = 0.5405093
+scale = Vector2(0.9998647, 0.9998647)
 rest = Transform2D(0.9880616, 0.15405944, -0.15405944, 0.9880616, 1, 146)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -2281,13 +2281,13 @@ occluder = SubResource("OccluderPolygon2D_jbjyn")
 
 [node name="LegL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=1374812682]
 position = Vector2(55.522446, 115.97094)
-rotation = -0.060192756
-scale = Vector2(0.9998453, 0.9998453)
+rotation = -0.36591682
+scale = Vector2(0.9998454, 0.9998454)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegL" unique_id=278652099]
 position = Vector2(-7, 125)
-rotation = 0.23958868
+rotation = 0.28080985
 scale = Vector2(0.99984497, 0.99984497)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
@@ -2303,13 +2303,13 @@ occluder = SubResource("OccluderPolygon2D_6rswy")
 [node name="SkirtL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=2124571071]
 visible = false
 position = Vector2(-19.953075, 7.672987)
-rotation = -0.34798568
+rotation = -0.3275145
 scale = Vector2(0.9998541, 0.9998541)
 rest = Transform2D(1, 0, 0, 1, -68, 10)
 
 [node name="SkirtL2" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/SkirtL" unique_id=608500439]
 position = Vector2(-54.593754, 151.47455)
-rotation = 0.25865656
+rotation = 0.25865674
 scale = Vector2(0.9998754, 0.9998754)
 rest = Transform2D(1, 0, 0, 1, -47, 168)
 auto_calculate_length_and_angle = false
@@ -2319,14 +2319,14 @@ bone_angle = 95.0
 [node name="SkirtC" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=617380591]
 visible = false
 position = Vector2(-1, 23)
-rotation = -0.22291625
-scale = Vector2(0.9998485, 0.9998485)
+rotation = -0.18051061
+scale = Vector2(0.9998477, 0.9998477)
 rest = Transform2D(1, 0, 0, 1, -1, 23)
 
 [node name="SkirtC2" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/SkirtC" unique_id=1904504327]
 position = Vector2(7, 173)
-rotation = -0.12770686
-scale = Vector2(0.99986464, 0.99986464)
+rotation = -0.12770702
+scale = Vector2(0.9998646, 0.9998646)
 rest = Transform2D(1, 0, 0, 1, 7, 173)
 auto_calculate_length_and_angle = false
 length = 90.0
@@ -2335,14 +2335,14 @@ bone_angle = 95.0
 [node name="SkirtR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=1522232717]
 visible = false
 position = Vector2(59.01034, 22.864365)
-rotation = 0.9188595
+rotation = 1.027849
 scale = Vector2(0.999852, 0.999852)
 rest = Transform2D(1, 0, 0, 1, 43, 10)
 
 [node name="SkirtR2" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/SkirtR" unique_id=1264282796]
 position = Vector2(184.16289, 43.428574)
-rotation = -1.3072647
-scale = Vector2(0.99986386, 0.99986386)
+rotation = -1.4264776
+scale = Vector2(0.9998639, 0.9998639)
 rest = Transform2D(1, 0, 0, 1, 27, 186)
 auto_calculate_length_and_angle = false
 length = 90.0
@@ -2485,6 +2485,7 @@ position = Vector2(-5, 66)
 position = Vector2(91, 65)
 
 [node name="Shadow" type="Node2D" parent="CharacterContainer" unique_id=13468894]
+visible = false
 
 [node name="ShadowRAY" type="RayCast2D" parent="CharacterContainer/Shadow" unique_id=381392053]
 position = Vector2(-5.0020027, 451)
@@ -2532,6 +2533,7 @@ texture = ExtResource("35_bmii2")
 visible = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=430310312]
+visible = false
 position = Vector2(242, -504)
 zoom = Vector2(0.3, 0.3)
 limit_enabled = false
@@ -2553,6 +2555,7 @@ drag_bottom_margin = 0.86
 editor_draw_drag_margin = true
 
 [node name="OverlayBlack" type="Sprite2D" parent="Camera2D" unique_id=698112768]
+visible = false
 modulate = Color(1, 1, 1, 0)
 z_index = -1
 position = Vector2(1429.5552, 101.49237)
