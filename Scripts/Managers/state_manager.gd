@@ -14,6 +14,7 @@ enum State {
 	SHOP,
 	TRANSITIONING,
 	CLIENT_SERVICE,
+	HIDDEN,
 }
 
 signal state_changed(from: State, to: State)
@@ -29,7 +30,7 @@ func _on_state_changed(_from: State, to: State) -> void:
 	match to:
 		State.MENU, State.PAUSED, State.JOURNAL, State.SHOP:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		State.GAMEPLAY, State.TRANSITIONING, State.SLEEPING, State.DIALOG, State.CLIENT_SERVICE:
+		State.GAMEPLAY, State.TRANSITIONING, State.SLEEPING, State.DIALOG, State.CLIENT_SERVICE, State.HIDDEN:
 			Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 # ================================================================
@@ -65,6 +66,8 @@ func can_enter(state: State) -> bool:
 			return _current != State.SLEEPING
 		State.CLIENT_SERVICE:
 			return _current == State.DIALOG or _current == State.GAMEPLAY
+		State.HIDDEN:
+			return _current == State.GAMEPLAY
 	return false
 
 func enter(state: State) -> bool:

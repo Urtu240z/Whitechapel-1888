@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://c3m8fewa1n53m"]
 
+[ext_resource type="Script" uid="uid://m5wslxsfjb06" path="res://Scripts/Core/hide_zone.gd" id="1_nevyb"]
+
 [sub_resource type="Gradient" id="Gradient_mh0du"]
 offsets = PackedFloat32Array(0.5714286, 0.80857146)
 colors = PackedColorArray(0, 0, 0, 0.84900004, 0, 0, 0, 0)
@@ -15,6 +17,7 @@ fill_from = Vector2(0.5, 0.5)
 size = Vector2(700, 1830)
 
 [node name="HideZone" type="Node2D" unique_id=40068791]
+script = ExtResource("1_nevyb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2111509884]
 scale = Vector2(5, 5)

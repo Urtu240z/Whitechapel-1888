@@ -70,7 +70,31 @@ func update_service(_delta: float, player: Node2D, player_in_range: bool) -> voi
 	if use_counter_behavior and not _state_locked:
 		_update_counter_state(player_in_range)
 
+	_update_walk_state()
 	_update_body_flip(player, player_in_range)
+
+func _update_walk_state() -> void:
+	if playback == null or _state_locked:
+		return
+
+	var movement := npc.get_node_or_null("Movement") as NPCClientMovement
+	if not movement:
+		return
+
+	# Si está frozen, forzar Idle siempre
+	if movement.is_frozen:
+		var current: String = playback.get_current_node()
+		if current != "Idle":
+			playback.start("Idle")
+		return
+
+	var is_moving: bool = movement.is_moving()
+	var current: String = playback.get_current_node()
+
+	if is_moving and current != "Walk":
+		playback.start("Walk")
+	elif not is_moving and current != "Idle":
+		playback.start("Idle")
 
 # ============================================================================
 # EDITOR PREVIEW
@@ -94,6 +118,9 @@ func lock_facing(facing_right: bool) -> void:
 	_state_locked = true
 	_locked_facing_right = facing_right
 	_apply_facing(facing_right)
+	# Forzar Idle al bloquear — evita que la animación de walk quede activa
+	if playback:
+		playback.start("Idle")
 
 func unlock_facing() -> void:
 	_state_locked = false
@@ -121,20 +148,25 @@ func _update_counter_state(player_in_range: bool) -> void:
 func _update_body_flip(player: Node2D, player_in_range: bool) -> void:
 	if not flip_body_with_player:
 		return
-	if not is_instance_valid(player):
-		return
 	if not character_container:
-			return
-
-	if face_player_only_when_in_range and not player_in_range and not _state_locked:
 		return
 
-	var face_right: bool = _locked_facing_right
+	if _state_locked:
+		_apply_facing(_locked_facing_right)
+		return
 
-	if not _state_locked:
-		face_right = player.global_position.x > npc.global_position.x
+	# En modo wander — girar según dirección de movimiento
+	var movement := npc.get_node_or_null("Movement") as NPCClientMovement
+	if movement and movement.is_following() == false and movement.is_moving():
+		_apply_facing(movement.get_facing_right())
+		return
 
-	_apply_facing(face_right)
+	# Fuera de rango del player — no actualizar facing
+	if face_player_only_when_in_range and not player_in_range:
+		return
+
+	if is_instance_valid(player):
+		_apply_facing(player.global_position.x > npc.global_position.x)
 
 # ============================================================================
 # HELPERS

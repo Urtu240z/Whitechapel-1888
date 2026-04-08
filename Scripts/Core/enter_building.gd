@@ -38,6 +38,16 @@ var _door_glow: Node2D = null
 var _config: Node = null
 
 # ================================================================
+# 🔗 NODE REFERENCES — asignar desde el Inspector
+# Si están vacíos, se usan las rutas por defecto como fallback.
+# ================================================================
+@export_group("🔗 Node References")
+@export var interior_path: NodePath
+@export var exit_area_path: NodePath
+@export var walls_path: NodePath
+@export var audio_path: NodePath
+
+# ================================================================
 # ESTADO
 # ================================================================
 
@@ -53,19 +63,31 @@ var _original_limit_enabled: bool = false
 # READY
 # ================================================================
 
+# Resuelve un NodePath exportado con fallback a una ruta por defecto.
+func _resolve(path: NodePath, fallback: String) -> Node:
+	if not path.is_empty():
+		var n = get_node_or_null(path)
+		if n:
+			return n
+		push_warning("BuildingEntrance: NodePath '%s' no encontrado, usando fallback '%s'" % [str(path), fallback])
+	return get_node_or_null(fallback)
+
 func _ready() -> void:
 	_config = get_parent()
 
 	_audio_sfx = AudioStreamPlayer2D.new()
 	add_child(_audio_sfx)
 
-	# Nodos por ruta local — no por grupos globales
-	_enter_area   = get_node_or_null("EnterArea")
-	_door_glow    = get_node_or_null("DoorGlow")
-	_interior     = get_node_or_null("../Interior")
-	_exit_area    = get_node_or_null("../Interior/TileMapLayer/ExitArea")
-	_walls        = get_node_or_null("../Interior/TileMapLayer/Wall")
-	_inside_audio = get_node_or_null("../Audio")
+	# Nodos internos fijos (hijos directos)
+	_enter_area = get_node_or_null("EnterArea")
+	_door_glow  = get_node_or_null("DoorGlow")
+
+	# Nodos externos — usar NodePath del Inspector si está asignado,
+	# si no usar la ruta por defecto como fallback.
+	_interior     = _resolve(interior_path,  "../Interior")
+	_exit_area    = _resolve(exit_area_path, "../Interior/TileMapLayer/ExitArea")
+	_walls        = _resolve(walls_path,     "../Interior/TileMapLayer/Wall")
+	_inside_audio = _resolve(audio_path,     "../Audio")
 
 	if _interior:
 		_interior.visible = false

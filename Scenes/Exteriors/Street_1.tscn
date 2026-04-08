@@ -102,7 +102,7 @@ texture = ExtResource("3_5ipyy")
 polygon = PackedVector2Array(-1052, -630, -190, -512, -87, -377, 99, -313, 234, -364, 975, -571, 1031, -590, 2811, -588, 2813, 209, -2567, 192, -2569, -651)
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=1802335230]
-collision_layer = 3
+collision_layer = 7
 collision_mask = 3
 
 [node name="GroundCobbelstoneSand" type="Sprite2D" parent="Ground" unique_id=1996102651]

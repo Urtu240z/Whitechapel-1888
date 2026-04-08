@@ -26,7 +26,20 @@ enum ClientType { POOR, MEDIUM, RICH }
 var skin_name: String = "NPC_ClientPoor"
 
 # ============================================================================
-# REFERENCIAS
+# 🏃 MOVIMIENTO — configuración exportada
+# ============================================================================
+@export_group("🏃 Movement")
+@export var follow_speed: float = 650.0
+@export var follow_accel: float = 650.0
+@export var follow_dist_min: float = 200.0
+@export var follow_dist_max: float = 500.0
+@export var follow_dist_warning: float = 2000.0
+@export var follow_dist_cancel: float = 3000.0
+@export var follow_gravity: float = 980.0
+@export var wander_enabled: bool = false
+
+# ============================================================================
+# 🔗 REFERENCIAS
 # ============================================================================
 @onready var skin: NPCClientSkin = $CharacterContainer
 @onready var movement: NPCClientMovement = $Movement
@@ -38,6 +51,9 @@ var skin_name: String = "NPC_ClientPoor"
 # ESTADO
 # ============================================================================
 var _enabled: bool = true
+var _refused: bool = false       # true si canceló el trato por distancia
+var _refused_timer: float = 0.0  # segundos reales hasta resetear _refused
+const REFUSED_RESET_SECS: float = 120.0  # 2 minutos reales
 var _editor_preview_queued: bool = false
 var _last_preview_skin_name: String = ""
 var _last_preview_facing_right: bool = true
@@ -61,7 +77,9 @@ func _ready() -> void:
 	if skin:
 		skin.set_skin(skin_name)
 	if movement:
-		movement.initialize(self)
+		movement.initialize(self, follow_speed, follow_accel, follow_dist_min, follow_dist_max, follow_gravity, follow_dist_warning, follow_dist_cancel)
+		if wander_enabled:
+			movement.start_wander()
 	if animation:
 		animation.initialize(self, initial_facing_right)
 	if conversation:
@@ -187,10 +205,23 @@ func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 
+	# Timer de refused
+	if _refused and _refused_timer > 0.0:
+		_refused_timer -= delta
+		if _refused_timer <= 0.0:
+			_refused = false
+			_refused_timer = 0.0
+
+	# Gravedad siempre — independiente de _enabled y is_frozen
+	const GRAVITY: float = 980.0
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
+	else:
+		velocity.y = 0.0
+	move_and_slide()
+
 	if not _enabled:
 		return
-
-	velocity = Vector2.ZERO
 
 	var player := _get_player()
 	var player_in_range: bool = false
@@ -198,6 +229,8 @@ func _physics_process(delta: float) -> void:
 	if conversation:
 		player_in_range = conversation.is_player_in_range()
 
+	if movement:
+		movement.process_movement(delta)
 	if animation:
 		animation.update_service(delta, player, player_in_range)
 
@@ -231,6 +264,9 @@ func prepare_dialogic_variables() -> void:
 
 	PlayerStats._sync_dialogic_variables()
 	Dialogic.VAR.set_variable("client.result", "")
+	Dialogic.VAR.set_variable("client.deal_state", "")
+	Dialogic.VAR.set_variable("client.deal_active", has_active_deal())
+	Dialogic.VAR.set_variable("client.refused", _refused)
 
 	var precios = _get_precios()
 	Dialogic.VAR.set_variable("client.precio_mano", precios.mano)
@@ -242,12 +278,31 @@ func prepare_dialogic_variables() -> void:
 # ============================================================================
 const CLIENT_TRANSITION_SCENE = preload("res://Scenes/Client_Transition/Client_Transition.tscn")
 
+# ============================================================================
+# DEAL — sistema de dos fases
+# ============================================================================
+var _deal_acto: String = ""         # "mano" | "oral" | "completo" — vacío = sin acuerdo
+signal deal_accepted(npc, acto)     # emitida al aceptar el acuerdo en diálogo
+
+func has_active_deal() -> bool:
+	return not _deal_acto.is_empty()
+
+func get_deal_acto() -> String:
+	return _deal_acto
+
 func resolve_dialogic_result() -> void:
+	# Llamada al cerrar el diálogo — lee client.result y activa el deal.
 	if Engine.is_editor_hint():
 		return
 
 	if not get_tree().root.has_node("Dialogic"):
 		return
+
+	# Sincronizar client.refused desde Dialogic → _refused
+	var dialogic_refused: bool = bool(Dialogic.VAR.get_variable("client.refused"))
+	if dialogic_refused and not _refused:
+		_refused = true
+		_refused_timer = REFUSED_RESET_SECS
 
 	var result: String = str(Dialogic.VAR.get_variable("client.result"))
 	Dialogic.VAR.set_variable("client.result", "")
@@ -255,12 +310,91 @@ func resolve_dialogic_result() -> void:
 	if result.is_empty():
 		return
 
-	var tipo: String = _get_tipo_string()
-	var data: Dictionary = await ClientServiceManager.start_service(result, tipo, skin_name)
-	if data.is_empty():
+	accept_deal(result)
+
+func accept_deal(acto: String) -> void:
+	# Fase 1: acuerdo cerrado. El cliente empieza a seguir a Nell.
+	_deal_acto = acto
+	var player := _get_player()
+	if player and movement:
+		movement.stop_wander()
+		movement.start_follow(player)
+		movement.player_too_far_warning.connect(_on_player_too_far_warning, CONNECT_ONE_SHOT)
+		movement.player_too_far_cancel.connect(_on_player_too_far_cancel, CONNECT_ONE_SHOT)
+	if get_tree().root.has_node("Dialogic"):
+		Dialogic.VAR.set_variable("client.deal_active", true)
+	deal_accepted.emit(self, acto)
+
+func _on_player_too_far_warning() -> void:
+	# Grito — abre diálogo de aviso sin cancelar el trato
+	if not get_tree().root.has_node("Dialogic"):
+		return
+	if not StateManager.can_enter(StateManager.State.DIALOG):
+		return
+	Dialogic.VAR.set_variable("client.deal_state", "warning")
+	var player := _get_player()
+	if player:
+		player.disable_movement()
+	movement.freeze()
+	StateManager.enter(StateManager.State.DIALOG)
+	Dialogic.start(dialog_timeline)
+	Dialogic.timeline_ended.connect(func():
+		Dialogic.VAR.set_variable("client.deal_state", "")
+		StateManager.exit(StateManager.State.DIALOG)
+		if is_instance_valid(self) and movement:
+			movement.unfreeze()
+		var p := _get_player()
+		if p:
+			p.enable_movement()
+	, CONNECT_ONE_SHOT)
+
+func _on_player_too_far_cancel() -> void:
+	# Cancelar trato — abre diálogo y cancela el deal
+	_deal_acto = ""
+	_refused = true
+	_refused_timer = REFUSED_RESET_SECS
+	if not get_tree().root.has_node("Dialogic"):
+		return
+	if not StateManager.can_enter(StateManager.State.DIALOG):
+		return
+	Dialogic.VAR.set_variable("client.deal_state", "cancel")
+	var player := _get_player()
+	if player:
+		player.disable_movement()
+	movement.freeze()
+	StateManager.enter(StateManager.State.DIALOG)
+	Dialogic.start(dialog_timeline)
+	Dialogic.timeline_ended.connect(func():
+		Dialogic.VAR.set_variable("client.deal_state", "")
+		Dialogic.VAR.set_variable("client.deal_active", has_active_deal())
+		StateManager.exit(StateManager.State.DIALOG)
+		if is_instance_valid(self) and movement:
+			movement.unfreeze()
+			if wander_enabled and not has_active_deal():
+				movement.start_wander()
+		var p := _get_player()
+		if p:
+			p.enable_movement()
+	, CONNECT_ONE_SHOT)
+
+func complete_deal() -> void:
+	# Fase 2: llamada desde HideZone cuando Nell pulsa F dentro del área.
+	if _deal_acto.is_empty():
 		return
 
-	PlayerStats.tener_acto(data["acto"], data["tipo"], data["satisfaction"])
+	var acto: String = _deal_acto
+	var tipo: String = _get_tipo_string()
+	_deal_acto = ""
+
+	if movement:
+		movement.stop_follow()
+
+	# Desaparecer cuando el mundo esté negro — antes de que el jugador vuelva a Streets
+	ClientServiceManager.world_hidden.connect(queue_free, CONNECT_ONE_SHOT)
+
+	var data: Dictionary = await ClientServiceManager.start_service(acto, tipo, skin_name)
+	if not data.is_empty():
+		PlayerStats.tener_acto(data["acto"], data["tipo"], data["satisfaction"])
 
 # ============================================================================
 # HELPERS

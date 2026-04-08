@@ -252,6 +252,7 @@ texture = ExtResource("4_ajpcj")
 
 [node name="Ground" type="StaticBody2D" parent="Scenary" unique_id=1541999250]
 position = Vector2(0, 450)
+collision_layer = 7
 collision_mask = 0
 
 [node name="GroundCobbelstoneSand2" type="Sprite2D" parent="Scenary/Ground" unique_id=1538756005]
@@ -387,31 +388,43 @@ scale = Vector2(1.1, 1.1)
 
 [node name="NPCClient" parent="NPC/Clients" unique_id=1649721714 instance=ExtResource("18_gb7vo")]
 position = Vector2(3210, -372)
+dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
-skin_name = "NPC_ClientPoor"
+wander_enabled = true
 
 [node name="NPCClient2" parent="NPC/Clients" unique_id=400459338 instance=ExtResource("18_gb7vo")]
 position = Vector2(2197, -373)
+dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
+wander_enabled = true
 skin_name = "NPC_ClientPoor2"
 
 [node name="NPCClient3" parent="NPC/Clients" unique_id=635591008 instance=ExtResource("18_gb7vo")]
 position = Vector2(1955, -366)
+dialog_timeline = "uid://c38evy5q65a84"
+wander_enabled = null
 skin_name = "NPC_ClientPoor3"
 
 [node name="NPCClient4" parent="NPC/Clients" unique_id=2103339271 instance=ExtResource("18_gb7vo")]
 position = Vector2(-2336, -375)
+dialog_timeline = "uid://c38evy5q65a84"
+wander_enabled = null
 skin_name = "NPC_ClientPoor4"
 
 [node name="NPCClient5" parent="NPC/Clients" unique_id=383274618 instance=ExtResource("18_gb7vo")]
 position = Vector2(2937, -397.99997)
 scale = Vector2(1.13, 1.13)
+dialog_timeline = "uid://c38evy5q65a84"
+wander_enabled = null
 skin_name = "NPC_ClientPoor6"
 
 [node name="NPCClient6" parent="NPC/Clients" unique_id=1966185597 instance=ExtResource("18_gb7vo")]
 position = Vector2(-3431, -450)
 scale = Vector2(1.2, 1.2)
+dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
+wander_enabled = true
+skin_name = "NPC_ClientPoor5"
 
 [node name="Service" type="Node2D" parent="NPC" unique_id=1416560985]
 

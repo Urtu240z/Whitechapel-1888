@@ -32,6 +32,7 @@
 [ext_resource type="Resource" uid="uid://btf4cqiava1u3" path="res://Data/Equip/equip-bolso.tres" id="26_6skcy"]
 [ext_resource type="PackedScene" uid="uid://oebyjtwwcxhx" path="res://Scenes/NPC/NPC_Client.tscn" id="31_mlx1v"]
 [ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="32_wl6bi"]
+[ext_resource type="PackedScene" uid="uid://c3m8fewa1n53m" path="res://Scenes/Buildings/Hide_Zone.tscn" id="33_mjtkt"]
 
 [sub_resource type="Resource" id="Resource_k7r8x"]
 script = ExtResource("20_35ndy")
@@ -311,6 +312,9 @@ shadow_max_skew = 0.05
 
 [node name="HUD" parent="." unique_id=3512527 instance=ExtResource("32_wl6bi")]
 
+[node name="HideZone" parent="." unique_id=40068791 instance=ExtResource("33_mjtkt")]
+position = Vector2(7992, -93)
+
 [node name="Clients" type="Node2D" parent="." unique_id=1541142758]
 
 [node name="NPCClient" parent="Clients" unique_id=232242800 instance=ExtResource("31_mlx1v")]
@@ -318,6 +322,7 @@ z_index = 3
 position = Vector2(1879.9999, -656.99994)
 scale = Vector2(1.16, 1.16)
 dialog_timeline = "uid://c38evy5q65a84"
+wander_enabled = null
 skin_name = "NPC_ClientPoor2"
 
 [node name="NPCClient2" parent="Clients" unique_id=1100192978 instance=ExtResource("31_mlx1v")]
@@ -326,6 +331,7 @@ position = Vector2(2125, -635)
 scale = Vector2(1.16, 1.16)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
+wander_enabled = null
 skin_name = "NPC_ClientPoor3"
 
 [node name="NPCClient3" parent="Clients" unique_id=812702173 instance=ExtResource("31_mlx1v")]
@@ -334,6 +340,7 @@ position = Vector2(467.99997, -635)
 scale = Vector2(1.16, 1.16)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
+wander_enabled = true
 skin_name = "NPC_ClientPoor4"
 
 [node name="NPCClient4" parent="Clients" unique_id=289648581 instance=ExtResource("31_mlx1v")]
@@ -342,12 +349,15 @@ position = Vector2(-2914, -697)
 scale = Vector2(1.3, 1.3)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
+wander_enabled = null
+skin_name = "NPC_ClientPoor5"
 
 [node name="NPCClient5" parent="Clients" unique_id=603340578 instance=ExtResource("31_mlx1v")]
 z_index = 3
 position = Vector2(1077.0001, -689)
 scale = Vector2(1.3, 1.3)
 dialog_timeline = "uid://c38evy5q65a84"
+wander_enabled = true
 skin_name = "NPC_ClientPoor6"
 
 [editable path="Exterior/Area2D/SceneChanger"]

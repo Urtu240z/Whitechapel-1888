@@ -52,9 +52,6 @@ var sex_appeal_bonus: float = 0.0  # bonus temporal de perfumes
 # ============================================================
 # 💸 COST CONSTANTS
 # ============================================================
-const COSTE_BANO: float = 0.3
-const COSTE_ALCOHOL: float = 0.2
-const COSTE_LAUDANO: float = 1.0
 
 # ============================================================
 # 🦠 PROBABILIDADES DE INFECCIÓN
@@ -289,40 +286,6 @@ func comer() -> bool:
 	return false
 
 
-func banarse() -> bool:
-	if dinero >= COSTE_BANO:
-		gastar_dinero(COSTE_BANO)
-		higiene = 100.0
-		felicidad = minf(100.0, felicidad + 10.0)
-		estres = maxf(0.0, estres - 5.0)
-		actualizar_stats()
-		return true
-	return false
-
-
-func beber_alcohol() -> bool:
-	if dinero >= COSTE_ALCOHOL:
-		gastar_dinero(COSTE_ALCOHOL)
-		alcohol = minf(100.0, alcohol + 30.0)
-		nervios = maxf(0.0, nervios - 20.0)
-		estres = maxf(0.0, estres - 15.0)
-		felicidad = minf(100.0, felicidad + 10.0)
-		actualizar_stats()
-		return true
-	return false
-
-
-func tomar_laudano() -> bool:
-	if dinero >= COSTE_LAUDANO:
-		gastar_dinero(COSTE_LAUDANO)
-		laudano = minf(100.0, laudano + 40.0)
-		estres = maxf(0.0, estres - 40.0)
-		nervios = maxf(0.0, nervios - 30.0)
-		felicidad = minf(100.0, felicidad + 20.0)
-		actualizar_stats()
-		return true
-	return false
-
 
 # ============================================================
 # 💊 TRATAMIENTOS
@@ -348,44 +311,6 @@ func ir_al_medico() -> bool:
 		return true
 	return false
 
-
-func descansar_hostal() -> bool:
-	if dinero >= CONFIG.coste_hostal * 3.0:
-		gastar_dinero(CONFIG.coste_hostal * 3.0)
-		sueno = 100.0
-		stamina = 100.0
-		estres = maxf(0.0, estres - 30.0)
-		dias_sin_pagar_hostal = 0
-
-		if randf() < 0.4:
-			enfermedad = 0.0
-			enferma = false
-			enfermedad_cambiada.emit(false)
-
-		actualizar_stats()
-		return true
-	return false
-
-
-func descansar_calle() -> void:
-	sueno = 60.0
-	stamina = minf(100.0, stamina + 40.0)
-	estres = minf(100.0, estres + 30.0)
-	higiene = maxf(0.0, higiene - 30.0)
-	felicidad = maxf(0.0, felicidad - 20.0)
-	nervios = minf(100.0, nervios + 20.0)
-	durmiendo_en_calle.emit()
-
-	var tirada: float = randf()
-	if tirada < 0.15:
-		enfermedad = 0.0
-		enferma = false
-		enfermedad_cambiada.emit(false)
-	elif tirada < 0.30:
-		enfermedad = minf(100.0, enfermedad + 10.0)
-		_check_enfermedad_efectos()
-
-	actualizar_stats()
 
 
 # ============================================================

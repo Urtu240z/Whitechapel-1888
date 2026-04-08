@@ -11,6 +11,8 @@ extends Node
 
 const CLIENT_TRANSITION_SCENE := preload("res://Scenes/Client_Transition/Client_Transition.tscn")
 
+signal world_hidden  # Emitida cuando el mundo está negro y pausado — momento seguro para queue_free NPCs
+
 var _active: bool = false
 
 func _ready() -> void:
@@ -49,6 +51,9 @@ func start_service(acto: String, tipo: String, client_skin_name: String = "NPC_C
 
 	get_tree().paused = true
 
+	# Momento seguro — mundo negro y pausado. NPCs pueden hacer queue_free aquí.
+	world_hidden.emit()
+
 	# 4. Instanciar ClientTransition FUERA del mundo
 	transition = CLIENT_TRANSITION_SCENE.instantiate()
 	if transition == null:
@@ -66,6 +71,13 @@ func start_service(acto: String, tipo: String, client_skin_name: String = "NPC_C
 	transition.begin(acto, tipo, client_skin_name)
 
 	# 7. Esperar resultado
+	# Guard: si transition se destruyó antes de emitir finished,
+	# forzamos cleanup para no dejar el juego con paused=true y mundo invisible.
+	if not is_instance_valid(transition):
+		push_error("ClientServiceManager: transition destruida antes de finished")
+		await _cleanup_service(world, player, null)
+		return {}
+
 	data = await transition.finished
 
 	# 8. Restaurar SIEMPRE todo antes de salir

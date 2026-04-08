@@ -67,9 +67,12 @@ variables={
 "barman_result": ""
 },
 "client": {
+"deal_active": false,
+"deal_state": "",
 "precio_completo": 0.0,
 "precio_mano": 0.0,
 "precio_oral": 0.0,
+"refused": false,
 "result": ""
 },
 "dinero": 5.0,

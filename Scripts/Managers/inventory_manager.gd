@@ -80,23 +80,37 @@ func add_item(item_id: String, quantity: int = 1) -> bool:
 		push_warning("InventoryManager: item '%s' no existe en la DB." % item_id)
 		return false
 
+	var restante: int = quantity
+
+	# 1. Rellenar stacks existentes del mismo item
 	for i in range(_slots_activos):
+		if restante <= 0:
+			break
 		if _pocket[i] != null and _pocket[i]["id"] == item_id:
 			var current: int = _pocket[i]["qty"]
 			if current >= item.max_stack:
 				continue
-			_pocket[i]["qty"] = min(current + quantity, item.max_stack)
-			inventory_changed.emit()
-			return true
+			var caben: int = item.max_stack - current
+			var a_meter: int = min(restante, caben)
+			_pocket[i]["qty"] += a_meter
+			restante -= a_meter
 
+	# 2. Abrir slots nuevos con el sobrante
 	for i in range(_slots_activos):
+		if restante <= 0:
+			break
 		if _pocket[i] == null:
-			_pocket[i] = { "id": item_id, "qty": quantity }
-			inventory_changed.emit()
-			return true
+			var a_meter: int = min(restante, item.max_stack)
+			_pocket[i] = { "id": item_id, "qty": a_meter }
+			restante -= a_meter
 
-	push_warning("InventoryManager: inventario lleno.")
-	return false
+	if restante > 0:
+		push_warning("InventoryManager: inventario lleno, no caben %d unidades de '%s'." % [restante, item_id])
+		inventory_changed.emit()
+		return false
+
+	inventory_changed.emit()
+	return true
 
 func add_item_to_slot(item_id: String, slot_index: int, quantity: int = 1) -> bool:
 	if slot_index < 0 or slot_index >= MAX_SLOTS:

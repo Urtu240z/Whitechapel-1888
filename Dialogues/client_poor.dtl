@@ -1,3 +1,16 @@
+if {client.refused} == true:
+	No me marees mas, puta, o sabras lo que es bueno.\
+	Con migo no se juega!
+	[end_timeline]
+if {client.deal_state} == "warning":
+	OYE! A donde vas tan deprisa?
+	[end_timeline]
+if {client.deal_state} == "cancel":
+	QUE TE DEN ZORRA!
+	[end_timeline]
+if {client.deal_active} == true:
+	Vamos a un lugar tranquilo...
+	[end_timeline]
 Eh, tú... ¿Cuánto cobras?
 - ¿Qué quieres?
 	Tengo {client.precio_mano} chelín si me haces una mano... O te doy {client.precio_oral} por la boca. Y {client.precio_completo} si quiero lo de verdad.
@@ -14,8 +27,10 @@ Eh, tú... ¿Cuánto cobras?
 		set {client.result} = "completo"
 		[end_timeline]
 	- No me interesas
+		set {client.refused} = true
 		Largate calienta braguetas!
 		[end_timeline]
 - Lárgate.
+	set {client.refused} = true
 	Zorra!
 	[end_timeline]
