@@ -33,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://oebyjtwwcxhx" path="res://Scenes/NPC/NPC_Client.tscn" id="31_mlx1v"]
 [ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="32_wl6bi"]
 [ext_resource type="PackedScene" uid="uid://c3m8fewa1n53m" path="res://Scenes/Buildings/Hide_Zone.tscn" id="33_mjtkt"]
+[ext_resource type="PackedScene" uid="uid://bt3ubgbvk60kv" path="res://Scenes/NPC/NPC_Companion.tscn" id="34_b0nva"]
 
 [sub_resource type="Resource" id="Resource_k7r8x"]
 script = ExtResource("20_35ndy")
@@ -356,5 +357,13 @@ scale = Vector2(1.3, 1.3)
 dialog_timeline = "uid://c38evy5q65a84"
 wander_enabled = true
 skin_name = "NPC_ClientPoor6"
+
+[node name="NPCCompanion" parent="." unique_id=1093994703 instance=ExtResource("34_b0nva")]
+position = Vector2(-1489, -641)
+skin_name = "Bridget"
+
+[node name="NPCCompanion2" parent="." unique_id=1036286580 instance=ExtResource("34_b0nva")]
+position = Vector2(1387, -641)
+skin_name = "Dolly"
 
 [editable path="Exterior/Area2D/SceneChanger"]
