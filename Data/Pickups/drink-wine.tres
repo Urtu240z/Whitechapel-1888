@@ -7,5 +7,6 @@
 script = ExtResource("1_wwhyb")
 name = "drink-wine"
 display_name = "Vino"
+description = "ITEM_DESC_WINE"
 cost = 3.0
 icon = ExtResource("1_814aa")

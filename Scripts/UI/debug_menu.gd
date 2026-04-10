@@ -24,6 +24,8 @@ var _btn_set_hour: Button
 var _btn_save_1: Button
 var _btn_load_1: Button
 var _btn_close: Button
+var _money_spin: SpinBox
+var _btn_add_money: Button
 
 
 func _ready() -> void:
@@ -177,6 +179,35 @@ func _build_ui() -> void:
 	vbox.add_child(sep2)
 
 	# ------------------------------------------------------------
+	# FILA DINERO
+	# ------------------------------------------------------------
+	var row_money := HBoxContainer.new()
+	row_money.add_theme_constant_override("separation", 8)
+	vbox.add_child(row_money)
+
+	var money_label := Label.new()
+	money_label.text = "Añadir dinero:"
+	money_label.add_theme_font_size_override("font_size", 16)
+	row_money.add_child(money_label)
+
+	_money_spin = SpinBox.new()
+	_money_spin.min_value = 1
+	_money_spin.max_value = 9999
+	_money_spin.step = 1
+	_money_spin.value = 10
+	_money_spin.rounded = true
+	_money_spin.custom_minimum_size = Vector2(140, 42)
+	row_money.add_child(_money_spin)
+
+	_btn_add_money = Button.new()
+	_btn_add_money.text = "Añadir"
+	_btn_add_money.custom_minimum_size = Vector2(110, 42)
+	row_money.add_child(_btn_add_money)
+
+	var sep3 := HSeparator.new()
+	vbox.add_child(sep3)
+
+	# ------------------------------------------------------------
 	# FILA SAVE / LOAD
 	# ------------------------------------------------------------
 	var row_save := HBoxContainer.new()
@@ -213,6 +244,7 @@ func _build_ui() -> void:
 	_btn_save_1.pressed.connect(_on_save_1_pressed)
 	_btn_load_1.pressed.connect(_on_load_1_pressed)
 	_btn_close.pressed.connect(_on_close_pressed)
+	_btn_add_money.pressed.connect(_on_add_money_pressed)
 
 
 func _recenter_panel() -> void:
@@ -264,6 +296,11 @@ func _on_save_1_pressed() -> void:
 func _on_load_1_pressed() -> void:
 	if SaveManager:
 		SaveManager.load_game(1)
+	_refresh_info()
+
+
+func _on_add_money_pressed() -> void:
+	PlayerStats.añadir_dinero(float(_money_spin.value))
 	_refresh_info()
 
 

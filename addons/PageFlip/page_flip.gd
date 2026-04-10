@@ -65,6 +65,7 @@ var _jump_target_spread: int = 0
 var _pending_target_spread_idx: int = 0
 
 var _interactive_slot: SubViewport = null
+var _interactive_slot_2: SubViewport = null
 
 
 signal started_page_flip_animation()
@@ -416,19 +417,26 @@ func _input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventMouse:
-		var poly = static_right if _interactive_slot == _slot_2 else static_left
+		var mouse_local = visuals_container.get_local_mouse_position()
+		var target_slot: SubViewport
+		if mouse_local.x >= 0.0:
+			target_slot = _interactive_slot_2 if _interactive_slot_2 != null else _interactive_slot
+		else:
+			target_slot = _interactive_slot
+
+		var poly = static_right if target_slot == _slot_2 else static_left
 		var local_pos = poly.get_local_mouse_position()
-		# Convertir coordenadas locales del polígono a coordenadas del SubViewport
-		# El polígono empieza en (0, -h/2), el SubViewport en (0,0)
 		var viewport_pos = Vector2(local_pos.x, local_pos.y + target_page_size.y / 2.0)
 
 		var new_event = event.duplicate()
 		new_event.position = viewport_pos
 		new_event.global_position = viewport_pos
-		_interactive_slot.push_input(new_event)
+		target_slot.push_input(new_event)
 		get_viewport().set_input_as_handled()
-	elif event is InputEventKey:  # ← añadir esto
+	elif event is InputEventKey:
 		_interactive_slot.push_input(event)
+		if _interactive_slot_2 != null:
+			_interactive_slot_2.push_input(event)
 
 func _unhandled_input(event):
 	if Engine.is_editor_hint():
@@ -498,6 +506,7 @@ func _pageflip_set_input_enabled(give_control_to_book: bool):
 # ==============================================================================
 func _check_interactive_pages() -> void:
 	_interactive_slot = null
+	_interactive_slot_2 = null
 	for slot in [_slot_1, _slot_2]:
 		if not slot:
 			continue
@@ -505,10 +514,13 @@ func _check_interactive_pages() -> void:
 			if child.has_signal("manage_pageflip"):
 				if not child.is_connected("manage_pageflip", _on_page_manage_pageflip):
 					child.connect("manage_pageflip", _on_page_manage_pageflip)
-				_interactive_slot = slot
+				if _interactive_slot == null:
+					_interactive_slot = slot
+				else:
+					_interactive_slot_2 = slot
 				_pageflip_set_input_enabled(false)
-				return
-	_pageflip_set_input_enabled(true)
+	if _interactive_slot == null:
+		_pageflip_set_input_enabled(true)
 
 
 func _on_page_manage_pageflip(give_control_to_book: bool) -> void:

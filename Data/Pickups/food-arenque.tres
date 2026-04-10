@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_lpj03")
 name = "food-arenque"
+description = "ITEM_DESC_ARENQUE"
 display_name = "Arenque ahumado"
 cost = 1.0
 effects = {

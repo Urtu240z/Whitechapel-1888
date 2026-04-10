@@ -7,11 +7,12 @@
 script = ExtResource("1_l8vrf")
 name = "perfume-noche-oriente"
 display_name = "Noche de Oriente"
+description = "ITEM_DESC_NOCHE_ORIENTE"
 cost = 60.0
 icon = ExtResource("1_gw21n")
 item_type = 1
 equip_slot = 3
-max_stack = 1
+max_stack = 3
 duracion_horas = 16.0
 usos_max = 3
 sex_appeal_bonus = 40.0

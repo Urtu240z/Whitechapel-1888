@@ -24,9 +24,10 @@ var _blink: ColorRect
 var _distortion: ColorRect
 var _disease: ColorRect
 var _camera: Camera2D = null
-
+var _flash: ColorRect
 var _blink_active: bool = false
 var _blink_timer: float = 0.0
+var _hit_blur_active: bool = false
 var BLINK_INTERVAL: float = 3.0
 const BLINK_DURATION: float = 0.12
 
@@ -66,6 +67,10 @@ func _build_nodes() -> void:
 	_disease.material = _load_shader("res://Assets/Shaders/disease.gdshader")
 	_canvas.add_child(_disease)
 
+	_flash = _make_fullscreen_rect()
+	_flash.color = Color(1, 1, 1, 0)
+	_canvas.add_child(_flash)
+
 	_set_visible_all(false)
 
 func _make_fullscreen_rect() -> ColorRect:
@@ -102,7 +107,21 @@ func _on_node_added(node: Node) -> void:
 # 🔄 PROCESS — solo stamina (necesita ser fluido) y parpadeos
 # Viñeta y distorsión se actualizan via señal stats_updated
 # =========================================================
+func _is_gameplay_active() -> bool:
+	# Los efectos se mantienen en GAMEPLAY y DIALOG —
+	# DIALOG es solo gameplay con un cuadro de texto encima.
+	# Se desactivan en SLEEPING, CLIENT_SERVICE, TRANSITIONING, etc.
+	var state := StateManager.current()
+	return state == StateManager.State.GAMEPLAY or state == StateManager.State.DIALOG
+
 func _process(delta: float) -> void:
+	if not _is_gameplay_active():
+		_set_visible_all(false)
+		if _camera and is_instance_valid(_camera):
+			_camera.offset = Vector2.ZERO
+		_blink_active = false
+		return
+
 	_update_stamina_effects()
 	if _blink_active:
 		_blink_timer += delta
@@ -115,6 +134,8 @@ func _process(delta: float) -> void:
 # Necesita _process para ser suave visualmente
 # =========================================================
 func _update_stamina_effects() -> void:
+	if _hit_blur_active:
+		return
 	var stamina_ratio: float = clamp(PlayerStats.stamina / 50.0, 0.0, 1.0)
 	var intensity: float = 1.0 - stamina_ratio
 
@@ -192,6 +213,44 @@ func _update_disease() -> void:
 	else:
 		_disease.visible = false
 
+func screen_shake(intensity: float = 10.0, _duration: float = 0.3) -> void:
+	if not _camera or not is_instance_valid(_camera):
+		_find_camera()
+
+	# Flash blanco
+	_flash.visible = true
+	_flash.color = Color(1.0, 0.47, 0.393, 0.922)
+	var flash_tween := create_tween()
+	flash_tween.tween_property(_flash, "color", Color(1, 1, 1, 0.0), 0.15)
+	flash_tween.tween_callback(func(): _flash.visible = false)
+
+	# Blur
+	_hit_blur_active = true
+	_blur.visible = true
+	if _blur.material:
+		_blur.material.set_shader_parameter("blur_amount", 3.0)
+	var blur_tween := create_tween()
+	blur_tween.tween_method(func(v: float):
+		if _blur.material:
+			_blur.material.set_shader_parameter("blur_amount", v)
+	, 3.0, 0.0, 1.0)
+	blur_tween.tween_callback(func():
+		_hit_blur_active = false
+		if PlayerStats.stamina >= 50.0:
+			_blur.visible = false
+	)
+
+	# Shake
+	if _camera and is_instance_valid(_camera):
+		var shake_tween := create_tween()
+		var steps: int = 10
+		for i in steps:
+			var decay: float = 1.0 - (float(i) / steps)
+			shake_tween.tween_property(_camera, "offset",
+				Vector2(randf_range(-intensity, intensity) * decay,
+						randf_range(-intensity * 0.8, intensity * 0.8) * decay), 0.025)
+		shake_tween.tween_property(_camera, "offset", Vector2.ZERO, 0.04)
+
 # =========================================================
 # 🔧 UTILS
 # =========================================================
@@ -199,3 +258,15 @@ func _set_visible_all(value: bool) -> void:
 	for node in [_blur, _vignette, _blink, _distortion, _disease]:
 		if node:
 			node.visible = value
+
+func _find_camera() -> void:
+	var cameras := get_tree().get_nodes_in_group("cameras")
+	if cameras.size() > 0:
+		_camera = cameras[0]
+		return
+	# Buscar directamente
+	for node in get_tree().get_nodes_in_group(""):
+		pass
+	var player := get_tree().get_first_node_in_group("player")
+	if player:
+		_camera = player.get_node_or_null("Camera2D")

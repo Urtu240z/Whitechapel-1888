@@ -20,6 +20,9 @@ var _item_db: Dictionary = {}
 var _equipped: Dictionary = {}
 var _equip_timers: Dictionary = {}
 
+# Contenido del bolso cuando está desequipado — persiste entre equipar/desequipar
+var _bolso_contents: Array = []
+
 # ================================================================
 # INIT
 # ================================================================
@@ -211,21 +214,14 @@ func _pocket_count() -> int:
 # ================================================================
 
 func _apply_perfume(slot_index: int, item: ItemData) -> bool:
-	# Si ya hay un perfume activo, avisar y no hacer nada
 	if _equipped.has(ItemData.EquipSlot.NECK_PERFUME):
 		perfume_already_active.emit()
 		return false
 
-	# Restar 1 uso del botellín
 	remove_item_from_slot(slot_index, 1)
-
-	# Activar efecto en slot de equipamiento
 	_equipped[ItemData.EquipSlot.NECK_PERFUME] = item
 	_equip_timers[ItemData.EquipSlot.NECK_PERFUME] = int(item.duracion_horas)
-
-	# Aplicar bonuses
 	_apply_equip_bonuses(item)
-
 	item_equipped.emit(ItemData.EquipSlot.NECK_PERFUME, item)
 	inventory_changed.emit()
 	return true
@@ -262,13 +258,29 @@ func unequip(slot: ItemData.EquipSlot) -> bool:
 	if not _equipped.has(slot):
 		return false
 	var item: ItemData = _equipped[slot]
+	if item.equip_slot != ItemData.EquipSlot.NECK_PERFUME:
+		if not _puede_añadir(item.name):
+			push_warning("InventoryManager: no se puede desequipar '%s', inventario lleno." % item.name)
+			return false
 	_remove_effects(item)
 	_equipped.erase(slot)
 	_equip_timers.erase(slot)
-	add_item(item.name, 1)
+	if item.equip_slot != ItemData.EquipSlot.NECK_PERFUME:
+		add_item(item.name, 1)
 	item_unequipped.emit(slot)
 	inventory_changed.emit()
 	return true
+
+func _puede_añadir(item_id: String) -> bool:
+	var item := get_item_data(item_id)
+	if not item:
+		return false
+	for i in range(_slots_activos):
+		if _pocket[i] == null:
+			return true
+		if _pocket[i]["id"] == item_id and _pocket[i]["qty"] < item.max_stack:
+			return true
+	return false
 
 func unequip_perfume_on_shower() -> void:
 	if not _equipped.has(ItemData.EquipSlot.NECK_PERFUME):
@@ -282,8 +294,11 @@ func get_equipped(slot: ItemData.EquipSlot) -> ItemData:
 func get_perfume_horas_restantes() -> int:
 	return _equip_timers.get(ItemData.EquipSlot.NECK_PERFUME, 0)
 
+func get_equip_timer(slot: ItemData.EquipSlot) -> int:
+	return _equip_timers.get(slot, 0)
+
 # ================================================================
-# EFECTOS — consumables
+# EFECTOS — consumables y equipables normales (bolso)
 # ================================================================
 
 func _apply_effects(item: ItemData) -> void:
@@ -297,6 +312,10 @@ func _apply_effects(item: ItemData) -> void:
 		unequip_perfume_on_shower()
 	if item.amplia_slots:
 		_slots_activos = MAX_SLOTS_CON_BOLSO
+		# Restaurar contenido previo del bolso si existe
+		for i in range(_bolso_contents.size()):
+			_pocket[MAX_SLOTS_BASE + i] = _bolso_contents[i]
+		_bolso_contents = []
 		inventory_changed.emit()
 	PlayerStats.actualizar_stats()
 
@@ -307,7 +326,10 @@ func _remove_effects(item: ItemData) -> void:
 			continue
 		PlayerStats.set(stat_name, clamp(PlayerStats.get(stat_name) - valor, 0.0, 100.0))
 	if item.amplia_slots:
+		# Guardar contenido del bolso (slots 6-11) sin perderlo
+		_bolso_contents = []
 		for i in range(MAX_SLOTS_BASE, MAX_SLOTS_CON_BOLSO):
+			_bolso_contents.append(_pocket[i])
 			_pocket[i] = null
 		_slots_activos = MAX_SLOTS_BASE
 		inventory_changed.emit()
@@ -324,6 +346,9 @@ func _apply_equip_bonuses(item: ItemData) -> void:
 		PlayerStats.nervios = clamp(PlayerStats.nervios + item.nervios_bonus, 0.0, 100.0)
 	if item.amplia_slots:
 		_slots_activos = MAX_SLOTS_CON_BOLSO
+		for i in range(_bolso_contents.size()):
+			_pocket[MAX_SLOTS_BASE + i] = _bolso_contents[i]
+		_bolso_contents = []
 		inventory_changed.emit()
 	PlayerStats.actualizar_stats()
 
@@ -333,8 +358,9 @@ func _remove_equip_bonuses(item: ItemData) -> void:
 	if item.nervios_bonus != 0.0:
 		PlayerStats.nervios = clamp(PlayerStats.nervios - item.nervios_bonus, 0.0, 100.0)
 	if item.amplia_slots:
-		# Limpiar slots 6-11 antes de reducir
+		_bolso_contents = []
 		for i in range(MAX_SLOTS_BASE, MAX_SLOTS_CON_BOLSO):
+			_bolso_contents.append(_pocket[i])
 			_pocket[i] = null
 		_slots_activos = MAX_SLOTS_BASE
 		inventory_changed.emit()
@@ -368,6 +394,23 @@ func get_pocket_serializable() -> Array:
 			result.append(null)
 	return result
 
+func get_bolso_contents_serializable() -> Array:
+	var result: Array = []
+	for entry in _bolso_contents:
+		if entry != null:
+			result.append({ "id": entry["id"], "qty": entry["qty"] })
+		else:
+			result.append(null)
+	return result
+
+func restore_bolso_contents_from_save(data: Array) -> void:
+	_bolso_contents = []
+	for entry in data:
+		if entry != null:
+			_bolso_contents.append({ "id": entry["id"], "qty": entry["qty"] })
+		else:
+			_bolso_contents.append(null)
+
 func restore_pocket_from_serializable(data: Array) -> void:
 	_pocket.resize(MAX_SLOTS)
 	for i in range(min(data.size(), MAX_SLOTS)):
@@ -390,9 +433,18 @@ func restore_equipped_from_save(slot_int: int, item_id: String, horas_restantes:
 	_equipped[slot] = item
 	if horas_restantes > 0:
 		_equip_timers[slot] = horas_restantes
-	# Activar slots antes de aplicar bonuses (el bolso necesita esto)
 	if item.amplia_slots:
 		_slots_activos = MAX_SLOTS_CON_BOLSO
 	_apply_equip_bonuses(item)
 	item_equipped.emit(slot, item)
+	inventory_changed.emit()
+
+func reset() -> void:
+	_pocket.resize(MAX_SLOTS)
+	for i in range(MAX_SLOTS):
+		_pocket[i] = null
+	_equipped.clear()
+	_equip_timers.clear()
+	_bolso_contents = []
+	_slots_activos = MAX_SLOTS_BASE
 	inventory_changed.emit()

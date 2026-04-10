@@ -246,12 +246,18 @@ func _add_item_row(parent: Node, item_data: ItemData, max_qty: int) -> void:
 	)
 	btn_plus.pressed.connect(func():
 		var item_data_check = InventoryManager.get_item_data(item_id)
-		var owned: int = _get_owned(item_id)
-		var stack_max: int = item_data_check.max_stack if item_data_check.max_stack > 0 else max_qty
-		var max_allowed: int = max(0, min(max_qty, stack_max - owned))
-		if _quantities[item_id] >= max_allowed:
-			_show_error(tr("SHOP_MAX_STACK"))
-			return
+		# Perfumes: solo 1 botella por tipo aunque tenga usos restantes
+		if item_data_check.usos_max > 0:
+			if InventoryManager.has_item(item_id) or _quantities[item_id] >= 1:
+				_show_error(tr("SHOP_MAX_STACK"))
+				return
+		else:
+			var owned: int = _get_owned(item_id)
+			var stack_max: int = item_data_check.max_stack if item_data_check.max_stack > 0 else max_qty
+			var max_allowed: int = max(0, min(max_qty, stack_max - owned))
+			if _quantities[item_id] >= max_allowed:
+				_show_error(tr("SHOP_MAX_STACK"))
+				return
 		_quantities[item_id] += 1
 		qty_lbl.text = str(_quantities[item_id])
 		stock_lbl.text = "(%d)" % (max_qty - _quantities[item_id])
@@ -331,13 +337,17 @@ func _on_buy_pressed() -> void:
 
 	for item_entry in items_to_add:
 		var item_data = InventoryManager.get_item_data(item_entry["id"])
-		var owned: int = _get_owned(item_entry["id"])
-		var qty_a_añadir: int = item_entry["qty"]
-		print("owned: ", owned, " qty_a_añadir: ", qty_a_añadir, " max_stack: ", item_data.max_stack, " usos_max: ", item_data.usos_max)
-			
-		if owned + qty_a_añadir > item_data.max_stack:
-			_show_error(tr("SHOP_NO_SPACE"))
-			return
+		# Perfumes: bloquear si ya tiene la botella
+		if item_data.usos_max > 0:
+			if InventoryManager.has_item(item_entry["id"]):
+				_show_error(tr("SHOP_MAX_STACK"))
+				return
+		else:
+			var owned: int = _get_owned(item_entry["id"])
+			var qty_a_añadir: int = item_entry["qty"]
+			if owned + qty_a_añadir > item_data.max_stack:
+				_show_error(tr("SHOP_NO_SPACE"))
+				return
 
 	PlayerStats.gastar_dinero(total)
 

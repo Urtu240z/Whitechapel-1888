@@ -84,10 +84,8 @@ func _do_load(data: Dictionary) -> void:
 		push_warning("SaveManager: escena no encontrada: %s" % escena)
 		return
 
-	# Aplicar stats antes del cambio de escena
 	_apply_stats(data)
 
-	# Fade out — cambio de escena — esperar tree_changed — fade in
 	await SceneManager.fade_out(0.5)
 	get_tree().change_scene_to_file(escena)
 	await get_tree().tree_changed
@@ -206,9 +204,12 @@ func _collect_data() -> Dictionary:
 			higiene_base -= item.higiene_bonus
 			nervios_base -= item.nervios_bonus
 			sex_appeal_bonus_base -= item.sex_appeal_bonus
+			var horas: int = 0
+			if item.duracion_horas > 0:
+				horas = InventoryManager.get_equip_timer(slot_key)
 			equipment_data[str(slot_key)] = {
 				"id": item.name,
-				"horas": InventoryManager.get_perfume_horas_restantes()
+				"horas": horas
 			}
 
 	# Recopilar stock de todos los vendedores
@@ -254,9 +255,10 @@ func _collect_data() -> Dictionary:
 		"medicina_timer":        PlayerStats.medicina_timer,
 		"dias_sin_pagar_hostal": PlayerStats.dias_sin_pagar_hostal,
 
-		"pocket":      InventoryManager.get_pocket_serializable(),
-		"equipment":   equipment_data,
-		"shop_stocks": shop_stocks,
+		"pocket":         InventoryManager.get_pocket_serializable(),
+		"bolso_contents": InventoryManager.get_bolso_contents_serializable(),
+		"equipment":      equipment_data,
+		"shop_stocks":    shop_stocks,
 	}
 
 
@@ -290,16 +292,20 @@ func _apply_stats(data: Dictionary) -> void:
 	# 1) Limpiar equipamiento
 	InventoryManager.clear_all_equipped()
 
-	# 2) Limpiar inventario
+	# 2) Limpiar inventario y bolso
 	for i in range(InventoryManager.MAX_SLOTS):
 		if InventoryManager.get_slot(i) != {}:
 			InventoryManager.remove_item_from_slot(i, 999)
 
-	# 3) Restaurar bolsillo
+	# 3) Restaurar contenido del bolso desequipado
+	var bolso_contents: Array = data.get("bolso_contents", [])
+	InventoryManager.restore_bolso_contents_from_save(bolso_contents)
+
+	# 4) Restaurar bolsillo
 	var pocket: Array = data.get("pocket", [])
 	InventoryManager.restore_pocket_from_serializable(pocket)
 
-	# 4) Restaurar equipamiento — aplica bonuses encima de los valores base
+	# 5) Restaurar equipamiento — aplica bonuses encima de los valores base
 	var equipment: Dictionary = data.get("equipment", {})
 	for slot_str in equipment:
 		var entry: Dictionary = equipment[slot_str]
@@ -317,7 +323,6 @@ func _convert_medicina_timer_from_save(data: Dictionary) -> float:
 	var timer := float(data.get("medicina_timer", 0.0))
 	var version := int(data.get("version", 1))
 	if version <= 1:
-		# Saves antiguos guardaban segundos reales; ahora usamos horas de juego.
 		timer = timer / CONFIG.duracion_hora_segundos
 	return timer
 

@@ -7,6 +7,7 @@
 script = ExtResource("1_c4f78")
 name = "drink-absenta"
 display_name = "Absenta"
+description = "ITEM_DESC_ABSENTA"
 cost = 94.0
 effects = {
 "alcohol": 100.0,

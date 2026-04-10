@@ -35,6 +35,11 @@ var _player_near: bool = false
 var _state_locked: bool = false
 var _locked_facing_right: bool = true
 var _base_scale: Vector2 = Vector2.ONE
+var _is_attacking: bool = false
+
+signal attack_finished
+signal attack_hit(attack_type: String)
+
 
 # ============================================================================
 # READY
@@ -83,8 +88,8 @@ func _update_walk_state() -> void:
 
 	# Si está frozen, forzar Idle siempre
 	if movement.is_frozen:
-		var current: String = playback.get_current_node()
-		if current != "Idle":
+		var frozen_current: String = playback.get_current_node()
+		if frozen_current != "Idle":
 			playback.start("Idle")
 		return
 
@@ -124,6 +129,26 @@ func lock_facing(facing_right: bool) -> void:
 
 func unlock_facing() -> void:
 	_state_locked = false
+
+func play_attack(attack_type: String = "Kick") -> void:
+	if not playback:
+		attack_finished.emit()
+		return
+
+	_is_attacking = true
+	_state_locked = true
+	playback.travel(attack_type)
+
+	# Esperar específicamente a que termine "Kick" o "Slap"
+	var anim_player: AnimationPlayer = npc.get_node_or_null("AnimationPlayer")
+	if anim_player:
+		var finished: String = ""
+		while finished != attack_type:
+			finished = await anim_player.animation_finished
+
+	_is_attacking = false
+	_state_locked = false
+	attack_finished.emit()
 
 # ============================================================================
 # COUNTER STATE
@@ -171,6 +196,9 @@ func _update_body_flip(player: Node2D, player_in_range: bool) -> void:
 # ============================================================================
 # HELPERS
 # ============================================================================
+func _emit_attack_hit(attack_type: String) -> void:
+	attack_hit.emit(attack_type)
+
 func _refresh_base_scale() -> void:
 	if character_container == null:
 		return

@@ -7,11 +7,12 @@
 script = ExtResource("1_7sat5")
 name = "perfume-pecado-carmesi"
 display_name = "Pecado Carmesí"
+description = "ITEM_DESC_PECADO_CARMESI"
 cost = 98.0
 icon = ExtResource("1_6xcr5")
 item_type = 1
 equip_slot = 3
-max_stack = 1
+max_stack = 3
 duracion_horas = 16.0
 usos_max = 3
 sex_appeal_bonus = 60.0

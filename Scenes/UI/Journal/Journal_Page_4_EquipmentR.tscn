@@ -2,9 +2,13 @@
 
 [ext_resource type="Script" uid="uid://d14bagbb1r6yt" path="res://Scripts/UI/Journal/journal_page_4.gd" id="1_7jty4"]
 [ext_resource type="Texture2D" uid="uid://bk4knn1k0il5a" path="res://Assets/Images/Journal_R.png" id="2_5fbwd"]
+[ext_resource type="FontFile" uid="uid://d31qwad02oajf" path="res://Assets/Fonts/IMFellEnglish.ttf" id="3_1ykh4"]
 [ext_resource type="Texture2D" uid="uid://jwtsn0g28bbp" path="res://Assets/Sprites/Player/Player_Front.png" id="3_5fbwd"]
+[ext_resource type="Texture2D" uid="uid://d1ejlntbq3ymw" path="res://Assets/Sprites/Items/Food-Bread.png" id="5_rj8s8"]
 
-[node name="JournalPage4" type="Node2D" unique_id=258372096]
+[node name="JournalPage4" type="Control" unique_id=744777093]
+layout_mode = 3
+anchors_preset = 0
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_7jty4")
 
@@ -13,41 +17,336 @@ texture_filter = 1
 position = Vector2(279.5, 367.5)
 texture = ExtResource("2_5fbwd")
 
-[node name="LabelTitle" type="Label" parent="." unique_id=1276135302]
-offset_left = 52.0
-offset_top = 53.0
-offset_right = 92.000015
-offset_bottom = 76.0
-
 [node name="Silhouette" type="Sprite2D" parent="." unique_id=1145609928]
 modulate = Color(0.585062, 0.585062, 0.58506197, 0.60300004)
-position = Vector2(270, 388.66666)
+position = Vector2(270, 388.6667)
 scale = Vector2(0.53, 0.53)
 texture = ExtResource("3_5fbwd")
 
-[node name="SlotsContainer" type="Node2D" parent="." unique_id=2102319922]
-position = Vector2(256, 460)
+[node name="LabelTitle" type="Label" parent="." unique_id=296775367]
+texture_filter = 2
+layout_mode = 0
+offset_left = 80.66667
+offset_top = 49.333336
+offset_right = 488.6667
+offset_bottom = 111.333336
+theme_override_colors/font_color = Color(0.5411765, 0.3529412, 0.18039216, 1)
+theme_override_colors/font_outline_color = Color(0.40184852, 0.21136904, 9.62615e-08, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_1ykh4")
+theme_override_font_sizes/font_size = 48
+text = "EQUIPAMIENTO"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="HEAD" type="Marker2D" parent="SlotsContainer" unique_id=821408336]
-position = Vector2(116, -237)
+[node name="HEAD_Slot" type="Control" parent="." unique_id=464542587]
+custom_minimum_size = Vector2(50, 50)
+anchors_preset = 0
+offset_left = 341.33334
+offset_top = 195.33334
+offset_right = 401.33334
+offset_bottom = 255.33334
 
-[node name="NECK_COLLAR" type="Marker2D" parent="SlotsContainer" unique_id=1222320313]
-position = Vector2(-94, -200)
+[node name="BG" type="ColorRect" parent="HEAD_Slot" unique_id=1462158309]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72156864, 0.58431375, 0.3529412, 0.4)
 
-[node name="NECK_PERFUME" type="Marker2D" parent="SlotsContainer" unique_id=1285449627]
-position = Vector2(-158.66667, -200)
+[node name="Border" type="ReferenceRect" parent="HEAD_Slot" unique_id=963758687]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.3529412, 0.22745098, 0.101960786, 0.93333334)
+border_width = 5.0
+editor_only = false
 
-[node name="BODY" type="Marker2D" parent="SlotsContainer" unique_id=893374429]
-position = Vector2(4.666667, -112)
+[node name="Icon" type="TextureRect" parent="HEAD_Slot" unique_id=1431213625]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_rj8s8")
+expand_mode = 2
+stretch_mode = 5
 
-[node name="HAND_LEFT" type="Marker2D" parent="SlotsContainer" unique_id=818530249]
-position = Vector2(-94, -70)
+[node name="NECK_COLLAR_Slot" type="Control" parent="." unique_id=1119726243]
+custom_minimum_size = Vector2(60, 60)
+anchors_preset = 0
+offset_left = 126.66667
+offset_top = 224.66667
+offset_right = 186.66667
+offset_bottom = 284.6667
 
-[node name="HAND_RIGHT" type="Marker2D" parent="SlotsContainer" unique_id=841592634]
-position = Vector2(116, -70)
+[node name="BG" type="ColorRect" parent="NECK_COLLAR_Slot" unique_id=363405841]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72156864, 0.58431375, 0.3529412, 0.4)
 
-[node name="GLOVES" type="Marker2D" parent="SlotsContainer" unique_id=1708623067]
-position = Vector2(116, -3.9999924)
+[node name="Border" type="ReferenceRect" parent="NECK_COLLAR_Slot" unique_id=2121459539]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.3529412, 0.22745098, 0.101960786, 0.93333334)
+border_width = 5.0
+editor_only = false
 
-[node name="SHOES" type="Marker2D" parent="SlotsContainer" unique_id=1642460691]
-position = Vector2(116, 105)
+[node name="Icon" type="TextureRect" parent="NECK_COLLAR_Slot" unique_id=1277450780]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_rj8s8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="NECK_PERFUME_Slot" type="Control" parent="." unique_id=74569757]
+custom_minimum_size = Vector2(60, 60)
+anchors_preset = 0
+offset_left = 56.0
+offset_top = 224.66667
+offset_right = 116.0
+offset_bottom = 284.6667
+
+[node name="BG" type="ColorRect" parent="NECK_PERFUME_Slot" unique_id=5044813]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72156864, 0.58431375, 0.3529412, 0.4)
+
+[node name="Border" type="ReferenceRect" parent="NECK_PERFUME_Slot" unique_id=1430306373]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.3529412, 0.22745098, 0.101960786, 0.93333334)
+border_width = 5.0
+editor_only = false
+
+[node name="Icon" type="TextureRect" parent="NECK_PERFUME_Slot" unique_id=2090873242]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_rj8s8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="HAND_RIGHT_Slot" type="Control" parent="." unique_id=1605561947]
+custom_minimum_size = Vector2(60, 60)
+anchors_preset = 0
+offset_left = 126.66667
+offset_top = 354.6667
+offset_right = 186.66667
+offset_bottom = 414.6667
+
+[node name="BG" type="ColorRect" parent="HAND_RIGHT_Slot" unique_id=292061118]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72156864, 0.58431375, 0.3529412, 0.4)
+
+[node name="Border" type="ReferenceRect" parent="HAND_RIGHT_Slot" unique_id=1835049463]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.3529412, 0.22745098, 0.101960786, 0.93333334)
+border_width = 5.0
+editor_only = false
+
+[node name="Icon" type="TextureRect" parent="HAND_RIGHT_Slot" unique_id=1523931482]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_rj8s8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="BODY_Slot" type="Control" parent="." unique_id=77397741]
+custom_minimum_size = Vector2(60, 60)
+anchors_preset = 0
+offset_left = 235.33334
+offset_top = 354.6667
+offset_right = 295.33334
+offset_bottom = 414.6667
+
+[node name="BG" type="ColorRect" parent="BODY_Slot" unique_id=2101134679]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72156864, 0.58431375, 0.3529412, 0.4)
+
+[node name="Border" type="ReferenceRect" parent="BODY_Slot" unique_id=1889014270]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.3529412, 0.22745098, 0.101960786, 0.93333334)
+border_width = 5.0
+editor_only = false
+
+[node name="Icon" type="TextureRect" parent="BODY_Slot" unique_id=786917076]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_rj8s8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="HAND_LEFT_Slot" type="Control" parent="." unique_id=2118103664]
+custom_minimum_size = Vector2(60, 60)
+anchors_preset = 0
+offset_left = 338.6667
+offset_top = 354.6667
+offset_right = 398.6667
+offset_bottom = 414.6667
+
+[node name="BG" type="ColorRect" parent="HAND_LEFT_Slot" unique_id=1383448571]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72156864, 0.58431375, 0.3529412, 0.4)
+
+[node name="Border" type="ReferenceRect" parent="HAND_LEFT_Slot" unique_id=278333672]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.3529412, 0.22745098, 0.101960786, 0.93333334)
+border_width = 5.0
+editor_only = false
+
+[node name="Icon" type="TextureRect" parent="HAND_LEFT_Slot" unique_id=1227007133]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_rj8s8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="GLOVES_Slot" type="Control" parent="." unique_id=1779594152]
+custom_minimum_size = Vector2(60, 60)
+anchors_preset = 0
+offset_left = 410.0
+offset_top = 354.6667
+offset_right = 470.0
+offset_bottom = 414.6667
+
+[node name="BG" type="ColorRect" parent="GLOVES_Slot" unique_id=473050565]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72156864, 0.58431375, 0.3529412, 0.4)
+
+[node name="Border" type="ReferenceRect" parent="GLOVES_Slot" unique_id=1334520654]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.3529412, 0.22745098, 0.101960786, 0.93333334)
+border_width = 5.0
+editor_only = false
+
+[node name="Icon" type="TextureRect" parent="GLOVES_Slot" unique_id=477153128]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_rj8s8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="SHOES_Slot" type="Control" parent="." unique_id=1004424321]
+custom_minimum_size = Vector2(60, 60)
+anchors_preset = 0
+offset_left = 338.6667
+offset_top = 536.6667
+offset_right = 398.6667
+offset_bottom = 596.6667
+
+[node name="BG" type="ColorRect" parent="SHOES_Slot" unique_id=801994446]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.72156864, 0.58431375, 0.3529412, 0.4)
+
+[node name="Border" type="ReferenceRect" parent="SHOES_Slot" unique_id=486911935]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+border_color = Color(0.3529412, 0.22745098, 0.101960786, 0.93333334)
+border_width = 5.0
+editor_only = false
+
+[node name="Icon" type="TextureRect" parent="SHOES_Slot" unique_id=729311833]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_rj8s8")
+expand_mode = 2
+stretch_mode = 5

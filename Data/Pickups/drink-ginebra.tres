@@ -7,6 +7,7 @@
 script = ExtResource("1_k74vc")
 name = "drink-ginebra"
 display_name = "Ginebra"
+description = "ITEM_DESC_GINEBRA"
 cost = 2.0
 effects = {
 "alcohol": 30.0,

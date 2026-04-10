@@ -7,6 +7,7 @@
 script = ExtResource("1_hx4u6")
 name = "food-sopa"
 display_name = "Sopa"
+description = "ITEM_DESC_SOPA"
 cost = 2.0
 effects = {
 "estres": -5.0,

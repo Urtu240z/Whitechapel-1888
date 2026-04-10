@@ -1,0 +1,3251 @@
+[gd_scene format=3 uid="uid://burq7ql0laagl"]
+
+[ext_resource type="Script" uid="uid://ctw83iqgqxjjt" path="res://addons/PageFlip/page_flip.gd" id="1_714w2"]
+[ext_resource type="Script" uid="uid://daqflpm6t24m" path="res://Scripts/UI/journal.gd" id="1_bngh4"]
+[ext_resource type="AudioStream" uid="uid://bylfc3b5pmbij" path="res://addons/PageFlip/Assets/page_flip.ogg" id="2_0g5p0"]
+[ext_resource type="Script" uid="uid://ce5ib2f4qff24" path="res://addons/PageFlip/page_rigger.gd" id="3_cwdt2"]
+[ext_resource type="Texture2D" uid="uid://d138qe7jyxdg2" path="res://Assets/Images/Journal.png" id="4_7vry6"]
+
+[sub_resource type="Animation" id="Animation_bngh4"]
+length = 0.8
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/DynamicFlipPoly:z_index")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.52),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [10, 25, 10]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.4, 0.688, 0.7664, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -6.0, -90.0, -172.8, -178.835, -179.9]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0:rotation_degrees")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.2125732532083184, 0.0, 0.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0:rotation_degrees")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -2.111212657236631, 0.0, 0.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0:rotation_degrees")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -2.9201488410873875, 0.0, 0.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0:rotation_degrees")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -3.6758347359905117, 0.0, 0.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0:rotation_degrees")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -4.394242173224471, 0.0, 0.0, 0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0:rotation_degrees")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -5.084274437034299, 0.0, 0.0, 0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0:rotation_degrees")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -5.75157008770037, 0.0, 0.0, 0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0/Bone_8_0:rotation_degrees")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -6.4, 0.0, 0.0, 0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1:rotation_degrees")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.4, 0.6976, 0.76928, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -7.800000000000001, -90.0, -172.8, -178.835, -179.9]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1:rotation_degrees")
+tracks/11/interp = 2
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.576345229170814, 0.0, 0.0, 0.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1:rotation_degrees")
+tracks/12/interp = 2
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -2.74457645440762, 0.0, 0.0, 0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1:rotation_degrees")
+tracks/13/interp = 2
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -3.796193493413604, 0.0, 0.0, 0.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1:rotation_degrees")
+tracks/14/interp = 2
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -4.778585156787665, 0.0, 0.0, 0.0]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1:rotation_degrees")
+tracks/15/interp = 2
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -5.712514825191812, 0.0, 0.0, 0.0]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1:rotation_degrees")
+tracks/16/interp = 2
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -6.609556768144588, 0.0, 0.0, 0.0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1:rotation_degrees")
+tracks/17/interp = 2
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -7.477041114010481, 0.0, 0.0, 0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1/Bone_8_1:rotation_degrees")
+tracks/18/interp = 2
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -8.32, 0.0, 0.0, 0.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2:rotation_degrees")
+tracks/19/interp = 2
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.4, 0.7072, 0.77216, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -9.6, -90.0, -172.8, -178.835, -179.9]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2:rotation_degrees")
+tracks/20/interp = 2
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -1.9401172051333095, 0.0, 0.0, 0.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2:rotation_degrees")
+tracks/21/interp = 2
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -3.377940251578609, 0.0, 0.0, 0.0]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2:rotation_degrees")
+tracks/22/interp = 2
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -4.67223814573982, 0.0, 0.0, 0.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2:rotation_degrees")
+tracks/23/interp = 2
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -5.881335577584819, 0.0, 0.0, 0.0]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2:rotation_degrees")
+tracks/24/interp = 2
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -7.030787477159154, 0.0, 0.0, 0.0]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2:rotation_degrees")
+tracks/25/interp = 2
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -8.134839099254878, 0.0, 0.0, 0.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2:rotation_degrees")
+tracks/26/interp = 2
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -9.202512140320591, 0.0, 0.0, 0.0]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2/Bone_8_2:rotation_degrees")
+tracks/27/interp = 2
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -10.24, 0.0, 0.0, 0.0]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3:rotation_degrees")
+tracks/28/interp = 2
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.4, 0.7168, 0.77504, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -11.4, -90.0, -172.8, -178.835, -179.9]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3:rotation_degrees")
+tracks/29/interp = 2
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -2.303889181095805, 0.0, 0.0, 0.0]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3:rotation_degrees")
+tracks/30/interp = 2
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -4.011304048749598, 0.0, 0.0, 0.0]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3:rotation_degrees")
+tracks/31/interp = 2
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -5.548282798066036, 0.0, 0.0, 0.0]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3:rotation_degrees")
+tracks/32/interp = 2
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -6.984085998381972, 0.0, 0.0, 0.0]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3:rotation_degrees")
+tracks/33/interp = 2
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -8.349060129126496, 0.0, 0.0, 0.0]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3:rotation_degrees")
+tracks/34/interp = 2
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -9.660121430365168, 0.0, 0.0, 0.0]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3:rotation_degrees")
+tracks/35/interp = 2
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -10.927983166630701, 0.0, 0.0, 0.0]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3/Bone_8_3:rotation_degrees")
+tracks/36/interp = 2
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -12.16, 0.0, 0.0, 0.0]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4:rotation_degrees")
+tracks/37/interp = 2
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.4, 0.7264, 0.77792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -13.2, -90.0, -172.8, -178.835, -179.9]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4:rotation_degrees")
+tracks/38/interp = 2
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -2.6676611570583004, 0.0, 0.0, 0.0]
+}
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4:rotation_degrees")
+tracks/39/interp = 2
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -4.644667845920588, 0.0, 0.0, 0.0]
+}
+tracks/40/type = "value"
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4:rotation_degrees")
+tracks/40/interp = 2
+tracks/40/loop_wrap = true
+tracks/40/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -6.424327450392252, 0.0, 0.0, 0.0]
+}
+tracks/41/type = "value"
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4:rotation_degrees")
+tracks/41/interp = 2
+tracks/41/loop_wrap = true
+tracks/41/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -8.086836419179125, 0.0, 0.0, 0.0]
+}
+tracks/42/type = "value"
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4:rotation_degrees")
+tracks/42/interp = 2
+tracks/42/loop_wrap = true
+tracks/42/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -9.667332781093837, 0.0, 0.0, 0.0]
+}
+tracks/43/type = "value"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4:rotation_degrees")
+tracks/43/interp = 2
+tracks/43/loop_wrap = true
+tracks/43/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -11.185403761475456, 0.0, 0.0, 0.0]
+}
+tracks/44/type = "value"
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4:rotation_degrees")
+tracks/44/interp = 2
+tracks/44/loop_wrap = true
+tracks/44/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -12.653454192940814, 0.0, 0.0, 0.0]
+}
+tracks/45/type = "value"
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4/Bone_8_4:rotation_degrees")
+tracks/45/interp = 2
+tracks/45/loop_wrap = true
+tracks/45/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -14.08, 0.0, 0.0, 0.0]
+}
+tracks/46/type = "value"
+tracks/46/imported = false
+tracks/46/enabled = true
+tracks/46/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5:rotation_degrees")
+tracks/46/interp = 2
+tracks/46/loop_wrap = true
+tracks/46/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.4, 0.736, 0.7808, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -15.0, -90.0, -172.8, -178.835, -179.9]
+}
+tracks/47/type = "value"
+tracks/47/imported = false
+tracks/47/enabled = true
+tracks/47/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5:rotation_degrees")
+tracks/47/interp = 2
+tracks/47/loop_wrap = true
+tracks/47/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -3.031433133020796, 0.0, 0.0, 0.0]
+}
+tracks/48/type = "value"
+tracks/48/imported = false
+tracks/48/enabled = true
+tracks/48/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5:rotation_degrees")
+tracks/48/interp = 2
+tracks/48/loop_wrap = true
+tracks/48/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -5.278031643091577, 0.0, 0.0, 0.0]
+}
+tracks/49/type = "value"
+tracks/49/imported = false
+tracks/49/enabled = true
+tracks/49/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5:rotation_degrees")
+tracks/49/interp = 2
+tracks/49/loop_wrap = true
+tracks/49/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -7.300372102718469, 0.0, 0.0, 0.0]
+}
+tracks/50/type = "value"
+tracks/50/imported = false
+tracks/50/enabled = true
+tracks/50/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5:rotation_degrees")
+tracks/50/interp = 2
+tracks/50/loop_wrap = true
+tracks/50/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -9.189586839976279, 0.0, 0.0, 0.0]
+}
+tracks/51/type = "value"
+tracks/51/imported = false
+tracks/51/enabled = true
+tracks/51/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5:rotation_degrees")
+tracks/51/interp = 2
+tracks/51/loop_wrap = true
+tracks/51/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -10.985605433061178, 0.0, 0.0, 0.0]
+}
+tracks/52/type = "value"
+tracks/52/imported = false
+tracks/52/enabled = true
+tracks/52/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5:rotation_degrees")
+tracks/52/interp = 2
+tracks/52/loop_wrap = true
+tracks/52/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -12.710686092585746, 0.0, 0.0, 0.0]
+}
+tracks/53/type = "value"
+tracks/53/imported = false
+tracks/53/enabled = true
+tracks/53/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5:rotation_degrees")
+tracks/53/interp = 2
+tracks/53/loop_wrap = true
+tracks/53/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -14.378925219250924, 0.0, 0.0, 0.0]
+}
+tracks/54/type = "value"
+tracks/54/imported = false
+tracks/54/enabled = true
+tracks/54/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5/Bone_8_5:rotation_degrees")
+tracks/54/interp = 2
+tracks/54/loop_wrap = true
+tracks/54/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -16.0, 0.0, 0.0, 0.0]
+}
+tracks/55/type = "value"
+tracks/55/imported = false
+tracks/55/enabled = true
+tracks/55/path = NodePath("Visual/DynamicFlipPoly:scale")
+tracks/55/interp = 1
+tracks/55/loop_wrap = true
+tracks/55/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.48, 0.68, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(0.88, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/56/type = "method"
+tracks/56/imported = false
+tracks/56/enabled = true
+tracks/56/path = NodePath("Visual/DynamicFlipPoly")
+tracks/56/interp = 1
+tracks/56/loop_wrap = true
+tracks/56/keys = {
+"times": PackedFloat32Array(0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_trigger_midpoint"
+}, {
+"args": [],
+"method": &"_trigger_end"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_xgk57"]
+length = 0.8
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/DynamicFlipPoly:z_index")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.52),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [10, 25, 10]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.4, 0.688, 0.7664, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-179.9, -173.9, -90.0, -7.200000000000003, -1.080000000000001, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0:rotation_degrees")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.2125732532083184, 0.0, 0.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0:rotation_degrees")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 2.111212657236631, 0.0, 0.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0:rotation_degrees")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 2.9201488410873875, 0.0, 0.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0:rotation_degrees")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 3.6758347359905117, 0.0, 0.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0:rotation_degrees")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 4.394242173224471, 0.0, 0.0, 0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0:rotation_degrees")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 5.084274437034299, 0.0, 0.0, 0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0:rotation_degrees")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 5.75157008770037, 0.0, 0.0, 0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0/Bone_8_0:rotation_degrees")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.128, 0.688, 0.772, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 6.4, 0.0, 0.0, 0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1:rotation_degrees")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.4, 0.6976, 0.76928, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-179.9, -172.1, -90.0, -7.200000000000003, -1.080000000000001, 0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1:rotation_degrees")
+tracks/11/interp = 2
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.576345229170814, 0.0, 0.0, 0.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1:rotation_degrees")
+tracks/12/interp = 2
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 2.74457645440762, 0.0, 0.0, 0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1:rotation_degrees")
+tracks/13/interp = 2
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 3.796193493413604, 0.0, 0.0, 0.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1:rotation_degrees")
+tracks/14/interp = 2
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 4.778585156787665, 0.0, 0.0, 0.0]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1:rotation_degrees")
+tracks/15/interp = 2
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 5.712514825191812, 0.0, 0.0, 0.0]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1:rotation_degrees")
+tracks/16/interp = 2
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 6.609556768144588, 0.0, 0.0, 0.0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1:rotation_degrees")
+tracks/17/interp = 2
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 7.477041114010481, 0.0, 0.0, 0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1/Bone_8_1:rotation_degrees")
+tracks/18/interp = 2
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.1184, 0.6976, 0.7744, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 8.32, 0.0, 0.0, 0.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2:rotation_degrees")
+tracks/19/interp = 2
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.4, 0.7072, 0.77216, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-179.9, -170.3, -90.0, -7.200000000000003, -1.080000000000001, 0.0]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2:rotation_degrees")
+tracks/20/interp = 2
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.9401172051333095, 0.0, 0.0, 0.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2:rotation_degrees")
+tracks/21/interp = 2
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 3.377940251578609, 0.0, 0.0, 0.0]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2:rotation_degrees")
+tracks/22/interp = 2
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 4.67223814573982, 0.0, 0.0, 0.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2:rotation_degrees")
+tracks/23/interp = 2
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 5.881335577584819, 0.0, 0.0, 0.0]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2:rotation_degrees")
+tracks/24/interp = 2
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 7.030787477159154, 0.0, 0.0, 0.0]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2:rotation_degrees")
+tracks/25/interp = 2
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 8.134839099254878, 0.0, 0.0, 0.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2:rotation_degrees")
+tracks/26/interp = 2
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 9.202512140320591, 0.0, 0.0, 0.0]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2/Bone_8_2:rotation_degrees")
+tracks/27/interp = 2
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.1088, 0.7072, 0.7768, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 10.24, 0.0, 0.0, 0.0]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3:rotation_degrees")
+tracks/28/interp = 2
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.4, 0.7168, 0.77504, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-179.9, -168.5, -90.0, -7.200000000000003, -1.080000000000001, 0.0]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3:rotation_degrees")
+tracks/29/interp = 2
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 2.303889181095805, 0.0, 0.0, 0.0]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3:rotation_degrees")
+tracks/30/interp = 2
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 4.011304048749598, 0.0, 0.0, 0.0]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3:rotation_degrees")
+tracks/31/interp = 2
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 5.548282798066036, 0.0, 0.0, 0.0]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3:rotation_degrees")
+tracks/32/interp = 2
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 6.984085998381972, 0.0, 0.0, 0.0]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3:rotation_degrees")
+tracks/33/interp = 2
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 8.349060129126496, 0.0, 0.0, 0.0]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3:rotation_degrees")
+tracks/34/interp = 2
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 9.660121430365168, 0.0, 0.0, 0.0]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3:rotation_degrees")
+tracks/35/interp = 2
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 10.927983166630701, 0.0, 0.0, 0.0]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3/Bone_8_3:rotation_degrees")
+tracks/36/interp = 2
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(0, 0.0992, 0.7168, 0.7792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 12.16, 0.0, 0.0, 0.0]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4:rotation_degrees")
+tracks/37/interp = 2
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.4, 0.7264, 0.77792, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-179.9, -166.70000000000002, -90.0, -7.200000000000003, -1.080000000000001, 0.0]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4:rotation_degrees")
+tracks/38/interp = 2
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 2.6676611570583004, 0.0, 0.0, 0.0]
+}
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4:rotation_degrees")
+tracks/39/interp = 2
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 4.644667845920588, 0.0, 0.0, 0.0]
+}
+tracks/40/type = "value"
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4:rotation_degrees")
+tracks/40/interp = 2
+tracks/40/loop_wrap = true
+tracks/40/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 6.424327450392252, 0.0, 0.0, 0.0]
+}
+tracks/41/type = "value"
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4:rotation_degrees")
+tracks/41/interp = 2
+tracks/41/loop_wrap = true
+tracks/41/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 8.086836419179125, 0.0, 0.0, 0.0]
+}
+tracks/42/type = "value"
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4:rotation_degrees")
+tracks/42/interp = 2
+tracks/42/loop_wrap = true
+tracks/42/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 9.667332781093837, 0.0, 0.0, 0.0]
+}
+tracks/43/type = "value"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4:rotation_degrees")
+tracks/43/interp = 2
+tracks/43/loop_wrap = true
+tracks/43/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 11.185403761475456, 0.0, 0.0, 0.0]
+}
+tracks/44/type = "value"
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4:rotation_degrees")
+tracks/44/interp = 2
+tracks/44/loop_wrap = true
+tracks/44/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 12.653454192940814, 0.0, 0.0, 0.0]
+}
+tracks/45/type = "value"
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4/Bone_8_4:rotation_degrees")
+tracks/45/interp = 2
+tracks/45/loop_wrap = true
+tracks/45/keys = {
+"times": PackedFloat32Array(0, 0.0896, 0.7264, 0.7816, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 14.08, 0.0, 0.0, 0.0]
+}
+tracks/46/type = "value"
+tracks/46/imported = false
+tracks/46/enabled = true
+tracks/46/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5:rotation_degrees")
+tracks/46/interp = 2
+tracks/46/loop_wrap = true
+tracks/46/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.4, 0.736, 0.7808, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-179.9, -164.9, -90.0, -7.200000000000003, -1.080000000000001, 0.0]
+}
+tracks/47/type = "value"
+tracks/47/imported = false
+tracks/47/enabled = true
+tracks/47/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5:rotation_degrees")
+tracks/47/interp = 2
+tracks/47/loop_wrap = true
+tracks/47/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 3.031433133020796, 0.0, 0.0, 0.0]
+}
+tracks/48/type = "value"
+tracks/48/imported = false
+tracks/48/enabled = true
+tracks/48/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5:rotation_degrees")
+tracks/48/interp = 2
+tracks/48/loop_wrap = true
+tracks/48/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 5.278031643091577, 0.0, 0.0, 0.0]
+}
+tracks/49/type = "value"
+tracks/49/imported = false
+tracks/49/enabled = true
+tracks/49/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5:rotation_degrees")
+tracks/49/interp = 2
+tracks/49/loop_wrap = true
+tracks/49/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 7.300372102718469, 0.0, 0.0, 0.0]
+}
+tracks/50/type = "value"
+tracks/50/imported = false
+tracks/50/enabled = true
+tracks/50/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5:rotation_degrees")
+tracks/50/interp = 2
+tracks/50/loop_wrap = true
+tracks/50/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 9.189586839976279, 0.0, 0.0, 0.0]
+}
+tracks/51/type = "value"
+tracks/51/imported = false
+tracks/51/enabled = true
+tracks/51/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5:rotation_degrees")
+tracks/51/interp = 2
+tracks/51/loop_wrap = true
+tracks/51/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 10.985605433061178, 0.0, 0.0, 0.0]
+}
+tracks/52/type = "value"
+tracks/52/imported = false
+tracks/52/enabled = true
+tracks/52/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5:rotation_degrees")
+tracks/52/interp = 2
+tracks/52/loop_wrap = true
+tracks/52/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 12.710686092585746, 0.0, 0.0, 0.0]
+}
+tracks/53/type = "value"
+tracks/53/imported = false
+tracks/53/enabled = true
+tracks/53/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5:rotation_degrees")
+tracks/53/interp = 2
+tracks/53/loop_wrap = true
+tracks/53/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 14.378925219250924, 0.0, 0.0, 0.0]
+}
+tracks/54/type = "value"
+tracks/54/imported = false
+tracks/54/enabled = true
+tracks/54/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5/Bone_8_5:rotation_degrees")
+tracks/54/interp = 2
+tracks/54/loop_wrap = true
+tracks/54/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.736, 0.784, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 16.0, 0.0, 0.0, 0.0]
+}
+tracks/55/type = "value"
+tracks/55/imported = false
+tracks/55/enabled = true
+tracks/55/path = NodePath("Visual/DynamicFlipPoly:scale")
+tracks/55/interp = 1
+tracks/55/loop_wrap = true
+tracks/55/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.48, 0.68, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(0.88, 1), Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/56/type = "method"
+tracks/56/imported = false
+tracks/56/enabled = true
+tracks/56/path = NodePath("Visual/DynamicFlipPoly")
+tracks/56/interp = 1
+tracks/56/loop_wrap = true
+tracks/56/keys = {
+"times": PackedFloat32Array(0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_trigger_midpoint"
+}, {
+"args": [],
+"method": &"_trigger_end"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_oi12d"]
+length = 0.8
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/DynamicFlipPoly:z_index")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.52),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [10, 25, 10]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -90.0, -179.9]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0:rotation_degrees")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0:rotation_degrees")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0:rotation_degrees")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0:rotation_degrees")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0:rotation_degrees")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0:rotation_degrees")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0:rotation_degrees")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0/Bone_8_0:rotation_degrees")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1:rotation_degrees")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -90.0, -179.9]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1:rotation_degrees")
+tracks/11/interp = 2
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1:rotation_degrees")
+tracks/12/interp = 2
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1:rotation_degrees")
+tracks/13/interp = 2
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1:rotation_degrees")
+tracks/14/interp = 2
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1:rotation_degrees")
+tracks/15/interp = 2
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1:rotation_degrees")
+tracks/16/interp = 2
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1:rotation_degrees")
+tracks/17/interp = 2
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1/Bone_8_1:rotation_degrees")
+tracks/18/interp = 2
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2:rotation_degrees")
+tracks/19/interp = 2
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -90.0, -179.9]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2:rotation_degrees")
+tracks/20/interp = 2
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2:rotation_degrees")
+tracks/21/interp = 2
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2:rotation_degrees")
+tracks/22/interp = 2
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2:rotation_degrees")
+tracks/23/interp = 2
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2:rotation_degrees")
+tracks/24/interp = 2
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2:rotation_degrees")
+tracks/25/interp = 2
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2:rotation_degrees")
+tracks/26/interp = 2
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2/Bone_8_2:rotation_degrees")
+tracks/27/interp = 2
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3:rotation_degrees")
+tracks/28/interp = 2
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -90.0, -179.9]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3:rotation_degrees")
+tracks/29/interp = 2
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3:rotation_degrees")
+tracks/30/interp = 2
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3:rotation_degrees")
+tracks/31/interp = 2
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3:rotation_degrees")
+tracks/32/interp = 2
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3:rotation_degrees")
+tracks/33/interp = 2
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3:rotation_degrees")
+tracks/34/interp = 2
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3:rotation_degrees")
+tracks/35/interp = 2
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3/Bone_8_3:rotation_degrees")
+tracks/36/interp = 2
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4:rotation_degrees")
+tracks/37/interp = 2
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -90.0, -179.9]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4:rotation_degrees")
+tracks/38/interp = 2
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4:rotation_degrees")
+tracks/39/interp = 2
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/40/type = "value"
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4:rotation_degrees")
+tracks/40/interp = 2
+tracks/40/loop_wrap = true
+tracks/40/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/41/type = "value"
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4:rotation_degrees")
+tracks/41/interp = 2
+tracks/41/loop_wrap = true
+tracks/41/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/42/type = "value"
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4:rotation_degrees")
+tracks/42/interp = 2
+tracks/42/loop_wrap = true
+tracks/42/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/43/type = "value"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4:rotation_degrees")
+tracks/43/interp = 2
+tracks/43/loop_wrap = true
+tracks/43/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/44/type = "value"
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4:rotation_degrees")
+tracks/44/interp = 2
+tracks/44/loop_wrap = true
+tracks/44/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/45/type = "value"
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4/Bone_8_4:rotation_degrees")
+tracks/45/interp = 2
+tracks/45/loop_wrap = true
+tracks/45/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/46/type = "value"
+tracks/46/imported = false
+tracks/46/enabled = true
+tracks/46/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5:rotation_degrees")
+tracks/46/interp = 2
+tracks/46/loop_wrap = true
+tracks/46/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -90.0, -179.9]
+}
+tracks/47/type = "value"
+tracks/47/imported = false
+tracks/47/enabled = true
+tracks/47/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5:rotation_degrees")
+tracks/47/interp = 2
+tracks/47/loop_wrap = true
+tracks/47/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/48/type = "value"
+tracks/48/imported = false
+tracks/48/enabled = true
+tracks/48/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5:rotation_degrees")
+tracks/48/interp = 2
+tracks/48/loop_wrap = true
+tracks/48/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/49/type = "value"
+tracks/49/imported = false
+tracks/49/enabled = true
+tracks/49/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5:rotation_degrees")
+tracks/49/interp = 2
+tracks/49/loop_wrap = true
+tracks/49/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/50/type = "value"
+tracks/50/imported = false
+tracks/50/enabled = true
+tracks/50/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5:rotation_degrees")
+tracks/50/interp = 2
+tracks/50/loop_wrap = true
+tracks/50/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/51/type = "value"
+tracks/51/imported = false
+tracks/51/enabled = true
+tracks/51/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5:rotation_degrees")
+tracks/51/interp = 2
+tracks/51/loop_wrap = true
+tracks/51/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/52/type = "value"
+tracks/52/imported = false
+tracks/52/enabled = true
+tracks/52/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5:rotation_degrees")
+tracks/52/interp = 2
+tracks/52/loop_wrap = true
+tracks/52/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/53/type = "value"
+tracks/53/imported = false
+tracks/53/enabled = true
+tracks/53/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5:rotation_degrees")
+tracks/53/interp = 2
+tracks/53/loop_wrap = true
+tracks/53/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/54/type = "value"
+tracks/54/imported = false
+tracks/54/enabled = true
+tracks/54/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5/Bone_8_5:rotation_degrees")
+tracks/54/interp = 2
+tracks/54/loop_wrap = true
+tracks/54/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/55/type = "method"
+tracks/55/imported = false
+tracks/55/enabled = true
+tracks/55/path = NodePath("Visual/DynamicFlipPoly")
+tracks/55/interp = 1
+tracks/55/loop_wrap = true
+tracks/55/keys = {
+"times": PackedFloat32Array(0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_trigger_midpoint"
+}, {
+"args": [],
+"method": &"_trigger_end"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_ep22d"]
+length = 0.8
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/DynamicFlipPoly:z_index")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.12, 0.52),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [10, 25, 10]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-179.9, -90.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0:rotation_degrees")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0:rotation_degrees")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0:rotation_degrees")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0:rotation_degrees")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0:rotation_degrees")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0:rotation_degrees")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0:rotation_degrees")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0/Bone_8_0:rotation_degrees")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1:rotation_degrees")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-179.9, -90.0, 0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1:rotation_degrees")
+tracks/11/interp = 2
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1:rotation_degrees")
+tracks/12/interp = 2
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1:rotation_degrees")
+tracks/13/interp = 2
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1:rotation_degrees")
+tracks/14/interp = 2
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1:rotation_degrees")
+tracks/15/interp = 2
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1:rotation_degrees")
+tracks/16/interp = 2
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1:rotation_degrees")
+tracks/17/interp = 2
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1/Bone_8_1:rotation_degrees")
+tracks/18/interp = 2
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2:rotation_degrees")
+tracks/19/interp = 2
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-179.9, -90.0, 0.0]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2:rotation_degrees")
+tracks/20/interp = 2
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2:rotation_degrees")
+tracks/21/interp = 2
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2:rotation_degrees")
+tracks/22/interp = 2
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2:rotation_degrees")
+tracks/23/interp = 2
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2:rotation_degrees")
+tracks/24/interp = 2
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2:rotation_degrees")
+tracks/25/interp = 2
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2:rotation_degrees")
+tracks/26/interp = 2
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2/Bone_8_2:rotation_degrees")
+tracks/27/interp = 2
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3:rotation_degrees")
+tracks/28/interp = 2
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-179.9, -90.0, 0.0]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3:rotation_degrees")
+tracks/29/interp = 2
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3:rotation_degrees")
+tracks/30/interp = 2
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3:rotation_degrees")
+tracks/31/interp = 2
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/32/type = "value"
+tracks/32/imported = false
+tracks/32/enabled = true
+tracks/32/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3:rotation_degrees")
+tracks/32/interp = 2
+tracks/32/loop_wrap = true
+tracks/32/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/33/type = "value"
+tracks/33/imported = false
+tracks/33/enabled = true
+tracks/33/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3:rotation_degrees")
+tracks/33/interp = 2
+tracks/33/loop_wrap = true
+tracks/33/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/34/type = "value"
+tracks/34/imported = false
+tracks/34/enabled = true
+tracks/34/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3:rotation_degrees")
+tracks/34/interp = 2
+tracks/34/loop_wrap = true
+tracks/34/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/35/type = "value"
+tracks/35/imported = false
+tracks/35/enabled = true
+tracks/35/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3:rotation_degrees")
+tracks/35/interp = 2
+tracks/35/loop_wrap = true
+tracks/35/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/36/type = "value"
+tracks/36/imported = false
+tracks/36/enabled = true
+tracks/36/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3/Bone_8_3:rotation_degrees")
+tracks/36/interp = 2
+tracks/36/loop_wrap = true
+tracks/36/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/37/type = "value"
+tracks/37/imported = false
+tracks/37/enabled = true
+tracks/37/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4:rotation_degrees")
+tracks/37/interp = 2
+tracks/37/loop_wrap = true
+tracks/37/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-179.9, -90.0, 0.0]
+}
+tracks/38/type = "value"
+tracks/38/imported = false
+tracks/38/enabled = true
+tracks/38/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4:rotation_degrees")
+tracks/38/interp = 2
+tracks/38/loop_wrap = true
+tracks/38/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/39/type = "value"
+tracks/39/imported = false
+tracks/39/enabled = true
+tracks/39/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4:rotation_degrees")
+tracks/39/interp = 2
+tracks/39/loop_wrap = true
+tracks/39/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/40/type = "value"
+tracks/40/imported = false
+tracks/40/enabled = true
+tracks/40/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4:rotation_degrees")
+tracks/40/interp = 2
+tracks/40/loop_wrap = true
+tracks/40/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/41/type = "value"
+tracks/41/imported = false
+tracks/41/enabled = true
+tracks/41/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4:rotation_degrees")
+tracks/41/interp = 2
+tracks/41/loop_wrap = true
+tracks/41/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/42/type = "value"
+tracks/42/imported = false
+tracks/42/enabled = true
+tracks/42/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4:rotation_degrees")
+tracks/42/interp = 2
+tracks/42/loop_wrap = true
+tracks/42/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/43/type = "value"
+tracks/43/imported = false
+tracks/43/enabled = true
+tracks/43/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4:rotation_degrees")
+tracks/43/interp = 2
+tracks/43/loop_wrap = true
+tracks/43/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/44/type = "value"
+tracks/44/imported = false
+tracks/44/enabled = true
+tracks/44/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4:rotation_degrees")
+tracks/44/interp = 2
+tracks/44/loop_wrap = true
+tracks/44/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/45/type = "value"
+tracks/45/imported = false
+tracks/45/enabled = true
+tracks/45/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4/Bone_8_4:rotation_degrees")
+tracks/45/interp = 2
+tracks/45/loop_wrap = true
+tracks/45/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/46/type = "value"
+tracks/46/imported = false
+tracks/46/enabled = true
+tracks/46/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5:rotation_degrees")
+tracks/46/interp = 2
+tracks/46/loop_wrap = true
+tracks/46/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-179.9, -90.0, 0.0]
+}
+tracks/47/type = "value"
+tracks/47/imported = false
+tracks/47/enabled = true
+tracks/47/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5:rotation_degrees")
+tracks/47/interp = 2
+tracks/47/loop_wrap = true
+tracks/47/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/48/type = "value"
+tracks/48/imported = false
+tracks/48/enabled = true
+tracks/48/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5:rotation_degrees")
+tracks/48/interp = 2
+tracks/48/loop_wrap = true
+tracks/48/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/49/type = "value"
+tracks/49/imported = false
+tracks/49/enabled = true
+tracks/49/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5:rotation_degrees")
+tracks/49/interp = 2
+tracks/49/loop_wrap = true
+tracks/49/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/50/type = "value"
+tracks/50/imported = false
+tracks/50/enabled = true
+tracks/50/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5:rotation_degrees")
+tracks/50/interp = 2
+tracks/50/loop_wrap = true
+tracks/50/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/51/type = "value"
+tracks/51/imported = false
+tracks/51/enabled = true
+tracks/51/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5:rotation_degrees")
+tracks/51/interp = 2
+tracks/51/loop_wrap = true
+tracks/51/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/52/type = "value"
+tracks/52/imported = false
+tracks/52/enabled = true
+tracks/52/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5:rotation_degrees")
+tracks/52/interp = 2
+tracks/52/loop_wrap = true
+tracks/52/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/53/type = "value"
+tracks/53/imported = false
+tracks/53/enabled = true
+tracks/53/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5:rotation_degrees")
+tracks/53/interp = 2
+tracks/53/loop_wrap = true
+tracks/53/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/54/type = "value"
+tracks/54/imported = false
+tracks/54/enabled = true
+tracks/54/path = NodePath("Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5/Bone_8_5:rotation_degrees")
+tracks/54/interp = 2
+tracks/54/loop_wrap = true
+tracks/54/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/55/type = "method"
+tracks/55/imported = false
+tracks/55/enabled = true
+tracks/55/path = NodePath("Visual/DynamicFlipPoly")
+tracks/55/interp = 1
+tracks/55/loop_wrap = true
+tracks/55/keys = {
+"times": PackedFloat32Array(0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_trigger_midpoint"
+}, {
+"args": [],
+"method": &"_trigger_end"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uywr4"]
+_data = {
+&"turn_flexible_page": SubResource("Animation_bngh4"),
+&"turn_flexible_page_mirror": SubResource("Animation_xgk57"),
+&"turn_rigid_page": SubResource("Animation_oi12d"),
+&"turn_rigid_page_mirror": SubResource("Animation_ep22d")
+}
+
+[node name="Journal" type="CanvasLayer" unique_id=1260495271 groups=["journal"]]
+layer = 10
+script = ExtResource("1_bngh4")
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=2072198320]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1178890429]
+position = Vector2(635, 364)
+scale = Vector2(0.5, 0.5)
+
+[node name="PageFlip2D" type="Node2D" parent="Node2D" unique_id=1329022926 node_paths=PackedStringArray("visuals_container", "static_left", "static_right", "dynamic_poly", "anim_player", "audio_player")]
+position = Vector2(26, -54)
+script = ExtResource("1_714w2")
+visuals_container = NodePath("Visual")
+static_left = NodePath("Visual/StaticPageLeft")
+static_right = NodePath("Visual/StaticPageRight")
+dynamic_poly = NodePath("Visual/DynamicFlipPoly")
+anim_player = NodePath("AnimationPlayer")
+sfx_page_flip = ExtResource("2_0g5p0")
+audio_player = NodePath("AudioStreamPlayer")
+target_page_size = Vector2(830, 1080)
+pages_paths = Array[String](["uid://cuov50nux1n8l", "uid://cqw54jvieemk2", "uid://qwjw2x1qmrwf", "uid://cm7ioqdu32csh", "uid://djmjoptiik71u", "uid://c625hdygwxvdq"])
+blank_page_color = Color(1, 1, 1, 0)
+metadata/_custom_type_script = "uid://ctw83iqgqxjjt"
+
+[node name="Viewports" type="Node" parent="Node2D/PageFlip2D" unique_id=734863721]
+
+[node name="Slots" type="Node" parent="Node2D/PageFlip2D/Viewports" unique_id=1436487817]
+
+[node name="Slot1" type="SubViewport" parent="Node2D/PageFlip2D/Viewports/Slots" unique_id=773428388]
+transparent_bg = true
+physics_object_picking = true
+oversampling_override = 1.5
+size = Vector2i(830, 1080)
+render_target_update_mode = 4
+
+[node name="Slot2" type="SubViewport" parent="Node2D/PageFlip2D/Viewports/Slots" unique_id=1260570643]
+transparent_bg = true
+physics_object_picking = true
+oversampling_override = 1.5
+size = Vector2i(830, 1080)
+render_target_update_mode = 4
+
+[node name="Slot3" type="SubViewport" parent="Node2D/PageFlip2D/Viewports/Slots" unique_id=501588543]
+transparent_bg = true
+oversampling_override = 1.5
+size = Vector2i(830, 1080)
+render_target_update_mode = 4
+
+[node name="Slot4" type="SubViewport" parent="Node2D/PageFlip2D/Viewports/Slots" unique_id=597816820]
+transparent_bg = true
+oversampling_override = 1.5
+size = Vector2i(830, 1080)
+render_target_update_mode = 4
+
+[node name="Visual" type="Node2D" parent="Node2D/PageFlip2D" unique_id=839803816]
+
+[node name="StaticPageLeft" type="Polygon2D" parent="Node2D/PageFlip2D/Visual" unique_id=66868385]
+visible = false
+z_index = 1
+position = Vector2(-830, 0)
+polygon = PackedVector2Array(0, -540, 830, -540, 830, 540, 0, 540)
+uv = PackedVector2Array(0, 0, 830, 0, 830, 1080, 0, 1080)
+
+[node name="StaticPageRight" type="Polygon2D" parent="Node2D/PageFlip2D/Visual" unique_id=1394060937]
+z_index = 1
+polygon = PackedVector2Array(0, -540, 830, -540, 830, 540, 0, 540)
+uv = PackedVector2Array(0, 0, 830, 0, 830, 1080, 0, 1080)
+
+[node name="DynamicFlipPoly" type="Polygon2D" parent="Node2D/PageFlip2D/Visual" unique_id=411011526 node_paths=PackedStringArray("anim_player")]
+visible = false
+clip_children = 2
+z_index = 10
+position = Vector2(0, -540)
+skeleton = NodePath("AutoSkeleton")
+polygon = PackedVector2Array(0, 0, 103.75, 0, 207.5, 0, 311.25, 0, 415, 0, 518.75, 0, 622.5, 0, 726.25, 0, 830, 0, 0, 216, 103.75, 216, 207.5, 216, 311.25, 216, 415, 216, 518.75, 216, 622.5, 216, 726.25, 216, 830, 216, 0, 432, 103.75, 432, 207.5, 432, 311.25, 432, 415, 432, 518.75, 432, 622.5, 432, 726.25, 432, 830, 432, 0, 648, 103.75, 648, 207.5, 648, 311.25, 648, 415, 648, 518.75, 648, 622.5, 648, 726.25, 648, 830, 648, 0, 864, 103.75, 864, 207.5, 864, 311.25, 864, 415, 864, 518.75, 864, 622.5, 864, 726.25, 864, 830, 864, 0, 1080, 103.75, 1080, 207.5, 1080, 311.25, 1080, 415, 1080, 518.75, 1080, 622.5, 1080, 726.25, 1080, 830, 1080)
+uv = PackedVector2Array(0, 0, 103.75, 0, 207.5, 0, 311.25, 0, 415, 0, 518.75, 0, 622.5, 0, 726.25, 0, 830, 0, 0, 216, 103.75, 216, 207.5, 216, 311.25, 216, 415, 216, 518.75, 216, 622.5, 216, 726.25, 216, 830, 216, 0, 432, 103.75, 432, 207.5, 432, 311.25, 432, 415, 432, 518.75, 432, 622.5, 432, 726.25, 432, 830, 432, 0, 648, 103.75, 648, 207.5, 648, 311.25, 648, 415, 648, 518.75, 648, 622.5, 648, 726.25, 648, 830, 648, 0, 864, 103.75, 864, 207.5, 864, 311.25, 864, 415, 864, 518.75, 864, 622.5, 864, 726.25, 864, 830, 864, 0, 1080, 103.75, 1080, 207.5, 1080, 311.25, 1080, 415, 1080, 518.75, 1080, 622.5, 1080, 726.25, 1080, 830, 1080)
+polygons = [PackedInt32Array(0, 1, 10, 9), PackedInt32Array(1, 2, 11, 10), PackedInt32Array(2, 3, 12, 11), PackedInt32Array(3, 4, 13, 12), PackedInt32Array(4, 5, 14, 13), PackedInt32Array(5, 6, 15, 14), PackedInt32Array(6, 7, 16, 15), PackedInt32Array(7, 8, 17, 16), PackedInt32Array(9, 10, 19, 18), PackedInt32Array(10, 11, 20, 19), PackedInt32Array(11, 12, 21, 20), PackedInt32Array(12, 13, 22, 21), PackedInt32Array(13, 14, 23, 22), PackedInt32Array(14, 15, 24, 23), PackedInt32Array(15, 16, 25, 24), PackedInt32Array(16, 17, 26, 25), PackedInt32Array(18, 19, 28, 27), PackedInt32Array(19, 20, 29, 28), PackedInt32Array(20, 21, 30, 29), PackedInt32Array(21, 22, 31, 30), PackedInt32Array(22, 23, 32, 31), PackedInt32Array(23, 24, 33, 32), PackedInt32Array(24, 25, 34, 33), PackedInt32Array(25, 26, 35, 34), PackedInt32Array(27, 28, 37, 36), PackedInt32Array(28, 29, 38, 37), PackedInt32Array(29, 30, 39, 38), PackedInt32Array(30, 31, 40, 39), PackedInt32Array(31, 32, 41, 40), PackedInt32Array(32, 33, 42, 41), PackedInt32Array(33, 34, 43, 42), PackedInt32Array(34, 35, 44, 43), PackedInt32Array(36, 37, 46, 45), PackedInt32Array(37, 38, 47, 46), PackedInt32Array(38, 39, 48, 47), PackedInt32Array(39, 40, 49, 48), PackedInt32Array(40, 41, 50, 49), PackedInt32Array(41, 42, 51, 50), PackedInt32Array(42, 43, 52, 51), PackedInt32Array(43, 44, 53, 52)]
+bones = ["/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0", PackedFloat32Array(0.84999996, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0", PackedFloat32Array(0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0", PackedFloat32Array(0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0", PackedFloat32Array(0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0", PackedFloat32Array(0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0", PackedFloat32Array(0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0", PackedFloat32Array(0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0/Bone_8_0", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0.15, 0.84999996, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.84999996, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1/Bone_8_1", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.84999996, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.84999996, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2/Bone_8_2", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.84999996, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.84999996, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3/Bone_8_3", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.84999996, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.84999996, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4/Bone_8_4", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.84999996, 0, 0, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.84999996, 0.15, 0, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15, 0), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.7, 0.15), "/root/@EditorNode@18065/@Panel@14/@VBoxContainer@15/DockHSplitMain/@VBoxContainer@28/DockVSplitCenter/@VSplitContainer@70/@VBoxContainer@71/@EditorMainScreen@125/MainScreen/@CanvasItemEditor@9318/@VSplitContainer@9101/@HSplitContainer@9103/@HSplitContainer@9105/@Control@9106/@SubViewportContainer@9107/@SubViewport@9108/Journal/Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5/Bone_8_5", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15, 0.84999996)]
+script = ExtResource("3_cwdt2")
+animation_preset = 4
+anim_player = NodePath("../../AnimationPlayer")
+anim_duration = 0.8
+paper_stiffness = 0.8
+lift_bend = -16.0
+land_bend = 0.0
+curl_mode = 2
+curl_lag = 0.6
+timing_peak_lift = 0.1
+timing_peak_land = 0.92
+
+[node name="AutoSkeleton" type="Skeleton2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly" unique_id=1443821110]
+
+[node name="Bone_0_0" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton" unique_id=1614105626]
+rest = Transform2D(1, 0, 0, 1, 0, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_1_0" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0" unique_id=755382345]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_2_0" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0" unique_id=1731980294]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_3_0" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0" unique_id=1715196085]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_4_0" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0" unique_id=1723666342]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_5_0" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0" unique_id=99007962]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_6_0" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0" unique_id=140359039]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_7_0" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0" unique_id=1613167427]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_8_0" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_0/Bone_1_0/Bone_2_0/Bone_3_0/Bone_4_0/Bone_5_0/Bone_6_0/Bone_7_0" unique_id=444723413]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_0_1" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton" unique_id=19987120]
+position = Vector2(0, 216)
+rest = Transform2D(1, 0, 0, 1, 0, 216)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_1_1" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1" unique_id=1125981698]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_2_1" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1" unique_id=1150508530]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_3_1" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1" unique_id=2068457226]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_4_1" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1" unique_id=1681810401]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_5_1" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1" unique_id=988417640]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_6_1" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1" unique_id=291396133]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_7_1" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1" unique_id=2006082818]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_8_1" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_1/Bone_1_1/Bone_2_1/Bone_3_1/Bone_4_1/Bone_5_1/Bone_6_1/Bone_7_1" unique_id=1570534627]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_0_2" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton" unique_id=677082686]
+position = Vector2(0, 432)
+rest = Transform2D(1, 0, 0, 1, 0, 432)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_1_2" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2" unique_id=1394359336]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_2_2" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2" unique_id=462470898]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_3_2" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2" unique_id=1971060525]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_4_2" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2" unique_id=406663492]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_5_2" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2" unique_id=816534809]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_6_2" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2" unique_id=1521796699]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_7_2" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2" unique_id=779680543]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_8_2" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_2/Bone_1_2/Bone_2_2/Bone_3_2/Bone_4_2/Bone_5_2/Bone_6_2/Bone_7_2" unique_id=800221609]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_0_3" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton" unique_id=2070581197]
+position = Vector2(0, 648)
+rest = Transform2D(1, 0, 0, 1, 0, 648)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_1_3" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3" unique_id=527762012]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_2_3" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3" unique_id=1504453878]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_3_3" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3" unique_id=1936389954]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_4_3" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3" unique_id=2037889831]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_5_3" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3" unique_id=334766940]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_6_3" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3" unique_id=492883722]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_7_3" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3" unique_id=124822524]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_8_3" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_3/Bone_1_3/Bone_2_3/Bone_3_3/Bone_4_3/Bone_5_3/Bone_6_3/Bone_7_3" unique_id=1761803513]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_0_4" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton" unique_id=1797363660]
+position = Vector2(0, 864)
+rest = Transform2D(1, 0, 0, 1, 0, 864)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_1_4" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4" unique_id=1439371731]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_2_4" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4" unique_id=848358478]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_3_4" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4" unique_id=161475589]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_4_4" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4" unique_id=184777740]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_5_4" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4" unique_id=487445480]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_6_4" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4" unique_id=1950805138]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_7_4" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4" unique_id=897631693]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_8_4" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_4/Bone_1_4/Bone_2_4/Bone_3_4/Bone_4_4/Bone_5_4/Bone_6_4/Bone_7_4" unique_id=314121072]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_0_5" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton" unique_id=492381327]
+position = Vector2(0, 1080)
+rest = Transform2D(1, 0, 0, 1, 0, 1080)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_1_5" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5" unique_id=1603605854]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_2_5" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5" unique_id=665724566]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_3_5" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5" unique_id=667144284]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_4_5" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5" unique_id=1886377645]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_5_5" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5" unique_id=301897106]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_6_5" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5" unique_id=1679880146]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_7_5" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5" unique_id=842624428]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="Bone_8_5" type="Bone2D" parent="Node2D/PageFlip2D/Visual/DynamicFlipPoly/AutoSkeleton/Bone_0_5/Bone_1_5/Bone_2_5/Bone_3_5/Bone_4_5/Bone_5_5/Bone_6_5/Bone_7_5" unique_id=1885510048]
+position = Vector2(103.75, 0)
+rest = Transform2D(1, 0, 0, 1, 103.75, 0)
+auto_calculate_length_and_angle = false
+length = 103.75
+bone_angle = 0.0
+
+[node name="RuntimeSpine" type="Polygon2D" parent="Node2D/PageFlip2D/Visual" unique_id=1078216934]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D/PageFlip2D" unique_id=529939511]
+libraries/ = SubResource("AnimationLibrary_uywr4")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Node2D/PageFlip2D" unique_id=1972515227]
+
+[node name="JournalBG" type="Sprite2D" parent="Node2D" unique_id=1859821150]
+position = Vector2(-20, 36)
+scale = Vector2(1.765, 1.765)
+texture = ExtResource("4_7vry6")

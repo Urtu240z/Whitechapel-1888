@@ -7,6 +7,7 @@
 script = ExtResource("1_64x66")
 name = "food-pan"
 display_name = "Pan"
+description = "ITEM_DESC_PAN"
 cost = 1.0
 effects = {
 "estres": -2.0,

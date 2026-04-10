@@ -619,3 +619,22 @@ func _lugar_a_string(lugar: Lugar) -> String:
 			return "callejon"
 		_:
 			return "calle"
+
+func reset() -> void:
+	# Limpia todo el estado de sueño para una nueva partida.
+	_durmiendo = false
+	_forzado = false
+	_cancelado = false
+	_hostel_payment_required = false
+	_pending_hostel_payment = 0.0
+	_horas_totales = 0.0
+	_horas_dormidas = 0.0
+	_reset_segment_state()
+	if _selection != null and is_instance_valid(_selection):
+		_selection.queue_free()
+	_selection = null
+	if _screen != null and is_instance_valid(_screen):
+		_screen.queue_free()
+	_screen = null
+	_limpiar_mensaje_colapso()
+	_limpiar_pago_hostal_pendiente()

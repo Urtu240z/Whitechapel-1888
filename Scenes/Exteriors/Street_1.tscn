@@ -41,12 +41,12 @@ colors = PackedColorArray(1, 1, 1, 0.08235294, 1, 1, 1, 0.654902)
 blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_xtpen"]
-offsets = PackedFloat32Array(0, 0.27644232)
+offsets = PackedFloat32Array(0, 0.16517857)
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
 [sub_resource type="Gradient" id="Gradient_fvg26"]
-offsets = PackedFloat32Array(0, 0.22651933)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.24330357)
+colors = PackedColorArray(1, 1, 1, 0, 0.95596343, 0.9559633, 0.95596343, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gmldl"]
 texture = ExtResource("19_segps")
@@ -278,14 +278,15 @@ texture = ExtResource("12_3552v")
 texture_scale = 0.5
 
 [node name="CPUParticles2D2" type="CPUParticles2D" parent="." unique_id=1152003967]
+light_mask = 0
 z_index = 6
 material = SubResource("CanvasItemMaterial_j3y8p")
-position = Vector2(1925.9999, -117)
+position = Vector2(1925.9999, -24.400002)
 scale = Vector2(0.20099764, 0.20099767)
 amount = 1024
 texture = ExtResource("9_nikpo")
 lifetime = 30.0
-preprocess = 10.0
+preprocess = 30.0
 speed_scale = 0.2
 randomness = 1.0
 fixed_fps = 30
@@ -297,7 +298,7 @@ gravity = Vector2(-200, 5)
 initial_velocity_max = 271.93
 scale_amount_min = 0.0
 scale_amount_max = 2.2
-color = Color(0.44481522, 0.7852611, 0.7290407, 0.12941177)
+color = Color(0.15713298, 0.21248898, 0.2280783, 0.5294118)
 color_ramp = SubResource("Gradient_xtpen")
 color_initial_ramp = SubResource("Gradient_fvg26")
 hue_variation_min = 1.0

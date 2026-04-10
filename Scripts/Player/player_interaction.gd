@@ -57,18 +57,22 @@ func unregister_npc(npc) -> void:
 # DIALOG — DIALOGIC
 # ==========================
 func _start_dialog(npc) -> void:
+	# Clientes gestionan su propio flujo (ataque si refused, etc.)
+	if npc.has_method("start_dialog"):
+		npc.start_dialog()
+		return
+
+	# NPCs normales — flujo estándar
 	var timeline: String = npc.dialog_timeline
 	if timeline.is_empty():
 		push_warning("NPC '%s' no tiene dialog_timeline asignado." % npc.name)
 		return
 
-	# Orientarse mutuamente
 	var player_is_right: bool = player.global_position.x > npc.global_position.x
 	npc.animation.lock_facing(player_is_right)
 	player.movement.facing_right = not player_is_right
 	player.animation.update_animation()
 
-	# Parar ambos
 	player.disable_movement()
 	npc.movement.freeze()
 
@@ -78,7 +82,6 @@ func _start_dialog(npc) -> void:
 	await get_tree().process_frame
 	StateManager.enter(StateManager.State.DIALOG)
 	Dialogic.start(timeline)
-
 	Dialogic.timeline_ended.connect(func():
 		StateManager.exit(StateManager.State.DIALOG)
 		player.enable_movement()

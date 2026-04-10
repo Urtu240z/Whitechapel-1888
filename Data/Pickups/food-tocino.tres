@@ -7,6 +7,7 @@
 script = ExtResource("1_sx7vm")
 name = "food-tocino"
 display_name = "Tocino"
+description = "ITEM_DESC_TOCINO"
 cost = 2.0
 effects = {
 "estres": -1.0,

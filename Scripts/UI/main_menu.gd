@@ -263,6 +263,11 @@ func _on_continue_pressed() -> void:
 
 func _on_new_game_pressed() -> void:
 	StateManager.exit(StateManager.State.MENU)
+	# Resetear todos los managers con estado de partida
+	PlayerStats.reset_stats()
+	InventoryManager.reset()
+	DayNightManager.reset()
+	SleepManager.reset()
 	SceneManager.change_scene(GAME_SCENE)
 
 

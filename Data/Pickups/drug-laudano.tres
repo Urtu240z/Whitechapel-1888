@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_ctxsc")
 name = "drug-laudano"
+description = "ITEM_DESC_LAUDANO"
 display_name = "Laudano"
 cost = 5.0
 effects = {

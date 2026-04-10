@@ -249,3 +249,16 @@ func _actualizar_iluminacion() -> void:
 	tween.tween_property(canvas_modulate, "color", target_color, 0.35) \
 		.set_trans(Tween.TRANS_SINE) \
 		.set_ease(Tween.EASE_IN_OUT)
+
+
+func reset() -> void:
+	# Vuelve al inicio del juego: día 1, 08:00.
+	tiempo_acumulado = 0.0
+	hora_actual = HORA_INICIO_RELOJ
+	hora_anterior = int(HORA_INICIO_RELOJ)
+	_ultima_hora_total_emitida = 0
+	pausado = false
+	_ultimo_color_objetivo = Color(-1.0, -1.0, -1.0, -1.0)
+	if tween and tween.is_running():
+		tween.kill()
+	_actualizar_estado_visual()

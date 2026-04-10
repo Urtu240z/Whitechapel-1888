@@ -7,6 +7,7 @@ enum EquipSlot { NONE, HEAD, NECK_COLLAR, NECK_PERFUME, BODY, HAND_LEFT, HAND_RI
 # — Campos originales (compatibles con .tres existentes) —
 @export var name: String = ""
 @export var display_name: String = ""
+@export var description: String = ""
 @export var cost: float = 0.0
 @export var effects: Dictionary = {}
 @export var sound: AudioStream = null

@@ -36,6 +36,9 @@ class_name MainPlayer
 @onready var animation: Node = $Animation
 @onready var interaction: Node = $Interaction
 @onready var audio: Node = $Audio
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var hit_particles: CPUParticles2D = $HitParticle
+@onready var player_playback = $AnimationTree["parameters/playback"]
 
 # ==========================
 # INTERNAL STATE

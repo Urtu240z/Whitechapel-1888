@@ -7,11 +7,12 @@
 script = ExtResource("1_yllf5")
 name = "perfume-bruma-mayo"
 display_name = "Bruma de Mayo"
+description = "ITEM_DESC_BRUMA_MAYO"
 cost = 24.0
 icon = ExtResource("1_uob4i")
 item_type = 1
 equip_slot = 3
-max_stack = 1
+max_stack = 3
 duracion_horas = 16.0
 usos_max = 3
 sex_appeal_bonus = 10.0

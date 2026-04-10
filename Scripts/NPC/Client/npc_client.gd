@@ -39,6 +39,12 @@ var skin_name: String = "NPC_ClientPoor"
 @export var wander_enabled: bool = false
 
 # ============================================================================
+# ⚔️ COMBATE
+# ============================================================================
+@export_group("⚔️ Combat")
+@export var attack_damage: float = 5.0
+
+# ============================================================================
 # 🔗 REFERENCIAS
 # ============================================================================
 @onready var skin: NPCClientSkin = $CharacterContainer
@@ -57,6 +63,7 @@ const REFUSED_RESET_SECS: float = 120.0  # 2 minutos reales
 var _editor_preview_queued: bool = false
 var _last_preview_skin_name: String = ""
 var _last_preview_facing_right: bool = true
+var _last_attack: String = "Slap"  # empieza en Slap para que el primero sea Kick
 
 # ============================================================================
 # CICLO DE VIDA
@@ -251,6 +258,62 @@ func set_enabled(value: bool) -> void:
 
 	if not value and animation:
 		animation.force_idle_counter()
+
+# ============================================================================
+# DIALOGIC — ABRIR DIÁLOGO
+# Llamar desde interaction.gd en lugar de Dialogic.start() directamente.
+# ============================================================================
+func start_dialog() -> void:
+	if not get_tree().root.has_node("Dialogic"):
+		return
+
+	prepare_dialogic_variables()
+
+	if not StateManager.can_enter(StateManager.State.DIALOG):
+		return
+
+	var player := _get_player()
+	if player:
+		player.disable_movement()
+	if movement:
+		movement.freeze()
+	StateManager.enter(StateManager.State.DIALOG)
+	Dialogic.start(dialog_timeline)
+
+	# Ataque tras delay — el diálogo ya está abierto y el jugador puede leer
+	if _refused and animation:
+		var attack_player := _get_player()
+		var facing_right: bool = true
+		if attack_player:
+			facing_right = attack_player.global_position.x > global_position.x
+		animation.lock_facing(facing_right)
+		await get_tree().create_timer(1.0).timeout
+		var next_attack: String = "Kick" if _last_attack == "Slap" else "Slap"
+		_last_attack = next_attack
+		animation.play_attack(next_attack)
+		animation.attack_hit.connect(_on_attack_hit, CONNECT_ONE_SHOT)
+
+	Dialogic.timeline_ended.connect(func():
+		resolve_dialogic_result()
+		StateManager.exit(StateManager.State.DIALOG)
+		if is_instance_valid(self) and movement:
+			movement.unfreeze()
+		if animation:
+			animation.unlock_facing()
+		var p := _get_player()
+		if p:
+			p.enable_movement()
+	, CONNECT_ONE_SHOT)
+
+# ============================================================================
+# ATAQUE — hit callback
+# ============================================================================
+func _on_attack_hit(attack_type: String) -> void:
+	var hit_player := _get_player()
+	if not hit_player:
+		return
+	var knockback_dir: float = 1.0 if hit_player.global_position.x > global_position.x else -1.0
+	DamageManager.take_damage(attack_damage, DamageManager.Source.CLIENT, knockback_dir, attack_type)
 
 # ============================================================================
 # DIALOGIC — PREPARAR VARIABLES
