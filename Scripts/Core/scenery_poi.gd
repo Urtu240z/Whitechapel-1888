@@ -3,13 +3,16 @@ class_name SceneryPOI
 
 # ============================================================================
 # SCENERY POI
-# Punto de interés para el sistema de deambulación de companions.
-# Se añade automáticamente al grupo "scenery_poi" en _ready().
+# Punto de interés para companions.
+# Para POIs de exterior: coloca el Marker2D en el mapa exterior.
+# Para POIs de interior: coloca el Marker2D DENTRO del nodo Interior del edificio.
+#   El companion caminará hasta la puerta exterior, teleportará al interior,
+#   caminará hasta este Marker2D, esperará, y volverá a salir.
 # ============================================================================
 
 @export_group("POI")
 @export var poi_name: String = "Lugar"
-@export var animation_on_arrive: String = "Idle"  # animación al llegar
+@export var animation_on_arrive: String = "Idle"
 @export var wait_time_min: float = 5.0
 @export var wait_time_max: float = 15.0
 
@@ -20,12 +23,9 @@ class_name SceneryPOI
 
 @export_group("🏠 Interior")
 @export var is_interior: bool = false
-# Ruta al nodo BuildingEntrance del edificio
+# NodePath al nodo BuildingEntrance del edificio
+# Desde aquí se obtiene: EnterArea (exterior) y el root del edificio (para Interior/ExitArea)
 @export var building_entrance_path: NodePath = NodePath("")
-# Área donde aparece la companion al entrar (ej: ExitArea del interior)
-@export var interior_entry_path: NodePath = NodePath("")
-# Área donde aparece la companion al salir (ej: EnterArea del exterior)
-@export var exterior_entry_path: NodePath = NodePath("")
 
 # ============================================================================
 # READY
@@ -50,14 +50,36 @@ func get_building_entrance() -> Node:
 		return null
 	return get_node_or_null(building_entrance_path)
 
-func get_interior_spawn() -> Vector2:
-	var node := get_node_or_null(interior_entry_path)
-	if node and node is Node2D:
-		return (node as Node2D).global_position
-	return global_position
+# Posición de la puerta exterior (donde la companion camina antes de entrar)
+func get_exterior_door_pos() -> Vector2:
+	var entrance := get_building_entrance()
+	if not entrance:
+		return global_position
+	var enter_area := entrance.get_node_or_null("EnterArea") as Node2D
+	return enter_area.global_position if enter_area else entrance.global_position
 
-func get_exterior_spawn() -> Vector2:
-	var node := get_node_or_null(exterior_entry_path)
-	if node and node is Node2D:
-		return (node as Node2D).global_position
-	return global_position
+# Posición de spawn dentro del interior (justo al entrar por la puerta interior)
+func get_interior_door_pos() -> Vector2:
+	var entrance := get_building_entrance()
+	if not entrance:
+		return global_position
+	# ExitArea está en: hermano del BuildingEntrance → Interior/TileMapLayer/ExitArea
+	var building_root := entrance.get_parent()
+	var exit_area := building_root.get_node_or_null("Interior/TileMapLayer/ExitArea") as Node2D
+	return exit_area.global_position if exit_area else global_position
+
+# Nodo ExitArea del interior (companion camina hasta aquí antes de salir)
+func get_interior_exit_node() -> Node2D:
+	var entrance := get_building_entrance()
+	if not entrance:
+		return null
+	var building_root := entrance.get_parent()
+	return building_root.get_node_or_null("Interior/TileMapLayer/ExitArea") as Node2D
+
+# Nodo Interior del edificio (para reparentar la companion)
+func get_interior_node() -> Node2D:
+	var entrance := get_building_entrance()
+	if not entrance:
+		return null
+	var building_root := entrance.get_parent()
+	return building_root.get_node_or_null("Interior") as Node2D

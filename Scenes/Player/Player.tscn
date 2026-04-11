@@ -2665,13 +2665,13 @@ bone_angle = 23.196201
 
 [node name="ArmL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest" unique_id=1310672979]
 position = Vector2(29.69851, -130.1768)
-rotation = 0.15037967
+rotation = 0.1503793
 scale = Vector2(0.99983364, 0.99983364)
 rest = Transform2D(1, 0, 0, 1, 47, -121)
 
 [node name="ForeArmL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/ArmL" unique_id=808976861]
 position = Vector2(22, 120)
-rotation = 0.49765345
+rotation = 0.49765402
 scale = Vector2(0.9998402, 0.9998402)
 rest = Transform2D(0.99988055, 0.015455957, -0.015455957, 0.99988055, 22, 120)
 auto_calculate_length_and_angle = false
@@ -2904,7 +2904,6 @@ position = Vector2(-5, 66)
 position = Vector2(91, 65)
 
 [node name="Shadow" type="Node2D" parent="CharacterContainer" unique_id=13468894]
-visible = false
 
 [node name="ShadowRAY" type="RayCast2D" parent="CharacterContainer/Shadow" unique_id=381392053]
 position = Vector2(-5.0020027, 451)

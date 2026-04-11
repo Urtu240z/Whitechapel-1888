@@ -23,9 +23,9 @@ var skin_name: String = "Mary"
 # 🏃 MOVIMIENTO
 # ============================================================================
 @export_group("🏃 Movement")
-@export var walk_speed: float = 120.0
-@export var walk_accel: float = 300.0
-@export var follow_speed: float = 200.0
+@export var walk_speed: float = 650.0
+@export var walk_accel: float = 650.0
+@export var follow_speed: float = 650.0
 @export var follow_dist_min: float = 150.0
 @export var follow_dist_max: float = 350.0
 

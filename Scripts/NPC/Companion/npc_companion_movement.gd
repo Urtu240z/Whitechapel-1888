@@ -3,17 +3,30 @@ class_name NPCCompanionMovement
 
 # ============================================================================
 # NPC COMPANION MOVEMENT
-# Modo IDLE: estático.
-# Modo WANDER: deambula entre SceneryPOIs del grupo "scenery_poi".
-# Modo FOLLOW: sigue al player entre dist_min y dist_max.
-# Gravedad gestionada desde npc_companion._physics_process.
+# Modo WANDER: deambula entre SceneryPOIs con soporte de interiores.
+# Modo FOLLOW: sigue al player.
+#
+# FLUJO INTERIOR:
+# 1. WALKING_EXTERIOR  → camina a puerta exterior (EnterArea)
+# 2. Teleport          → aparece en puerta interior (ExitArea), reparent a Interior
+# 3. INSIDE_TO_POI     → camina al Marker2D del POI dentro del interior
+# 4. INSIDE_WAITING    → espera en el POI
+# 5. INSIDE_TO_EXIT    → camina de vuelta al ExitArea interior
+# 6. Teleport          → aparece en EnterArea exterior, reparent al padre original
+# 7. Pick next POI
 # ============================================================================
 
 enum Mode { IDLE, WANDER, FOLLOW }
-enum WanderState { WALKING, WAITING, INSIDE }
+enum WanderState {
+	WALKING_EXTERIOR,   # caminando a poi exterior o a puerta exterior
+	WAITING,            # esperando en poi exterior
+	INSIDE_TO_POI,      # dentro, caminando al marker del poi
+	INSIDE_WAITING,     # dentro, esperando en el poi
+	INSIDE_TO_EXIT,     # dentro, volviendo a la puerta de salida
+}
 
 # ============================================================================
-# CONFIG — recibida via initialize()
+# CONFIG
 # ============================================================================
 var walk_speed: float = 120.0
 var walk_accel: float = 300.0
@@ -27,14 +40,17 @@ var dist_max: float = 350.0
 var npc: CharacterBody2D = null
 var is_frozen: bool = false
 var _mode: Mode = Mode.IDLE
-var _wander_state: WanderState = WanderState.WALKING
+var _wander_state: WanderState = WanderState.WALKING_EXTERIOR
 var _target: Node2D = null
 
 var _current_poi: SceneryPOI = null
 var _last_poi: SceneryPOI = null
 var _wait_timer: float = 0.0
+var _walk_target_x: float = 0.0
+
 var _inside_building: bool = false
-var _current_entrance: Node = null
+var _original_parent: Node = null
+var _interior_exit_node: Node2D = null
 
 # ============================================================================
 # INIT
@@ -67,7 +83,6 @@ func start_wander() -> void:
 	if _mode == Mode.FOLLOW:
 		return
 	_mode = Mode.WANDER
-	_wander_state = WanderState.WALKING
 	_pick_next_poi()
 
 func stop_wander() -> void:
@@ -77,8 +92,8 @@ func stop_wander() -> void:
 			npc.velocity.x = 0.0
 
 func start_follow(target: Node2D) -> void:
-	if _inside_building and _current_entrance:
-		_exit_building()
+	if _inside_building:
+		_force_exit_building()
 	_target = target
 	_mode = Mode.FOLLOW
 
@@ -100,7 +115,7 @@ func get_facing_right() -> bool:
 	return true
 
 # ============================================================================
-# PROCESO — llamado desde npc_companion._physics_process
+# PROCESO
 # ============================================================================
 func process_movement(delta: float) -> void:
 	if is_frozen or not npc:
@@ -120,83 +135,130 @@ func process_movement(delta: float) -> void:
 # ============================================================================
 func _process_wander(delta: float) -> void:
 	match _wander_state:
-		WanderState.WALKING:
-			_process_walk_to_poi(delta)
+		WanderState.WALKING_EXTERIOR:
+			_walk_toward(_walk_target_x, delta)
+			if _arrived_at(_walk_target_x):
+				_on_arrived_exterior()
+
 		WanderState.WAITING:
-			_process_wait(delta)
-		WanderState.INSIDE:
-			npc.velocity.x = 0.0
+			npc.velocity.x = move_toward(npc.velocity.x, 0.0, walk_accel * delta)
+			_wait_timer -= delta
+			if _wait_timer <= 0.0:
+				_pick_next_poi()
 
-func _process_walk_to_poi(delta: float) -> void:
-	if not is_instance_valid(_current_poi):
-		_pick_next_poi()
-		return
+		WanderState.INSIDE_TO_POI:
+			_walk_toward(_walk_target_x, delta)
+			if _arrived_at(_walk_target_x):
+				_on_arrived_at_interior_poi()
 
-	var diff: float = _current_poi.global_position.x - npc.global_position.x
-	var dist: float = abs(diff)
+		WanderState.INSIDE_WAITING:
+			npc.velocity.x = move_toward(npc.velocity.x, 0.0, walk_accel * delta)
+			_wait_timer -= delta
+			if _wait_timer <= 0.0:
+				_start_leaving_interior()
 
-	if dist < 12.0:
-		npc.velocity.x = 0.0
-		npc.global_position.x = _current_poi.global_position.x
-		_on_arrived_at_poi()
-		return
+		WanderState.INSIDE_TO_EXIT:
+			_walk_toward(_walk_target_x, delta)
+			if _arrived_at(_walk_target_x):
+				_do_exit_building()
 
-	var dir: float = sign(diff)
-	npc.velocity.x = move_toward(npc.velocity.x, dir * walk_speed, walk_accel * delta)
-
-func _process_wait(delta: float) -> void:
-	npc.velocity.x = move_toward(npc.velocity.x, 0.0, walk_accel * delta)
-	_wait_timer -= delta
-	if _wait_timer <= 0.0:
-		_pick_next_poi()
-
-func _on_arrived_at_poi() -> void:
+# ============================================================================
+# LLEGADA EXTERIOR
+# ============================================================================
+func _on_arrived_exterior() -> void:
 	if not is_instance_valid(_current_poi):
 		_pick_next_poi()
 		return
 
 	if _current_poi.is_interior:
-		_enter_building()
+		_do_enter_building()
 	else:
+		# POI exterior — esperar y siguiente
 		_wander_state = WanderState.WAITING
 		_wait_timer = _current_poi.get_wait_time()
 
-func _enter_building() -> void:
+# ============================================================================
+# ENTRAR AL EDIFICIO
+# ============================================================================
+func _do_enter_building() -> void:
 	if not is_instance_valid(_current_poi):
 		_pick_next_poi()
 		return
 
-	var entrance := _current_poi.get_building_entrance()
-	if not entrance or not entrance.has_method("npc_enter"):
-		# Sin entrance válido — esperar en la puerta
+	var interior_node: Node2D = _current_poi.get_interior_node()
+	var interior_door_pos: Vector2 = _current_poi.get_interior_door_pos()
+	_interior_exit_node = _current_poi.get_interior_exit_node()
+
+	if not interior_node:
+		# Sin interior válido — esperar en la puerta
 		_wander_state = WanderState.WAITING
 		_wait_timer = _current_poi.get_wait_time()
 		return
 
-	_current_entrance = entrance
+	# Guardar padre original y reparentar al Interior
+	_original_parent = npc.get_parent()
 	_inside_building = true
-	_wander_state = WanderState.INSIDE
-	entrance.npc_enter(npc, _current_poi.get_interior_spawn())
+	_original_parent.remove_child(npc)
+	interior_node.add_child(npc)
+	npc.global_position = interior_door_pos
 
-	# Salir después del tiempo de espera
-	var wait: float = _current_poi.get_wait_time()
-	npc.get_tree().create_timer(wait).timeout.connect(_exit_building, CONNECT_ONE_SHOT)
-
-func _exit_building() -> void:
-	if not is_instance_valid(_current_entrance) or not _current_entrance.has_method("npc_exit"):
-		_inside_building = false
-		_current_entrance = null
-		_pick_next_poi()
-		return
-
-	var exit_pos: Vector2 = _current_poi.get_exterior_spawn() if is_instance_valid(_current_poi) else npc.global_position
-	_current_entrance.npc_exit(npc, exit_pos)
-	_inside_building = false
-	_current_entrance = null
-	_pick_next_poi()
+	# Caminar hacia el POI dentro del interior
+	_walk_target_x = _current_poi.global_position.x
+	_wander_state = WanderState.INSIDE_TO_POI
 
 # ============================================================================
-# SELECCIÓN DE POI — random sin repetir el último
+# LLEGADA AL POI INTERIOR
+# ============================================================================
+func _on_arrived_at_interior_poi() -> void:
+	_wander_state = WanderState.INSIDE_WAITING
+	_wait_timer = _current_poi.get_wait_time() if is_instance_valid(_current_poi) else 5.0
+
+# ============================================================================
+# SALIR DEL EDIFICIO
+# ============================================================================
+func _start_leaving_interior() -> void:
+	if is_instance_valid(_interior_exit_node):
+		_walk_target_x = _interior_exit_node.global_position.x
+		_wander_state = WanderState.INSIDE_TO_EXIT
+	else:
+		_do_exit_building()
+
+func _do_exit_building() -> void:
+	var exterior_door_pos: Vector2 = Vector2.ZERO
+	if is_instance_valid(_current_poi):
+		exterior_door_pos = _current_poi.get_exterior_door_pos()
+
+	# Reparentar de vuelta al padre original
+	var current_parent := npc.get_parent()
+	if current_parent:
+		current_parent.remove_child(npc)
+	if is_instance_valid(_original_parent):
+		_original_parent.add_child(npc)
+	else:
+		npc.get_tree().current_scene.add_child(npc)
+
+	npc.global_position = exterior_door_pos
+	_inside_building = false
+	_original_parent = null
+	_interior_exit_node = null
+	_pick_next_poi()
+
+func _force_exit_building() -> void:
+	if not _inside_building:
+		return
+	var current_parent := npc.get_parent()
+	if current_parent:
+		current_parent.remove_child(npc)
+	if is_instance_valid(_original_parent):
+		_original_parent.add_child(npc)
+	else:
+		npc.get_tree().current_scene.add_child(npc)
+	_inside_building = false
+	_original_parent = null
+	_interior_exit_node = null
+
+# ============================================================================
+# SELECCIÓN DE POI
 # ============================================================================
 func _pick_next_poi() -> void:
 	var all_pois := npc.get_tree().get_nodes_in_group("scenery_poi")
@@ -217,7 +279,26 @@ func _pick_next_poi() -> void:
 
 	_last_poi = _current_poi
 	_current_poi = available.pick_random()
-	_wander_state = WanderState.WALKING
+
+	if _current_poi.is_interior:
+		# Caminar a la puerta exterior del edificio primero
+		_walk_target_x = _current_poi.get_exterior_door_pos().x
+	else:
+		# Caminar directamente al POI
+		_walk_target_x = _current_poi.global_position.x
+
+	_wander_state = WanderState.WALKING_EXTERIOR
+
+# ============================================================================
+# HELPERS DE MOVIMIENTO
+# ============================================================================
+func _walk_toward(target_x: float, delta: float) -> void:
+	var diff: float = target_x - npc.global_position.x
+	var dir: float = sign(diff)
+	npc.velocity.x = move_toward(npc.velocity.x, dir * walk_speed, walk_accel * delta)
+
+func _arrived_at(target_x: float) -> bool:
+	return abs(npc.global_position.x - target_x) < 12.0
 
 # ============================================================================
 # FOLLOW

@@ -359,12 +359,14 @@ dialog_timeline = "uid://c38evy5q65a84"
 wander_enabled = true
 skin_name = "NPC_ClientPoor6"
 
-[node name="NPCCompanion" parent="." unique_id=1093994703 instance=ExtResource("34_b0nva")]
+[node name="Companions" type="Node2D" parent="." unique_id=1087582166]
 position = Vector2(-1489, -641)
+
+[node name="NPCCompanion" parent="Companions" unique_id=1093994703 instance=ExtResource("34_b0nva")]
 skin_name = "Bridget"
 
-[node name="NPCCompanion2" parent="." unique_id=1036286580 instance=ExtResource("34_b0nva")]
-position = Vector2(1387, -641)
+[node name="NPCCompanion2" parent="Companions" unique_id=1036286580 instance=ExtResource("34_b0nva")]
+position = Vector2(2876, 0)
 skin_name = "Dolly"
 
 [node name="POIs" type="Node2D" parent="." unique_id=661232300]

@@ -490,6 +490,8 @@ func is_transitioning() -> bool:
 var _npcs_inside: Array = []
 
 func npc_enter(npc: CharacterBody2D, interior_position: Vector2) -> void:
+	print("npc_enter — pos: ", interior_position, " npc scale antes: ", npc.scale)
+
 	if npc in _npcs_inside:
 		return
 	_npcs_inside.append(npc)
@@ -500,6 +502,7 @@ func npc_enter(npc: CharacterBody2D, interior_position: Vector2) -> void:
 	if _interior:
 		_interior.add_child(npc)
 	npc.global_position = interior_position
+	print("npc scale después de reparent: ", npc.scale)
 
 func npc_exit(npc: CharacterBody2D, exterior_position: Vector2) -> void:
 	if not npc in _npcs_inside:
