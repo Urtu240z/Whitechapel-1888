@@ -3,11 +3,9 @@ class_name SceneryPOI
 
 # ============================================================================
 # SCENERY POI
-# Punto de interés para companions.
+# Punto de interés para companions / clients.
 # Para POIs de exterior: coloca el Marker2D en el mapa exterior.
 # Para POIs de interior: coloca el Marker2D DENTRO del nodo Interior del edificio.
-#   El companion caminará hasta la puerta exterior, teleportará al interior,
-#   caminará hasta este Marker2D, esperará, y volverá a salir.
 # ============================================================================
 
 @export_group("POI")
@@ -23,9 +21,16 @@ class_name SceneryPOI
 
 @export_group("🏠 Interior")
 @export var is_interior: bool = false
-# NodePath al nodo BuildingEntrance del edificio
-# Desde aquí se obtiene: EnterArea (exterior) y el root del edificio (para Interior/ExitArea)
 @export var building_entrance_path: NodePath = NodePath("")
+
+@export_group("👥 Crowd Spread")
+@export var use_spread_positions: bool = true
+@export var slot_spacing: float = 36.0
+@export var slot_count: int = 5
+@export var slot_jitter: float = 8.0
+
+# npc instance id -> slot index
+var _slot_reservations: Dictionary = {}
 
 # ============================================================================
 # READY
@@ -39,6 +44,7 @@ func _ready() -> void:
 func is_available() -> bool:
 	if always_available:
 		return true
+
 	var hour: float = DayNightManager.get_hour_float()
 	return hour >= hour_open and hour < hour_close
 
@@ -50,36 +56,90 @@ func get_building_entrance() -> Node:
 		return null
 	return get_node_or_null(building_entrance_path)
 
-# Posición de la puerta exterior (donde la companion camina antes de entrar)
 func get_exterior_door_pos() -> Vector2:
 	var entrance := get_building_entrance()
 	if not entrance:
 		return global_position
+
 	var enter_area := entrance.get_node_or_null("EnterArea") as Node2D
 	return enter_area.global_position if enter_area else entrance.global_position
 
-# Posición de spawn dentro del interior (justo al entrar por la puerta interior)
 func get_interior_door_pos() -> Vector2:
 	var entrance := get_building_entrance()
 	if not entrance:
 		return global_position
-	# ExitArea está en: hermano del BuildingEntrance → Interior/TileMapLayer/ExitArea
+
 	var building_root := entrance.get_parent()
 	var exit_area := building_root.get_node_or_null("Interior/TileMapLayer/ExitArea") as Node2D
 	return exit_area.global_position if exit_area else global_position
 
-# Nodo ExitArea del interior (companion camina hasta aquí antes de salir)
 func get_interior_exit_node() -> Node2D:
 	var entrance := get_building_entrance()
 	if not entrance:
 		return null
+
 	var building_root := entrance.get_parent()
 	return building_root.get_node_or_null("Interior/TileMapLayer/ExitArea") as Node2D
 
-# Nodo Interior del edificio (para reparentar la companion)
 func get_interior_node() -> Node2D:
 	var entrance := get_building_entrance()
 	if not entrance:
 		return null
+
 	var building_root := entrance.get_parent()
 	return building_root.get_node_or_null("Interior") as Node2D
+
+# ============================================================================
+# CROWD SPREAD
+# ============================================================================
+func reserve_target_position(npc: Node) -> Vector2:
+	if not is_instance_valid(npc):
+		return global_position
+
+	if not use_spread_positions or slot_count <= 1:
+		return global_position
+
+	var npc_id: int = npc.get_instance_id()
+
+	if _slot_reservations.has(npc_id):
+		return _position_for_slot(int(_slot_reservations[npc_id]))
+
+	var used_slots: Array[int] = []
+	for value in _slot_reservations.values():
+		used_slots.append(int(value))
+
+	var slot_order: Array[int] = _build_slot_order()
+
+	for slot_index in slot_order:
+		if not used_slots.has(slot_index):
+			_slot_reservations[npc_id] = slot_index
+			return _position_for_slot(slot_index)
+
+	# Fallback: si están todos ocupados, usa uno aleatorio cercano
+	return global_position + Vector2(randf_range(-slot_spacing, slot_spacing), 0.0)
+
+func release_target_position(npc: Node) -> void:
+	if not is_instance_valid(npc):
+		return
+
+	var npc_id: int = npc.get_instance_id()
+	if _slot_reservations.has(npc_id):
+		_slot_reservations.erase(npc_id)
+
+func _build_slot_order() -> Array[int]:
+	var order: Array[int] = []
+	var half: int = int(floor(slot_count / 2.0))
+
+	order.append(0)
+	for i in range(1, half + 1):
+		order.append(i)
+		order.append(-i)
+
+	while order.size() > slot_count:
+		order.pop_back()
+
+	return order
+
+func _position_for_slot(slot_index: int) -> Vector2:
+	var jitter: float = randf_range(-slot_jitter, slot_jitter)
+	return global_position + Vector2(slot_index * slot_spacing + jitter, 0.0)

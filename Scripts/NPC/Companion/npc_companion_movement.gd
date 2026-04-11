@@ -1,6 +1,8 @@
 extends Node
 class_name NPCCompanionMovement
 
+const NPCBuildingTravelScript = preload("res://Scripts/NPC/Common/npc_building_travel.gd")
+
 # ============================================================================
 # NPC COMPANION MOVEMENT
 # Modo WANDER: deambula entre SceneryPOIs con soporte de interiores.
@@ -8,21 +10,21 @@ class_name NPCCompanionMovement
 #
 # FLUJO INTERIOR:
 # 1. WALKING_EXTERIOR  → camina a puerta exterior (EnterArea)
-# 2. Teleport          → aparece en puerta interior (ExitArea), reparent a Interior
+# 2. Teleport          → aparece en puerta interior usando BuildingEntrance.npc_enter()
 # 3. INSIDE_TO_POI     → camina al Marker2D del POI dentro del interior
 # 4. INSIDE_WAITING    → espera en el POI
 # 5. INSIDE_TO_EXIT    → camina de vuelta al ExitArea interior
-# 6. Teleport          → aparece en EnterArea exterior, reparent al padre original
+# 6. Teleport          → sale al exterior usando BuildingEntrance.npc_exit()
 # 7. Pick next POI
 # ============================================================================
 
 enum Mode { IDLE, WANDER, FOLLOW }
 enum WanderState {
-	WALKING_EXTERIOR,   # caminando a poi exterior o a puerta exterior
-	WAITING,            # esperando en poi exterior
-	INSIDE_TO_POI,      # dentro, caminando al marker del poi
-	INSIDE_WAITING,     # dentro, esperando en el poi
-	INSIDE_TO_EXIT,     # dentro, volviendo a la puerta de salida
+	WALKING_EXTERIOR,
+	WAITING,
+	INSIDE_TO_POI,
+	INSIDE_WAITING,
+	INSIDE_TO_EXIT,
 }
 
 # ============================================================================
@@ -47,10 +49,9 @@ var _current_poi: SceneryPOI = null
 var _last_poi: SceneryPOI = null
 var _wait_timer: float = 0.0
 var _walk_target_x: float = 0.0
+var _current_poi_target: Vector2 = Vector2.ZERO
 
-var _inside_building: bool = false
-var _original_parent: Node = null
-var _interior_exit_node: Node2D = null
+var _building_travel = NPCBuildingTravelScript.new()
 
 # ============================================================================
 # INIT
@@ -67,6 +68,8 @@ func initialize(owner_npc: CharacterBody2D,
 	follow_speed = p_follow_speed
 	dist_min     = p_dist_min
 	dist_max     = p_dist_max
+
+	_building_travel.initialize(owner_npc)
 
 # ============================================================================
 # API
@@ -87,13 +90,17 @@ func start_wander() -> void:
 
 func stop_wander() -> void:
 	if _mode == Mode.WANDER:
+		_release_current_poi_slot()
 		_mode = Mode.IDLE
 		if npc:
 			npc.velocity.x = 0.0
 
 func start_follow(target: Node2D) -> void:
-	if _inside_building:
+	_release_current_poi_slot()
+
+	if _building_travel.is_inside_building():
 		_force_exit_building()
+
 	_target = target
 	_mode = Mode.FOLLOW
 
@@ -119,7 +126,8 @@ func get_facing_right() -> bool:
 # ============================================================================
 func process_movement(delta: float) -> void:
 	if is_frozen or not npc:
-		npc.velocity.x = 0.0
+		if npc:
+			npc.velocity.x = 0.0
 		return
 
 	match _mode:
@@ -173,7 +181,6 @@ func _on_arrived_exterior() -> void:
 	if _current_poi.is_interior:
 		_do_enter_building()
 	else:
-		# POI exterior — esperar y siguiente
 		_wander_state = WanderState.WAITING
 		_wait_timer = _current_poi.get_wait_time()
 
@@ -185,25 +192,14 @@ func _do_enter_building() -> void:
 		_pick_next_poi()
 		return
 
-	var interior_node: Node2D = _current_poi.get_interior_node()
-	var interior_door_pos: Vector2 = _current_poi.get_interior_door_pos()
-	_interior_exit_node = _current_poi.get_interior_exit_node()
+	var entered: bool = _building_travel.enter_building_for_poi(_current_poi)
 
-	if not interior_node:
-		# Sin interior válido — esperar en la puerta
+	if not entered:
 		_wander_state = WanderState.WAITING
 		_wait_timer = _current_poi.get_wait_time()
 		return
 
-	# Guardar padre original y reparentar al Interior
-	_original_parent = npc.get_parent()
-	_inside_building = true
-	_original_parent.remove_child(npc)
-	interior_node.add_child(npc)
-	npc.global_position = interior_door_pos
-
-	# Caminar hacia el POI dentro del interior
-	_walk_target_x = _current_poi.global_position.x
+	_walk_target_x = _current_poi_target.x
 	_wander_state = WanderState.INSIDE_TO_POI
 
 # ============================================================================
@@ -217,45 +213,27 @@ func _on_arrived_at_interior_poi() -> void:
 # SALIR DEL EDIFICIO
 # ============================================================================
 func _start_leaving_interior() -> void:
-	if is_instance_valid(_interior_exit_node):
-		_walk_target_x = _interior_exit_node.global_position.x
+	var interior_exit_node: Node2D = _building_travel.get_interior_exit_node()
+
+	if is_instance_valid(interior_exit_node):
+		_walk_target_x = interior_exit_node.global_position.x
 		_wander_state = WanderState.INSIDE_TO_EXIT
 	else:
 		_do_exit_building()
 
 func _do_exit_building() -> void:
-	var exterior_door_pos: Vector2 = Vector2.ZERO
+	var exterior_door_pos: Vector2 = npc.global_position
+
 	if is_instance_valid(_current_poi):
 		exterior_door_pos = _current_poi.get_exterior_door_pos()
 
-	# Reparentar de vuelta al padre original
-	var current_parent := npc.get_parent()
-	if current_parent:
-		current_parent.remove_child(npc)
-	if is_instance_valid(_original_parent):
-		_original_parent.add_child(npc)
-	else:
-		npc.get_tree().current_scene.add_child(npc)
-
-	npc.global_position = exterior_door_pos
-	_inside_building = false
-	_original_parent = null
-	_interior_exit_node = null
+	_building_travel.exit_current_building(exterior_door_pos)
+	_release_current_poi_slot()
 	_pick_next_poi()
 
 func _force_exit_building() -> void:
-	if not _inside_building:
-		return
-	var current_parent := npc.get_parent()
-	if current_parent:
-		current_parent.remove_child(npc)
-	if is_instance_valid(_original_parent):
-		_original_parent.add_child(npc)
-	else:
-		npc.get_tree().current_scene.add_child(npc)
-	_inside_building = false
-	_original_parent = null
-	_interior_exit_node = null
+	_building_travel.force_exit_to_poi_door()
+	_release_current_poi_slot()
 
 # ============================================================================
 # SELECCIÓN DE POI
@@ -274,18 +252,21 @@ func _pick_next_poi() -> void:
 				available.append(poi)
 
 	if available.is_empty():
-		_mode = Mode.IDLE
+		_mode = Mode.WANDER
+		_wander_state = WanderState.WAITING
+		_wait_timer = 1.0
 		return
+
+	_release_current_poi_slot()
 
 	_last_poi = _current_poi
 	_current_poi = available.pick_random()
+	_reserve_current_poi_target()
 
 	if _current_poi.is_interior:
-		# Caminar a la puerta exterior del edificio primero
 		_walk_target_x = _current_poi.get_exterior_door_pos().x
 	else:
-		# Caminar directamente al POI
-		_walk_target_x = _current_poi.global_position.x
+		_walk_target_x = _current_poi_target.x
 
 	_wander_state = WanderState.WALKING_EXTERIOR
 
@@ -299,6 +280,16 @@ func _walk_toward(target_x: float, delta: float) -> void:
 
 func _arrived_at(target_x: float) -> bool:
 	return abs(npc.global_position.x - target_x) < 12.0
+
+func _release_current_poi_slot() -> void:
+	if is_instance_valid(_current_poi):
+		_current_poi.release_target_position(npc)
+
+func _reserve_current_poi_target() -> void:
+	if is_instance_valid(_current_poi):
+		_current_poi_target = _current_poi.reserve_target_position(npc)
+	else:
+		_current_poi_target = npc.global_position
 
 # ============================================================================
 # FOLLOW

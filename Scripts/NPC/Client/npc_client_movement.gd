@@ -1,30 +1,39 @@
 extends Node
 class_name NPCClientMovement
+
+const NPCBuildingTravelScript = preload("res://Scripts/NPC/Common/npc_building_travel.gd")
+
 # ============================================================================
 # NPC CLIENT MOVEMENT
 # Modo IDLE: estático.
+# Modo WANDER: deambula entre SceneryPOIs con soporte de interiores.
 # Modo FOLLOW: sigue al player manteniéndose entre dist_min y dist_max px.
-# Gravedad siempre activa — se aplica desde npc_client._physics_process.
 # ============================================================================
 
 enum Mode { IDLE, WANDER, FOLLOW }
+enum WanderState {
+	WALKING_EXTERIOR,
+	WAITING,
+	INSIDE_TO_POI,
+	INSIDE_WAITING,
+	INSIDE_TO_EXIT,
+}
 
 # ============================================================================
 # SEÑALES
 # ============================================================================
-signal player_too_far_warning   # Emitida una vez al superar dist_warning
-signal player_too_far_cancel    # Emitida una vez al superar dist_cancel
+signal player_too_far_warning
+signal player_too_far_cancel
 
 # ============================================================================
-# CONFIG — recibida desde npc_client.gd via initialize()
-# No editar aquí — ajustar desde el Inspector de NPCClient.
+# CONFIG
 # ============================================================================
 var follow_speed: float = 250.0
 var follow_accel: float = 400.0
 var dist_min: float = 200.0
 var dist_max: float = 300.0
-var dist_warning: float = 800.0   # grito
-var dist_cancel: float = 1000.0   # cancelar trato
+var dist_warning: float = 800.0
+var dist_cancel: float = 1000.0
 var gravity: float = 980.0
 
 # ============================================================================
@@ -38,15 +47,14 @@ var _warning_emitted: bool = false
 var _warning_cooldown: float = 0.0
 const WARNING_COOLDOWN_SECS: float = 10.0
 
-# Wander
-var _wander_target_x: float = 0.0
-var _wander_wait_timer: float = 0.0
-var _wander_origin_x: float = 0.0
-const WANDER_DIST_MIN: float = 600.0   # 10s a 600px/s
-const WANDER_DIST_MAX: float = 6000.0
-const WANDER_WAIT_MIN: float = 5.0
-const WANDER_WAIT_MAX: float = 5.0
-const WANDER_SPEED: float = 600.0
+var _wander_state: WanderState = WanderState.WALKING_EXTERIOR
+var _current_poi: SceneryPOI = null
+var _last_poi: SceneryPOI = null
+var _wait_timer: float = 0.0
+var _walk_target_x: float = 0.0
+var _current_poi_target: Vector2 = Vector2.ZERO
+
+var _building_travel = NPCBuildingTravelScript.new()
 
 # ============================================================================
 # INIT
@@ -68,15 +76,17 @@ func initialize(owner_npc: CharacterBody2D,
 	dist_warning  = p_dist_warning
 	dist_cancel   = p_dist_cancel
 
+	_building_travel.initialize(owner_npc)
+
 # ============================================================================
-# PROCESO — cooldown del grito
+# PROCESO
 # ============================================================================
 func _process(delta: float) -> void:
 	if _warning_cooldown > 0.0:
 		_warning_cooldown -= delta
 		if _warning_cooldown <= 0.0:
 			_warning_cooldown = 0.0
-			_warning_emitted = false  # puede volver a gritar
+			_warning_emitted = false
 
 # ============================================================================
 # API
@@ -90,6 +100,11 @@ func unfreeze() -> void:
 	is_frozen = false
 
 func start_follow(target: Node2D) -> void:
+	_release_current_poi_slot()
+
+	if _building_travel.is_inside_building():
+		_force_exit_building()
+
 	_target = target
 	_mode = Mode.FOLLOW
 
@@ -105,30 +120,31 @@ func is_following() -> bool:
 func start_wander() -> void:
 	if _mode == Mode.FOLLOW:
 		return
-	_wander_origin_x = npc.global_position.x
 	_mode = Mode.WANDER
-	_pick_wander_target()
+	_pick_next_poi()
 
 func stop_wander() -> void:
 	if _mode == Mode.WANDER:
+		_release_current_poi_slot()
 		_mode = Mode.IDLE
-		npc.velocity.x = 0.0
+		if npc:
+			npc.velocity.x = 0.0
 
-func _pick_wander_target() -> void:
-	var rng := RandomNumberGenerator.new()
-	rng.randomize()
-	var dist: float = rng.randf_range(WANDER_DIST_MIN, WANDER_DIST_MAX)
-	var dir: float = 1.0 if rng.randf() > 0.5 else -1.0
-	_wander_target_x = _wander_origin_x + dist * dir
-	# NO resetear timer aquí — lo gestiona _process_wander
+func is_moving() -> bool:
+	return abs(npc.velocity.x) > 10.0 if npc else false
+
+func get_facing_right() -> bool:
+	if npc and abs(npc.velocity.x) > 5.0:
+		return npc.velocity.x > 0.0
+	return true
 
 # ============================================================================
-# PROCESO — llamado desde npc_client._physics_process
-# Solo gestiona velocidad horizontal. Gravedad y move_and_slide van en npc_client.
+# PROCESO DE MOVIMIENTO
 # ============================================================================
 func process_movement(delta: float) -> void:
 	if is_frozen or not npc:
-		npc.velocity.x = 0.0
+		if npc:
+			npc.velocity.x = 0.0
 		return
 
 	match _mode:
@@ -139,27 +155,126 @@ func process_movement(delta: float) -> void:
 		Mode.FOLLOW:
 			_process_follow_horizontal(delta)
 
+# ============================================================================
+# WANDER POR POIs
+# ============================================================================
 func _process_wander(delta: float) -> void:
-	# Esperando — frenar y contar timer
-	if _wander_wait_timer > 0.0:
-		_wander_wait_timer -= delta
-		npc.velocity.x = move_toward(npc.velocity.x, 0.0, follow_accel * delta)
+	match _wander_state:
+		WanderState.WALKING_EXTERIOR:
+			_walk_toward(_walk_target_x, delta)
+			if _arrived_at(_walk_target_x):
+				_on_arrived_exterior()
+
+		WanderState.WAITING:
+			npc.velocity.x = move_toward(npc.velocity.x, 0.0, follow_accel * delta)
+			_wait_timer -= delta
+			if _wait_timer <= 0.0:
+				_pick_next_poi()
+
+		WanderState.INSIDE_TO_POI:
+			_walk_toward(_walk_target_x, delta)
+			if _arrived_at(_walk_target_x):
+				_on_arrived_at_interior_poi()
+
+		WanderState.INSIDE_WAITING:
+			npc.velocity.x = move_toward(npc.velocity.x, 0.0, follow_accel * delta)
+			_wait_timer -= delta
+			if _wait_timer <= 0.0:
+				_start_leaving_interior()
+
+		WanderState.INSIDE_TO_EXIT:
+			_walk_toward(_walk_target_x, delta)
+			if _arrived_at(_walk_target_x):
+				_do_exit_building()
+
+func _on_arrived_exterior() -> void:
+	if not is_instance_valid(_current_poi):
+		_pick_next_poi()
 		return
 
-	var diff: float = _wander_target_x - npc.global_position.x
+	if _current_poi.is_interior:
+		_do_enter_building()
+	else:
+		_wander_state = WanderState.WAITING
+		_wait_timer = _current_poi.get_wait_time()
 
-	# Llegó al objetivo — poner timer y elegir nuevo destino
-	if abs(diff) < 15.0:
-		var rng := RandomNumberGenerator.new()
-		rng.randomize()
-		_wander_wait_timer = rng.randf_range(WANDER_WAIT_MIN, WANDER_WAIT_MAX)
-		_pick_wander_target()
+func _do_enter_building() -> void:
+	if not is_instance_valid(_current_poi):
+		_pick_next_poi()
 		return
 
-	# Moverse hacia el objetivo
-	var dir_x: float = sign(diff)
-	npc.velocity.x = move_toward(npc.velocity.x, dir_x * WANDER_SPEED, follow_accel * delta)
+	var entered: bool = _building_travel.enter_building_for_poi(_current_poi)
 
+	if not entered:
+		_wander_state = WanderState.WAITING
+		_wait_timer = _current_poi.get_wait_time()
+		return
+
+	_walk_target_x = _current_poi_target.x
+	_wander_state = WanderState.INSIDE_TO_POI
+
+func _on_arrived_at_interior_poi() -> void:
+	_wander_state = WanderState.INSIDE_WAITING
+	_wait_timer = _current_poi.get_wait_time() if is_instance_valid(_current_poi) else 5.0
+
+func _start_leaving_interior() -> void:
+	var interior_exit_node: Node2D = _building_travel.get_interior_exit_node()
+
+	if is_instance_valid(interior_exit_node):
+		_walk_target_x = interior_exit_node.global_position.x
+		_wander_state = WanderState.INSIDE_TO_EXIT
+	else:
+		_do_exit_building()
+
+func _do_exit_building() -> void:
+	var exterior_door_pos: Vector2 = npc.global_position
+
+	if is_instance_valid(_current_poi):
+		exterior_door_pos = _current_poi.get_exterior_door_pos()
+
+	_building_travel.exit_current_building(exterior_door_pos)
+	_release_current_poi_slot()
+	_pick_next_poi()
+
+func _force_exit_building() -> void:
+	_building_travel.force_exit_to_poi_door()
+	_release_current_poi_slot()
+
+func _pick_next_poi() -> void:
+	var all_pois := npc.get_tree().get_nodes_in_group("scenery_poi")
+	var available: Array = []
+
+	for poi in all_pois:
+		if poi is SceneryPOI and poi.is_available() and poi != _last_poi:
+			available.append(poi)
+
+	if available.is_empty():
+		for poi in all_pois:
+			if poi is SceneryPOI and poi.is_available():
+				available.append(poi)
+
+	if available.is_empty():
+		_mode = Mode.WANDER
+		_wander_state = WanderState.WAITING
+		_wait_timer = 1.0
+		return
+
+	_release_current_poi_slot()
+
+	_last_poi = _current_poi
+	_current_poi = available.pick_random()
+	_reserve_current_poi_target()
+
+	if _current_poi.is_interior:
+		_walk_target_x = _current_poi.get_exterior_door_pos().x
+	else:
+		_walk_target_x = _current_poi_target.x
+
+	_wander_state = WanderState.WALKING_EXTERIOR
+
+# ============================================================================
+# FOLLOW
+# ============================================================================
 func _process_follow_horizontal(delta: float) -> void:
 	if not is_instance_valid(_target):
 		stop_follow()
@@ -167,7 +282,6 @@ func _process_follow_horizontal(delta: float) -> void:
 
 	var dist: float = npc.global_position.distance_to(_target.global_position)
 
-	# Umbrales de distancia
 	if dist >= dist_cancel:
 		player_too_far_cancel.emit()
 		stop_follow()
@@ -190,11 +304,20 @@ func _process_follow_horizontal(delta: float) -> void:
 # ============================================================================
 # HELPERS
 # ============================================================================
-func is_moving() -> bool:
-	return abs(npc.velocity.x) > 10.0 if npc else false
+func _walk_toward(target_x: float, delta: float) -> void:
+	var diff: float = target_x - npc.global_position.x
+	var dir: float = sign(diff)
+	npc.velocity.x = move_toward(npc.velocity.x, dir * follow_speed, follow_accel * delta)
 
-func get_facing_right() -> bool:
-	# Dirección basada en velocidad — usada por animación en modo WANDER
-	if abs(npc.velocity.x) > 5.0:
-		return npc.velocity.x > 0.0
-	return true  # default
+func _arrived_at(target_x: float) -> bool:
+	return abs(npc.global_position.x - target_x) < 12.0
+
+func _release_current_poi_slot() -> void:
+	if is_instance_valid(_current_poi):
+		_current_poi.release_target_position(npc)
+
+func _reserve_current_poi_target() -> void:
+	if is_instance_valid(_current_poi):
+		_current_poi_target = _current_poi.reserve_target_position(npc)
+	else:
+		_current_poi_target = npc.global_position

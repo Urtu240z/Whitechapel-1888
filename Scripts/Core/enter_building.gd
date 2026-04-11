@@ -25,7 +25,6 @@ extends Node2D
 # ================================================================
 # NODOS INTERNOS
 # ================================================================
-
 var _enter_area: Area2D = null
 var _exit_area: Area2D = null
 var _interior: Node2D = null
@@ -48,9 +47,15 @@ var _config: Node = null
 @export var audio_path: NodePath
 
 # ================================================================
+# 🚶 NPC TRANSIT
+# ================================================================
+@export_group("🚶 NPC Transit")
+@export var npc_fade_time: float = 0.10
+@export var npc_play_door_sfx: bool = true
+
+# ================================================================
 # ESTADO
 # ================================================================
-
 var _inside: bool = false
 var _player_near_enter: bool = false
 var _player_near_exit: bool = false
@@ -58,17 +63,18 @@ var _transitioning: bool = false
 var _original_limits: Dictionary = {}
 var _interior_audio_started: bool = false
 var _original_limit_enabled: bool = false
+var _npcs_inside: Array[CharacterBody2D] = []
 
 # ================================================================
 # READY
 # ================================================================
-
 func _resolve(path: NodePath, fallback: String) -> Node:
 	if not path.is_empty():
 		var resolved_node: Node = get_node_or_null(path)
 		if resolved_node:
 			return resolved_node
 		push_warning("BuildingEntrance: NodePath '%s' no encontrado, usando fallback '%s'" % [str(path), fallback])
+
 	return get_node_or_null(fallback)
 
 func _ready() -> void:
@@ -82,9 +88,9 @@ func _ready() -> void:
 	_door_glow = get_node_or_null("DoorGlow")
 
 	# Nodos externos con fallback
-	_interior = _resolve(interior_path, "../Interior")
-	_exit_area = _resolve(exit_area_path, "../Interior/TileMapLayer/ExitArea")
-	_walls = _resolve(walls_path, "../Interior/TileMapLayer/Wall")
+	_interior = _resolve(interior_path, "../Interior") as Node2D
+	_exit_area = _resolve(exit_area_path, "../Interior/TileMapLayer/ExitArea") as Area2D
+	_walls = _resolve(walls_path, "../Interior/TileMapLayer/Wall") as StaticBody2D
 	_inside_audio = _resolve(audio_path, "../Audio")
 
 	if _interior:
@@ -101,11 +107,9 @@ func _ready() -> void:
 		_exit_area.body_entered.connect(_on_exit_area_entered)
 		_exit_area.body_exited.connect(_on_exit_area_exited)
 
-
 # ================================================================
 # DETECCIÓN DE ÁREAS
 # ================================================================
-
 func _on_enter_area_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		_player_near_enter = true
@@ -145,11 +149,9 @@ func _on_interact() -> void:
 		await _exit()
 		_transitioning = false
 
-
 # ================================================================
 # ENTRAR
 # ================================================================
-
 func _enter() -> void:
 	_inside = true
 	_play_sfx(_config.open_sounds)
@@ -171,7 +173,6 @@ func _enter() -> void:
 	_mostrar_nombre_con_fade(_config.building_name, nombre_margen, nombre_duracion)
 	await SceneManager.fade_out(fade_half)
 
-	# Cambios de escena local
 	_set_level_inside_state(true)
 
 	var exterior: Node = get_parent().get_node_or_null("Exterior")
@@ -207,7 +208,6 @@ func _enter() -> void:
 
 	await SceneManager.fade_in(fade_half)
 
-	# Audio interior
 	if not _interior_audio_started:
 		_interior_audio_started = true
 		_start_inside_audio()
@@ -216,11 +216,9 @@ func _enter() -> void:
 
 	player.enable_movement()
 
-
 # ================================================================
 # SALIR
 # ================================================================
-
 func _exit() -> void:
 	_inside = false
 	_play_sfx(_config.close_sounds)
@@ -271,11 +269,9 @@ func _exit() -> void:
 
 	player.enable_movement()
 
-
 # ================================================================
 # NOMBRE EN PANTALLA
 # ================================================================
-
 var _name_label: CanvasLayer = null
 
 func _mostrar_nombre_con_fade(nombre: String, delay: float, duracion: float) -> void:
@@ -303,6 +299,7 @@ func _mostrar_nombre_con_fade(nombre: String, delay: float, duracion: float) -> 
 
 	var fade_nombre: float = duracion * 0.2
 	var visible_puro: float = duracion - fade_nombre * 2.0
+
 	var tween: Tween = _name_label.create_tween()
 	tween.tween_interval(delay)
 	tween.tween_property(lbl, "modulate:a", 1.0, fade_nombre)
@@ -315,49 +312,63 @@ func _limpiar_nombre() -> void:
 		_name_label.queue_free()
 		_name_label = null
 
-
 # ================================================================
 # AUDIO INTERIOR DEL EDIFICIO
 # ================================================================
-
 func _start_inside_audio() -> void:
 	if not _inside_audio:
 		return
 
-	for child: Node in _inside_audio.get_children():
-		if child is AudioStreamPlayer or child is AudioStreamPlayer2D:
-			var player_audio: Node = child
-			player_audio.volume_db = -40.0
-			player_audio.play()
-
 	var tween: Tween = create_tween().set_parallel(true)
+
 	for child: Node in _inside_audio.get_children():
-		if child is AudioStreamPlayer or child is AudioStreamPlayer2D:
-			tween.tween_property(child, "volume_db", 0.0, _config.fade_time * 0.8)
+		if child is AudioStreamPlayer:
+			var asp := child as AudioStreamPlayer
+			asp.volume_db = -40.0
+			asp.play()
+			tween.tween_property(asp, "volume_db", 0.0, _config.fade_time * 0.8)
+		elif child is AudioStreamPlayer2D:
+			var asp2d := child as AudioStreamPlayer2D
+			asp2d.volume_db = -40.0
+			asp2d.play()
+			tween.tween_property(asp2d, "volume_db", 0.0, _config.fade_time * 0.8)
 
 func _set_inside_audio_paused(paused: bool) -> void:
 	if not _inside_audio:
 		return
 
 	for child: Node in _inside_audio.get_children():
-		if child is AudioStreamPlayer or child is AudioStreamPlayer2D:
+		if child is AudioStreamPlayer:
+			var asp := child as AudioStreamPlayer
 			if paused:
-				if not child.has_meta("_original_volume_db"):
-					child.set_meta("_original_volume_db", child.volume_db)
-				child.volume_db = -80.0
-				child.stream_paused = true
+				if not asp.has_meta("_original_volume_db"):
+					asp.set_meta("_original_volume_db", asp.volume_db)
+				asp.volume_db = -80.0
+				asp.stream_paused = true
 			else:
-				child.stream_paused = false
-				if child.has_meta("_original_volume_db"):
-					child.volume_db = float(child.get_meta("_original_volume_db"))
+				asp.stream_paused = false
+				if asp.has_meta("_original_volume_db"):
+					asp.volume_db = float(asp.get_meta("_original_volume_db"))
 				else:
-					child.volume_db = 0.0
+					asp.volume_db = 0.0
 
+		elif child is AudioStreamPlayer2D:
+			var asp2d := child as AudioStreamPlayer2D
+			if paused:
+				if not asp2d.has_meta("_original_volume_db"):
+					asp2d.set_meta("_original_volume_db", asp2d.volume_db)
+				asp2d.volume_db = -80.0
+				asp2d.stream_paused = true
+			else:
+				asp2d.stream_paused = false
+				if asp2d.has_meta("_original_volume_db"):
+					asp2d.volume_db = float(asp2d.get_meta("_original_volume_db"))
+				else:
+					asp2d.volume_db = 0.0
 
 # ================================================================
 # AUDIO SFX
 # ================================================================
-
 func _play_sfx(sounds: Array[AudioStream]) -> void:
 	if sounds.is_empty() or not _audio_sfx:
 		return
@@ -367,25 +378,26 @@ func _play_sfx(sounds: Array[AudioStream]) -> void:
 	_audio_sfx.volume_db = randf_range(_config.sfx_volume_db_min, _config.sfx_volume_db_max)
 	_audio_sfx.play()
 
+func _play_npc_door_sfx(sounds: Array[AudioStream]) -> void:
+	if not npc_play_door_sfx:
+		return
+	_play_sfx(sounds)
 
 # ================================================================
 # COLISIONES
 # ================================================================
-
 func _set_walls_enabled(enabled: bool) -> void:
 	if not is_instance_valid(_walls):
 		return
 
 	for shape: Node in _walls.get_children():
 		if shape is CollisionShape2D:
-			shape.disabled = not enabled
-
+			(shape as CollisionShape2D).disabled = not enabled
 
 # ================================================================
 # CONGELAR MUNDO EXTERIOR
 # Fallback temporal si la escena no usa LevelRoot todavía.
 # ================================================================
-
 func _set_level_inside_state(inside: bool) -> void:
 	var current_scene: Node = get_tree().current_scene
 	if is_instance_valid(current_scene) and current_scene.has_method("set_player_inside_building"):
@@ -408,11 +420,9 @@ func _freeze_world(freeze: bool) -> void:
 
 		child.process_mode = Node.PROCESS_MODE_DISABLED if freeze else Node.PROCESS_MODE_INHERIT
 
-
 # ================================================================
 # GLOW DE PUERTA
 # ================================================================
-
 var _glow_tween: Tween = null
 
 func _set_door_glow(active: bool) -> void:
@@ -449,16 +459,13 @@ func _glow_pulse(mat: ShaderMaterial) -> void:
 		2.0, 0.0, 0.7
 	)
 
-
 # ================================================================
 # FORZAR ESTADO INTERIOR
 # ================================================================
-
 func force_inside_state(inside: bool) -> void:
 	print("🏠 FORZANDO ESTADO INTERIOR: ", inside, " en el edificio: ", _config.building_name)
 	_inside = inside
 
-	# 1. Visibilidad y colisiones
 	if _interior:
 		_interior.visible = inside
 		_interior.modulate.a = 1.0 if inside else 0.0
@@ -470,7 +477,6 @@ func force_inside_state(inside: bool) -> void:
 	if exterior and exterior is CanvasItem:
 		(exterior as CanvasItem).visible = not inside
 
-	# 2. Cámara
 	var player: Node = PlayerManager.player_instance
 	if is_instance_valid(player):
 		var camera: Camera2D = player.get_node_or_null("Camera2D")
@@ -485,6 +491,7 @@ func force_inside_state(inside: bool) -> void:
 				}
 
 				camera.zoom = _config.zoom_in
+
 				var limits: Dictionary = _config.get_interior_camera_limits()
 				if not limits.is_empty():
 					camera.limit_enabled = true
@@ -505,7 +512,6 @@ func force_inside_state(inside: bool) -> void:
 					camera.reset_smoothing()
 					camera.force_update_scroll()
 
-	# 3. Audio interior
 	if inside:
 		if not _interior_audio_started:
 			_interior_audio_started = true
@@ -518,16 +524,25 @@ func force_inside_state(inside: bool) -> void:
 func is_transitioning() -> bool:
 	return _transitioning
 
-
 # ================================================================
 # NPCs — entrar/salir sin afectar al player
 # ================================================================
+func _set_npc_transit_active(npc: CharacterBody2D, active: bool) -> void:
+	if not is_instance_valid(npc):
+		return
 
-var _npcs_inside: Array = []
+	npc.set_meta("_building_transit_active", active)
+	npc.velocity = Vector2.ZERO
+
+	if npc.has_node("Movement"):
+		var movement := npc.get_node("Movement")
+		if movement:
+			if active and movement.has_method("freeze"):
+				movement.freeze()
+			elif not active and movement.has_method("unfreeze"):
+				movement.unfreeze()
 
 func npc_enter(npc: CharacterBody2D, interior_position: Vector2) -> void:
-	print("npc_enter — pos: ", interior_position, " npc scale antes: ", npc.scale)
-
 	if npc in _npcs_inside:
 		return
 
@@ -536,12 +551,33 @@ func npc_enter(npc: CharacterBody2D, interior_position: Vector2) -> void:
 	var original_parent: Node = npc.get_parent()
 	npc.set_meta("_original_parent_path", str(original_parent.get_path()))
 
-	original_parent.remove_child(npc)
-	if _interior:
-		_interior.add_child(npc)
+	_set_npc_transit_active(npc, true)
 
-	npc.global_position = interior_position
-	print("npc scale después de reparent: ", npc.scale)
+	var tween: Tween = create_tween()
+	tween.tween_property(npc, "modulate:a", 0.0, npc_fade_time)
+
+	tween.tween_callback(func():
+		var old_global_transform: Transform2D = npc.global_transform
+
+		if is_instance_valid(original_parent):
+			original_parent.remove_child(npc)
+
+		if _interior:
+			_interior.add_child(npc)
+
+		npc.global_transform = old_global_transform
+		npc.global_position = interior_position
+		npc.velocity = Vector2.ZERO
+
+		_play_npc_door_sfx(_config.open_sounds)
+	)
+
+	tween.tween_property(npc, "modulate:a", 1.0, npc_fade_time)
+
+	tween.tween_callback(func():
+		npc.velocity = Vector2.ZERO
+		_set_npc_transit_active(npc, false)
+	)
 
 func npc_exit(npc: CharacterBody2D, exterior_position: Vector2) -> void:
 	if not npc in _npcs_inside:
@@ -558,9 +594,30 @@ func npc_exit(npc: CharacterBody2D, exterior_position: Vector2) -> void:
 	if not original_parent:
 		original_parent = get_tree().current_scene
 
-	var current_parent: Node = npc.get_parent()
-	if is_instance_valid(current_parent):
-		current_parent.remove_child(npc)
+	_set_npc_transit_active(npc, true)
 
-	original_parent.add_child(npc)
-	npc.global_position = exterior_position
+	var tween: Tween = create_tween()
+	tween.tween_property(npc, "modulate:a", 0.0, npc_fade_time)
+
+	tween.tween_callback(func():
+		var old_global_transform: Transform2D = npc.global_transform
+
+		var current_parent: Node = npc.get_parent()
+		if is_instance_valid(current_parent):
+			current_parent.remove_child(npc)
+
+		original_parent.add_child(npc)
+
+		npc.global_transform = old_global_transform
+		npc.global_position = exterior_position
+		npc.velocity = Vector2.ZERO
+
+		_play_npc_door_sfx(_config.close_sounds)
+	)
+
+	tween.tween_property(npc, "modulate:a", 1.0, npc_fade_time)
+
+	tween.tween_callback(func():
+		npc.velocity = Vector2.ZERO
+		_set_npc_transit_active(npc, false)
+	)

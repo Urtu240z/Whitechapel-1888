@@ -109,7 +109,9 @@ func play_step() -> void:
 	step_player.pitch_scale = randf_range(1.0 - pitch_variation, 1.0 + pitch_variation)
 	step_player.play()
 
-func play_random_step() -> void:
+# Acepta un argumento opcional porque la pista de animación
+# puede estar llamándolo con 1 parámetro.
+func play_random_step(_run: bool = false) -> void:
 	play_step()
 
 func play_talk() -> void:
