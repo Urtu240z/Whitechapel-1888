@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://c0lvpw23xq8xf"]
+
+[ext_resource type="Texture2D" uid="uid://brbobjobxf42s" path="res://Assets/Sprites/UI/Keyboard.png" id="1_4m21b"]
+[ext_resource type="Script" uid="uid://dbbm8slofkxiq" path="res://Scripts/UI/key_prompt.gd" id="1_0614d"]
+[ext_resource type="FontFile" uid="uid://caq2db73e3ny4" path="res://Assets/Fonts/LibreBaskerville.ttf" id="2_0614d"]
+
+[node name="KeyPrompt" type="Node2D" unique_id=361756385]
+visible = false
+z_index = 9
+script = ExtResource("1_0614d")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1734352446]
+texture = ExtResource("1_4m21b")
+
+[node name="Key" type="Node2D" parent="." unique_id=1766414447]
+position = Vector2(35, -6)
+skew = -0.27227136
+
+[node name="Label" type="Label" parent="Key" unique_id=2065261170]
+offset_left = -84.793396
+offset_top = -197.07526
+offset_right = 62.206604
+offset_bottom = 76.92474
+rotation = -0.19480455
+theme_override_colors/font_color = Color(1, 0.70668167, 0.4720465, 1)
+theme_override_fonts/font = ExtResource("2_0614d")
+theme_override_font_sizes/font_size = 220
+text = "F"
+horizontal_alignment = 1
+vertical_alignment = 1

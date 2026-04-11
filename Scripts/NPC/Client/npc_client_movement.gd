@@ -241,13 +241,21 @@ func _force_exit_building() -> void:
 	_release_current_poi_slot()
 
 func _pick_next_poi() -> void:
+	var previous_poi: SceneryPOI = _current_poi
 	var all_pois := npc.get_tree().get_nodes_in_group("scenery_poi")
 	var available: Array = []
 
 	for poi in all_pois:
-		if poi is SceneryPOI and poi.is_available() and poi != _last_poi:
+		if poi is SceneryPOI and poi.is_available() and poi != previous_poi and poi != _last_poi:
 			available.append(poi)
 
+	# Si no hay suficientes, al menos evita repetir el actual
+	if available.is_empty():
+		for poi in all_pois:
+			if poi is SceneryPOI and poi.is_available() and poi != previous_poi:
+				available.append(poi)
+
+	# Si aún así no hay, ya acepta cualquiera
 	if available.is_empty():
 		for poi in all_pois:
 			if poi is SceneryPOI and poi.is_available():
@@ -261,7 +269,7 @@ func _pick_next_poi() -> void:
 
 	_release_current_poi_slot()
 
-	_last_poi = _current_poi
+	_last_poi = previous_poi
 	_current_poi = available.pick_random()
 	_reserve_current_poi_target()
 

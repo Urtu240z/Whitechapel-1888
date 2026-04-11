@@ -6,17 +6,20 @@ extends Sprite2D
 # sin depender de propiedades del nodo padre.
 # ================================================================
 
-@export var shadow_max_distance: float = 400.0
-@export var shadow_base_alpha: float = 0.35
-@export var shadow_max_rotation_left: float = -45.0
-@export var shadow_max_rotation_right: float = 45.0
+@export var shadow_max_distance: float = 1000.0
+@export var shadow_base_alpha: float = 1.7
+@export var shadow_max_rotation_left: float = 45.0
+@export var shadow_max_rotation_right: float = -45.0
 @export var shadow_max_scale: float = 1.5
-@export var shadow_max_skew: float = 0.5
+@export var shadow_max_skew: float = 0.05
 
 var _shader_mat: ShaderMaterial
+var _base_scale: Vector2 = Vector2.ONE
 
 func _ready() -> void:
+	_base_scale = scale
 	modulate = Color(0, 0, 0, 0.0)
+
 	var shader = Shader.new()
 	shader.code = """
 	shader_type canvas_item;
@@ -41,7 +44,7 @@ func _process(_delta: float) -> void:
 	if lamp == null:
 		modulate.a = 0.0
 		rotation = 0.0
-		scale = Vector2.ONE
+		scale = _base_scale
 		_shader_mat.set_shader_parameter("skew_x", 0.0)
 		_shader_mat.set_shader_parameter("skew_y", 0.0)
 		return
@@ -59,7 +62,7 @@ func _process(_delta: float) -> void:
 	rotation = deg_to_rad(max_rot) * factor_rot
 
 	var s = 1.0 + (shadow_max_scale - 1.0) * factor
-	scale = Vector2(s, s)
+	scale = _base_scale * s
 
 	var inv_skew = 1.0 - factor
 	var skew_val = shadow_max_skew * inv_skew * sign(dir.x) * -1.0
@@ -70,13 +73,17 @@ func _get_nearest_lamp(search_distance: float) -> Node2D:
 	var lamps = get_tree().get_nodes_in_group("street_lamp")
 	var nearest: Node2D = null
 	var nearest_dist: float = search_distance
+
 	for lamp in lamps:
 		if not is_instance_valid(lamp):
 			continue
+
 		var lamp_base = lamp.get_node_or_null("LampBase")
 		var lamp_pos = lamp_base.global_position if lamp_base else lamp.global_position
 		var d = global_position.distance_to(lamp_pos)
+
 		if d < nearest_dist:
 			nearest_dist = d
 			nearest = lamp_base if lamp_base else lamp
+
 	return nearest

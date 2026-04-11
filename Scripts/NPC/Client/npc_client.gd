@@ -22,7 +22,7 @@ enum BehaviorMode {
 # DATOS DEL CLIENTE
 # ============================================================================
 @export_group("NPC Client")
-@export var npc_display_name: String = "Client"
+@export var npc_display_name: String = ""
 @export_file("*.dtl") var dialog_timeline: String = ""
 @export var client_type: ClientType = ClientType.POOR
 @export var initial_facing_right: bool = true
@@ -30,8 +30,16 @@ enum BehaviorMode {
 @export_group("Behavior")
 @export var behavior_mode: BehaviorMode = BehaviorMode.STATIC
 
+@export_group("Appearance")
+@export var body_scale: float = 1.0
+
+@export_group("Name")
+@export var use_random_name_if_empty: bool = true
+@export var name_pools: NPCNamePools
+
 # Propiedad dinámica para dropdown
 var skin_name: String = "NPC_ClientPoor"
+var current_display_name: String = ""
 
 # ============================================================================
 # 🏃 MOVIMIENTO — configuración exportada
@@ -59,6 +67,12 @@ var skin_name: String = "NPC_ClientPoor"
 @onready var animation: NPCClientAnimation = $Animation
 @onready var conversation: NPCClientConversation = $Conversation
 @onready var audio: NPCClientAudio = $Audio
+@onready var name_tag: NameTag = $NameTag
+
+@onready var character_container: Node2D = $CharacterContainer
+@onready var body_collision: CollisionShape2D = $Collision
+@onready var conversation_collision: CollisionShape2D = $Conversation/CollisionShape2D
+@onready var shadow_sprite: Sprite2D = $Shadow
 
 # ============================================================================
 # ESTADO
@@ -70,10 +84,12 @@ const REFUSED_RESET_SECS: float = 120.0
 var _editor_preview_queued: bool = false
 var _last_preview_skin_name: String = ""
 var _last_preview_facing_right: bool = true
+var _last_preview_body_scale: float = 1.0
+var _last_preview_display_name: String = ""
 var _last_attack: String = "Slap"
 
-# Modo al que volver cuando termine FOLLOW
 var _behavior_before_follow: BehaviorMode = BehaviorMode.STATIC
+var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 # ============================================================================
 # CICLO DE VIDA
@@ -91,8 +107,13 @@ func _ready() -> void:
 	add_to_group("npc_client")
 	velocity = Vector2.ZERO
 
+	_rng.randomize()
+	_resolve_runtime_display_name()
+
 	if skin:
 		skin.set_skin(skin_name)
+
+	_apply_body_scale()
 
 	if int(behavior_mode) < 0 or int(behavior_mode) > BehaviorMode.FOLLOW:
 		behavior_mode = BehaviorMode.STATIC
@@ -117,6 +138,8 @@ func _ready() -> void:
 		conversation.initialize(self)
 	if audio:
 		audio.initialize(self)
+	if name_tag:
+		name_tag.set_text(get_display_name())
 
 	visibility_changed.connect(_on_visibility_changed)
 	set_enabled(is_visible_in_tree())
@@ -128,7 +151,12 @@ func _process(_delta: float) -> void:
 	if not Engine.is_editor_hint():
 		return
 
-	if skin_name != _last_preview_skin_name or initial_facing_right != _last_preview_facing_right:
+	if (
+		skin_name != _last_preview_skin_name
+		or initial_facing_right != _last_preview_facing_right
+		or not is_equal_approx(body_scale, _last_preview_body_scale)
+		or _get_preview_display_name() != _last_preview_display_name
+	):
 		_queue_editor_preview()
 
 func _queue_editor_preview() -> void:
@@ -147,10 +175,16 @@ func _apply_editor_preview() -> void:
 		return
 
 	_apply_selected_skin_preview()
+	_apply_body_scale()
 	_apply_facing_preview()
+
+	if name_tag:
+		name_tag.set_text(_get_preview_display_name())
 
 	_last_preview_skin_name = skin_name
 	_last_preview_facing_right = initial_facing_right
+	_last_preview_body_scale = body_scale
+	_last_preview_display_name = _get_preview_display_name()
 
 func _get_property_list() -> Array[Dictionary]:
 	var properties: Array[Dictionary] = []
@@ -212,22 +246,31 @@ func _apply_selected_skin_preview() -> void:
 
 	skin_node.preview_skin(skin_name)
 
+func _apply_body_scale() -> void:
+	var s: float = max(body_scale, 0.01)
+	var scale_vec := Vector2(s, s)
+
+	if character_container:
+		var sign_x: float = -1.0 if character_container.scale.x < 0.0 else 1.0
+		character_container.scale = Vector2(sign_x * s, s)
+
+	if body_collision:
+		body_collision.scale = scale_vec
+
+	if conversation_collision:
+		conversation_collision.scale = scale_vec
+
+	if shadow_sprite:
+		shadow_sprite.scale = scale_vec
+
 func _apply_facing_preview() -> void:
-	var character_container := get_node_or_null("CharacterContainer") as Node2D
-	if character_container == null:
+	var character_container_node := get_node_or_null("CharacterContainer") as Node2D
+	if character_container_node == null:
 		return
 
-	var base_scale := character_container.scale
-	base_scale.x = abs(base_scale.x)
-	base_scale.y = abs(base_scale.y)
-
-	if is_zero_approx(base_scale.x):
-		base_scale.x = 1.0
-	if is_zero_approx(base_scale.y):
-		base_scale.y = 1.0
-
-	character_container.scale.x = base_scale.x if initial_facing_right else -base_scale.x
-	character_container.scale.y = base_scale.y
+	var s: float = max(body_scale, 0.01)
+	character_container_node.scale.x = s if initial_facing_right else -s
+	character_container_node.scale.y = s
 
 # ============================================================================
 # LOOP
@@ -240,14 +283,12 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		return
 
-	# Timer de refused
 	if _refused and _refused_timer > 0.0:
 		_refused_timer -= delta
 		if _refused_timer <= 0.0:
 			_refused = false
 			_refused_timer = 0.0
 
-	# Gravedad siempre
 	const GRAVITY: float = 980.0
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
@@ -265,6 +306,14 @@ func _physics_process(delta: float) -> void:
 	if conversation:
 		player_in_range = conversation.is_player_in_range()
 
+	if current_display_name.is_empty():
+		_resolve_runtime_display_name()
+		if name_tag:
+			name_tag.set_text(get_display_name())
+
+	if name_tag:
+		name_tag.set_tag_visible(player_in_range)
+
 	if movement:
 		movement.process_movement(delta)
 	if animation:
@@ -274,8 +323,15 @@ func _physics_process(delta: float) -> void:
 # API
 # ============================================================================
 func get_display_name() -> String:
+	if current_display_name.is_empty():
+		_resolve_runtime_display_name()
+
+	if not current_display_name.is_empty():
+		return current_display_name
+
 	if not npc_display_name.is_empty():
 		return npc_display_name
+
 	return name
 
 func set_enabled(value: bool) -> void:
@@ -287,6 +343,9 @@ func set_enabled(value: bool) -> void:
 
 	if not value and animation:
 		animation.force_idle_counter()
+
+	if name_tag and not value:
+		name_tag.hide_tag()
 
 func _apply_behavior_mode() -> void:
 	if not movement:
@@ -347,7 +406,6 @@ func start_dialog() -> void:
 	StateManager.enter(StateManager.State.DIALOG)
 	Dialogic.start(dialog_timeline)
 
-	# Ataque tras delay
 	if _refused and animation:
 		var attack_player := _get_player()
 		var facing_right: bool = true
@@ -537,13 +595,48 @@ func complete_deal() -> void:
 
 	ClientServiceManager.world_hidden.connect(queue_free, CONNECT_ONE_SHOT)
 
-	var data: Dictionary = await ClientServiceManager.start_service(acto, tipo)
+	var data: Dictionary = await ClientServiceManager.start_service(acto, tipo, skin_name)
 	if not data.is_empty():
 		PlayerStats.tener_acto(data["acto"], data["tipo"], data["satisfaction"])
 
 # ============================================================================
 # HELPERS
 # ============================================================================
+func _resolve_runtime_display_name() -> void:
+	if not current_display_name.is_empty():
+		return
+
+	if not npc_display_name.is_empty():
+		current_display_name = npc_display_name
+		return
+
+	if not use_random_name_if_empty:
+		current_display_name = name
+		return
+
+	if name_pools == null:
+		current_display_name = name
+		return
+
+	var pool := name_pools.client_names
+	if pool.is_empty():
+		current_display_name = name
+		return
+
+	current_display_name = pool[_rng.randi_range(0, pool.size() - 1)]
+
+func _get_preview_display_name() -> String:
+	if not npc_display_name.is_empty():
+		return npc_display_name
+
+	if not use_random_name_if_empty:
+		return name
+
+	if name_pools and not name_pools.client_names.is_empty():
+		return name_pools.client_names[0]
+
+	return name
+
 func _get_player() -> Node2D:
 	if PlayerManager and PlayerManager.player_instance:
 		return PlayerManager.player_instance as Node2D
@@ -569,8 +662,5 @@ func _get_precios() -> Dictionary:
 			return { "mano": 2.0, "oral": 4.0, "completo": 8.0 }
 	return { "mano": 0.5, "oral": 1.0, "completo": 2.0 }
 
-# ============================================================================
-# SEÑALES
-# ============================================================================
 func _on_visibility_changed() -> void:
 	set_enabled(is_visible_in_tree())

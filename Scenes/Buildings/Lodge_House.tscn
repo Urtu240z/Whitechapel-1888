@@ -156,8 +156,8 @@ scale = Vector2(0.22421524, 0.22421524)
 npc_display_name = "Hostal Keeper"
 dialog_timeline = "uid://d3uvod4y3u4ho"
 service_id = "lodge_reception"
-skin_name = null
 initial_facing_right = false
+skin_name = "NPC_HostalKeeper"
 
 [node name="Objects" type="Node2D" parent="Interior/TileMapLayer" unique_id=1834296797]
 position = Vector2(0, 145.99998)
@@ -393,6 +393,7 @@ interior_path = NodePath("../Interior")
 exit_area_path = NodePath("../Interior/TileMapLayer/ExitArea")
 walls_path = NodePath("../Interior/TileMapLayer/Wall")
 audio_path = NodePath("../Audio")
+npc_fade_time = 0.5
 
 [node name="EnterArea" type="Area2D" parent="BuildingEntrance" unique_id=1226471041]
 visible = false

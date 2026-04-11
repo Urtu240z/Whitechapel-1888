@@ -119,7 +119,7 @@ func _build_ui() -> void:
 	add_child(_root)
 
 	var overlay = ColorRect.new()
-	overlay.color = Color(0, 0, 0, 0.72)
+	overlay.color = Color(0.0, 0.0, 0.0, 0.95)
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_root.add_child(overlay)
 

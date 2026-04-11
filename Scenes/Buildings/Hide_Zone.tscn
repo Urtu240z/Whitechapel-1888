@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c3m8fewa1n53m"]
 
 [ext_resource type="Script" uid="uid://m5wslxsfjb06" path="res://Scripts/Core/hide_zone.gd" id="1_nevyb"]
+[ext_resource type="PackedScene" uid="uid://c0lvpw23xq8xf" path="res://Scenes/UI/KeyPrompt.tscn" id="2_v43yp"]
 
 [sub_resource type="Gradient" id="Gradient_mh0du"]
 offsets = PackedFloat32Array(0.5714286, 0.80857146)
@@ -30,3 +31,8 @@ visible = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1738451392]
 position = Vector2(0, -915)
 shape = SubResource("RectangleShape2D_v43yp")
+
+[node name="KeyPrompt" parent="." unique_id=361756385 instance=ExtResource("2_v43yp")]
+visible = true
+position = Vector2(0, -1061)
+scale = Vector2(0.4, 0.4)

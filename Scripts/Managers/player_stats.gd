@@ -21,8 +21,21 @@ const CONFIG = preload("res://Data/Game/game_config.tres")
 @export var hambre: float = 50.0
 @export var higiene: float = 70.0
 @export var sueno: float = 80.0
-@export var alcohol: float = 0.0
-@export var laudano: float = 0.0
+
+var _alcohol: float = 0.0
+@export var alcohol: float:
+	get:
+		return _alcohol
+	set(value):
+		_set_alcohol(value)
+
+var _laudano: float = 0.0
+@export var laudano: float:
+	get:
+		return _laudano
+	set(value):
+		_set_laudano(value)
+
 @export var salud: float = 100.0
 @export var stamina: float = 100.0
 
@@ -73,6 +86,7 @@ const ENFERMEDAD_POR_HORA: float = 0.3
 var _ultima_hora_procesada: int = -1
 var _sueno_anterior: float = 80.0
 var _colapso_activo: bool = false
+var _stats_refresh_queued: bool = false
 
 # ============================================================
 # 📢 SIGNALS
@@ -101,13 +115,11 @@ func _ready() -> void:
 	sincronizar_reloj()
 	call_deferred("_post_ready_init")
 
-
 # ============================================================
 # ⏱️ RELOJ DEL JUEGO
 # ============================================================
 func sincronizar_reloj() -> void:
 	_ultima_hora_procesada = int(floor(DayNightManager.get_hour_float()))
-
 
 func _on_hora_cambiada(hora: float) -> void:
 	var hora_int: int = int(floor(hora))
@@ -122,7 +134,6 @@ func _on_hora_cambiada(hora: float) -> void:
 		if medicina_timer >= MEDICINA_DURACION_HORAS:
 			medicina_activa = false
 			medicina_timer = 0.0
-
 
 func _aplicar_degradacion() -> void:
 	hambre = clampf(hambre + HAMBRE_POR_HORA, 0.0, 100.0)
@@ -139,7 +150,6 @@ func _aplicar_degradacion() -> void:
 	actualizar_salud()
 	actualizar_stats()
 
-
 # ============================================================
 # 🦠 ENFERMEDAD
 # ============================================================
@@ -148,7 +158,6 @@ func _check_enfermedad_efectos() -> void:
 		damage_health(CONFIG.salud_dano_enfermedad_terminal)
 	elif enfermedad >= CONFIG.salud_umbral_enfermedad_critica:
 		damage_health(CONFIG.salud_dano_enfermedad_critica)
-
 
 func infectar(probabilidad: float) -> bool:
 	if randf() < probabilidad:
@@ -159,7 +168,6 @@ func infectar(probabilidad: float) -> bool:
 		actualizar_stats()
 		return true
 	return false
-
 
 # ============================================================
 # ❤️ SEX APPEAL
@@ -197,7 +205,6 @@ func calcular_sex_appeal() -> float:
 		atributo_critico.emit("enfermedad")
 
 	return sex_appeal
-
 
 # ============================================================
 # 🩺 SALUD
@@ -249,7 +256,6 @@ func actualizar_salud(_delta: float = 1.0) -> void:
 	if salud <= 0.0:
 		morir()
 
-
 # ============================================================
 # 💥 DAÑO / CURA INSTANTÁNEA
 # Para golpes, agresiones, eventos, medicina instantánea, etc.
@@ -264,14 +270,12 @@ func damage_health(amount: float) -> void:
 	if salud <= 0.0:
 		morir()
 
-
 func heal_health(amount: float) -> void:
 	if amount <= 0.0:
 		return
 
 	salud = clampf(salud + amount, 0.0, 100.0)
 	actualizar_stats()
-
 
 # ============================================================
 # 🍞 BASIC ACTIONS
@@ -285,8 +289,6 @@ func comer() -> bool:
 		return true
 	return false
 
-
-
 # ============================================================
 # 💊 TRATAMIENTOS
 # ============================================================
@@ -299,7 +301,6 @@ func comprar_medicina() -> bool:
 		return true
 	return false
 
-
 func ir_al_medico() -> bool:
 	if dinero >= CONFIG.coste_medico:
 		gastar_dinero(CONFIG.coste_medico)
@@ -311,14 +312,11 @@ func ir_al_medico() -> bool:
 		return true
 	return false
 
-
-
 # ============================================================
 # 💋 ACTO CON CLIENTE — reemplaza tener_sexo_poor/medium/rich
 # acto:  "mano" | "oral" | "completo"
 # tipo:  "poor" | "medium" | "rich"
 # ============================================================
-
 const _ACTOS: Dictionary = {
 	"mano": {
 		"poor":   { "pago": 0.5, "higiene": -5,  "nervios": 5,  "sueno": -3,  "estres": 5,  "infeccion": 0.00 },
@@ -357,7 +355,6 @@ func tener_acto(acto: String, tipo: String, satisfaction: float = 1.0) -> void:
 
 	actualizar_stats()
 
-
 # ============================================================
 # 💤 SLEEP
 # ============================================================
@@ -375,7 +372,6 @@ func dormir_hostal() -> bool:
 		dormir_calle()
 		return false
 
-
 func dormir_calle() -> void:
 	sueno = 60.0
 	stamina = minf(100.0, stamina + 40.0)
@@ -385,7 +381,6 @@ func dormir_calle() -> void:
 	nervios = minf(100.0, nervios + 20.0)
 	durmiendo_en_calle.emit()
 	actualizar_stats()
-
 
 # ============================================================
 # 💸 ECONOMY
@@ -397,7 +392,6 @@ func añadir_dinero(cantidad: float) -> void:
 		objetivo_completado.emit()
 	actualizar_stats()
 
-
 func gastar_dinero(cantidad: float) -> bool:
 	if dinero >= cantidad:
 		dinero -= cantidad
@@ -406,10 +400,8 @@ func gastar_dinero(cantidad: float) -> bool:
 		return true
 	return false
 
-
 func puede_escapar() -> bool:
 	return dinero >= CONFIG.objetivo_dinero
-
 
 # ============================================================
 # 🧠 STATE MANAGEMENT
@@ -421,7 +413,6 @@ func clamp_all() -> void:
 		"stamina", "enfermedad"
 	]:
 		self.set(prop_name, clampf(float(self.get(prop_name)), 0.0, 100.0))
-
 
 # ============================================================
 # 🔄 UPDATE & SIGNAL EMIT
@@ -445,7 +436,6 @@ func actualizar_stats(_delta: float = 1.0) -> void:
 			" sex_appeal:", sex_appeal
 		)
 
-
 func _detectar_colapso() -> void:
 	if sueno > 0.0 and _colapso_activo:
 		_colapso_activo = false
@@ -456,11 +446,9 @@ func _detectar_colapso() -> void:
 
 	_sueno_anterior = sueno
 
-
 func actualizar_stats_diferido(_delta: float = 1.0) -> void:
 	actualizar_stats()
 	await get_tree().process_frame
-
 
 # ============================================================
 # 🔁 SYNC CON DIALOGIC
@@ -503,7 +491,6 @@ func obtener_color_atributo(valor: float) -> Color:
 	else:
 		return Color.RED
 
-
 func obtener_estado_general() -> String:
 	if enfermedad >= 70.0:
 		return "😷 Estás gravemente enferma..."
@@ -520,19 +507,16 @@ func obtener_estado_general() -> String:
 	else:
 		return "Estás al límite..."
 
-
 func has(stat_name: String) -> bool:
 	for prop in get_property_list():
 		if prop.name == stat_name:
 			return true
 	return false
 
-
 func morir() -> void:
 	jugador_muerto.emit()
 	if debug_mode:
 		print("☠️ El jugador ha muerto.")
-
 
 func reset_stats() -> void:
 	miedo = 10.0
@@ -560,3 +544,37 @@ func reset_stats() -> void:
 func _post_ready_init() -> void:
 	actualizar_stats()
 	_sync_dialogic_variables()
+
+# ============================================================
+# 🍷 CAMBIOS INMEDIATOS DE ALCOHOL / LAUDANO
+# Para que los efectos visuales reaccionen al instante aunque
+# otra parte del código cambie estas stats directamente.
+# ============================================================
+func _set_alcohol(value: float) -> void:
+	var clamped: float = clampf(value, 0.0, 100.0)
+	if is_equal_approx(_alcohol, clamped):
+		return
+	_alcohol = clamped
+	_queue_stats_refresh()
+
+func _set_laudano(value: float) -> void:
+	var clamped: float = clampf(value, 0.0, 100.0)
+	if is_equal_approx(_laudano, clamped):
+		return
+	_laudano = clamped
+	_queue_stats_refresh()
+
+func _queue_stats_refresh() -> void:
+	if Engine.is_editor_hint():
+		return
+	if not is_node_ready():
+		return
+	if _stats_refresh_queued:
+		return
+
+	_stats_refresh_queued = true
+	call_deferred("_apply_deferred_stats_refresh")
+
+func _apply_deferred_stats_refresh() -> void:
+	_stats_refresh_queued = false
+	actualizar_stats()

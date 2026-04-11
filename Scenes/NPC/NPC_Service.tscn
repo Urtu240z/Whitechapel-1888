@@ -2,12 +2,14 @@
 
 [ext_resource type="Script" uid="uid://btivbup1ghpq8" path="res://Scripts/NPC/Service/npc_service.gd" id="1_mixur"]
 [ext_resource type="Script" uid="uid://cpqy4gc3tklod" path="res://Scripts/NPC/Service/npc_service_skin.gd" id="2_cwwe2"]
+[ext_resource type="Resource" path="res://Data/NPC/npc_name_pools.tres" id="2_e67tv"]
 [ext_resource type="Texture2D" uid="uid://b1m1kv73xm1fv" path="res://Assets/Sprites/NPC/Services/HostalKeeper_Pieces.png" id="3_cki5x"]
 [ext_resource type="Texture2D" uid="uid://di6dvjog28xch" path="res://Assets/Sprites/NPC/Services/HostalKeeper_Pieces_n.png" id="4_ckeaq"]
 [ext_resource type="Texture2D" uid="uid://s8scfgb1j2yq" path="res://Assets/Sprites/NPC/Services/Barman_Pieces.png" id="5_dqhko"]
 [ext_resource type="Texture2D" uid="uid://dj1csacbig6yj" path="res://Assets/Sprites/NPC/Services/Barman_Pieces_n.png" id="6_j1edg"]
 [ext_resource type="Texture2D" uid="uid://blnwvyx5e87rc" path="res://Assets/Sprites/NPC/Services/PerfumeVendor_Pieces.png" id="7_8e73h"]
 [ext_resource type="Texture2D" uid="uid://j2pxlktmnb1p" path="res://Assets/Sprites/NPC/Services/PerfumeVendor_Pieces_n.png" id="8_0rrr3"]
+[ext_resource type="PackedScene" uid="uid://qrckrvjkyeu" path="res://Scenes/Core/NameTag.tscn" id="19_0rrr3"]
 [ext_resource type="Script" uid="uid://3n2ir7g15yw5" path="res://addons/soupik/modifications/soup_group.gd" id="31_becn0"]
 [ext_resource type="Script" uid="uid://bnso0mph1tb11" path="res://addons/soupik/modifications/soup_two_bone_ik.gd" id="32_lgleu"]
 [ext_resource type="Script" uid="uid://b4u1tvhlw4d2g" path="res://addons/soupik/modifications/soup_look_at.gd" id="33_5ryky"]
@@ -1028,6 +1030,8 @@ graph_offset = Vector2(23, -183)
 collision_layer = 528
 collision_mask = 512
 script = ExtResource("1_mixur")
+name_pools = ExtResource("2_e67tv")
+skin_name = "NPC_HostalKeeper"
 
 [node name="CharacterContainer" type="Node2D" parent="." unique_id=58656308]
 script = ExtResource("2_cwwe2")
@@ -1035,7 +1039,6 @@ script = ExtResource("2_cwwe2")
 [node name="Skins" type="Node2D" parent="CharacterContainer" unique_id=808895510]
 
 [node name="NPC_HostalKeeper" type="Node2D" parent="CharacterContainer/Skins" unique_id=2142412245]
-visible = false
 
 [node name="ArmL" type="Polygon2D" parent="CharacterContainer/Skins/NPC_HostalKeeper" unique_id=1180958]
 texture_filter = 1
@@ -1205,6 +1208,7 @@ bones = ["Hip", PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 internal_vertex_count = 3
 
 [node name="NPC_PerfumeVendor" type="Node2D" parent="CharacterContainer/Skins" unique_id=850070444]
+visible = false
 
 [node name="ArmL" type="Polygon2D" parent="CharacterContainer/Skins/NPC_PerfumeVendor" unique_id=369713006]
 texture_filter = 1
@@ -1313,7 +1317,7 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Head" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/Neck" unique_id=353021918]
 position = Vector2(-21.552269, -163.67763)
-rotation = -0.03019774
+rotation = -0.030197859
 scale = Vector2(0.9996984, 0.9996984)
 rest = Transform2D(0.99658036, 0.07903025, -0.07903025, 0.99658036, -21.552269, -163.67763)
 auto_calculate_length_and_angle = false
@@ -1328,8 +1332,8 @@ rest = Transform2D(0.83090454, 0.556137, -0.556137, 0.83090454, -86.79408, -102.
 
 [node name="ForeArmR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/ArmR" unique_id=533513270]
 position = Vector2(103.411964, 108.07965)
-rotation = 1.4715511
-scale = Vector2(0.99984735, 0.99984735)
+rotation = 1.4715512
+scale = Vector2(0.9998474, 0.9998474)
 rest = Transform2D(0.6211967, 0.7834735, -0.7834735, 0.6211967, 103.411964, 108.07965)
 auto_calculate_length_and_angle = false
 length = 139.5
@@ -1343,8 +1347,8 @@ rest = Transform2D(0.32011485, 0.94722396, -0.94722396, 0.32011485, 49.899414, -
 
 [node name="ForeArmL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/ArmL" unique_id=579055792]
 position = Vector2(129.2485, -20.424229)
-rotation = -0.51762366
-scale = Vector2(0.999835, 0.999835)
+rotation = -0.5176238
+scale = Vector2(0.99983495, 0.99983495)
 rest = Transform2D(0.9884388, 0.15055905, -0.15055905, 0.9884388, 129.2485, -20.424229)
 auto_calculate_length_and_angle = false
 length = 145.667
@@ -1352,18 +1356,18 @@ bone_angle = -33.018
 
 [node name="LegR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=739498891]
 position = Vector2(-44.77522, 45.260902)
-rotation = -1.0975937
-scale = Vector2(0.9998507, 0.9998507)
+rotation = -1.0975931
+scale = Vector2(0.99985063, 0.99985063)
 rest = Transform2D(0.44403812, -0.8958404, 0.8958404, 0.44403812, -44.77522, 45.260902)
 
 [node name="KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegR" unique_id=1673755140]
 position = Vector2(-130.53163, 94.41959)
-rotation = 1.1518142
+rotation = 1.1518136
 scale = Vector2(0.99985427, 0.99985427)
 rest = Transform2D(0.35090968, 0.93623465, -0.93623465, 0.35090968, -130.53163, 94.41959)
 auto_calculate_length_and_angle = false
 length = 223.384
-bone_angle = 91.99997
+bone_angle = 91.99996
 
 [node name="LegL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=947634729]
 position = Vector2(29.15951, 50.506165)
@@ -1493,6 +1497,11 @@ pitch_scale = 0.65
 max_distance = 400.0
 attenuation = 1.3195082
 
+[node name="NameTag" parent="." unique_id=1423277668 instance=ExtResource("19_0rrr3")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, -470)
+text = "NPCService"
+
 [node name="Conversation" type="Area2D" parent="." unique_id=1100352954 groups=["npcs", "npcs_active"]]
 visible = false
 collision_layer = 16
@@ -1523,5 +1532,4 @@ parameters/Idle_to_Counter/TimeScale/scale = 1.0
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=569175778]
 position = Vector2(-9.002001, 428)
-scale = Vector2(0.39, 0.39)
 texture = ExtResource("43_d4jxa")

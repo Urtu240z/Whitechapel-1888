@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NPCNamePools" format=3 uid="uid://dxlm5sy6n08dh"]
+
+[ext_resource type="Script" uid="uid://7b35yjwl456r" path="res://Scripts/Data/npc_name_pools.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+companion_names = Array[String](["Mary", "Annie", "Rose", "Liz", "Ada", "Maggie", "Kate", "Sarah", "Betsy"])
+client_names = Array[String](["Arthur C.", "George M.", "William C.", "Henry S.", "Edward L.", "Frederick P.", "Albert R.", "James C.", "Joseph L.", "Charles D.", "Walter D."])
+service_names = Array[String](["Mr. Brown", "Mrs. Reeds", "Mr. Doyle", "Mrs. Finch", "Martha", "Mr. Collins", "Eileen"])

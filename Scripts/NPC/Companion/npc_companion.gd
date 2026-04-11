@@ -18,15 +18,23 @@ enum BehaviorMode {
 # DATOS
 # ============================================================================
 @export_group("NPC Companion")
-@export var companion_name: String = "Mary"
+@export var companion_name: String = ""
 @export_file("*.dtl") var dialog_timeline: String = ""
 @export var initial_facing_right: bool = true
 
 @export_group("Behavior")
 @export var behavior_mode: BehaviorMode = BehaviorMode.WANDER
 
+@export_group("Appearance")
+@export var body_scale: float = 1.0
+
+@export_group("Name")
+@export var use_random_name_if_empty: bool = true
+@export var name_pools: NPCNamePools
+
 # Propiedad dinámica para dropdown de skin
 var skin_name: String = "Mary"
+var current_display_name: String = ""
 
 # ============================================================================
 # 🏃 MOVIMIENTO
@@ -46,6 +54,12 @@ var skin_name: String = "Mary"
 @onready var animation: NPCCompanionAnimation = $Animation
 @onready var conversation: NPCCompanionConversation = $Conversation
 @onready var audio: NPCCompanionAudio = $Audio
+@onready var name_tag: NameTag = $NameTag
+
+@onready var character_container: Node2D = $CharacterContainer
+@onready var body_collision: CollisionShape2D = $Collision
+@onready var conversation_collision: CollisionShape2D = $Conversation/CollisionShape2D
+@onready var shadow_sprite: Sprite2D = $Shadow
 
 # ============================================================================
 # ESTADO
@@ -54,6 +68,9 @@ var _enabled: bool = true
 var _editor_preview_queued: bool = false
 var _last_preview_skin_name: String = ""
 var _last_preview_facing_right: bool = true
+var _last_preview_body_scale: float = 1.0
+var _last_preview_display_name: String = ""
+var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 # ============================================================================
 # CICLO DE VIDA
@@ -71,8 +88,13 @@ func _ready() -> void:
 	add_to_group("npc_companion")
 	velocity = Vector2.ZERO
 
+	_rng.randomize()
+	_resolve_runtime_display_name()
+
 	if skin:
 		skin.set_skin(skin_name)
+
+	_apply_body_scale()
 
 	if movement:
 		movement.initialize(
@@ -91,6 +113,8 @@ func _ready() -> void:
 		conversation.initialize(self)
 	if audio:
 		audio.initialize(self)
+	if name_tag:
+		name_tag.set_text(get_display_name())
 
 	visibility_changed.connect(_on_visibility_changed)
 	set_enabled(is_visible_in_tree())
@@ -102,7 +126,12 @@ func _process(_delta: float) -> void:
 	if not Engine.is_editor_hint():
 		return
 
-	if skin_name != _last_preview_skin_name or initial_facing_right != _last_preview_facing_right:
+	if (
+		skin_name != _last_preview_skin_name
+		or initial_facing_right != _last_preview_facing_right
+		or not is_equal_approx(body_scale, _last_preview_body_scale)
+		or _get_preview_display_name() != _last_preview_display_name
+	):
 		_queue_editor_preview()
 
 func _queue_editor_preview() -> void:
@@ -114,15 +143,20 @@ func _queue_editor_preview() -> void:
 
 func _apply_editor_preview() -> void:
 	_editor_preview_queued = false
-
 	if not Engine.is_editor_hint():
 		return
 
 	_apply_selected_skin_preview()
+	_apply_body_scale()
 	_apply_facing_preview()
+
+	if name_tag:
+		name_tag.set_text(_get_preview_display_name())
 
 	_last_preview_skin_name = skin_name
 	_last_preview_facing_right = initial_facing_right
+	_last_preview_body_scale = body_scale
+	_last_preview_display_name = _get_preview_display_name()
 
 func _get_property_list() -> Array[Dictionary]:
 	var properties: Array[Dictionary] = []
@@ -182,22 +216,31 @@ func _apply_selected_skin_preview() -> void:
 	if skin_node:
 		skin_node.preview_skin(skin_name)
 
+func _apply_body_scale() -> void:
+	var s: float = max(body_scale, 0.01)
+	var scale_vec := Vector2(s, s)
+
+	if character_container:
+		var sign_x: float = -1.0 if character_container.scale.x < 0.0 else 1.0
+		character_container.scale = Vector2(sign_x * s, s)
+
+	if body_collision:
+		body_collision.scale = scale_vec
+
+	if conversation_collision:
+		conversation_collision.scale = scale_vec
+
+	if shadow_sprite:
+		shadow_sprite.scale = scale_vec
+
 func _apply_facing_preview() -> void:
 	var container := get_node_or_null("CharacterContainer") as Node2D
 	if not container:
 		return
 
-	var base_scale := container.scale
-	base_scale.x = abs(base_scale.x)
-	base_scale.y = abs(base_scale.y)
-
-	if is_zero_approx(base_scale.x):
-		base_scale.x = 1.0
-	if is_zero_approx(base_scale.y):
-		base_scale.y = 1.0
-
-	container.scale.x = base_scale.x if initial_facing_right else -base_scale.x
-	container.scale.y = base_scale.y
+	var s: float = max(body_scale, 0.01)
+	container.scale.x = s if initial_facing_right else -s
+	container.scale.y = s
 
 # ============================================================================
 # LOOP
@@ -226,7 +269,8 @@ func _physics_process(delta: float) -> void:
 
 	if conversation:
 		player_in_range = conversation.is_player_in_range()
-
+	if name_tag:
+		name_tag.set_tag_visible(player_in_range)
 	if movement:
 		movement.process_movement(delta)
 	if animation:
@@ -236,7 +280,16 @@ func _physics_process(delta: float) -> void:
 # API
 # ============================================================================
 func get_display_name() -> String:
-	return companion_name if not companion_name.is_empty() else str(name)
+	if current_display_name.is_empty() and not Engine.is_editor_hint():
+		_resolve_runtime_display_name()
+
+	if not current_display_name.is_empty():
+		return current_display_name
+
+	if not companion_name.is_empty():
+		return companion_name
+
+	return str(name)
 
 func set_enabled(value: bool) -> void:
 	_enabled = value
@@ -247,6 +300,9 @@ func set_enabled(value: bool) -> void:
 
 	if not value and animation:
 		animation.force_idle_counter()
+
+	if name_tag and not value:
+		name_tag.hide_tag()
 
 func start_follow() -> void:
 	set_follow_mode()
@@ -272,6 +328,42 @@ func _apply_behavior_mode() -> void:
 			movement.stop_wander()
 			movement.start_follow(_get_player())
 
+# ============================================================================
+# DIALOGIC
+# ============================================================================
+func start_dialog() -> void:
+	if dialog_timeline.is_empty():
+		push_warning("NPCCompanion '%s': no tiene dialog_timeline asignado." % companion_name)
+		return
+	if not get_tree().root.has_node("Dialogic"):
+		return
+	if not StateManager.can_enter(StateManager.State.DIALOG):
+		return
+
+	var player := _get_player()
+	if player:
+		player.disable_movement()
+	if movement:
+		movement.freeze()
+	if animation and player:
+		animation.lock_facing(player.global_position.x > global_position.x)
+
+	StateManager.enter(StateManager.State.DIALOG)
+	Dialogic.start(dialog_timeline)
+	Dialogic.timeline_ended.connect(func():
+		StateManager.exit(StateManager.State.DIALOG)
+		if is_instance_valid(self) and movement:
+			movement.unfreeze()
+		if animation:
+			animation.unlock_facing()
+		var p := _get_player()
+		if p:
+			p.enable_movement()
+	, CONNECT_ONE_SHOT)
+
+# ============================================================================
+# HELPERS
+# ============================================================================
 func set_behavior_mode(mode: BehaviorMode) -> void:
 	behavior_mode = mode
 	_apply_behavior_mode()
@@ -285,49 +377,41 @@ func set_wander_mode() -> void:
 func set_follow_mode() -> void:
 	set_behavior_mode(BehaviorMode.FOLLOW)
 
-# ============================================================================
-# DIALOGIC
-# ============================================================================
-func start_dialog() -> void:
-	if dialog_timeline.is_empty():
-		push_warning("NPCCompanion '%s': no tiene dialog_timeline asignado." % companion_name)
+func _resolve_runtime_display_name() -> void:
+	if not current_display_name.is_empty():
 		return
 
-	if not get_tree().root.has_node("Dialogic"):
+	if not companion_name.is_empty():
+		current_display_name = companion_name
 		return
-	if not StateManager.can_enter(StateManager.State.DIALOG):
+
+	if not use_random_name_if_empty:
+		current_display_name = str(name)
 		return
 
-	var player := _get_player()
-	if player:
-		player.disable_movement()
+	if name_pools == null:
+		current_display_name = str(name)
+		return
 
-	if movement:
-		movement.freeze()
+	var pool := name_pools.companion_names
+	if pool.is_empty():
+		current_display_name = str(name)
+		return
 
-	if animation and player:
-		animation.lock_facing(player.global_position.x > global_position.x)
+	current_display_name = pool[_rng.randi_range(0, pool.size() - 1)]
 
-	StateManager.enter(StateManager.State.DIALOG)
-	Dialogic.start(dialog_timeline)
+func _get_preview_display_name() -> String:
+	if not companion_name.is_empty():
+		return companion_name
 
-	Dialogic.timeline_ended.connect(func():
-		StateManager.exit(StateManager.State.DIALOG)
+	if not use_random_name_if_empty:
+		return str(name)
 
-		if is_instance_valid(self) and movement:
-			movement.unfreeze()
+	if name_pools and not name_pools.companion_names.is_empty():
+		return name_pools.companion_names[0]
 
-		if animation:
-			animation.unlock_facing()
+	return str(name)
 
-		var p := _get_player()
-		if p:
-			p.enable_movement()
-	, CONNECT_ONE_SHOT)
-
-# ============================================================================
-# HELPERS
-# ============================================================================
 func _get_player() -> Node2D:
 	if PlayerManager and PlayerManager.player_instance:
 		return PlayerManager.player_instance as Node2D

@@ -50,8 +50,9 @@ var _config: Node = null
 # 🚶 NPC TRANSIT
 # ================================================================
 @export_group("🚶 NPC Transit")
-@export var npc_fade_time: float = 0.10
+@export var npc_fade_time: float = 0.22
 @export var npc_play_door_sfx: bool = true
+@export var npc_color_reveal_start: float = 0.8
 
 # ================================================================
 # ESTADO
@@ -542,6 +543,79 @@ func _set_npc_transit_active(npc: CharacterBody2D, active: bool) -> void:
 			elif not active and movement.has_method("unfreeze"):
 				movement.unfreeze()
 
+func _get_npc_fade_target(npc: CharacterBody2D) -> CanvasItem:
+	if not is_instance_valid(npc):
+		return null
+
+	var character_container := npc.get_node_or_null("CharacterContainer") as CanvasItem
+	if character_container:
+		return character_container
+
+	return npc as CanvasItem
+
+func _set_canvas_item_modulate(item: CanvasItem, color: Color) -> void:
+	if item:
+		item.modulate = color
+
+func _tween_npc_reappear_visual(tween: Tween, fade_target: CanvasItem) -> void:
+	if not fade_target:
+		return
+
+	_apply_npc_reappear_progress(fade_target, 0.0)
+
+	tween.tween_method(
+		func(v: float) -> void:
+			_apply_npc_reappear_progress(fade_target, v),
+		0.0,
+		1.0,
+		npc_fade_time
+	)
+
+func _tween_npc_disappear_visual(tween: Tween, fade_target: CanvasItem) -> void:
+	if not fade_target:
+		return
+
+	_apply_npc_disappear_progress(fade_target, 0.0)
+
+	tween.tween_method(
+		func(v: float) -> void:
+			_apply_npc_disappear_progress(fade_target, v),
+		0.0,
+		1.0,
+		npc_fade_time
+	)
+
+func _apply_npc_reappear_progress(fade_target: CanvasItem, t: float) -> void:
+	if not fade_target:
+		return
+
+	t = clamp(t, 0.0, 1.0)
+
+	var reveal_start: float = clamp(npc_color_reveal_start, 0.0, 0.99)
+	var color_t: float = 0.0
+
+	if t >= reveal_start:
+		color_t = (t - reveal_start) / (1.0 - reveal_start)
+
+	# Alpha sube de 0 a 1 desde el inicio.
+	# El color se queda negro hasta reveal_start, luego pasa a blanco.
+	fade_target.modulate = Color(color_t, color_t, color_t, t)
+
+
+func _apply_npc_disappear_progress(fade_target: CanvasItem, t: float) -> void:
+	if not fade_target:
+		return
+
+	t = clamp(t, 0.0, 1.0)
+
+	# t = 0  -> color normal, alpha 1
+	# t = 1  -> negro, alpha 0
+	var dark_t: float = min(t / 0.2, 1.0)
+	var alpha_t: float = 1.0 - t
+
+	var rgb: float = 1.0 - dark_t
+	fade_target.modulate = Color(rgb, rgb, rgb, alpha_t)
+
 func npc_enter(npc: CharacterBody2D, interior_position: Vector2) -> void:
 	if npc in _npcs_inside:
 		return
@@ -553,8 +627,10 @@ func npc_enter(npc: CharacterBody2D, interior_position: Vector2) -> void:
 
 	_set_npc_transit_active(npc, true)
 
+	var fade_target: CanvasItem = _get_npc_fade_target(npc)
 	var tween: Tween = create_tween()
-	tween.tween_property(npc, "modulate:a", 0.0, npc_fade_time)
+
+	_tween_npc_disappear_visual(tween, fade_target)
 
 	tween.tween_callback(func():
 		var old_global_transform: Transform2D = npc.global_transform
@@ -572,7 +648,7 @@ func npc_enter(npc: CharacterBody2D, interior_position: Vector2) -> void:
 		_play_npc_door_sfx(_config.open_sounds)
 	)
 
-	tween.tween_property(npc, "modulate:a", 1.0, npc_fade_time)
+	_tween_npc_reappear_visual(tween, fade_target)
 
 	tween.tween_callback(func():
 		npc.velocity = Vector2.ZERO
@@ -596,8 +672,10 @@ func npc_exit(npc: CharacterBody2D, exterior_position: Vector2) -> void:
 
 	_set_npc_transit_active(npc, true)
 
+	var fade_target: CanvasItem = _get_npc_fade_target(npc)
 	var tween: Tween = create_tween()
-	tween.tween_property(npc, "modulate:a", 0.0, npc_fade_time)
+
+	_tween_npc_disappear_visual(tween, fade_target)
 
 	tween.tween_callback(func():
 		var old_global_transform: Transform2D = npc.global_transform
@@ -615,7 +693,7 @@ func npc_exit(npc: CharacterBody2D, exterior_position: Vector2) -> void:
 		_play_npc_door_sfx(_config.close_sounds)
 	)
 
-	tween.tween_property(npc, "modulate:a", 1.0, npc_fade_time)
+	_tween_npc_reappear_visual(tween, fade_target)
 
 	tween.tween_callback(func():
 		npc.velocity = Vector2.ZERO

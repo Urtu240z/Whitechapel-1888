@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://djqsnhaf3c38j" path="res://Scripts/NPC/Companion/npc_companion.gd" id="1_33bcd"]
 [ext_resource type="Script" uid="uid://brrk3it024uuc" path="res://Scripts/NPC/Companion/npc_companion_skin.gd" id="2_1o0oq"]
 [ext_resource type="Script" uid="uid://djtg4einflwy5" path="res://Scripts/NPC/Companion/npc_companion_movement.gd" id="2_8u2cw"]
+[ext_resource type="Resource" uid="uid://dxlm5sy6n08dh" path="res://Data/NPC/npc_name_pools.tres" id="2_sj2xk"]
 [ext_resource type="Script" uid="uid://b6e58mc72dgxx" path="res://Scripts/NPC/Companion/npc_companion_animation.gd" id="3_b11bt"]
 [ext_resource type="Script" uid="uid://pr5kxc47nl5h" path="res://Scripts/NPC/Companion/npc_companion_audio.gd" id="4_y7jbo"]
 [ext_resource type="AudioStream" uid="uid://beu8sdsym1xs" path="res://Assets/Audio/Effects/Voice_Slap_4.ogg" id="20_4qwdc"]
@@ -24,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://ctqh0sstagorg" path="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_1_Pieces_n.png" id="29_wn7ys"]
 [ext_resource type="Texture2D" uid="uid://c8bbbs5k60c3o" path="res://Assets/Sprites/NPC/Companion/3_Pieces.png" id="30_30tso"]
 [ext_resource type="Script" uid="uid://b5uiivwxcoics" path="res://addons/soupik/modifications/soup_stay_at.gd" id="30_k3ion"]
+[ext_resource type="PackedScene" uid="uid://qrckrvjkyeu" path="res://Scenes/Core/NameTag.tscn" id="31_5d1tx"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="31_7vuh2"]
 [ext_resource type="Texture2D" uid="uid://bvquqsrb8fvn2" path="res://Assets/Sprites/NPC/Companion/3_Pieces_n.png" id="31_ixgjr"]
 [ext_resource type="Texture2D" uid="uid://buyjjx72arglm" path="res://Assets/Sprites/NPC/Companion/5_Pieces.png" id="32_gtm34"]
@@ -2418,6 +2420,7 @@ graph_offset = Vector2(95, -6.867462)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_33bcd")
+name_pools = ExtResource("2_sj2xk")
 skin_name = "Mary"
 
 [node name="CharacterContainer" type="Node2D" parent="." unique_id=2008153722]
@@ -2928,14 +2931,14 @@ occluder = SubResource("OccluderPolygon2D_vqiu2")
 
 [node name="LegL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=802244090]
 position = Vector2(55.522446, 115.97094)
-rotation = -0.3659292
-scale = Vector2(0.99985284, 0.99985284)
+rotation = -0.36592898
+scale = Vector2(0.9998528, 0.9998528)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegL" unique_id=1844206024]
 position = Vector2(-7, 125)
-rotation = 0.2808269
-scale = Vector2(0.99984497, 0.99984497)
+rotation = 0.28082666
+scale = Vector2(0.999845, 0.999845)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -3167,6 +3170,11 @@ position = Vector2(1, 389)
 target_position = Vector2(0, 200)
 collision_mask = 4
 
+[node name="NameTag" parent="." unique_id=1423277668 instance=ExtResource("31_5d1tx")]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(0, -470)
+text = "Mary"
+
 [node name="Conversation" type="Area2D" parent="." unique_id=470487145 groups=["npcs", "npcs_active"]]
 visible = false
 script = ExtResource("33_nqt6k")
@@ -3203,12 +3211,11 @@ parameters/Walk/TimeScale/scale = 1.1000000000000014
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1770327073]
 position = Vector2(-9.002001, 481)
-scale = Vector2(0.39, 0.39)
 texture = ExtResource("31_7vuh2")
 
 [node name="ShadowProjection" type="Sprite2D" parent="." unique_id=1096834818]
 position = Vector2(-15, 472)
-scale = Vector2(2, 0.5)
+scale = Vector2(1, 1.15)
 texture = ExtResource("33_44evf")
 offset = Vector2(0, -409.035)
 script = ExtResource("26_1o0oq")

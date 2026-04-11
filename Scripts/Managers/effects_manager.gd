@@ -17,6 +17,7 @@ extends Node
 # - distortion.gdshader
 # =========================================================
 
+var _effects_hidden_by_state: bool = false
 var _canvas: CanvasLayer
 var _blur: ColorRect
 var _vignette: ColorRect
@@ -37,9 +38,13 @@ const BLINK_DURATION: float = 0.12
 func _ready() -> void:
 	_build_nodes()
 	_connect_signals()
+
 	# Buscar cámara cuando cambia la escena — usando scene_tree_changed
 	# en lugar de tree_changed para no dispararse miles de veces
 	get_tree().node_added.connect(_on_node_added)
+
+	# Aplicar efectos iniciales al arrancar
+	call_deferred("refresh_effects")
 
 func _build_nodes() -> void:
 	_canvas = CanvasLayer.new()
@@ -90,7 +95,8 @@ func _load_shader(path: String) -> ShaderMaterial:
 
 func _connect_signals() -> void:
 	# stats_updated para viñeta, distorsión y parpadeos — no cada frame
-	PlayerStats.stats_updated.connect(_on_stats_updated)
+	if not PlayerStats.stats_updated.is_connected(_on_stats_updated):
+		PlayerStats.stats_updated.connect(_on_stats_updated)
 
 # =========================================================
 # 📷 BUSCAR CÁMARA — solo cuando se añade un nodo Camera2D
@@ -103,6 +109,17 @@ func _on_node_added(node: Node) -> void:
 		if is_instance_valid(node) and node.is_current():
 			_camera = node
 
+func _find_camera() -> void:
+	var cameras := get_tree().get_nodes_in_group("camera")
+	for node in cameras:
+		if node is Camera2D and node.is_current():
+			_camera = node
+			return
+
+	var current_scene := get_tree().current_scene
+	if current_scene:
+		_camera = current_scene.find_child("Camera2D", true, false) as Camera2D
+
 # =========================================================
 # 🔄 PROCESS — solo stamina (necesita ser fluido) y parpadeos
 # Viñeta y distorsión se actualizan via señal stats_updated
@@ -112,17 +129,28 @@ func _is_gameplay_active() -> bool:
 	# DIALOG es solo gameplay con un cuadro de texto encima.
 	# Se desactivan en SLEEPING, CLIENT_SERVICE, TRANSITIONING, etc.
 	var state := StateManager.current()
-	return state == StateManager.State.GAMEPLAY or state == StateManager.State.DIALOG
+	return (
+		state == StateManager.State.GAMEPLAY
+		or state == StateManager.State.DIALOG
+		or state == StateManager.State.JOURNAL
+	)
 
 func _process(delta: float) -> void:
 	if not _is_gameplay_active():
-		_set_visible_all(false)
-		if _camera and is_instance_valid(_camera):
-			_camera.offset = Vector2.ZERO
-		_blink_active = false
+		if not _effects_hidden_by_state:
+			_set_visible_all(false)
+			if _camera and is_instance_valid(_camera):
+				_camera.offset = Vector2.ZERO
+			_blink_active = false
+			_effects_hidden_by_state = true
 		return
 
+	if _effects_hidden_by_state:
+		_effects_hidden_by_state = false
+		refresh_effects()
+
 	_update_stamina_effects()
+
 	if _blink_active:
 		_blink_timer += delta
 		if _blink_timer >= BLINK_INTERVAL:
@@ -136,6 +164,7 @@ func _process(delta: float) -> void:
 func _update_stamina_effects() -> void:
 	if _hit_blur_active:
 		return
+
 	var stamina_ratio: float = clamp(PlayerStats.stamina / 50.0, 0.0, 1.0)
 	var intensity: float = 1.0 - stamina_ratio
 
@@ -162,6 +191,9 @@ func on_stamina_exhausted(_exhausted: bool) -> void:
 # Se actualiza via señal, no cada frame — más eficiente
 # =========================================================
 func _on_stats_updated() -> void:
+	refresh_effects()
+
+func refresh_effects() -> void:
 	_update_vignette()
 	_update_distortion()
 	_update_blink_state()
@@ -199,7 +231,7 @@ func _update_blink_state() -> void:
 func _do_blink() -> void:
 	_blink.modulate.a = 0.85
 	_blink.visible = true
-	var tw = create_tween()
+	var tw := create_tween()
 	tw.tween_property(_blink, "modulate:a", 0.0, BLINK_DURATION)
 	tw.tween_callback(func(): _blink.visible = false)
 
@@ -247,8 +279,10 @@ func screen_shake(intensity: float = 10.0, _duration: float = 0.3) -> void:
 		for i in steps:
 			var decay: float = 1.0 - (float(i) / steps)
 			shake_tween.tween_property(_camera, "offset",
-				Vector2(randf_range(-intensity, intensity) * decay,
-						randf_range(-intensity * 0.8, intensity * 0.8) * decay), 0.025)
+				Vector2(
+					randf_range(-intensity, intensity) * decay,
+					randf_range(-intensity * 0.8, intensity * 0.8) * decay
+				), 0.025)
 		shake_tween.tween_property(_camera, "offset", Vector2.ZERO, 0.04)
 
 # =========================================================
@@ -258,15 +292,3 @@ func _set_visible_all(value: bool) -> void:
 	for node in [_blur, _vignette, _blink, _distortion, _disease]:
 		if node:
 			node.visible = value
-
-func _find_camera() -> void:
-	var cameras := get_tree().get_nodes_in_group("cameras")
-	if cameras.size() > 0:
-		_camera = cameras[0]
-		return
-	# Buscar directamente
-	for node in get_tree().get_nodes_in_group(""):
-		pass
-	var player := get_tree().get_first_node_in_group("player")
-	if player:
-		_camera = player.get_node_or_null("Camera2D")

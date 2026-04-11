@@ -12,12 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://cg3wm3f0te243" path="res://Scenes/NPC/NPC_Charger.tscn" id="9_ge66w"]
 [ext_resource type="PackedScene" uid="uid://36qdlvetmmi" path="res://Scenes/Vehicles/Carriage.tscn" id="10_y1gga"]
 [ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="11_aubp3"]
-[ext_resource type="AudioStream" uid="uid://blulpegm5fkto" path="res://Assets/Audio/Buildings/Open_Door (1).wav" id="12_s83io"]
-[ext_resource type="AudioStream" uid="uid://2ocbh2xjeg3i" path="res://Assets/Audio/Buildings/Open_Door (2).wav" id="13_xo5qw"]
-[ext_resource type="AudioStream" uid="uid://bpbgo1ht1u2mx" path="res://Assets/Audio/Buildings/Open_Door (3).wav" id="14_54kyg"]
-[ext_resource type="AudioStream" uid="uid://bq626yq3ebj5a" path="res://Assets/Audio/Buildings/Close_Door (1).wav" id="15_ekbqe"]
-[ext_resource type="AudioStream" uid="uid://vsi28chd68ph" path="res://Assets/Audio/Buildings/Close_Door (2).wav" id="16_ylnch"]
-[ext_resource type="AudioStream" uid="uid://d1q5svthqkw2r" path="res://Assets/Audio/Buildings/Close_Door (3).wav" id="17_dughy"]
 [ext_resource type="PackedScene" uid="uid://1pqfhxw14n4a" path="res://Scenes/Buildings/Lodge_House.tscn" id="18_wefgp"]
 [ext_resource type="PackedScene" uid="uid://cmmlvd8ng8chj" path="res://Scenes/NPC/NPC_Service.tscn" id="19_l08at"]
 [ext_resource type="Script" uid="uid://bbc6r2ife4inn" path="res://Scripts/Data/shop_item_data.gd" id="20_ixfdq"]
@@ -89,12 +83,12 @@ position = Vector2(-1135, -107)
 
 [node name="FireflyAudioAtmosphereOfAStreetWhitoutCarsAtNight,CrowVariation1" type="AudioStreamPlayer" parent="OutsideAudiovisuals/Audio" unique_id=278960691 groups=["world_ambience"]]
 stream = ExtResource("1_76d3c")
-volume_db = -10.275
+volume_db = -10.0
 autoplay = true
 
 [node name="ShadowsBeneathTheVeilV2" type="AudioStreamPlayer" parent="OutsideAudiovisuals/Audio" unique_id=2081144783 groups=["world_music"]]
 stream = ExtResource("2_agp33")
-volume_db = 9.892
+volume_db = 3.0
 autoplay = true
 
 [node name="World" type="Node2D" parent="OutsideAudiovisuals" unique_id=405277679]
@@ -244,19 +238,9 @@ speed_max = 800.0
 [node name="PerfumeStore" type="Node2D" parent="OutsideAudiovisuals/World/Services" unique_id=663088643]
 scale = Vector2(0.99999994, 0.99999994)
 
-[node name="NPCService" parent="OutsideAudiovisuals/World/Services/PerfumeStore" unique_id=1649721714 instance=ExtResource("19_l08at")]
-position = Vector2(-119.80002, -143)
-scale = Vector2(0.19999999, 0.19999999)
-npc_display_name = "Madame Colette"
-dialog_timeline = "uid://bv2dnetct8j1v"
-service_id = "perfume_vendor"
-skin_name = "NPC_PerfumeVendor"
-initial_facing_right = false
-shop_items = Array[ExtResource("20_ixfdq")]([SubResource("Resource_k7r8x"), SubResource("Resource_l83om"), SubResource("Resource_v1jka"), SubResource("Resource_keg7c"), SubResource("Resource_ubdd7"), SubResource("Resource_mlx1v")])
-shop_name_key = "PERFUME_VENDOR_SHOP_NAME"
-
 [node name="PerfumeStall" type="Sprite2D" parent="OutsideAudiovisuals/World/Services/PerfumeStore" unique_id=709910960]
 modulate = Color(0.7162962, 0.7162962, 0.7162962, 1)
+z_index = 1
 position = Vector2(-125.799995, -162.2)
 scale = Vector2(0.31999996, 0.31999996)
 texture = ExtResource("27_cevxu")
@@ -268,52 +252,68 @@ texture = ExtResource("27_cevxu")
 [node name="NPCClient" parent="OutsideActors/Clients" unique_id=232242800 instance=ExtResource("28_3rwnu")]
 z_index = 3
 position = Vector2(1879.9999, -656.99994)
-scale = Vector2(1.16, 1.16)
 dialog_timeline = "uid://c38evy5q65a84"
 behavior_mode = 1
+body_scale = 1.16
 skin_name = "NPC_ClientPoor2"
 
 [node name="NPCClient2" parent="OutsideActors/Clients" unique_id=1100192978 instance=ExtResource("28_3rwnu")]
 z_index = 3
 position = Vector2(2125, -635)
-scale = Vector2(1.16, 1.16)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
+body_scale = 1.16
 skin_name = "NPC_ClientPoor3"
 
 [node name="NPCClient3" parent="OutsideActors/Clients" unique_id=812702173 instance=ExtResource("28_3rwnu")]
 z_index = 3
 position = Vector2(467.99997, -635)
-scale = Vector2(1.16, 1.16)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
 behavior_mode = 1
+body_scale = 1.16
 skin_name = "NPC_ClientPoor4"
 
 [node name="NPCClient4" parent="OutsideActors/Clients" unique_id=289648581 instance=ExtResource("28_3rwnu")]
 z_index = 3
 position = Vector2(-2914, -697)
-scale = Vector2(1.3, 1.3)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
+body_scale = 1.3
 skin_name = "NPC_ClientPoor5"
 
 [node name="NPCClient5" parent="OutsideActors/Clients" unique_id=603340578 instance=ExtResource("28_3rwnu")]
 z_index = 3
 position = Vector2(1077.0001, -689)
-scale = Vector2(1.3, 1.3)
 dialog_timeline = "uid://c38evy5q65a84"
+body_scale = 1.3
 skin_name = "NPC_ClientPoor6"
 
 [node name="Companions" type="Node2D" parent="OutsideActors" unique_id=1087582166]
 position = Vector2(-1489, -641)
 
 [node name="NPCCompanion" parent="OutsideActors/Companions" unique_id=1093994703 instance=ExtResource("29_p0tfu")]
+companion_name = "Dolly"
+body_scale = 1.1
 skin_name = "Bridget"
 
 [node name="NPCCompanion2" parent="OutsideActors/Companions" unique_id=1036286580 instance=ExtResource("29_p0tfu")]
 position = Vector2(2876, 0)
+companion_name = "Bridget"
 skin_name = "Dolly"
+
+[node name="Services" type="Node2D" parent="OutsideActors" unique_id=382545114]
+
+[node name="NPCService" parent="OutsideActors/Services" unique_id=1649721714 instance=ExtResource("19_l08at")]
+position = Vector2(-599.00006, -714.99994)
+npc_display_name = "Madame Colette"
+dialog_timeline = "uid://bv2dnetct8j1v"
+service_id = "perfume_vendor"
+initial_facing_right = false
+body_scale = 0.9
+shop_items = Array[ExtResource("20_ixfdq")]([SubResource("Resource_k7r8x"), SubResource("Resource_l83om"), SubResource("Resource_v1jka"), SubResource("Resource_keg7c"), SubResource("Resource_ubdd7"), SubResource("Resource_mlx1v")])
+shop_name_key = "PERFUME_VENDOR_SHOP_NAME"
+skin_name = "NPC_PerfumeVendor"
 
 [node name="OutsideBuildings" type="Node2D" parent="." unique_id=1835699367]
 scale = Vector2(4.9999995, 4.9999995)
@@ -321,8 +321,6 @@ scale = Vector2(4.9999995, 4.9999995)
 [node name="Ten_Bells" parent="OutsideBuildings" unique_id=926207058 groups=["buildings"] instance=ExtResource("11_aubp3")]
 position = Vector2(-487.00003, -370.00003)
 scale = Vector2(0.6700001, 0.6700001)
-open_sounds = Array[AudioStream]([ExtResource("12_s83io"), ExtResource("13_xo5qw"), ExtResource("14_54kyg")])
-close_sounds = Array[AudioStream]([ExtResource("15_ekbqe"), ExtResource("16_ylnch"), ExtResource("17_dughy")])
 
 [node name="Lodge" parent="OutsideBuildings" unique_id=1878724243 groups=["buildings"] instance=ExtResource("18_wefgp")]
 position = Vector2(-2742.0002, -548.60004)

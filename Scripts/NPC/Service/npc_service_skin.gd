@@ -1,3 +1,4 @@
+@tool
 extends Node2D
 class_name NPCServiceSkin
 
@@ -43,9 +44,12 @@ func set_skin(skin_name: String) -> void:
 
 	for child in skins_root.get_children():
 		if child is CanvasItem:
-			child.visible = (child == target)
+			(child as CanvasItem).visible = (child == target)
 
 	current_skin = skin_name
+
+func preview_skin(skin_name: String) -> void:
+	set_skin(skin_name)
 
 func get_current_skin() -> Node:
 	if not skins_root:
