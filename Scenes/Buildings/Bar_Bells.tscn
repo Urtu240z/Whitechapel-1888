@@ -41,6 +41,7 @@
 [ext_resource type="Shader" uid="uid://duaxbbg0a834o" path="res://Assets/Shaders/Interaction_Glow.gdshader" id="28_ylgcw"]
 [ext_resource type="Texture2D" uid="uid://dpx06umrbw1r8" path="res://Assets/Sprites/Interiors/Bar Bells/Window.png" id="29_1nm8b"]
 [ext_resource type="AudioStream" uid="uid://cmci08mvr01u3" path="res://Assets/Music/Bar - Whispers of the Lamplight.wav" id="39_2u12w"]
+[ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="42_rpjb7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ec4d"]
 texture = ExtResource("2_n1eba")
@@ -185,7 +186,6 @@ position = Vector2(74, -87)
 texture = ExtResource("8_vcas7")
 
 [node name="Interior" type="Node2D" parent="." unique_id=936244711]
-visible = false
 position = Vector2(0, -88)
 scale = Vector2(1.2, 1.2)
 
@@ -298,7 +298,7 @@ scale = Vector2(0.99998975, 0.99998975)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="9" unique_id=1346636835]
 position = Vector2(-53.35913, 893.88464)
-rotation = -0.060020138
+rotation = -0.06002015
 scale = Vector2(0.99998426, 0.99998426)
 
 [node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="10" unique_id=1940891905]
@@ -320,13 +320,13 @@ visible = false
 position = Vector2(58, 139.99988)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-scale = Vector2(0.9999897, 0.9999897)
+scale = Vector2(0.9999896, 0.9999896)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
 scale = Vector2(0.9999965, 0.9999965)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR/Mp1LegR" index="0" unique_id=1973771377]
-rotation = -0.09247087
+rotation = -0.09247088
 scale = Vector2(0.99999815, 0.99999815)
 
 [node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL" parent_id_path=PackedInt32Array(1872631834, 607615665) index="1" unique_id=1135898689]
@@ -471,15 +471,15 @@ scale = Vector2(0.9999929, 0.9999929)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="7" unique_id=966757603]
 position = Vector2(-28.915283, 538.63403)
-scale = Vector2(0.9999823, 0.9999823)
+scale = Vector2(0.9999822, 0.9999822)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="8" unique_id=1961738744]
 position = Vector2(-3, 162)
-scale = Vector2(0.9999853, 0.9999853)
+scale = Vector2(0.99998516, 0.99998516)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="9" unique_id=1346636835]
 position = Vector2(-53.358643, 893.88184)
-rotation = -0.06001017
+rotation = -0.06001016
 scale = Vector2(0.99997944, 0.99997944)
 
 [node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="10" unique_id=1940891905]
@@ -501,7 +501,7 @@ visible = false
 position = Vector2(57.999756, 140)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-scale = Vector2(0.99998504, 0.99998504)
+scale = Vector2(0.999985, 0.999985)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
 scale = Vector2(0.9999972, 0.9999972)
@@ -891,6 +891,12 @@ texture = ExtResource("8_vcas7")
 region_enabled = true
 region_rect = Rect2(286.81104, 868, 132.02158, 279)
 metadata/_edit_lock_ = true
+
+[node name="SceneryPOI" parent="." unique_id=797204525 instance=ExtResource("42_rpjb7")]
+position = Vector2(240, 301)
+poi_name = "Bells"
+is_interior = true
+building_entrance_path = NodePath("../BuildingEntrance")
 
 [editable path="Interior/TileMapLayer/Objects/NPC3"]
 [editable path="Interior/TileMapLayer/Objects/NPC"]

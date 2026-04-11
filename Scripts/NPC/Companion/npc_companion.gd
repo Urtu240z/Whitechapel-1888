@@ -29,12 +29,6 @@ var skin_name: String = "Mary"
 @export var follow_dist_min: float = 150.0
 @export var follow_dist_max: float = 350.0
 
-# ============================================================================
-# 📍 WAYPOINTS
-# ============================================================================
-@export_group("📍 Waypoints")
-@export var waypoints: Array[NodePath] = []
-@export var wait_time_at_waypoint: float = 3.0
 
 # ============================================================================
 # 🔗 REFERENCIAS
@@ -73,9 +67,8 @@ func _ready() -> void:
 		skin.set_skin(skin_name)
 	if movement:
 		movement.initialize(self, walk_speed, walk_accel, follow_speed,
-			follow_dist_min, follow_dist_max, waypoints, wait_time_at_waypoint)
-		if waypoints.size() > 0:
-			movement.start_wander()
+			follow_dist_min, follow_dist_max)
+		movement.start_wander()
 	if animation:
 		animation.initialize(self, initial_facing_right)
 	if conversation:
@@ -205,7 +198,7 @@ func _physics_process(delta: float) -> void:
 # API
 # ============================================================================
 func get_display_name() -> String:
-	return companion_name if not companion_name.is_empty() else name
+	return companion_name if not companion_name.is_empty() else str(name)
 
 func set_enabled(value: bool) -> void:
 	_enabled = value
@@ -223,8 +216,7 @@ func start_follow() -> void:
 func stop_follow() -> void:
 	if movement:
 		movement.stop_follow()
-		if waypoints.size() > 0:
-			movement.start_wander()
+		movement.start_wander()
 
 # ============================================================================
 # DIALOGIC

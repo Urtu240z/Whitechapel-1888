@@ -483,3 +483,37 @@ func force_inside_state(inside: bool) -> void:
 
 func is_transitioning() -> bool:
 	return _transitioning
+
+# ================================================================
+# NPCs — entrar/salir sin afectar al player
+# ================================================================
+var _npcs_inside: Array = []
+
+func npc_enter(npc: CharacterBody2D, interior_position: Vector2) -> void:
+	if npc in _npcs_inside:
+		return
+	_npcs_inside.append(npc)
+	# Reparentar al interior para heredar su visibilidad
+	var original_parent := npc.get_parent()
+	npc.set_meta("_original_parent_path", str(original_parent.get_path()))
+	original_parent.remove_child(npc)
+	if _interior:
+		_interior.add_child(npc)
+	npc.global_position = interior_position
+
+func npc_exit(npc: CharacterBody2D, exterior_position: Vector2) -> void:
+	if not npc in _npcs_inside:
+		return
+	_npcs_inside.erase(npc)
+	var original_path: String = npc.get_meta("_original_parent_path", "")
+	var original_parent: Node = null
+	if original_path != "":
+		original_parent = get_node_or_null(original_path)
+	if not original_parent:
+		original_parent = get_tree().current_scene
+	npc.get_parent().remove_child(npc)
+	original_parent.add_child(npc)
+	npc.global_position = exterior_position
+
+func get_npcs_inside() -> Array:
+	return _npcs_inside.duplicate()

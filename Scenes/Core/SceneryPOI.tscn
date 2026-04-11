@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://daahtk3rtmb88"]
+
+[ext_resource type="Script" uid="uid://coonakn8j1im5" path="res://Scripts/Core/scenery_poi.gd" id="1_38yw7"]
+
+[node name="SceneryPOI" type="Marker2D" unique_id=797204525]
+script = ExtResource("1_38yw7")

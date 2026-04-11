@@ -34,6 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="32_wl6bi"]
 [ext_resource type="PackedScene" uid="uid://c3m8fewa1n53m" path="res://Scenes/Buildings/Hide_Zone.tscn" id="33_mjtkt"]
 [ext_resource type="PackedScene" uid="uid://bt3ubgbvk60kv" path="res://Scenes/NPC/NPC_Companion.tscn" id="34_b0nva"]
+[ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="35_k7r8x"]
 
 [sub_resource type="Resource" id="Resource_k7r8x"]
 script = ExtResource("20_35ndy")
@@ -365,5 +366,15 @@ skin_name = "Bridget"
 [node name="NPCCompanion2" parent="." unique_id=1036286580 instance=ExtResource("34_b0nva")]
 position = Vector2(1387, -641)
 skin_name = "Dolly"
+
+[node name="POIs" type="Node2D" parent="." unique_id=661232300]
+
+[node name="SceneryPOI" parent="." unique_id=797204525 instance=ExtResource("35_k7r8x")]
+position = Vector2(1681, -701)
+poi_name = "Clients"
+
+[node name="SceneryPOI2" parent="." unique_id=958857100 instance=ExtResource("35_k7r8x")]
+position = Vector2(-619, -816)
+poi_name = "Perfume"
 
 [editable path="Exterior/Area2D/SceneChanger"]

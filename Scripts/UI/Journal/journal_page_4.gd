@@ -134,7 +134,7 @@ func _on_journal_closing() -> void:
 # MENÚ CONTEXTUAL — DESEQUIPAR
 # ================================================================
 
-func _show_unequip_menu(item_data: ItemData, equip_slot: ItemData.EquipSlot, slot_global_pos: Vector2) -> void:
+func _show_unequip_menu(item_data: ItemData, equip_slot: ItemData.EquipSlot, _slot_global_pos: Vector2) -> void:
 	if is_instance_valid(_context_menu):
 		_context_menu.queue_free()
 		_context_menu = null

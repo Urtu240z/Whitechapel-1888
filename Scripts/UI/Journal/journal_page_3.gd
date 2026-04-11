@@ -5,7 +5,6 @@ signal manage_pageflip(give_control_to_book: bool)
 @onready var label_title:    Label          = $LabelTitle
 @onready var grid_container: GridContainer  = $GridContainer
 @onready var label_count:    Label          = $LabelCount
-@onready var _desc_panel:    PanelContainer = $DescPanel
 @onready var _desc_label:    Label          = $DescPanel/DescLabel
 
 var font_title = preload("res://Assets/Fonts/Cinzel.ttf")
