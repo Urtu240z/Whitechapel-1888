@@ -41,11 +41,11 @@ colors = PackedColorArray(1, 1, 1, 0.08235294, 1, 1, 1, 0.654902)
 blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_xtpen"]
-offsets = PackedFloat32Array(0, 0.16517857)
+offsets = PackedFloat32Array(0, 0.112161994)
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
 
 [sub_resource type="Gradient" id="Gradient_fvg26"]
-offsets = PackedFloat32Array(0, 0.24330357)
+offsets = PackedFloat32Array(0, 0.14594579)
 colors = PackedColorArray(1, 1, 1, 0, 0.95596343, 0.9559633, 0.95596343, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gmldl"]
@@ -79,7 +79,7 @@ texture_region_size = Vector2i(48, 48)
 tile_size = Vector2i(48, 48)
 sources/0 = SubResource("TileSetAtlasSource_gmldl")
 
-[node name="Street1" type="Node2D" unique_id=2068958027]
+[node name="Street" type="Node2D" unique_id=2068958027]
 scale = Vector2(5, 5)
 
 [node name="SkyNight" type="Sprite2D" parent="." unique_id=1895621234]
@@ -285,7 +285,7 @@ position = Vector2(1925.9999, -24.400002)
 scale = Vector2(0.20099764, 0.20099767)
 amount = 1024
 texture = ExtResource("9_nikpo")
-lifetime = 30.0
+lifetime = 17.0
 preprocess = 30.0
 speed_scale = 0.2
 randomness = 1.0

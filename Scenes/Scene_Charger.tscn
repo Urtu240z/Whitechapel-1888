@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://b08qcjttirv76"]
 
 [ext_resource type="Shader" uid="uid://dqngrnl2o820o" path="res://Assets/Shaders/CRT.gdshader" id="1_cj7lv"]
-[ext_resource type="PackedScene" uid="uid://bxjhpfh4rly4c" path="res://Scenes/Exteriors/Streets.tscn" id="1_vt05j"]
+[ext_resource type="PackedScene" uid="uid://bxjhpfh4rly4c" path="res://Scenes/Exteriors/Template_Scenario.tscn" id="1_vt05j"]
 [ext_resource type="Script" uid="uid://cpvknmx26eyg8" path="res://Scripts/Core/CRT.gd" id="2_vt05j"]
+
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yglnd"]
 shader = ExtResource("1_cj7lv")

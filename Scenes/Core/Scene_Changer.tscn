@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://crm7wt4vyued" path="res://Scripts/Core/scene_changer.gd" id="1_x7b1d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_byt0t"]
-size = Vector2(80, 200)
+size = Vector2(880, 2682.5)
 
 [node name="SceneChanger" type="Area2D" unique_id=1533950328]
 collision_layer = 0
@@ -11,5 +11,5 @@ collision_mask = 2
 script = ExtResource("1_x7b1d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1949894590]
-position = Vector2(0, -68.5)
+position = Vector2(440, -1341)
 shape = SubResource("RectangleShape2D_byt0t")
