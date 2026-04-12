@@ -1,0 +1,276 @@
+[gd_scene format=3 uid="uid://ciprxm01yi32y"]
+
+[ext_resource type="Script" uid="uid://cy5kyons6cnkx" path="res://Scripts/Minigames/mg_hand.gd" id="1_416kb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_416kb"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfql6"]
+bg_color = Color(0.78301036, 0.53587043, 0.37198365, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.68042827, 0.18042374, 0.19014183, 1)
+border_blend = true
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_oaov5"]
+blend_mode = 3
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_c67be"]
+blend_mode = 3
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ihxyc"]
+blend_mode = 3
+
+[node name="MGHand" type="Control" unique_id=2036517947]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_416kb")
+max_speed = 600.0
+reality_speed_bonus_max = 2.0
+
+[node name="BG" type="ColorRect" parent="." unique_id=1704676015]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="SuccessFlash" type="ColorRect" parent="." unique_id=901257139]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="FailFlash" type="ColorRect" parent="." unique_id=875486731]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0, 0, 0)
+
+[node name="Center" type="Control" parent="." unique_id=757118817]
+custom_minimum_size = Vector2(900, 560)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Center" unique_id=1253448089]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_416kb")
+
+[node name="Title" type="Label" parent="Center/Panel" unique_id=865229627]
+layout_mode = 0
+offset_left = 372.0
+offset_top = 33.0
+offset_right = 501.0
+offset_bottom = 56.0
+text = "HAND / TRÁMITE"
+
+[node name="Subtitle" type="Label" parent="Center/Panel" unique_id=1664220875]
+layout_mode = 0
+offset_left = 406.0
+offset_top = 97.0
+offset_right = 466.0
+offset_bottom = 120.0
+text = "Subtitle"
+
+[node name="RhythmArea" type="Control" parent="Center/Panel" unique_id=1563180452]
+custom_minimum_size = Vector2(180, 360)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -180.0
+offset_right = 189.0
+offset_bottom = 180.0
+grow_vertical = 2
+
+[node name="BarBG" type="Panel" parent="Center/Panel/RhythmArea" unique_id=365105522]
+custom_minimum_size = Vector2(60, 320)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -160.0
+offset_right = 50.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sfql6")
+
+[node name="TopZone" type="ColorRect" parent="Center/Panel/RhythmArea/BarBG" unique_id=474205670]
+material = SubResource("CanvasItemMaterial_oaov5")
+layout_mode = 0
+offset_top = 36.0
+offset_right = 100.0
+offset_bottom = 61.0
+size_flags_stretch_ratio = 0.0
+color = Color(0.9529412, 0.9254902, 0.1764706, 0.6)
+
+[node name="BottomZone" type="ColorRect" parent="Center/Panel/RhythmArea/BarBG" unique_id=635343896]
+material = SubResource("CanvasItemMaterial_c67be")
+layout_mode = 0
+offset_top = 240.0
+offset_right = 100.0
+offset_bottom = 265.0
+color = Color(0.95281494, 0.9255881, 0.17558163, 0.6)
+
+[node name="Cursor" type="ColorRect" parent="Center/Panel/RhythmArea/BarBG" unique_id=310533384]
+material = SubResource("CanvasItemMaterial_ihxyc")
+layout_mode = 0
+offset_top = 169.0
+offset_right = 100.0
+offset_bottom = 184.0
+color = Color(1.2742168, 0.5930433, 0.40077758, 1)
+
+[node name="MentalArea" type="Control" parent="Center/Panel" unique_id=1535177079]
+custom_minimum_size = Vector2(460, 140)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -70.0
+offset_bottom = 70.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="MentalBarBG" type="Panel" parent="Center/Panel/MentalArea" unique_id=2132290110]
+custom_minimum_size = Vector2(360, 36)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sfql6")
+
+[node name="ArmorZone" type="Panel" parent="Center/Panel/MentalArea/MentalBarBG" unique_id=393115729]
+custom_minimum_size = Vector2(90, 36)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -20.0
+offset_right = 45.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MentalCursor" type="Panel" parent="Center/Panel/MentalArea/MentalBarBG" unique_id=1031296151]
+custom_minimum_size = Vector2(12, 36)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RealityLabel" type="Label" parent="Center/Panel/MentalArea" unique_id=442049191]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 112.0
+offset_right = 93.0
+offset_bottom = 159.66667
+text = "REALIDAD
+"
+
+[node name="DissociationLabel" type="Label" parent="Center/Panel/MentalArea" unique_id=1953958185]
+layout_mode = 0
+offset_left = 345.0
+offset_top = 110.0
+offset_right = 449.0
+offset_bottom = 133.0
+text = "DISOCIACIÓN"
+
+[node name="ProgressLabel" type="Label" parent="Center/Panel" unique_id=1460317156]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 494.0
+offset_right = 257.0
+offset_bottom = 517.0
+text = "Aciertos: 0 / 6"
+
+[node name="MistakesLabel" type="Label" parent="Center/Panel" unique_id=1728186224]
+layout_mode = 0
+offset_left = 389.0
+offset_top = 495.0
+offset_right = 458.0
+offset_bottom = 518.0
+text = "Fallos: 0 / 5"
+
+[node name="LeftHint" type="Label" parent="Center/Panel" unique_id=1610826340]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 61.0
+offset_right = 142.0
+offset_bottom = 84.0
+text = "F / X = ritmo"
+
+[node name="RightHint" type="Label" parent="Center/Panel" unique_id=1665376840]
+layout_mode = 0
+offset_left = 559.0
+offset_top = 201.0
+offset_right = 792.0
+offset_bottom = 224.0
+text = "Ratón / Stick derecho = coraza"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1827791706]
+
+[node name="SuccessSFX" type="AudioStreamPlayer" parent="." unique_id=1378698144]
+
+[node name="FailSFX" type="AudioStreamPlayer" parent="." unique_id=1934573945]
+
+[node name="TimerStart" type="Timer" parent="." unique_id=1916060537]
+one_shot = true
