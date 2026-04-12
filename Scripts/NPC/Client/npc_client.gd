@@ -90,6 +90,9 @@ var _last_attack: String = "Slap"
 
 var _behavior_before_follow: BehaviorMode = BehaviorMode.STATIC
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
+var _base_shadow_position: Vector2 = Vector2.ZERO
+var _base_shadow_scale: Vector2 = Vector2.ONE
+var _body_scale_refs_cached: bool = false
 
 # ============================================================================
 # CICLO DE VIDA
@@ -246,7 +249,19 @@ func _apply_selected_skin_preview() -> void:
 
 	skin_node.preview_skin(skin_name)
 
+func _cache_body_scale_refs() -> void:
+	if _body_scale_refs_cached:
+		return
+
+	if shadow_sprite:
+		_base_shadow_position = shadow_sprite.position
+		_base_shadow_scale = shadow_sprite.scale
+
+	_body_scale_refs_cached = true
+
 func _apply_body_scale() -> void:
+	_cache_body_scale_refs()
+
 	var s: float = max(body_scale, 0.01)
 	var scale_vec := Vector2(s, s)
 
@@ -261,7 +276,8 @@ func _apply_body_scale() -> void:
 		conversation_collision.scale = scale_vec
 
 	if shadow_sprite:
-		shadow_sprite.scale = scale_vec
+		shadow_sprite.position = _base_shadow_position * s
+		shadow_sprite.scale = _base_shadow_scale * s
 
 func _apply_facing_preview() -> void:
 	var character_container_node := get_node_or_null("CharacterContainer") as Node2D

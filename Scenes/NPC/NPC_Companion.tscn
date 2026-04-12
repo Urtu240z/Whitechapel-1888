@@ -2910,13 +2910,13 @@ bone_angle = 42.711983
 
 [node name="LegR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=1406433777]
 position = Vector2(-14.700328, 126.63689)
-rotation = -0.53276914
+rotation = -0.5327696
 scale = Vector2(0.999854, 0.999854)
 rest = Transform2D(0.99116075, -0.1326665, 0.1326665, 0.99116075, -66, 103)
 
 [node name="KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegR" unique_id=1691631702]
 position = Vector2(1, 146)
-rotation = 0.54049283
+rotation = 0.5404934
 scale = Vector2(0.9998531, 0.9998531)
 rest = Transform2D(0.9880616, 0.15405944, -0.15405944, 0.9880616, 1, 146)
 auto_calculate_length_and_angle = false
@@ -2931,13 +2931,13 @@ occluder = SubResource("OccluderPolygon2D_vqiu2")
 
 [node name="LegL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=802244090]
 position = Vector2(55.522446, 115.97094)
-rotation = -0.36592898
+rotation = -0.36593038
 scale = Vector2(0.9998528, 0.9998528)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegL" unique_id=1844206024]
 position = Vector2(-7, 125)
-rotation = 0.28082666
+rotation = 0.28082854
 scale = Vector2(0.999845, 0.999845)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
@@ -3171,6 +3171,7 @@ target_position = Vector2(0, 200)
 collision_mask = 4
 
 [node name="NameTag" parent="." unique_id=1423277668 instance=ExtResource("31_5d1tx")]
+visible = true
 modulate = Color(1, 1, 1, 0)
 position = Vector2(0, -470)
 text = "Mary"

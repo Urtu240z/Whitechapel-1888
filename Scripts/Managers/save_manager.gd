@@ -218,6 +218,10 @@ func _collect_data() -> Dictionary:
 		if npc.shop_items.size() > 0 and not npc.service_id.is_empty():
 			shop_stocks[npc.service_id] = npc.get_stock()
 
+	# Guardar nombres runtime elegidos para NPCs colocados en escena.
+	# Así evitamos que cambien al cargar partida si usan pool aleatorio.
+	var npc_runtime_names: Dictionary = _collect_npc_runtime_names(current_scene)
+
 	return {
 		"version":   2,
 		"timestamp": Time.get_datetime_string_from_system(),
@@ -259,6 +263,7 @@ func _collect_data() -> Dictionary:
 		"bolso_contents": InventoryManager.get_bolso_contents_serializable(),
 		"equipment":      equipment_data,
 		"shop_stocks":    shop_stocks,
+		"npc_runtime_names": npc_runtime_names,
 	}
 
 
@@ -326,6 +331,48 @@ func _convert_medicina_timer_from_save(data: Dictionary) -> float:
 		timer = timer / CONFIG.duracion_hora_segundos
 	return timer
 
+func _collect_npc_runtime_names(current_scene: Node) -> Dictionary:
+	var result: Dictionary = {}
+	var groups: Array[String] = ["npc_companion", "npc_client", "npc_service"]
+
+	for group_name: String in groups:
+		for npc in get_tree().get_nodes_in_group(group_name):
+			if not is_instance_valid(npc):
+				continue
+			if current_scene == null or not current_scene.is_ancestor_of(npc):
+				continue
+
+			var runtime_name: String = str(npc.current_display_name)
+			if runtime_name.is_empty():
+				continue
+
+			result[str(current_scene.get_path_to(npc))] = runtime_name
+
+	return result
+
+
+func _restore_npc_runtime_names(data: Dictionary) -> void:
+	if data.is_empty():
+		return
+
+	var current_scene = get_tree().current_scene
+	if current_scene == null:
+		return
+
+	for node_path_str in data.keys():
+		var npc = current_scene.get_node_or_null(NodePath(str(node_path_str)))
+		if not is_instance_valid(npc):
+			continue
+
+		var runtime_name: String = str(data[node_path_str])
+		if runtime_name.is_empty():
+			continue
+
+		npc.current_display_name = runtime_name
+
+		var tag = npc.get_node_or_null("NameTag")
+		if is_instance_valid(tag) and tag.has_method("set_text"):
+			tag.set_text(runtime_name)
 
 # =========================================================
 # 📥 APLICAR MUNDO — necesita que el player esté en el árbol
@@ -363,7 +410,7 @@ func _apply_world(data: Dictionary) -> void:
 			building = current_scene.get_node_or_null(NodePath(building_path))
 
 		if not is_instance_valid(building):
-			var last_name := building_path.get_file()
+			var last_name: String = building_path.get_file()
 			for b in get_tree().get_nodes_in_group("buildings"):
 				if b.name == last_name:
 					building = b
@@ -386,6 +433,9 @@ func _apply_world(data: Dictionary) -> void:
 	for npc in get_tree().get_nodes_in_group("npc_service"):
 		if shop_stocks.has(npc.service_id):
 			npc.restore_stock(shop_stocks[npc.service_id])
+
+	# Restaurar nombres runtime de NPCs ya instanciados en la escena.
+	_restore_npc_runtime_names(data.get("npc_runtime_names", {}))
 
 	print("✅ Partida cargada — pos: ", player.global_position)
 

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://oebyjtwwcxhx"]
 
 [ext_resource type="Script" uid="uid://u0wm8puw7way" path="res://Scripts/NPC/Client/npc_client.gd" id="1_i4ikf"]
-[ext_resource type="Resource" path="res://Data/NPC/npc_name_pools.tres" id="2_n1eow"]
+[ext_resource type="Resource" uid="uid://dxlm5sy6n08dh" path="res://Data/NPC/npc_name_pools.tres" id="2_n1eow"]
 [ext_resource type="Script" uid="uid://bhdhtis78oxh0" path="res://Scripts/NPC/Client/npc_client_skin.gd" id="2_olur3"]
 [ext_resource type="Texture2D" uid="uid://dxy5o2ua2u643" path="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_1_Pieces.png" id="3_i4ikf"]
 [ext_resource type="Texture2D" uid="uid://ctqh0sstagorg" path="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_1_Pieces_n.png" id="4_olur3"]
@@ -34,6 +34,8 @@
 [ext_resource type="AudioStream" uid="uid://btggs7olo6i7w" path="res://Assets/Audio/Effects/Slap_1.ogg" id="30_ccqk5"]
 [ext_resource type="AudioStream" uid="uid://cetbmnrsyejnj" path="res://Assets/Audio/Effects/Kick_4.ogg" id="31_sd6pm"]
 [ext_resource type="PackedScene" uid="uid://qrckrvjkyeu" path="res://Scenes/Core/NameTag.tscn" id="33_sd6pm"]
+[ext_resource type="Texture2D" uid="uid://cmiaxkdag50ib" path="res://Assets/Sprites/Player/Player_Shadow.png" id="35_j2evj"]
+[ext_resource type="Script" uid="uid://cjid154armajs" path="res://Scripts/NPC/Client/npc_client_shadow.gd" id="36_j2evj"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ktbwa"]
 diffuse_texture = ExtResource("3_i4ikf")
@@ -1436,6 +1438,7 @@ name_pools = ExtResource("2_n1eow")
 skin_name = "NPC_ClientPoor"
 
 [node name="CharacterContainer" type="Node2D" parent="." unique_id=58656308]
+z_index = 1
 script = ExtResource("2_olur3")
 current_skin = "NPC_ClientPoor5"
 
@@ -2181,13 +2184,13 @@ bone_angle = -33.018
 
 [node name="LegR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=739498891]
 position = Vector2(-44.77522, 45.260902)
-rotation = -1.0975735
-scale = Vector2(0.9998446, 0.9998446)
+rotation = -1.0975739
+scale = Vector2(0.99984455, 0.99984455)
 rest = Transform2D(0.44403812, -0.8958404, 0.8958404, 0.44403812, -44.77522, 45.260902)
 
 [node name="KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegR" unique_id=1673755140]
 position = Vector2(-130.53163, 94.41959)
-rotation = 1.1517862
+rotation = 1.1517867
 scale = Vector2(0.99983954, 0.99983954)
 rest = Transform2D(0.35090968, 0.93623465, -0.93623465, 0.35090968, -130.53163, 94.41959)
 auto_calculate_length_and_angle = false
@@ -2280,6 +2283,7 @@ bone_node = NodePath("../../Hip")
 metadata/_custom_type_script = "uid://b5uiivwxcoics"
 
 [node name="IK Targets" type="Node2D" parent="CharacterContainer" unique_id=1052882206]
+visible = false
 
 [node name="Head Target" type="Node2D" parent="CharacterContainer/IK Targets" unique_id=1937265171]
 position = Vector2(60, -379)
@@ -2375,5 +2379,13 @@ parameters/Slap/TimeScale/scale = 0.7000000000000028
 parameters/Walk/TimeScale/scale = 1.5
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=569175778]
+z_index = 1
 position = Vector2(-9.002001, 428)
 texture = ExtResource("18_tfgen")
+
+[node name="ShadowProjection" type="Sprite2D" parent="." unique_id=510466625]
+position = Vector2(-15, 472)
+scale = Vector2(1, 1.15)
+texture = ExtResource("35_j2evj")
+offset = Vector2(0, -409.035)
+script = ExtResource("36_j2evj")

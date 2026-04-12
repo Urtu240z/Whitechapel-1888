@@ -245,7 +245,46 @@ position = Vector2(-125.799995, -162.2)
 scale = Vector2(0.31999996, 0.31999996)
 texture = ExtResource("27_cevxu")
 
+[node name="OutsideBuildings" type="Node2D" parent="." unique_id=1835699367]
+scale = Vector2(4.9999995, 4.9999995)
+
+[node name="Ten_Bells" parent="OutsideBuildings" unique_id=926207058 groups=["buildings"] instance=ExtResource("11_aubp3")]
+position = Vector2(-487.00003, -370.00003)
+scale = Vector2(0.6700001, 0.6700001)
+
+[node name="Lodge" parent="OutsideBuildings" unique_id=1878724243 groups=["buildings"] instance=ExtResource("18_wefgp")]
+position = Vector2(-2742.0002, -548.60004)
+scale = Vector2(1.0000001, 1.0000001)
+zoom_in = Vector2(0.31, 0.31)
+
 [node name="OutsideActors" type="Node2D" parent="." unique_id=1503485489]
+
+[node name="Companions" type="Node2D" parent="OutsideActors" unique_id=1087582166]
+
+[node name="NPCCompanion" parent="OutsideActors/Companions" unique_id=1093994703 instance=ExtResource("29_p0tfu")]
+position = Vector2(-1523, -641)
+companion_name = "Dolly"
+initial_facing_right = false
+body_scale = 1.1
+skin_name = "Bridget"
+
+[node name="NPCCompanion2" parent="OutsideActors/Companions" unique_id=1036286580 instance=ExtResource("29_p0tfu")]
+position = Vector2(1387, -641)
+companion_name = "Bridget"
+skin_name = "Dolly"
+
+[node name="Services" type="Node2D" parent="OutsideActors" unique_id=382545114]
+
+[node name="NPCService" parent="OutsideActors/Services" unique_id=1649721714 instance=ExtResource("19_l08at")]
+position = Vector2(-599.00006, -714.99994)
+npc_display_name = "Madame Colette"
+dialog_timeline = "uid://bv2dnetct8j1v"
+service_id = "perfume_vendor"
+initial_facing_right = false
+body_scale = 0.9
+shop_items = Array[ExtResource("20_ixfdq")]([SubResource("Resource_k7r8x"), SubResource("Resource_l83om"), SubResource("Resource_v1jka"), SubResource("Resource_keg7c"), SubResource("Resource_ubdd7"), SubResource("Resource_mlx1v")])
+shop_name_key = "PERFUME_VENDOR_SHOP_NAME"
+skin_name = "NPC_PerfumeVendor"
 
 [node name="Clients" type="Node2D" parent="OutsideActors" unique_id=1541142758]
 
@@ -288,44 +327,6 @@ position = Vector2(1077.0001, -689)
 dialog_timeline = "uid://c38evy5q65a84"
 body_scale = 1.3
 skin_name = "NPC_ClientPoor6"
-
-[node name="Companions" type="Node2D" parent="OutsideActors" unique_id=1087582166]
-position = Vector2(-1489, -641)
-
-[node name="NPCCompanion" parent="OutsideActors/Companions" unique_id=1093994703 instance=ExtResource("29_p0tfu")]
-companion_name = "Dolly"
-body_scale = 1.1
-skin_name = "Bridget"
-
-[node name="NPCCompanion2" parent="OutsideActors/Companions" unique_id=1036286580 instance=ExtResource("29_p0tfu")]
-position = Vector2(2876, 0)
-companion_name = "Bridget"
-skin_name = "Dolly"
-
-[node name="Services" type="Node2D" parent="OutsideActors" unique_id=382545114]
-
-[node name="NPCService" parent="OutsideActors/Services" unique_id=1649721714 instance=ExtResource("19_l08at")]
-position = Vector2(-599.00006, -714.99994)
-npc_display_name = "Madame Colette"
-dialog_timeline = "uid://bv2dnetct8j1v"
-service_id = "perfume_vendor"
-initial_facing_right = false
-body_scale = 0.9
-shop_items = Array[ExtResource("20_ixfdq")]([SubResource("Resource_k7r8x"), SubResource("Resource_l83om"), SubResource("Resource_v1jka"), SubResource("Resource_keg7c"), SubResource("Resource_ubdd7"), SubResource("Resource_mlx1v")])
-shop_name_key = "PERFUME_VENDOR_SHOP_NAME"
-skin_name = "NPC_PerfumeVendor"
-
-[node name="OutsideBuildings" type="Node2D" parent="." unique_id=1835699367]
-scale = Vector2(4.9999995, 4.9999995)
-
-[node name="Ten_Bells" parent="OutsideBuildings" unique_id=926207058 groups=["buildings"] instance=ExtResource("11_aubp3")]
-position = Vector2(-487.00003, -370.00003)
-scale = Vector2(0.6700001, 0.6700001)
-
-[node name="Lodge" parent="OutsideBuildings" unique_id=1878724243 groups=["buildings"] instance=ExtResource("18_wefgp")]
-position = Vector2(-2742.0002, -548.60004)
-scale = Vector2(1.0000001, 1.0000001)
-zoom_in = Vector2(0.31, 0.31)
 
 [node name="OutsideGameplay" type="Node2D" parent="." unique_id=1636201878]
 
@@ -391,7 +392,7 @@ color = Color(0, 0, 0, 1)
 [node name="Player" parent="." unique_id=1458210690 instance=ExtResource("33_6sqwf")]
 modulate = Color(0.65834004, 0.6583399, 0.6583399, 1)
 y_sort_enabled = true
-position = Vector2(-4403, -564)
+position = Vector2(-1938, -564)
 shadow_max_distance = 1000.0
 shadow_base_alpha = 1.7
 shadow_max_rotation_left = 45.0

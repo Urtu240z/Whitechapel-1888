@@ -7,6 +7,7 @@ layer = 12
 script = ExtResource("1_ce0ii")
 
 [node name="Control" type="Control" parent="." unique_id=2062303486]
+light_mask = 0
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

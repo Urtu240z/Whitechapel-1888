@@ -9,7 +9,7 @@ blend_mode = 1
 
 [sub_resource type="Gradient" id="Gradient_4m6vr"]
 offsets = PackedFloat32Array(0, 0.7022222)
-colors = PackedColorArray(0.99999994, 0.6751051, 0.28616115, 1, 0, 0, 0, 0)
+colors = PackedColorArray(0.47065556, 0.28257865, 0, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_iolyl"]
 gradient = SubResource("Gradient_4m6vr")
@@ -23,7 +23,7 @@ texture = ExtResource("1_x7thl")
 modulate_color = Color(0.99999994, 0.85582066, 0.7444757, 1)
 
 [node name="NameTag" type="Node2D" unique_id=1423277668]
-visible = false
+modulate = Color(1, 1, 1, 0)
 z_index = 100
 script = ExtResource("1_4m6vr")
 fade_time = 0.3
@@ -31,11 +31,11 @@ fade_time = 0.3
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1919495359]
 material = SubResource("CanvasItemMaterial_x7thl")
 position = Vector2(9.094947e-13, -2.9802322e-08)
-scale = Vector2(3.2187498, 1.3671877)
+scale = Vector2(5.5, 2.3)
 texture = SubResource("GradientTexture2D_iolyl")
 
 [node name="Panel" type="Panel" parent="." unique_id=1052569514]
-custom_minimum_size = Vector2(250, 80)
+custom_minimum_size = Vector2(350, 140)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -58,7 +58,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.78605634, 0.5459456, 1)
 theme_override_fonts/font = ExtResource("2_4m6vr")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 42
 text = "NPC"
 horizontal_alignment = 1
 vertical_alignment = 1
