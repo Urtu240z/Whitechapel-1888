@@ -9,8 +9,8 @@
 [ext_resource type="AudioStream" uid="uid://bq626yq3ebj5a" path="res://Assets/Audio/Buildings/Close_Door (1).wav" id="5_ckb2g"]
 [ext_resource type="AudioStream" uid="uid://vsi28chd68ph" path="res://Assets/Audio/Buildings/Close_Door (2).wav" id="6_i4n63"]
 [ext_resource type="AudioStream" uid="uid://d1q5svthqkw2r" path="res://Assets/Audio/Buildings/Close_Door (3).wav" id="7_gkafe"]
+[ext_resource type="Texture2D" uid="uid://dehublgg56alq" path="res://Assets/Sprites/Building/Bar Ten Bells.png" id="8_fh68x"]
 [ext_resource type="PackedScene" uid="uid://cmmlvd8ng8chj" path="res://Scenes/NPC/NPC_Service.tscn" id="8_nqx5a"]
-[ext_resource type="Texture2D" uid="uid://blanr7qkp7rp5" path="res://Assets/Sprites/Building/Ten Bells.png" id="8_vcas7"]
 [ext_resource type="Script" uid="uid://bbc6r2ife4inn" path="res://Scripts/Data/shop_item_data.gd" id="9_2u12w"]
 [ext_resource type="Resource" uid="uid://gs43wgyqonvx" path="res://Data/Pickups/drink-cerveza.tres" id="10_rpjb7"]
 [ext_resource type="Texture2D" uid="uid://5ba0d6ipy0es" path="res://Assets/Sprites/Interiors/Bar Bells/Guitar.png" id="10_us83r"]
@@ -190,8 +190,9 @@ street_name = "Commercial Street"
 
 [node name="Exterior" type="Sprite2D" parent="." unique_id=107088786]
 texture_filter = 1
-position = Vector2(74, -87)
-texture = ExtResource("8_vcas7")
+position = Vector2(-642, -88.00001)
+scale = Vector2(0.82765955, 0.82765955)
+texture = ExtResource("8_fh68x")
 
 [node name="Interior" type="Node2D" parent="." unique_id=936244711]
 visible = false
@@ -299,16 +300,16 @@ scale = Vector2(0.9999894, 0.9999894)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="7" unique_id=966757603]
 position = Vector2(-28.915283, 538.63513)
-scale = Vector2(0.99998516, 0.99998516)
+scale = Vector2(0.9999849, 0.9999849)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="8" unique_id=1961738744]
 position = Vector2(-3, 161.99976)
-scale = Vector2(0.9999887, 0.9999887)
+scale = Vector2(0.99998844, 0.99998844)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="9" unique_id=1346636835]
 position = Vector2(-53.35913, 893.88367)
-rotation = -0.06001728
-scale = Vector2(0.999983, 0.999983)
+rotation = -0.06001729
+scale = Vector2(0.9999828, 0.9999828)
 
 [node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="10" unique_id=1940891905]
 position = Vector2(80.47656, -294.79858)
@@ -329,13 +330,13 @@ visible = false
 position = Vector2(58, 139.99988)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-scale = Vector2(0.99998856, 0.99998856)
+scale = Vector2(0.9999883, 0.9999883)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
 scale = Vector2(0.9999965, 0.9999965)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR/Mp1LegR" index="0" unique_id=1973771377]
-rotation = -0.092468016
+rotation = -0.09246802
 scale = Vector2(0.999998, 0.999998)
 
 [node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL" parent_id_path=PackedInt32Array(1872631834, 607615665) index="1" unique_id=1135898689]
@@ -480,16 +481,16 @@ scale = Vector2(0.99999255, 0.99999255)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="7" unique_id=966757603]
 position = Vector2(-28.915283, 538.63354)
-scale = Vector2(0.9999811, 0.9999811)
+scale = Vector2(0.99998087, 0.99998087)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="8" unique_id=1961738744]
 position = Vector2(-3, 162)
-scale = Vector2(0.9999841, 0.9999841)
+scale = Vector2(0.99998385, 0.99998385)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="9" unique_id=1346636835]
 position = Vector2(-53.35913, 893.88086)
-rotation = -0.06000788
-scale = Vector2(0.9999781, 0.9999781)
+rotation = -0.060007874
+scale = Vector2(0.9999777, 0.9999777)
 
 [node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="10" unique_id=1940891905]
 position = Vector2(80.47656, -294.79834)
@@ -510,14 +511,14 @@ visible = false
 position = Vector2(57.999756, 140)
 
 [node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-scale = Vector2(0.9999839, 0.9999839)
+scale = Vector2(0.99998367, 0.99998367)
 
 [node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
 scale = Vector2(0.9999972, 0.9999972)
 
 [node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR/Mp1LegR" index="0" unique_id=1973771377]
-rotation = -0.092458665
-scale = Vector2(0.999997, 0.999997)
+rotation = -0.09245855
+scale = Vector2(0.9999968, 0.9999968)
 
 [node name="Mp1KneeL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="2" unique_id=607615665]
 scale = Vector2(0.99999964, 0.99999964)
@@ -903,13 +904,13 @@ position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_0l6d3")
 
 [node name="DoorGlow" type="Sprite2D" parent="BuildingEntrance" unique_id=479644034]
-texture_filter = 1
+texture_filter = 2
 material = SubResource("ShaderMaterial_nqx5a")
-position = Vector2(0.3, 346)
-texture = ExtResource("8_vcas7")
+position = Vector2(-1.999999, 342)
+scale = Vector2(0.83561647, 0.82716054)
+texture = ExtResource("8_fh68x")
 region_enabled = true
-region_rect = Rect2(286.81104, 868, 132.02158, 279)
-metadata/_edit_lock_ = true
+region_rect = Rect2(1966.5, 1062.5, 146, 324)
 
 [editable path="Interior/TileMapLayer/Objects/NPC3"]
 [editable path="Interior/TileMapLayer/Objects/NPC"]

@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://d046qlky05sps" path="res://Assets/Sprites/Effects/Smoke.png" id="10_ee86v"]
 [ext_resource type="Shader" uid="uid://cfs0s7thwppo1" path="res://Assets/Shaders/Blur_Sprite.gdshader" id="11_ajpcj"]
 [ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="11_nas3t"]
+[ext_resource type="Texture2D" uid="uid://blwmycta5s4us" path="res://Assets/Sprites/Building/Victoria Home.png" id="11_y0tni"]
+[ext_resource type="Texture2D" uid="uid://dsxbp2tfseoov" path="res://Assets/Sprites/Building/Princess Alice.png" id="12_fcpjw"]
 [ext_resource type="Texture2D" uid="uid://njfqt2e88exo" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand3.png" id="12_tp2us"]
 [ext_resource type="Texture2D" uid="uid://db0e7drmhg073" path="res://Assets/Sprites/Background/Ground.png" id="12_v2j58"]
 [ext_resource type="Texture2D" uid="uid://bhcdu34bwng3e" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand2_n.png" id="13_y0tni"]
@@ -134,7 +136,7 @@ color = Color(0.27058825, 0.27058825, 0.27058825, 0.972549)
 color_ramp = SubResource("Gradient_peixa")
 
 [node name="Ten_Bells" parent="Scenary/Buildings" unique_id=926207058 instance=ExtResource("11_nas3t")]
-position = Vector2(-6505, -10010)
+position = Vector2(11740, -9615)
 scale = Vector2(20, 20)
 zoom_in = Vector2(0.3, 0.3)
 zoom_out = Vector2(1, 1)
@@ -142,6 +144,7 @@ zoom_out = Vector2(1, 1)
 [node name="Front" type="Node2D" parent="Scenary/Buildings" unique_id=1795668460]
 
 [node name="ApartmentBlock2" type="Sprite2D" parent="Scenary/Buildings/Front" unique_id=1962539512]
+visible = false
 texture_filter = 1
 position = Vector2(6544.9995, -8594.999)
 scale = Vector2(4.61, 4.61)
@@ -214,7 +217,7 @@ material = SubResource("CanvasItemMaterial_8oeb8")
 texture = ExtResource("2_gb7vo")
 
 [node name="ApartmentBlock4" type="Sprite2D" parent="Scenary/Buildings/Front" unique_id=269792243]
-position = Vector2(-34914.996, -5859.999)
+position = Vector2(72285, -6530.001)
 scale = Vector2(24.999998, 24.999998)
 texture = ExtResource("7_fcpjw")
 
@@ -232,6 +235,16 @@ modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
 texture = ExtResource("2_gb7vo")
 
+[node name="VictoriaHome" type="Sprite2D" parent="Scenary/Buildings/Front" unique_id=2002751111]
+position = Vector2(-46260.004, -12515)
+scale = Vector2(16.87953, 16.879526)
+texture = ExtResource("11_y0tni")
+
+[node name="PrincessAlice" type="Sprite2D" parent="Scenary/Buildings/Front" unique_id=949728203]
+position = Vector2(70395.01, -9015)
+scale = Vector2(10.162389, 10.162389)
+texture = ExtResource("12_fcpjw")
+
 [node name="Rear" type="Node2D" parent="Scenary/Buildings" unique_id=315640050]
 
 [node name="ApartmentBlock6" type="Sprite2D" parent="Scenary/Buildings/Rear" unique_id=183269784]
@@ -246,7 +259,7 @@ texture = ExtResource("5_tp2us")
 light_mask = 0
 z_index = -1
 texture_filter = 1
-position = Vector2(-39169.996, -8625)
+position = Vector2(-75035, -9805)
 scale = Vector2(3.91, 4.645)
 texture = ExtResource("4_ajpcj")
 
@@ -390,32 +403,27 @@ scale = Vector2(1.1, 1.1)
 position = Vector2(3210, -372)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
-wander_enabled = true
 
 [node name="NPCClient2" parent="NPC/Clients" unique_id=400459338 instance=ExtResource("18_gb7vo")]
 position = Vector2(2197, -373)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
-wander_enabled = true
 skin_name = "NPC_ClientPoor2"
 
 [node name="NPCClient3" parent="NPC/Clients" unique_id=635591008 instance=ExtResource("18_gb7vo")]
 position = Vector2(1955, -366)
 dialog_timeline = "uid://c38evy5q65a84"
-wander_enabled = null
 skin_name = "NPC_ClientPoor3"
 
 [node name="NPCClient4" parent="NPC/Clients" unique_id=2103339271 instance=ExtResource("18_gb7vo")]
 position = Vector2(-2336, -375)
 dialog_timeline = "uid://c38evy5q65a84"
-wander_enabled = null
 skin_name = "NPC_ClientPoor4"
 
 [node name="NPCClient5" parent="NPC/Clients" unique_id=383274618 instance=ExtResource("18_gb7vo")]
 position = Vector2(2937, -397.99997)
 scale = Vector2(1.13, 1.13)
 dialog_timeline = "uid://c38evy5q65a84"
-wander_enabled = null
 skin_name = "NPC_ClientPoor6"
 
 [node name="NPCClient6" parent="NPC/Clients" unique_id=1966185597 instance=ExtResource("18_gb7vo")]
@@ -423,7 +431,6 @@ position = Vector2(-3431, -450)
 scale = Vector2(1.2, 1.2)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
-wander_enabled = true
 skin_name = "NPC_ClientPoor5"
 
 [node name="Service" type="Node2D" parent="NPC" unique_id=1416560985]

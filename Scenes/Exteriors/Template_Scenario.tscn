@@ -311,6 +311,8 @@ dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
 behavior_mode = 1
 body_scale = 1.16
+follow_dist_min = 100.0
+follow_dist_max = 300.0
 skin_name = "NPC_ClientPoor4"
 
 [node name="NPCClient4" parent="OutsideActors/Clients" unique_id=289648581 instance=ExtResource("28_3rwnu")]
@@ -350,18 +352,22 @@ next_scene_path = "uid://cwgtlmcg3m7y2"
 [node name="SceneryPOI" parent="OutsideGameplay/POIs" unique_id=797204525 instance=ExtResource("32_b2rtk")]
 position = Vector2(1681, -701)
 poi_name = "Clients"
+slot_spacing = 320.0
 
 [node name="SceneryPOI2" parent="OutsideGameplay/POIs" unique_id=958857100 instance=ExtResource("32_b2rtk")]
 position = Vector2(-619, -816)
 poi_name = "Perfume"
+slot_spacing = 300.0
 
 [node name="SceneryPOI3" parent="OutsideGameplay/POIs" unique_id=748484449 instance=ExtResource("32_b2rtk")]
 position = Vector2(-6755, -816)
 poi_name = "Perfume"
+slot_spacing = 360.0
 
 [node name="SceneryPOI4" parent="OutsideGameplay/POIs" unique_id=346336918 instance=ExtResource("32_b2rtk")]
 position = Vector2(8085, -816)
 poi_name = "Perfume"
+slot_spacing = 190.0
 
 [node name="RouteMarkers" type="Node2D" parent="OutsideGameplay" unique_id=343400679]
 
