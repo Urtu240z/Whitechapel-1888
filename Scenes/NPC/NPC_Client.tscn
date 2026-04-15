@@ -1431,6 +1431,7 @@ transitions = ["Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(-11, 83)
 
 [node name="NPCClient" type="CharacterBody2D" unique_id=1649721714 groups=["npcs", "npcs_active"]]
+z_index = 6
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_i4ikf")
@@ -1438,7 +1439,6 @@ name_pools = ExtResource("2_n1eow")
 skin_name = "NPC_ClientPoor"
 
 [node name="CharacterContainer" type="Node2D" parent="." unique_id=58656308]
-z_index = 1
 script = ExtResource("2_olur3")
 current_skin = "NPC_ClientPoor5"
 
@@ -2345,7 +2345,7 @@ pitch_scale = 0.81
 bus = &"ReverbZone"
 
 [node name="NameTag" parent="." unique_id=1423277668 instance=ExtResource("33_sd6pm")]
-modulate = Color(1, 1, 1, 0)
+visible = false
 position = Vector2(0, -470)
 text = "Arthur C."
 
@@ -2384,6 +2384,7 @@ position = Vector2(-9.002001, 428)
 texture = ExtResource("18_tfgen")
 
 [node name="ShadowProjection" type="Sprite2D" parent="." unique_id=510466625]
+z_index = -1
 position = Vector2(-15, 472)
 scale = Vector2(1, 1.15)
 texture = ExtResource("35_j2evj")

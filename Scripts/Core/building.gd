@@ -27,21 +27,21 @@ extends Node2D
 # ================================================================
 @export_group("⚙️ Behaviour")
 @export var enter_action: String = "interact"
-@export var fade_time: float = 0.8
+@export var fade_time: float = 3.5
 # ================================================================
 # 📷 CÁMARA
 # ================================================================
 @export_group("📷 Camera")
-@export var zoom_in: Vector2 = Vector2(1.7, 1.7)
-@export var zoom_out: Vector2 = Vector2(1.445, 1.445)
+@export var zoom_in: Vector2 = Vector2(0.38, 0.38)
+@export var zoom_out: Vector2 = Vector2(0.3, 0.3)
 # ================================================================
 # 🔊 AUDIO
 # ================================================================
 @export_group("🔊 Audio")
 @export var open_sounds: Array[AudioStream] = []
 @export var close_sounds: Array[AudioStream] = []
-@export var sfx_volume_db_min: float = -2.0
-@export var sfx_volume_db_max: float = 0.0
+@export var sfx_volume_db_min: float = 0.0
+@export var sfx_volume_db_max: float = 2.0
 # ================================================================
 # 🏷️ NOMBRES
 # ================================================================

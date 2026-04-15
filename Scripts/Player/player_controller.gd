@@ -16,12 +16,12 @@ class_name MainPlayer
 @export var gravity_scale: int = 1
 
 @export_group("🌑 Shadow")
-@export var shadow_max_distance: float = 400.0
-@export var shadow_base_alpha: float = 0.35
-@export var shadow_max_rotation_left: float = -45.0
-@export var shadow_max_rotation_right: float = 45.0
+@export var shadow_max_distance: float = 1000.0
+@export var shadow_base_alpha: float = 1.7
+@export var shadow_max_rotation_left: float = 45.0
+@export var shadow_max_rotation_right: float = -45.0
 @export var shadow_max_scale: float = 1.5
-@export var shadow_max_skew: float = 0.5
+@export var shadow_max_skew: float = 0.05
 
 @export_group("👗 Visual Settings")
 @export_enum("London", "Farm") var default_outfit: String = "London"

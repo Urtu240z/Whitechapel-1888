@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://7aunpuk0twuj"]
+
+[ext_resource type="Shader" uid="uid://cfs0s7thwppo1" path="res://Assets/Shaders/Blur_Sprite.gdshader" id="1_umvyx"]
+
+[resource]
+shader = ExtResource("1_umvyx")
+shader_parameter/blur_strength = 3.3370001585075
+shader_parameter/blur_quality = 3.0
+shader_parameter/center_preserve = 0.0
+shader_parameter/opacity = 1.0
+shader_parameter/brightness = 0.53200002527
+shader_parameter/tint_color = Color(1, 0.6738783, 0.5060719, 1)

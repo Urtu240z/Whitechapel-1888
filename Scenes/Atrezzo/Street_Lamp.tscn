@@ -10,7 +10,7 @@ blend_mode = 1
 [node name="Street_Lamp" type="Sprite2D" unique_id=1667577496 groups=["street_lamp"]]
 light_mask = 2
 visibility_layer = 2
-z_index = 2
+z_index = 7
 texture = ExtResource("1_u5ynd")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=643840350]
