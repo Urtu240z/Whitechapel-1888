@@ -1,32 +1,6 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://brwt8d6kmkbt7"]
 
-[ext_resource type="Shader" uid="uid://crt0rfb25vhke" path="res://Assets/Shaders/Painting_Animated.gdshader" id="1_xclf3"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bbl76"]
-load_path = "res://.godot/imported/ColorCloud.png-9cf5cec44a9018fb555886ba8fe0c998.ctex"
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_xclf3"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_alycg"]
-noise = SubResource("FastNoiseLite_xclf3")
-seamless = true
+[ext_resource type="Shader" uid="uid://dw2ei2imjhod8" path="res://Assets/Shaders/Sobel.gdshader" id="1_bbl76"]
 
 [resource]
-shader = ExtResource("1_xclf3")
-shader_parameter/main_tex = SubResource("CompressedTexture2D_bbl76")
-shader_parameter/noise_tex = SubResource("NoiseTexture2D_alycg")
-shader_parameter/iterations = 3.0
-shader_parameter/shift = 0.7
-shader_parameter/rotation_speed = 5.0
-shader_parameter/smoothness = 3.0
-shader_parameter/smooth_enabled = true
-shader_parameter/rotation_min = 0.1
-shader_parameter/rotation_max = 0.2
-shader_parameter/sharpness = 1.0
-shader_parameter/hue_shift = 0.0
-shader_parameter/saturation = 0.6999999843536
-shader_parameter/brightness = 0.0
-shader_parameter/contrast = 1.0
-shader_parameter/shadows_color = Color(1, 1, 1, 1)
-shader_parameter/midtones_color = Color(1, 1, 1, 1)
-shader_parameter/highlights_color = Color(1, 1, 1, 1)
+shader = ExtResource("1_bbl76")

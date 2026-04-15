@@ -13,13 +13,15 @@
 [ext_resource type="Shader" uid="uid://cfs0s7thwppo1" path="res://Assets/Shaders/Blur_Sprite.gdshader" id="11_ajpcj"]
 [ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="11_nas3t"]
 [ext_resource type="Texture2D" uid="uid://blwmycta5s4us" path="res://Assets/Sprites/Building/Victoria Home.png" id="11_y0tni"]
+[ext_resource type="Texture2D" uid="uid://c27185k2cf804" path="res://Assets/Sprites/Building/Victoria Home_n.png" id="12_7ajcb"]
 [ext_resource type="Texture2D" uid="uid://dsxbp2tfseoov" path="res://Assets/Sprites/Building/Princess Alice.png" id="12_fcpjw"]
-[ext_resource type="Texture2D" uid="uid://njfqt2e88exo" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand3.png" id="12_tp2us"]
 [ext_resource type="Texture2D" uid="uid://db0e7drmhg073" path="res://Assets/Sprites/Background/Ground.png" id="12_v2j58"]
 [ext_resource type="Texture2D" uid="uid://bhcdu34bwng3e" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand2_n.png" id="13_y0tni"]
 [ext_resource type="PackedScene" uid="uid://5o5jm036m674" path="res://Scenes/Atrezzo/Street_Lamp.tscn" id="14_3j0sx"]
+[ext_resource type="Texture2D" uid="uid://doveld8sakx3j" path="res://Assets/Sprites/Building/Princess Alice_n.png" id="14_ee86v"]
 [ext_resource type="PackedScene" uid="uid://g6e6vle2a0l2" path="res://Scenes/Atrezzo/Street_Lamp_Blur.tscn" id="15_5c5rf"]
 [ext_resource type="Texture2D" uid="uid://cuesydgcralbu" path="res://Assets/Sprites/Atrezzo/Street_Lamp_Blur.png" id="16_3duel"]
+[ext_resource type="Texture2D" uid="uid://b3urn2vwo45y5" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand.png" id="16_nas3t"]
 [ext_resource type="Texture2D" uid="uid://b38snj6t625s5" path="res://Assets/Sprites/Effects/Fog.png" id="17_h8mjo"]
 [ext_resource type="PackedScene" uid="uid://oebyjtwwcxhx" path="res://Scenes/NPC/NPC_Client.tscn" id="18_gb7vo"]
 [ext_resource type="PackedScene" uid="uid://c3m8fewa1n53m" path="res://Scenes/Buildings/Hide_Zone.tscn" id="19_lwph6"]
@@ -34,6 +36,14 @@ colors = PackedColorArray(1, 1, 1, 0.08235294, 1, 1, 1, 0.654902)
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8oeb8"]
 blend_mode = 1
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_v2j58"]
+diffuse_texture = ExtResource("11_y0tni")
+normal_texture = ExtResource("12_7ajcb")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_4w0qd"]
+diffuse_texture = ExtResource("12_fcpjw")
+normal_texture = ExtResource("14_ee86v")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tp2us"]
 shader = ExtResource("11_ajpcj")
 shader_parameter/blur_strength = 2.1690001030275
@@ -42,7 +52,7 @@ shader_parameter/brightness = 0.8470000402325
 shader_parameter/tint_color = Color(0.40832946, 0.40832946, 0.40832946, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_fcpjw"]
-diffuse_texture = ExtResource("12_tp2us")
+diffuse_texture = ExtResource("16_nas3t")
 normal_texture = ExtResource("13_y0tni")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_isxnx"]
@@ -238,12 +248,12 @@ texture = ExtResource("2_gb7vo")
 [node name="VictoriaHome" type="Sprite2D" parent="Scenary/Buildings/Front" unique_id=2002751111]
 position = Vector2(-46260.004, -12515)
 scale = Vector2(16.87953, 16.879526)
-texture = ExtResource("11_y0tni")
+texture = SubResource("CanvasTexture_v2j58")
 
 [node name="PrincessAlice" type="Sprite2D" parent="Scenary/Buildings/Front" unique_id=949728203]
 position = Vector2(70395.01, -9015)
 scale = Vector2(10.162389, 10.162389)
-texture = ExtResource("12_fcpjw")
+texture = SubResource("CanvasTexture_4w0qd")
 
 [node name="Rear" type="Node2D" parent="Scenary/Buildings" unique_id=315640050]
 
@@ -272,7 +282,7 @@ collision_mask = 0
 z_index = -1
 texture_filter = 1
 position = Vector2(-30, 770.00006)
-scale = Vector2(10, 10)
+scale = Vector2(40.565, 40.565)
 texture = SubResource("CanvasTexture_fcpjw")
 
 [node name="BorderGround" type="Sprite2D" parent="Scenary/Ground" unique_id=1863265908]
@@ -311,7 +321,7 @@ position = Vector2(-139.375, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
 [node name="Street_Lamp5" parent="Lights/Parallax2D/Lights_background" unique_id=1022455554 instance=ExtResource("14_3j0sx")]
-position = Vector2(540.625, -177.71143)
+position = Vector2(538.9335, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
 [node name="Street_Lamp7" parent="Lights/Parallax2D/Lights_background" unique_id=166615034 instance=ExtResource("14_3j0sx")]

@@ -2131,6 +2131,172 @@ tracks/11/keys = {
 "values": [0.17889677]
 }
 
+[sub_resource type="Animation" id="Animation_vrod0"]
+resource_name = "Walk_Silent"
+length = 1.9666667
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterContainer/IK Targets/Head Target:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(130, -497), Vector2(190, -466)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CharacterContainer/IK Targets/Chest Target:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.01),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(429, 47), Vector2(489.00003, 122)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CharacterContainer/IK Targets/ArmR Target:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.46666667, 1.02, 1.58),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(20.000008, 62.00003), Vector2(1.0000019, 78), Vector2(67, 51), Vector2(128, -51.999996)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CharacterContainer/IK Targets/ArmL Target:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.49, 1.1, 1.58),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(120, 50), Vector2(118, 37), Vector2(104, 77), Vector2(103, 20)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CharacterContainer/IK Targets/FootR Target:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.45999998, 1.03, 1.59),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-116, 365), Vector2(94, 457), Vector2(-60, 582), Vector2(-197, 442)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CharacterContainer/IK Targets/FootL Target:position")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.45999998, 1.03, 1.59),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-85, 653), Vector2(-219, 419), Vector2(-118, 349), Vector2(56, 563)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CharacterContainer/IK Targets/Skirt:position")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8333333, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-2, 372), Vector2(86, 268), Vector2(31, 258), Vector2(48, 277)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CharacterContainer/IK Targets/Skirt/SkirtR Target:position")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(91, 65), Vector2(144, 39)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CharacterContainer/IK Targets/Skirt/SkirtL Target:position")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.45999998, 1.1, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-134, 58), Vector2(-134, 58), Vector2(-145, 71), Vector2(-81.51036, 47.914642)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CharacterContainer/IK Targets/Skirt/SkirtC Target:position")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.45999998, 1.1, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-5, 66), Vector2(-5, 66), Vector2(12, 78), Vector2(4.489643, 81.91463)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CharacterContainer/IK Targets/Hip Target:position")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.45999998, 1.06),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(10, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CharacterContainer/Bones/Skeleton2D/Hip:rotation")
+tracks/11/interp = 4
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.17889677]
+}
+tracks/12/type = "method"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Audio")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0.6333333, 1.5333333),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [false],
+"method": &"play_random_step"
+}, {
+"args": [false],
+"method": &"play_random_step"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ur43p"]
 _data = {
 &"Crouch": SubResource("Animation_v340a"),
@@ -2145,7 +2311,8 @@ _data = {
 &"Run": SubResource("Animation_074l0"),
 &"Slap": SubResource("Animation_p7cr0"),
 &"Walk": SubResource("Animation_w7jv1"),
-&"Walk_Drunk": SubResource("Animation_2yh8p")
+&"Walk_Drunk": SubResource("Animation_2yh8p"),
+&"Walk_Silent": SubResource("Animation_vrod0")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_sbiq8"]
@@ -2294,6 +2461,19 @@ nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_0jou1")
 nodes/TimeScale/position = Vector2(480, 100)
 node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fcbn2"]
+animation = &"Walk_Silent"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_hjq2i"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ui31c"]
+nodes/output/position = Vector2(640, 260)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_fcbn2")
+nodes/Animation/position = Vector2(280, 260)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_hjq2i")
+nodes/TimeScale/position = Vector2(460, 240)
+node_connections = [&"output", 0, &"TimeScale", &"TimeScale", 0, &"Animation"]
+
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q284w"]
 xfade_time = 0.3
 
@@ -2356,6 +2536,15 @@ advance_mode = 2
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w4oha"]
+xfade_time = 0.5
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4ribq"]
+xfade_time = 0.3
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jh1yi"]
+xfade_time = 0.3
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_uawau"]
 states/Crouch_Down/node = SubResource("AnimationNodeBlendTree_ygan3")
 states/Crouch_Down/position = Vector2(489, 207.13254)
@@ -2367,24 +2556,26 @@ states/Crouch_Walk/node = SubResource("AnimationNodeBlendTree_g66pu")
 states/Crouch_Walk/position = Vector2(406, 391.13254)
 states/End/position = Vector2(1038, 100)
 states/Faint/node = SubResource("AnimationNodeBlendTree_g7gci")
-states/Faint/position = Vector2(328, -28.867462)
+states/Faint/position = Vector2(270, -28.867462)
 states/Idle/node = SubResource("AnimationNodeBlendTree_xw1rp")
 states/Idle/position = Vector2(406, 100)
 states/Kick/node = SubResource("AnimationNodeBlendTree_p7cr0")
-states/Kick/position = Vector2(759, 224.13254)
+states/Kick/position = Vector2(340, -158.86746)
 states/RESET/node = SubResource("AnimationNodeAnimation_6hr71")
 states/RESET/position = Vector2(1038, 195.13254)
 states/Rise/node = SubResource("AnimationNodeBlendTree_jbjyn")
-states/Rise/position = Vector2(501, -28.867462)
+states/Rise/position = Vector2(540, -28.867462)
 states/Run/node = SubResource("AnimationNodeBlendTree_tgdyp")
 states/Run/position = Vector2(871, 100)
 states/Slap/node = SubResource("AnimationNodeBlendTree_hjq2i")
-states/Slap/position = Vector2(759, -28.867462)
+states/Slap/position = Vector2(451, -158.86746)
 states/Start/position = Vector2(191, 100)
 states/Walk/node = SubResource("AnimationNodeBlendTree_6wdvf")
 states/Walk/position = Vector2(645, 100)
-transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_q284w"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_rj8q8"), "Walk", "Run", SubResource("AnimationNodeStateMachineTransition_b7epl"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_ybri8"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_il54b"), "Idle", "Crouch_Down", SubResource("AnimationNodeStateMachineTransition_qdq1f"), "Crouch_Down", "Crouch_Idle", SubResource("AnimationNodeStateMachineTransition_12xgd"), "Crouch_Idle", "Crouch_Walk", SubResource("AnimationNodeStateMachineTransition_1g52f"), "Crouch_Walk", "Crouch_Idle", SubResource("AnimationNodeStateMachineTransition_7gg3n"), "Crouch_Up", "Idle", SubResource("AnimationNodeStateMachineTransition_y3vh2"), "Crouch_Idle", "Crouch_Up", SubResource("AnimationNodeStateMachineTransition_4qus3"), "Idle", "Faint", SubResource("AnimationNodeStateMachineTransition_lw74r"), "Faint", "Rise", SubResource("AnimationNodeStateMachineTransition_tf3ct"), "Rise", "Idle", SubResource("AnimationNodeStateMachineTransition_to4uw"), "Idle", "Slap", SubResource("AnimationNodeStateMachineTransition_ui31c"), "Idle", "Kick", SubResource("AnimationNodeStateMachineTransition_karlm"), "Slap", "Idle", SubResource("AnimationNodeStateMachineTransition_2avfq"), "Kick", "Idle", SubResource("AnimationNodeStateMachineTransition_d2y64")]
-graph_offset = Vector2(94, -236.86746)
+states/Walk_Silent/node = SubResource("AnimationNodeBlendTree_ui31c")
+states/Walk_Silent/position = Vector2(762, 11.132538)
+transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_q284w"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_rj8q8"), "Walk", "Run", SubResource("AnimationNodeStateMachineTransition_b7epl"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_ybri8"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_il54b"), "Idle", "Crouch_Down", SubResource("AnimationNodeStateMachineTransition_qdq1f"), "Crouch_Down", "Crouch_Idle", SubResource("AnimationNodeStateMachineTransition_12xgd"), "Crouch_Idle", "Crouch_Walk", SubResource("AnimationNodeStateMachineTransition_1g52f"), "Crouch_Walk", "Crouch_Idle", SubResource("AnimationNodeStateMachineTransition_7gg3n"), "Crouch_Up", "Idle", SubResource("AnimationNodeStateMachineTransition_y3vh2"), "Crouch_Idle", "Crouch_Up", SubResource("AnimationNodeStateMachineTransition_4qus3"), "Idle", "Faint", SubResource("AnimationNodeStateMachineTransition_lw74r"), "Faint", "Rise", SubResource("AnimationNodeStateMachineTransition_tf3ct"), "Rise", "Idle", SubResource("AnimationNodeStateMachineTransition_to4uw"), "Idle", "Slap", SubResource("AnimationNodeStateMachineTransition_ui31c"), "Idle", "Kick", SubResource("AnimationNodeStateMachineTransition_karlm"), "Slap", "Idle", SubResource("AnimationNodeStateMachineTransition_2avfq"), "Kick", "Idle", SubResource("AnimationNodeStateMachineTransition_d2y64"), "Walk", "Walk_Silent", SubResource("AnimationNodeStateMachineTransition_w4oha"), "Walk_Silent", "Run", SubResource("AnimationNodeStateMachineTransition_4ribq"), "Walk_Silent", "Walk", SubResource("AnimationNodeStateMachineTransition_jh1yi")]
+graph_offset = Vector2(-54, -85.86746)
 
 [sub_resource type="Gradient" id="Gradient_wdekc"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -2626,14 +2817,15 @@ visible = false
 modification_stack = SubResource("SkeletonModificationStack2D_qdq1f")
 
 [node name="Hip" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D" unique_id=597663585]
+position = Vector2(8.617917, 0)
 rotation = 0.17889677
 scale = Vector2(0.9998805, 0.9998805)
 rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Chest" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=326213532]
 position = Vector2(-2, -53)
-rotation = -0.12630394
-scale = Vector2(0.9998392, 0.9998392)
+rotation = -0.07072865
+scale = Vector2(0.99983275, 0.99983275)
 rest = Transform2D(0.99793434, 0.06424214, -0.06424214, 0.99793434, -2, -53)
 
 [node name="Neck" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest" unique_id=432818330]
@@ -2641,8 +2833,8 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Head" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/Neck" unique_id=1471978912]
 position = Vector2(-11, -162)
-rotation = -0.13348718
-scale = Vector2(0.9998426, 0.9998426)
+rotation = -0.20806468
+scale = Vector2(0.9998298, 0.9998298)
 rest = Transform2D(0.9999851, -0.00547044, 0.00547044, 0.9999851, -11, -162)
 auto_calculate_length_and_angle = false
 length = 53.297
@@ -2650,14 +2842,14 @@ bone_angle = -80.11498
 
 [node name="ArmR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest" unique_id=1761835730]
 position = Vector2(-72, -117)
-rotation = 0.0887225
-scale = Vector2(0.9998293, 0.9998293)
+rotation = -0.3953063
+scale = Vector2(0.9998348, 0.9998348)
 rest = Transform2D(0.99997807, 0.0066213235, -0.0066213235, 0.99997807, -72, -117)
 
 [node name="ForeArmR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/ArmR" unique_id=513871701]
 position = Vector2(-7, 135)
 rotation = 1.2177516
-scale = Vector2(0.9998497, 0.9998497)
+scale = Vector2(0.9998338, 0.9998338)
 rest = Transform2D(0.89776886, 0.44046685, -0.44046685, 0.89776886, -7, 135)
 auto_calculate_length_and_angle = false
 length = 155.0
@@ -2665,14 +2857,14 @@ bone_angle = 23.196201
 
 [node name="ArmL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest" unique_id=1310672979]
 position = Vector2(29.69851, -130.1768)
-rotation = 0.1503793
-scale = Vector2(0.99983364, 0.99983364)
+rotation = 0.49279508
+scale = Vector2(0.9998398, 0.9998398)
 rest = Transform2D(1, 0, 0, 1, 47, -121)
 
 [node name="ForeArmL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/ArmL" unique_id=808976861]
 position = Vector2(22, 120)
-rotation = 0.49765402
-scale = Vector2(0.9998402, 0.9998402)
+rotation = 0.078518085
+scale = Vector2(0.9998421, 0.9998421)
 rest = Transform2D(0.99988055, 0.015455957, -0.015455957, 0.99988055, 22, 120)
 auto_calculate_length_and_angle = false
 length = 125.0
@@ -2680,14 +2872,14 @@ bone_angle = 42.711983
 
 [node name="LegR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=250582046]
 position = Vector2(-14.700328, 126.63689)
-rotation = -0.5327902
-scale = Vector2(0.9998602, 0.9998602)
+rotation = -0.42715147
+scale = Vector2(0.9998572, 0.9998572)
 rest = Transform2D(0.99116075, -0.1326665, 0.1326665, 0.99116075, -66, 103)
 
 [node name="KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegR" unique_id=1757211730]
 position = Vector2(1, 146)
-rotation = 0.54052293
-scale = Vector2(0.99986887, 0.99986887)
+rotation = 0.9502977
+scale = Vector2(0.9998564, 0.9998564)
 rest = Transform2D(0.9880616, 0.15405944, -0.15405944, 0.9880616, 1, 146)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -2701,14 +2893,14 @@ occluder = SubResource("OccluderPolygon2D_jbjyn")
 
 [node name="LegL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=1374812682]
 position = Vector2(55.522446, 115.97094)
-rotation = -0.3659262
-scale = Vector2(0.99985206, 0.99985206)
+rotation = -0.7610465
+scale = Vector2(0.99984545, 0.99984545)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegL" unique_id=278652099]
 position = Vector2(-7, 125)
-rotation = 0.2808229
-scale = Vector2(0.99984246, 0.99984246)
+rotation = 0.7821972
+scale = Vector2(0.99984443, 0.99984443)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -2723,14 +2915,14 @@ occluder = SubResource("OccluderPolygon2D_6rswy")
 [node name="SkirtL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=2124571071]
 visible = false
 position = Vector2(-19.953075, 7.672987)
-rotation = -0.3275145
-scale = Vector2(0.9998427, 0.9998427)
+rotation = -0.5404929
+scale = Vector2(0.9998544, 0.9998544)
 rest = Transform2D(1, 0, 0, 1, -68, 10)
 
 [node name="SkirtL2" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/SkirtL" unique_id=608500439]
 position = Vector2(-54.593754, 151.47455)
-rotation = 0.25865674
-scale = Vector2(0.9998734, 0.9998734)
+rotation = 0.41699365
+scale = Vector2(0.9998661, 0.9998661)
 rest = Transform2D(1, 0, 0, 1, -47, 168)
 auto_calculate_length_and_angle = false
 length = 130.0
@@ -2739,14 +2931,14 @@ bone_angle = 95.0
 [node name="SkirtC" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=617380591]
 visible = false
 position = Vector2(-1, 23)
-rotation = -0.18051064
-scale = Vector2(0.9998374, 0.9998374)
+rotation = -0.30805546
+scale = Vector2(0.9998486, 0.9998486)
 rest = Transform2D(1, 0, 0, 1, -1, 23)
 
 [node name="SkirtC2" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/SkirtC" unique_id=1904504327]
 position = Vector2(7, 173)
-rotation = -0.12770697
-scale = Vector2(0.9998645, 0.9998645)
+rotation = -0.12770689
+scale = Vector2(0.99984264, 0.99984264)
 rest = Transform2D(1, 0, 0, 1, 7, 173)
 auto_calculate_length_and_angle = false
 length = 90.0
@@ -2755,14 +2947,14 @@ bone_angle = 95.0
 [node name="SkirtR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=1522232717]
 visible = false
 position = Vector2(59.01034, 22.864365)
-rotation = 1.027849
-scale = Vector2(0.9998557, 0.9998557)
+rotation = 0.5913105
+scale = Vector2(0.9998536, 0.9998536)
 rest = Transform2D(1, 0, 0, 1, 43, 10)
 
 [node name="SkirtR2" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/SkirtR" unique_id=1264282796]
 position = Vector2(184.16289, 43.428574)
-rotation = -1.4264776
-scale = Vector2(0.9998639, 0.9998639)
+rotation = -0.9482133
+scale = Vector2(0.99985945, 0.99985945)
 rest = Transform2D(1, 0, 0, 1, 27, 186)
 auto_calculate_length_and_angle = false
 length = 90.0
@@ -2943,6 +3135,7 @@ parameters/Rise/TimeScale/scale = 1.5
 parameters/Run/TimeScale/scale = 1.1000000000000014
 parameters/Slap/TimeScale/scale = 1.0
 parameters/Walk/TimeScale/scale = 1.1000000000000014
+parameters/Walk_Silent/TimeScale/scale = 1.0
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=258397546]
 position = Vector2(-9.002001, 481)
