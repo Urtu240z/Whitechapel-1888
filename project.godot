@@ -146,7 +146,7 @@ project/assembly_name="Whitechapel 1888"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/curved_lines_2d/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/pickup_creator/plugin.cfg", "res://addons/soupik/plugin.cfg")
+enabled=PackedStringArray("res://addons/curved_lines_2d/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/pickup_creator/plugin.cfg", "res://addons/shader_library/plugin.cfg", "res://addons/soupik/plugin.cfg")
 
 [global_group]
 
@@ -257,3 +257,7 @@ textures/canvas_textures/default_texture_filter=0
 anti_aliasing/quality/msaa_2d=2
 anti_aliasing/quality/use_debanding=true
 environment/defaults/default_clear_color=Color(0.19793725, 0.19793722, 0.19793722, 1)
+
+[shader_library]
+
+internal/previous_shaders_folder="res://shaders/shaderlib/"
