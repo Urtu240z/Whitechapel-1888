@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://7kh0xydx0b1o"]
+[gd_scene load_steps=10 format=3 uid="uid://7kh0xydx0b1o"]
 
-[ext_resource type="Script" uid="uid://cb46ypjv5p72s" path="res://addons/phantom_camera/examples/scripts/2D/player_character_body_2d.gd" id="1_jnc14"]
+[ext_resource type="Script" uid="uid://cnnaky2ns2pn4" path="res://addons/phantom_camera/examples/scripts/2D/player_character_body_2d.gd" id="1_jnc14"]
 [ext_resource type="FontFile" uid="uid://c4mm3of2mc8o5" path="res://addons/phantom_camera/fonts/Nunito-Black.ttf" id="2_62b2n"]
 [ext_resource type="Texture2D" uid="uid://cscjjt55iw2cu" path="res://addons/phantom_camera/examples/textures/2D/player_sprite.svg" id="2_yr8cm"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="4_rloon"]
@@ -25,10 +25,10 @@ size = Vector2(64, 57)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_18i13"]
 size = Vector2(64, 57)
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=444725908]
+[node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_jnc14")
 
-[node name="DarkOverlay" type="ColorRect" parent="." unique_id=1939284497]
+[node name="DarkOverlay" type="ColorRect" parent="."]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 8
@@ -44,15 +44,15 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.615686)
 
-[node name="PlayerVisuals" type="Node2D" parent="." unique_id=223660702]
+[node name="PlayerVisuals" type="Node2D" parent="."]
 unique_name_in_owner = true
 
-[node name="PlayerSprite" type="Sprite2D" parent="PlayerVisuals" unique_id=775464603]
+[node name="PlayerSprite" type="Sprite2D" parent="PlayerVisuals"]
 unique_name_in_owner = true
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_yr8cm")
 
-[node name="InteractionPrompt" type="Panel" parent="PlayerVisuals" unique_id=1682321930]
+[node name="InteractionPrompt" type="Panel" parent="PlayerVisuals"]
 unique_name_in_owner = true
 visible = false
 anchors_preset = 7
@@ -69,7 +69,7 @@ grow_vertical = 0
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_5hryl")
 
-[node name="Label" type="Label" parent="PlayerVisuals/InteractionPrompt" unique_id=1546723487]
+[node name="Label" type="Label" parent="PlayerVisuals/InteractionPrompt"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -85,21 +85,21 @@ text = "F"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1033031563]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_xj4ar")
 
-[node name="PlayerArea2D" type="Area2D" parent="." unique_id=726894513]
+[node name="PlayerArea2D" type="Area2D" parent="."]
 unique_name_in_owner = true
 collision_layer = 2
 collision_mask = 2
 priority = 20
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea2D" unique_id=984532717]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea2D"]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_18i13")
 
-[node name="ItemFocusPhantomCamera2D" type="Node2D" parent="." unique_id=729873912]
+[node name="ItemFocusPhantomCamera2D" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, -122)
 script = ExtResource("4_rloon")
@@ -109,7 +109,7 @@ tween_resource = ExtResource("5_4iyk1")
 follow_damping_value = Vector2(0, 0)
 draw_limits = true
 
-[node name="InventoryPhantomCamera2D" type="Node2D" parent="." unique_id=818955986]
+[node name="InventoryPhantomCamera2D" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-183, -5)
 script = ExtResource("4_rloon")

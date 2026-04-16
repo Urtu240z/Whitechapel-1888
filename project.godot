@@ -44,8 +44,8 @@ DayNightManager="*res://Scripts/Managers/day_night_manager.gd"
 InventoryManager="*uid://dy7hx75blrap1"
 InteractionManager="*uid://28eacuhmdtha"
 PlayerStats="*res://Scripts/Managers/player_stats.gd"
-PhantomCameraManager="*uid://duq6jhf6unyis"
 Dialogic="*uid://ds2q0uclmolvu"
+PhantomCameraManager="*uid://duq6jhf6unyis"
 
 [dialogic]
 
@@ -146,7 +146,7 @@ project/assembly_name="Whitechapel 1888"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/curved_lines_2d/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/phantom_camera/plugin.cfg", "res://addons/pickup_creator/plugin.cfg", "res://addons/soupik/plugin.cfg")
+enabled=PackedStringArray("res://addons/curved_lines_2d/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/pickup_creator/plugin.cfg", "res://addons/soupik/plugin.cfg")
 
 [global_group]
 
