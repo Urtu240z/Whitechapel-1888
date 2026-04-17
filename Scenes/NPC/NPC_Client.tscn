@@ -33,7 +33,7 @@
 [ext_resource type="AudioStream" uid="uid://dpd1hrm3tip4t" path="res://Assets/Audio/Walk_Foot_3.ogg" id="28_4wdri"]
 [ext_resource type="AudioStream" uid="uid://btggs7olo6i7w" path="res://Assets/Audio/Effects/Slap_1.ogg" id="30_ccqk5"]
 [ext_resource type="AudioStream" uid="uid://cetbmnrsyejnj" path="res://Assets/Audio/Effects/Kick_4.ogg" id="31_sd6pm"]
-[ext_resource type="PackedScene" uid="uid://qrckrvjkyeu" path="res://Scenes/Core/NameTag.tscn" id="33_sd6pm"]
+[ext_resource type="PackedScene" uid="uid://qrckrvjkyeu" path="res://Scenes/Core/Name_Tag.tscn" id="33_sd6pm"]
 [ext_resource type="Texture2D" uid="uid://cmiaxkdag50ib" path="res://Assets/Sprites/Player/Player_Shadow.png" id="35_j2evj"]
 [ext_resource type="Script" uid="uid://cjid154armajs" path="res://Scripts/NPC/Client/npc_client_shadow.gd" id="36_j2evj"]
 

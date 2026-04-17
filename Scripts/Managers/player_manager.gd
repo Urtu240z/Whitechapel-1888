@@ -27,7 +27,7 @@ func register_player(player: MainPlayer) -> void:
 # =========================================================
 func ensure_player(parent: Node, position: Vector2) -> void:
 	if parent == null:
-		printerr("❌ ensure_player(): El parent es nulo, abortando.")
+		push_error("ensure_player(): El parent es nulo, abortando.")
 		return
 	if player_instance == null:
 		player_instance = player_scene.instantiate()

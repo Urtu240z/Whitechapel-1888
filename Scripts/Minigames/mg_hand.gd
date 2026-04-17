@@ -317,7 +317,6 @@ func _finish(success: bool) -> void:
 	if subtitle_label:
 		subtitle_label.text = "Terminado" if success else "Fallido"
 
-	print("MG_Hand result: ", result)
 	minigame_finished.emit(result)
 
 # =========================================================

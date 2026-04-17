@@ -26,9 +26,6 @@ func _input(event: InputEvent) -> void:
 	if StateManager.is_state(StateManager.State.CLIENT_SERVICE):
 		return
 
-	if OS.is_debug_build() and event is InputEventMouseButton and event.pressed:
-		print("🖱️ Click recibido en GameManager, estado: ", StateManager.State.keys()[StateManager.current()])
-
 	if event.is_action_pressed("ui_cancel"):
 		_handle_cancel()
 		return
@@ -39,13 +36,6 @@ func _input(event: InputEvent) -> void:
 
 	if not StateManager.is_gameplay():
 		return
-
-	if OS.is_debug_build() and event is InputEventKey and event.pressed:
-		if event.keycode == KEY_F6:
-			InventoryManager.add_item("food-pan", 2)
-			InventoryManager.add_item("drink-cerveza", 1)
-			InventoryManager.add_item("drug-laudano", 1)
-			print("🎒 Items de prueba añadidos")
 
 # ==============================================================================
 # ESC / PAUSA

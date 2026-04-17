@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://br10pupaikeeo"]
+
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_0ikgd"]
+
+[node name="CameraRig" type="Node2D" unique_id=309327357]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=105811422]
+physics_interpolation_mode = 1
+top_level = true
+zoom = Vector2(0.3, 0.3)
+limit_enabled = false
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=812856789]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("1_0ikgd")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"

@@ -57,10 +57,6 @@ func open() -> void:
 
 	_set_book_input_enabled(true)
 
-	# Forzar slots de página derecha activos — el handshake de PageFlip2D
-	# solo da foco a página 3, pero página 4 también necesita input
-	call_deferred("_force_right_page_input")
-
 	if reset_to_first_spread_on_open:
 		_go_to_first_spread_instant()
 
@@ -76,12 +72,6 @@ func open() -> void:
 
 	await tw.finished
 	_transitioning = false
-
-func _force_right_page_input() -> void:
-	for slot_name in ["Slot1", "Slot2", "Slot3", "Slot4"]:
-		var sv = book.find_child(slot_name, true, false)
-		if sv is SubViewport:
-			print("Slot %s — gui_disable_input: %s — children: %s" % [slot_name, sv.gui_disable_input, sv.get_children()])
 
 func close() -> void:
 	if not is_open or _transitioning:
@@ -140,11 +130,6 @@ func _set_book_input_enabled(enabled: bool) -> void:
 
 		for child in sv.get_children():
 			_set_node_input_enabled_recursive(child, enabled)
-
-	if OS.is_debug_build():
-		print("📖 Journal PageFlip input enabled:", enabled)
-		for sv in _get_pageflip_subviewports():
-			print("   - ", sv.name, " gui_disable_input=", sv.gui_disable_input, " process_mode=", sv.process_mode)
 
 
 func _set_node_input_enabled_recursive(node: Node, enabled: bool) -> void:

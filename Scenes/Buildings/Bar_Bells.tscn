@@ -49,46 +49,11 @@
 [ext_resource type="Texture2D" uid="uid://dpx06umrbw1r8" path="res://Assets/Sprites/Interiors/Bar Bells/Window.png" id="29_1nm8b"]
 [ext_resource type="AudioStream" uid="uid://cmci08mvr01u3" path="res://Assets/Music/Bar - Whispers of the Lamplight.wav" id="39_2u12w"]
 [ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="42_rpjb7"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="45_ckb2g"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="46_i4n63"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_jhiha"]
 diffuse_texture = ExtResource("8_fh68x")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fh68x"]
-texture = ExtResource("2_n1eba")
-texture_region_size = Vector2i(48, 48)
-0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-3:0/0 = 0
-4:0/0 = 0
-5:0/0 = 0
-6:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-3:1/0 = 0
-4:1/0 = 0
-5:1/0 = 0
-6:1/0 = 0
-7:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
-3:2/0 = 0
-4:2/0 = 0
-5:2/0 = 0
-6:2/0 = 0
-7:2/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_ibxqm"]
-tile_size = Vector2i(48, 48)
-sources/0 = SubResource("TileSetAtlasSource_fh68x")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_g8sw3"]
-size = Vector2(45, 587)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcas7"]
-size = Vector2(1730, 112)
 
 [sub_resource type="Resource" id="Resource_gkafe"]
 script = ExtResource("9_2u12w")
@@ -156,12 +121,43 @@ item = ExtResource("20_i4n63")
 is_variable = true
 metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
-[sub_resource type="Gradient" id="Gradient_jhiha"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ckb2g"]
+texture = ExtResource("2_n1eba")
+texture_region_size = Vector2i(48, 48)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ibxqm"]
+tile_size = Vector2i(48, 48)
+sources/0 = SubResource("TileSetAtlasSource_ckb2g")
+
+[sub_resource type="Gradient" id="Gradient_i4n63"]
 offsets = PackedFloat32Array(0, 0.5466667)
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_elauw"]
-gradient = SubResource("Gradient_jhiha")
+gradient = SubResource("Gradient_i4n63")
 width = 512
 height = 512
 fill = 1
@@ -169,6 +165,22 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xtf64"]
 size = Vector2(128.87479, 280.20502)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g8sw3"]
+size = Vector2(38.5, 471)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i4n63"]
+size = Vector2(998, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vcas7"]
+size = Vector2(1058, 43.999992)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gkafe"]
+size = Vector2(131, 467)
+
+[sub_resource type="Resource" id="Resource_gxpp8"]
+script = ExtResource("46_i4n63")
+duration = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0l6d3"]
 size = Vector2(164, 273)
@@ -193,43 +205,46 @@ street_name = "Commercial Street"
 
 [node name="Exterior" type="Sprite2D" parent="." unique_id=107088786]
 texture_filter = 1
-position = Vector2(-642, -88.00001)
-scale = Vector2(0.82765955, 0.82765955)
+position = Vector2(-642, -462.28998)
+scale = Vector2(0.662, 0.662)
 texture = SubResource("CanvasTexture_jhiha")
 
 [node name="Interior" type="Node2D" parent="." unique_id=936244711]
 visible = false
-position = Vector2(4, -51)
+position = Vector2(-128, -114.28998)
+
+[node name="NPCService" parent="Interior" unique_id=1649721714 instance=ExtResource("8_nqx5a")]
+z_index = 2
+position = Vector2(154, 8)
+scale = Vector2(0.214, 0.214)
+npc_display_name = "Barman"
+dialog_timeline = "uid://50cluqdbukef"
+service_id = "barman"
+initial_facing_right = false
+shop_items = Array[ExtResource("9_2u12w")]([SubResource("Resource_gkafe"), SubResource("Resource_gfjkd"), SubResource("Resource_0c17p"), SubResource("Resource_17x7e"), SubResource("Resource_2mo0p"), SubResource("Resource_wbshs"), SubResource("Resource_12ksu"), SubResource("Resource_4vyom"), SubResource("Resource_fgqt2"), SubResource("Resource_5uiak"), SubResource("Resource_rrirq")])
+shop_name_key = "BARMAN_SHOP_NAME"
+skin_name = "NPC_Barman"
+
+[node name="NPC" parent="Interior" unique_id=2027052352 instance=ExtResource("11_pn1s2")]
+modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
+z_index = 2
+position = Vector2(-426, 8)
+scale = Vector2(0.125, 0.125)
+
+[node name="NPC2" parent="Interior" unique_id=1787750930 instance=ExtResource("11_pn1s2")]
+modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
+z_index = 2
+position = Vector2(-242, -11)
+rotation = -3.1415925
+scale = Vector2(0.112, -0.112)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Interior" unique_id=1434301336]
 modulate = Color(0.585062, 0.585062, 0.5850621, 1)
 z_index = 1
-position = Vector2(29, -39.99997)
-scale = Vector2(0.99999994, 0.99999994)
+position = Vector2(28, -302.99997)
+scale = Vector2(0.8, 0.8)
 tile_map_data = PackedByteArray("AAD6/wgAAAAEAAEAAAD6/wkAAAAEAAIAAAD7/wgAAAAEAAEAAAD7/wkAAAAEAAIAAAD8/wgAAAADAAEAAAD8/wkAAAADAAIAAAD9/wgAAAAEAAEAAAD9/wkAAAAEAAIAAAD+/wgAAAADAAEAAAD+/wkAAAADAAIAAAD//wgAAAAEAAEAAAD//wkAAAAEAAIAAAAAAAgAAAADAAEAAAAAAAkAAAADAAIAAAABAAgAAAAEAAEAAAABAAkAAAAEAAIAAAACAAgAAAADAAEAAAACAAkAAAADAAIAAAADAAgAAAAEAAEAAAADAAkAAAAEAAIAAAACAAYAAAAAAAEAAAACAAcAAAAAAAEAAAADAAYAAAAAAAEAAAADAAcAAAAAAAEAAAAEAAYAAAAAAAEAAAAEAAcAAAAAAAEAAAAFAAYAAAAAAAEAAAAFAAcAAAAAAAEAAAAEAAgAAAADAAEAAAAEAAkAAAADAAIAAAAFAAgAAAADAAEAAAAFAAkAAAADAAIAAAABAAYAAAAAAAEAAAAAAAYAAAAAAAEAAAD//wYAAAAAAAEAAAD+/wYAAAAAAAEAAAD9/wYAAAAAAAEAAAD8/wYAAAAAAAEAAAD7/wYAAAAAAAEAAAD6/wYAAAAAAAEAAAD6/wcAAAAAAAEAAAD7/wcAAAAAAAEAAAD8/wcAAAAAAAEAAAD9/wcAAAAAAAEAAAD+/wcAAAAAAAEAAAD//wcAAAAAAAEAAAAAAAcAAAAAAAEAAAABAAcAAAAAAAEAAAAFAAUAAAAAAAEAAAAFAAQAAAAAAAEAAAAEAAQAAAAAAAEAAAAEAAMAAAAAAAEAAAAFAAMAAAAAAAEAAAADAAMAAAAAAAEAAAACAAMAAAAAAAEAAAABAAMAAAAAAAEAAAAAAAMAAAAAAAEAAAD//wMAAAAAAAEAAAD+/wMAAAAAAAEAAAD9/wMAAAAAAAEAAAD8/wMAAAAAAAEAAAD7/wMAAAAAAAEAAAD6/wMAAAAAAAEAAAD6/wQAAAAAAAEAAAD6/wUAAAAAAAEAAAD7/wQAAAAAAAEAAAD7/wUAAAAAAAEAAAD8/wUAAAAAAAEAAAD8/wQAAAAAAAEAAAD9/wUAAAAAAAEAAAD9/wQAAAAAAAEAAAD+/wQAAAAAAAEAAAD+/wUAAAAAAAEAAAD//wUAAAAAAAEAAAAAAAUAAAAAAAEAAAAAAAQAAAAAAAEAAAABAAQAAAAAAAEAAAABAAUAAAAAAAEAAAACAAUAAAAAAAEAAAADAAUAAAAAAAEAAAAEAAUAAAAAAAEAAAADAAQAAAAAAAEAAAACAAQAAAAAAAEAAAD//wQAAAAAAAEAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAIAAAAAAAAAAAD//wIAAAAAAAAAAAD+/wIAAAAAAAAAAAD9/wIAAAAAAAAAAAD8/wIAAAAAAAAAAAD7/wIAAAAAAAAAAAD6/wIAAAAAAAAAAAAGAAgAAAAEAAEAAAAGAAkAAAAEAAIAAAAHAAgAAAADAAEAAAAHAAkAAAADAAIAAAAIAAgAAAAEAAEAAAAIAAkAAAAEAAIAAAAJAAgAAAADAAEAAAAJAAkAAAADAAIAAAAKAAgAAAAEAAEAAAAKAAkAAAAEAAIAAAD5/wgAAAADAAEAAAD5/wkAAAADAAIAAAD3/wgAAAADAAEAAAD3/wkAAAADAAIAAAD4/wgAAAAEAAEAAAD4/wkAAAAEAAIAAAD1/wgAAAADAAEAAAD1/wkAAAADAAIAAAD2/wgAAAAEAAEAAAD2/wkAAAAEAAIAAADz/wgAAAADAAEAAADz/wkAAAADAAIAAAD0/wgAAAAEAAEAAAD0/wkAAAAEAAIAAAD5/wYAAAAAAAEAAAD5/wUAAAAAAAEAAAD4/wUAAAAAAAEAAAD3/wUAAAAAAAEAAAD3/wYAAAAAAAEAAAD4/wYAAAAAAAEAAAD5/wcAAAAAAAEAAAD4/wcAAAAAAAEAAAD3/wcAAAAAAAEAAAD2/wcAAAAAAAEAAAD1/wcAAAAAAAEAAAD0/wcAAAAAAAEAAAD1/wYAAAAAAAEAAAD2/wYAAAAAAAEAAAD4/wQAAAAAAAEAAAD5/wQAAAAAAAEAAAD3/wQAAAAAAAEAAAD2/wQAAAAAAAEAAAD1/wQAAAAAAAEAAAD0/wMAAAAAAAEAAADz/wMAAAAAAAEAAADz/wQAAAAAAAEAAADz/wUAAAAAAAEAAADz/wYAAAAAAAEAAADz/wcAAAAAAAEAAAD0/wQAAAAAAAEAAAD0/wUAAAAAAAEAAAD0/wYAAAAAAAEAAAD1/wUAAAAAAAEAAAD2/wUAAAAAAAEAAAD1/wMAAAAAAAEAAAD2/wMAAAAAAAEAAAD3/wMAAAAAAAEAAAD4/wMAAAAAAAEAAAD5/wMAAAAAAAEAAAAGAAMAAAAAAAEAAAAHAAMAAAAAAAEAAAAIAAMAAAAAAAEAAAAJAAMAAAAAAAEAAAAKAAMAAAAAAAEAAAAKAAQAAAAAAAEAAAAKAAUAAAAAAAEAAAAKAAYAAAAAAAEAAAAKAAcAAAAAAAEAAAAJAAQAAAAAAAEAAAAJAAUAAAAAAAEAAAAIAAQAAAAAAAEAAAAIAAUAAAAAAAEAAAAHAAQAAAAAAAEAAAAHAAUAAAAAAAEAAAAGAAQAAAAAAAEAAAAGAAUAAAAAAAEAAAAGAAYAAAAAAAEAAAAGAAcAAAAAAAEAAAAIAAYAAAAAAAEAAAAHAAYAAAAAAAEAAAAJAAYAAAAAAAEAAAAJAAcAAAAAAAEAAAAIAAcAAAAAAAEAAAAHAAcAAAAAAAEAAADz/wIAAAAAAAAAAAD0/wIAAAAAAAAAAAD1/wIAAAAAAAAAAAD2/wIAAAAAAAAAAAD3/wIAAAAAAAAAAAD4/wIAAAAAAAAAAAD5/wIAAAAAAAAAAAAGAAIAAAAAAAAAAAAHAAIAAAAAAAAAAAAIAAIAAAAAAAAAAAAJAAIAAAAAAAAAAAAKAAIAAAAAAAAAAADz/wEAAAABAAIAAAD0/wEAAAABAAIAAAD1/wEAAAABAAIAAAD2/wEAAAABAAIAAAD3/wEAAAABAAIAAAD4/wEAAAABAAIAAAD5/wEAAAABAAIAAAD6/wEAAAABAAIAAAD7/wEAAAABAAIAAAD8/wEAAAABAAIAAAD9/wEAAAABAAIAAAD+/wEAAAABAAIAAAD//wEAAAABAAIAAAAAAAEAAAABAAIAAAABAAEAAAABAAIAAAACAAEAAAABAAIAAAADAAEAAAABAAIAAAAEAAEAAAABAAIAAAAFAAEAAAABAAIAAAAGAAEAAAABAAIAAAAHAAEAAAABAAIAAAAIAAEAAAABAAIAAAAJAAEAAAABAAIAAAAKAAEAAAABAAIAAADz/wAAAAABAAIAAAD0/wAAAAABAAIAAAD1/wAAAAABAAIAAAD2/wAAAAABAAIAAAD3/wAAAAABAAIAAAD4/wAAAAABAAIAAAD5/wAAAAABAAIAAAD6/wAAAAABAAIAAAD7/wAAAAABAAIAAAD8/wAAAAABAAIAAAD9/wAAAAABAAIAAAD+/wAAAAABAAIAAAD//wAAAAABAAIAAAAAAAAAAAABAAIAAAABAAAAAAABAAIAAAACAAAAAAABAAIAAAADAAAAAAABAAIAAAAEAAAAAAABAAIAAAAFAAAAAAABAAIAAAAGAAAAAAABAAIAAAAHAAAAAAABAAIAAAAIAAAAAAABAAIAAAAJAAAAAAABAAIAAAAKAAAAAAABAAIAAADz////AAAFAAAAAADy////AAAEAAAAAAALAP//AAAGAAAAAAAKAP//AAAFAAAAAAAJAP//AAAFAAAAAAAIAP//AAAFAAAAAAAHAP//AAAFAAAAAAAGAP//AAAFAAAAAAAFAP//AAAFAAAAAAAEAP//AAAFAAAAAAADAP//AAAFAAAAAAACAP//AAAFAAAAAAABAP//AAAFAAAAAAAAAP//AAAFAAAAAAD/////AAAFAAAAAAD+////AAAFAAAAAAD9////AAAFAAAAAAD8////AAAFAAAAAAD7////AAAFAAAAAAD6////AAAFAAAAAAD5////AAAFAAAAAAD4////AAAFAAAAAAD3////AAAFAAAAAAD2////AAAFAAAAAAD1////AAAFAAAAAAD0////AAAFAAAAAAALAAAAAAAHAAEAAAALAAEAAAAHAAEAAAALAAIAAAAHAAEAAAALAAMAAAAHAAEAAAALAAQAAAAHAAEAAAALAAUAAAAHAAEAAAALAAYAAAAHAAEAAAALAAcAAAAHAAEAAAALAAgAAAAHAAEAAAALAAkAAAAHAAEAAADy/wAAAAAHAAIAAADy/wEAAAAHAAIAAADy/wIAAAAHAAIAAADy/wMAAAAHAAIAAADy/wQAAAAHAAIAAADy/wUAAAAHAAIAAADy/wYAAAAHAAIAAADy/wcAAAAHAAIAAADy/wgAAAAHAAIAAADy/wkAAAAHAAIAAADz/woAAAABAAIAAAD0/woAAAABAAIAAAD1/woAAAABAAIAAAD2/woAAAABAAIAAAD3/woAAAABAAIAAAD4/woAAAABAAIAAAD5/woAAAABAAIAAAD6/woAAAABAAIAAAD7/woAAAABAAIAAAD8/woAAAABAAIAAAD9/woAAAABAAIAAAD+/woAAAABAAIAAAD//woAAAABAAIAAAAAAAoAAAABAAIAAAABAAoAAAABAAIAAAACAAoAAAABAAIAAAADAAoAAAABAAIAAAAEAAoAAAABAAIAAAAFAAoAAAABAAIAAAAGAAoAAAABAAIAAAAHAAoAAAABAAIAAAAIAAoAAAABAAIAAAAJAAoAAAABAAIAAAAKAAoAAAABAAIAAAAKAAsAAAABAAIAAAAJAAsAAAABAAIAAAAIAAsAAAABAAIAAAAHAAsAAAABAAIAAAAGAAsAAAABAAIAAAAFAAsAAAABAAIAAAAEAAsAAAABAAIAAAADAAsAAAABAAIAAAACAAsAAAABAAIAAAABAAsAAAABAAIAAAAAAAsAAAABAAIAAAD//wsAAAABAAIAAAD+/wsAAAABAAIAAAD9/wsAAAABAAIAAAD8/wsAAAABAAIAAAD7/wsAAAABAAIAAAD6/wsAAAABAAIAAAD5/wsAAAABAAIAAAD4/wsAAAABAAIAAAD3/wsAAAABAAIAAAD2/wsAAAABAAIAAAD1/wsAAAABAAIAAAD0/wsAAAABAAIAAADz/wsAAAABAAIAAADy/woAAAAHAAEAAADy/wsAAAAHAAEAAAALAAoAAAAHAAEAAAALAAsAAAAHAAEAAAA=")
 tile_set = SubResource("TileSet_ibxqm")
-
-[node name="Wall" type="StaticBody2D" parent="Interior/TileMapLayer" unique_id=1118295153]
-position = Vector2(0, -3.0517578e-05)
-collision_layer = 7
-collision_mask = 3
-metadata/surface_type = "wood"
-
-[node name="WallLeft" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=1684094964]
-position = Vector2(-649.5, 278.5)
-shape = SubResource("RectangleShape2D_g8sw3")
-
-[node name="Roof" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=826860421]
-position = Vector2(-101.25, 41)
-shape = SubResource("RectangleShape2D_vcas7")
-
-[node name="Floor" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=1103163513]
-position = Vector2(-101.25, 596.6667)
-shape = SubResource("RectangleShape2D_vcas7")
-
-[node name="WallRight" type="CollisionShape2D" parent="Interior/TileMapLayer/Wall" unique_id=1178151929]
-position = Vector2(447, 278)
-shape = SubResource("RectangleShape2D_g8sw3")
 
 [node name="Objects" type="Node2D" parent="Interior/TileMapLayer" unique_id=240319390]
 position = Vector2(0, 145.99995)
@@ -264,125 +279,23 @@ position = Vector2(-417.64706, 343.5294)
 scale = Vector2(0.24, 0.24)
 texture = ExtResource("10_us83r")
 
-[node name="NPC3" parent="Interior/TileMapLayer/Objects" unique_id=1872631834 instance=ExtResource("11_pn1s2")]
-modulate = Color(0.6378587, 0.6378586, 0.6378586, 1)
-position = Vector2(454.11765, 247.84317)
-rotation = -3.1415925
-scale = Vector2(0.19, -0.19)
-
-[node name="NPC_1" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins" parent_id_path=PackedInt32Array(1872631834, 1418891037) index="0" unique_id=646331494]
-visible = false
-
-[node name="Mp1ArmL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="0" unique_id=1566028591]
-position = Vector2(156.47388, -179.849)
-scale = Vector2(0.9999996, 0.9999996)
-
-[node name="Mp1ForearmL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="1" unique_id=1628481528]
-position = Vector2(167.27661, 26.035156)
-scale = Vector2(0.9999989, 0.9999989)
-
-[node name="Mp1Hip" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="2" unique_id=221842155]
-position = Vector2(58, 139.99988)
-
-[node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="4" unique_id=1140063982]
-position = Vector2(118.73413, 533.22205)
-scale = Vector2(0.9999978, 0.9999978)
-
-[node name="Mp1KneeL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="5" unique_id=1474959191]
-position = Vector2(117, 160)
-
-[node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="6" unique_id=1015211277]
-position = Vector2(120.28638, 867.36755)
-scale = Vector2(0.9999893, 0.9999893)
-
-[node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="7" unique_id=966757603]
-position = Vector2(-28.91504, 538.6349)
-scale = Vector2(0.9999839, 0.9999839)
-
-[node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="8" unique_id=1961738744]
-position = Vector2(-3, 162)
-scale = Vector2(0.9999875, 0.9999875)
-
-[node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="9" unique_id=1346636835]
-position = Vector2(-53.35913, 893.8832)
-rotation = -0.060015623
-scale = Vector2(0.9999815, 0.9999815)
-
-[node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="10" unique_id=1940891905]
-position = Vector2(80.47656, -294.79846)
-scale = Vector2(0.99999803, 0.99999803)
-
-[node name="Mp1ArmR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="11" unique_id=1862412567]
-position = Vector2(-64.35254, -221.66492)
-scale = Vector2(0.9999992, 0.9999992)
-
-[node name="Mp1ForearmR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Skins/NPC_1" index="12" unique_id=1844649754]
-position = Vector2(-76.28247, 4.7563477)
-scale = Vector2(0.9999988, 0.9999988)
-
-[node name="Bones" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer" parent_id_path=PackedInt32Array(1872631834, 180093305) index="1" unique_id=1070215732]
-visible = false
-
-[node name="Mp1Hip" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D" parent_id_path=PackedInt32Array(1872631834, 1138009450) index="0" unique_id=847032776]
-position = Vector2(58, 139.99988)
-
-[node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-scale = Vector2(0.9999874, 0.9999874)
-
-[node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
-scale = Vector2(0.9999965, 0.9999965)
-
-[node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR/Mp1LegR" index="0" unique_id=1973771377]
-rotation = -0.09246612
-scale = Vector2(0.99999756, 0.99999756)
-
-[node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL" parent_id_path=PackedInt32Array(1872631834, 607615665) index="1" unique_id=1135898689]
-scale = Vector2(0.9999982, 0.9999982)
-
-[node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL/Mp1LegL" index="1" unique_id=909040570]
-scale = Vector2(0.99999154, 0.99999154)
-
-[node name="Mp1ArmR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle" parent_id_path=PackedInt32Array(1872631834, 793221498) index="0" unique_id=31757731]
-scale = Vector2(0.9999994, 0.9999994)
-
-[node name="Mp1ForearmR" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle/Mp1ArmR" index="1" unique_id=1284003043]
-scale = Vector2(0.99999946, 0.99999946)
-
-[node name="Mp1ForearmL" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle/Mp1ArmL" parent_id_path=PackedInt32Array(1872631834, 342671053) index="1" unique_id=101060477]
-scale = Vector2(0.99999946, 0.99999946)
-
-[node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC3/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle" parent_id_path=PackedInt32Array(1872631834, 793221498) index="2" unique_id=1090892894]
-scale = Vector2(0.99999815, 0.99999815)
-
-[node name="AnimationTree" parent="Interior/TileMapLayer/Objects/NPC3" index="3" unique_id=474788181]
-active = false
-
-[node name="NPCService" parent="Interior/TileMapLayer/Objects" unique_id=1649721714 instance=ExtResource("8_nqx5a")]
-position = Vector2(203.13725, 262.54907)
-scale = Vector2(0.316, 0.316)
-npc_display_name = "Barman"
-dialog_timeline = "uid://50cluqdbukef"
-service_id = "barman"
-initial_facing_right = false
-shop_items = Array[ExtResource("9_2u12w")]([SubResource("Resource_gkafe"), SubResource("Resource_gfjkd"), SubResource("Resource_0c17p"), SubResource("Resource_17x7e"), SubResource("Resource_2mo0p"), SubResource("Resource_wbshs"), SubResource("Resource_12ksu"), SubResource("Resource_4vyom"), SubResource("Resource_fgqt2"), SubResource("Resource_5uiak"), SubResource("Resource_rrirq")])
-shop_name_key = "BARMAN_SHOP_NAME"
-skin_name = "NPC_Barman"
-
 [node name="Counter" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1817256655]
 modulate = Color(0.35120526, 0.35120538, 0.35500652, 1)
+z_index = 1
 position = Vector2(340.94788, 362.7126)
 scale = Vector2(1.18, 0.495)
 texture = ExtResource("12_fq600")
 
 [node name="Barrel2" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=664875984]
 modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
+z_index = 1
 position = Vector2(618.0907, 400.14117)
 scale = Vector2(0.53, 0.53)
 texture = ExtResource("13_xaqf6")
 
 [node name="Barrel3" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=358268065]
 modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
-z_index = 6
+z_index = 1
 position = Vector2(542.37646, 431.28412)
 rotation = -1.6854203
 scale = Vector2(0.53, 0.53)
@@ -448,317 +361,73 @@ position = Vector2(-546, 440)
 scale = Vector2(0.295, 0.295)
 texture = ExtResource("20_0xaki")
 
-[node name="NPC" parent="Interior/TileMapLayer/Objects" unique_id=2027052352 instance=ExtResource("11_pn1s2")]
-modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
-z_index = 6
-position = Vector2(-665.8823, 296.47064)
-scale = Vector2(0.185, 0.185)
-
-[node name="Mp1ArmL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="0" unique_id=1566028591]
-position = Vector2(156.47388, -179.84875)
-scale = Vector2(0.999999, 0.999999)
-
-[node name="Mp1ForearmL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="1" unique_id=1628481528]
-position = Vector2(167.27661, 26.035278)
-scale = Vector2(0.9999986, 0.9999986)
-
-[node name="Mp1Hip" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="2" unique_id=221842155]
-position = Vector2(58, 140.00012)
-
-[node name="Mp1Torso" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="3" unique_id=536363032]
-position = Vector2(66.999756, 34.000122)
-scale = Vector2(1, 1)
-
-[node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="4" unique_id=1140063982]
-position = Vector2(118.73389, 533.2223)
-scale = Vector2(0.99999785, 0.99999785)
-
-[node name="Mp1KneeL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="5" unique_id=1474959191]
-position = Vector2(117, 160.00012)
-
-[node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="6" unique_id=1015211277]
-position = Vector2(120.28613, 867.36755)
-scale = Vector2(0.99999255, 0.99999255)
-
-[node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="7" unique_id=966757603]
-position = Vector2(-28.91504, 538.6332)
-scale = Vector2(0.99998, 0.99998)
-
-[node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="8" unique_id=1961738744]
-position = Vector2(-3, 162.00012)
-scale = Vector2(0.9999829, 0.9999829)
-
-[node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="9" unique_id=1346636835]
-position = Vector2(-53.3584, 893.88025)
-rotation = -0.060005974
-scale = Vector2(0.9999764, 0.9999764)
-
-[node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="10" unique_id=1940891905]
-position = Vector2(80.47632, -294.79822)
-scale = Vector2(0.99999624, 0.99999624)
-
-[node name="Mp1ArmR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="11" unique_id=1862412567]
-position = Vector2(-64.35254, -221.6648)
-scale = Vector2(0.99999833, 0.99999833)
-
-[node name="Mp1ForearmR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(2027052352, 646331494) index="12" unique_id=1844649754]
-position = Vector2(-76.28247, 4.7562256)
-scale = Vector2(0.999998, 0.999998)
-
-[node name="NPC_2" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Skins" parent_id_path=PackedInt32Array(2027052352, 1418891037) index="1" unique_id=135189728]
-visible = false
-
-[node name="Mp1Hip" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D" parent_id_path=PackedInt32Array(2027052352, 1138009450) index="0" unique_id=847032776]
-position = Vector2(58, 140.00012)
-
-[node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-scale = Vector2(0.9999828, 0.9999828)
-
-[node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
-scale = Vector2(0.99999714, 0.99999714)
-
-[node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR/Mp1LegR" index="0" unique_id=1973771377]
-rotation = -0.092456765
-scale = Vector2(0.9999964, 0.9999964)
-
-[node name="Mp1KneeL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="2" unique_id=607615665]
-scale = Vector2(0.99999964, 0.99999964)
-
-[node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL" index="1" unique_id=1135898689]
-scale = Vector2(0.9999981, 0.9999981)
-
-[node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL/Mp1LegL" index="1" unique_id=909040570]
-scale = Vector2(0.99999464, 0.99999464)
-
-[node name="Mp1ArmR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle" parent_id_path=PackedInt32Array(2027052352, 793221498) index="0" unique_id=31757731]
-scale = Vector2(0.99999845, 0.99999845)
-
-[node name="Mp1ForearmR" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle/Mp1ArmR" index="1" unique_id=1284003043]
-scale = Vector2(0.99999946, 0.99999946)
-
-[node name="Mp1ArmL" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle" parent_id_path=PackedInt32Array(2027052352, 793221498) index="1" unique_id=342671053]
-scale = Vector2(0.99999905, 0.99999905)
-
-[node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle" parent_id_path=PackedInt32Array(2027052352, 793221498) index="2" unique_id=1090892894]
-scale = Vector2(0.9999961, 0.9999961)
-
-[node name="AnimationTree" parent="Interior/TileMapLayer/Objects/NPC" index="3" unique_id=474788181]
-active = false
-
-[node name="NPC2" parent="Interior/TileMapLayer/Objects" unique_id=1787750930 instance=ExtResource("11_pn1s2")]
-modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
-position = Vector2(-397.64706, 254.11768)
-rotation = 3.1415927
-scale = Vector2(0.165, -0.165)
-
-[node name="Mp1ArmL" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="0" unique_id=1566028591]
-position = Vector2(-225.2926, 237.08948)
-rotation = -0.31010884
-scale = Vector2(0.99999934, 0.99999934)
-
-[node name="Mp1ForearmL" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="1" unique_id=1628481528]
-position = Vector2(-126.80359, 418.21057)
-rotation = -1.7417647
-scale = Vector2(0.9999989, 0.9999989)
-
-[node name="Mp1Hip" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="2" unique_id=221842155]
-position = Vector2(-310.8224, 561.90466)
-scale = Vector2(0.99999994, 0.99999994)
-
-[node name="Mp1Torso" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="3" unique_id=536363032]
-position = Vector2(-301.8224, 455.90466)
-rotation = 0.0024205744
-scale = Vector2(0.9999999, 0.9999999)
-
-[node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="4" unique_id=1140063982]
-position = Vector2(119.04883, 623.76575)
-rotation = 0.093368754
-scale = Vector2(0.99999756, 0.99999756)
-
-[node name="Mp1KneeL" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="5" unique_id=1474959191]
-position = Vector2(-251.82239, 581.90466)
-rotation = -1.4511182
-scale = Vector2(0.9999995, 0.9999995)
-
-[node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="6" unique_id=1015211277]
-position = Vector2(78.4314, 955.43665)
-rotation = -0.048154116
-scale = Vector2(0.9999946, 0.9999946)
-
-[node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="7" unique_id=966757603]
-position = Vector2(-7.3376465, 682.28503)
-rotation = 0.12070919
-scale = Vector2(0.99999446, 0.99999446)
-
-[node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="8" unique_id=1961738744]
-position = Vector2(-371.8224, 583.90466)
-rotation = -1.3994892
-scale = Vector2(0.9999958, 0.9999958)
-
-[node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="9" unique_id=1346636835]
-position = Vector2(-62.999756, 1033.9999)
-rotation = -0.08925248
-scale = Vector2(0.99999315, 0.99999315)
-
-[node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="10" unique_id=1940891905]
-position = Vector2(-308.02588, 126.888794)
-rotation = -0.028720206
-scale = Vector2(0.999998, 0.999998)
-
-[node name="Mp1ArmR" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="11" unique_id=1862412567]
-position = Vector2(-448.224, 208.54968)
-rotation = -0.27740312
-scale = Vector2(0.99999905, 0.99999905)
-
-[node name="Mp1ForearmR" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins/NPC_1" parent_id_path=PackedInt32Array(1787750930, 646331494) index="12" unique_id=1844649754]
-position = Vector2(-428.28967, 434.4071)
-rotation = -0.5863717
-scale = Vector2(0.99999857, 0.99999857)
-
-[node name="NPC_2" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Skins" parent_id_path=PackedInt32Array(1787750930, 1418891037) index="1" unique_id=135189728]
-visible = false
-
-[node name="Mp1Hip" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D" parent_id_path=PackedInt32Array(1787750930, 1138009450) index="0" unique_id=847032776]
-position = Vector2(-310.8224, 561.90466)
-
-[node name="Mp1KneeR" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="1" unique_id=1858767866]
-rotation = -1.3994892
-scale = Vector2(0.9999958, 0.9999958)
-
-[node name="Mp1LegR" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR" index="1" unique_id=718148819]
-rotation = 1.5201983
-scale = Vector2(0.99999875, 0.99999875)
-
-[node name="Mp1FootR" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeR/Mp1LegR" index="0" unique_id=1973771377]
-rotation = -0.20996168
-scale = Vector2(0.9999986, 0.9999986)
-
-[node name="Mp1KneeL" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="2" unique_id=607615665]
-rotation = -1.4511182
-scale = Vector2(0.9999996, 0.9999996)
-
-[node name="Mp1LegL" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL" index="1" unique_id=1135898689]
-rotation = 1.544487
-scale = Vector2(0.99999803, 0.99999803)
-
-[node name="Mp1FootL" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1KneeL/Mp1LegL" index="1" unique_id=909040570]
-rotation = -0.14152285
-scale = Vector2(0.99999696, 0.99999696)
-
-[node name="Mp1Torso" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip" index="3" unique_id=592130368]
-rotation = 0.0024205744
-
-[node name="Mp1ArmR" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle" parent_id_path=PackedInt32Array(1787750930, 793221498) index="0" unique_id=31757731]
-rotation = -0.2798237
-scale = Vector2(0.9999992, 0.9999992)
-
-[node name="Mp1ForearmR" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle/Mp1ArmR" index="1" unique_id=1284003043]
-rotation = -0.3089686
-scale = Vector2(0.99999934, 0.99999934)
-
-[node name="Mp1ArmL" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle" parent_id_path=PackedInt32Array(1787750930, 793221498) index="1" unique_id=342671053]
-rotation = 1.1878898
-scale = Vector2(0.99999946, 0.99999946)
-
-[node name="Mp1ForearmL" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle/Mp1ArmL" index="1" unique_id=101060477]
-rotation = -2.932075
-scale = Vector2(0.9999995, 0.9999995)
-
-[node name="Mp1Head" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/Bones/Skeleton2D/Mp1Hip/Mp1Torso/Clavicle" parent_id_path=PackedInt32Array(1787750930, 793221498) index="2" unique_id=1090892894]
-rotation = -0.03114078
-scale = Vector2(0.9999981, 0.9999981)
-
-[node name="FootR LookAt" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/IK Targets/FootR Target" parent_id_path=PackedInt32Array(1787750930, 2135513784) index="0" unique_id=455428139]
-position = Vector2(241.25298, 121.08022)
-
-[node name="FootL Target" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/IK Targets" parent_id_path=PackedInt32Array(1787750930, 332316525) index="1" unique_id=1823053590]
-position = Vector2(78.4312, 955.4367)
-
-[node name="FootL LookAt" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/IK Targets/FootL Target" index="0" unique_id=1600521808]
-position = Vector2(328.19757, 62.778976)
-
-[node name="ArmR Target" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/IK Targets" parent_id_path=PackedInt32Array(1787750930, 332316525) index="2" unique_id=975049427]
-position = Vector2(-221.03381, 663.1017)
-
-[node name="ArmL Target" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/IK Targets" parent_id_path=PackedInt32Array(1787750930, 332316525) index="3" unique_id=565009636]
-position = Vector2(156.86272, 342.24594)
-
-[node name="Head Target" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/IK Targets" parent_id_path=PackedInt32Array(1787750930, 332316525) index="4" unique_id=1057147937]
-position = Vector2(-135.47221, -969.69684)
-
-[node name="Hip Target" parent="Interior/TileMapLayer/Objects/NPC2/CharacterContainer/IK Targets" parent_id_path=PackedInt32Array(1787750930, 332316525) index="5" unique_id=1219288703]
-position = Vector2(-310.8225, 561.9046)
-
-[node name="AnimationPlayer" parent="Interior/TileMapLayer/Objects/NPC2" index="2" unique_id=1101617534]
-active = false
-reset_on_save = false
-playback_auto_capture = false
-
-[node name="AnimationTree" parent="Interior/TileMapLayer/Objects/NPC2" index="3" unique_id=474788181]
-active = false
-deterministic = false
-reset_on_save = false
-
-[node name="Shadow" parent="Interior/TileMapLayer/Objects/NPC2" index="4" unique_id=223983194]
-position = Vector2(-9.918213e-05, 1040.9983)
-scale = Vector2(1.733, 2.569)
-
-[node name="Shadow2" type="Sprite2D" parent="Interior/TileMapLayer/Objects/NPC2" unique_id=1787276489]
+[node name="Shadow2" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1787276489]
 modulate = Color(1, 1, 1, 0.5372549)
-position = Vector2(570.41, 948.3065)
-scale = Vector2(1.008, 1.494)
+position = Vector2(-491.7647, 410.5883)
+rotation = -3.1415925
+scale = Vector2(0.16632, -0.24650998)
 texture = ExtResource("22_vcas7")
 
-[node name="Shadow3" type="Sprite2D" parent="Interior/TileMapLayer/Objects/NPC2" unique_id=430619824]
+[node name="Shadow3" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=430619824]
 modulate = Color(1, 1, 1, 0.5372549)
-position = Vector2(-427.80756, 962.56665)
-scale = Vector2(1.008, 1.494)
+position = Vector2(-327.05884, 412.9412)
+rotation = -3.1415925
+scale = Vector2(0.16632, -0.24650998)
 texture = ExtResource("22_vcas7")
 
-[node name="Shadow4" type="Sprite2D" parent="Interior/TileMapLayer/Objects/NPC2" unique_id=601528500]
+[node name="Shadow4" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=601528500]
 modulate = Color(1, 1, 1, 0.5372549)
-position = Vector2(-926.91626, 877.0051)
-scale = Vector2(1.008, 1.494)
+position = Vector2(-244.70593, 398.82355)
+rotation = -3.1415925
+scale = Vector2(0.16632, -0.24650998)
 texture = ExtResource("22_vcas7")
 
-[node name="Shadow5" type="Sprite2D" parent="Interior/TileMapLayer/Objects/NPC2" unique_id=338564944]
+[node name="Shadow5" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=338564944]
 modulate = Color(1, 1, 1, 0.5372549)
-position = Vector2(-1311.943, 919.7858)
-scale = Vector2(1.008, 1.494)
+position = Vector2(-181.17648, 405.8824)
+rotation = -3.1415925
+scale = Vector2(0.16632, -0.24650998)
 texture = ExtResource("22_vcas7")
 
-[node name="Shadow6" type="Sprite2D" parent="Interior/TileMapLayer/Objects/NPC2" unique_id=370113113]
+[node name="Shadow6" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=370113113]
 modulate = Color(1, 1, 1, 0.5372549)
-position = Vector2(-1768.271, 884.1352)
-scale = Vector2(1.008, 1.494)
+position = Vector2(-105.882355, 400.00006)
+rotation = -3.1415925
+scale = Vector2(0.16632, -0.24650998)
 texture = ExtResource("22_vcas7")
 
-[node name="Shadow7" type="Sprite2D" parent="Interior/TileMapLayer/Objects/NPC2" unique_id=2114049239]
+[node name="Shadow7" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=2114049239]
 modulate = Color(1, 1, 1, 0.5372549)
-position = Vector2(-5953.654, 1404.6339)
-scale = Vector2(1.468, 2.176)
+z_index = 2
+position = Vector2(584.7058, 485.88245)
+rotation = -3.1415925
+scale = Vector2(0.24222001, -0.35904002)
 texture = ExtResource("22_vcas7")
 
 [node name="Bottles" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1565382653]
 modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
+z_index = 1
 position = Vector2(135.23363, 271.14117)
 scale = Vector2(0.175, 0.175)
 texture = ExtResource("21_1nm8b")
 
 [node name="Bottles2" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=999438650]
 modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
+z_index = 1
 position = Vector2(280.94794, 271.14117)
 scale = Vector2(0.175, 0.175)
 texture = ExtResource("21_1nm8b")
 
 [node name="Bottles3" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1145345001]
 modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
+z_index = 1
 position = Vector2(322.37653, 272.71265)
 scale = Vector2(-0.175, 0.175)
 texture = ExtResource("21_1nm8b")
 
 [node name="Bottle" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=2063435519]
 modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
+z_index = 1
 position = Vector2(97.37642, 266.14117)
 scale = Vector2(0.215, 0.215)
 texture = ExtResource("22_x11pg")
@@ -771,6 +440,7 @@ texture = ExtResource("23_iec42")
 
 [node name="Beer2" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=612408947]
 modulate = Color(0.3106173, 0.31061706, 0.31061706, 1)
+z_index = 1
 position = Vector2(-422.3529, 305.8824)
 rotation = 3.1415927
 scale = Vector2(0.12, -0.12)
@@ -783,6 +453,7 @@ scale = Vector2(1.7499999, 1.7499999)
 texture = ExtResource("25_vcas7")
 
 [node name="Whiskey" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1040159709]
+z_index = 1
 position = Vector2(242.37645, 260.14117)
 scale = Vector2(0.205, 0.205)
 texture = ExtResource("24_vrakd")
@@ -798,7 +469,7 @@ scale = Vector2(-1.636, -1.636)
 texture = ExtResource("27_xtf64")
 
 [node name="Hanger" type="Sprite2D" parent="Interior/TileMapLayer/Objects" unique_id=1983730279]
-z_index = 6
+z_index = 1
 position = Vector2(594.1176, 347.0588)
 scale = Vector2(1.944, 2.007)
 texture = ExtResource("28_0xaki")
@@ -866,21 +537,55 @@ position = Vector2(-6.020661, -85.26572)
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_xtf64")
 
-[node name="CameraLimits" type="Node2D" parent="Interior" unique_id=867561010]
-
-[node name="TopLeft" type="Marker2D" parent="Interior/CameraLimits" unique_id=2066196426]
-position = Vector2(-641.6666, -55)
-
-[node name="BottomRight" type="Marker2D" parent="Interior/CameraLimits" unique_id=1098924872]
-position = Vector2(603.3333, 534.1667)
-
 [node name="SceneryPOI" parent="Interior" unique_id=797204525 instance=ExtResource("42_rpjb7")]
-position = Vector2(179.99998, 328.3333)
+position = Vector2(178.99998, 65.33331)
 scale = Vector2(0.8333333, 0.8333333)
 poi_name = "Bells"
 is_interior = true
 building_entrance_path = NodePath("../../BuildingEntrance")
 slot_spacing = 220.0
+
+[node name="Wall" type="StaticBody2D" parent="Interior" unique_id=1118295153]
+position = Vector2(28, -303)
+collision_layer = 7
+collision_mask = 3
+metadata/surface_type = "wood"
+
+[node name="WallLeft" type="CollisionShape2D" parent="Interior/Wall" unique_id=1684094964]
+position = Vector2(-518.75, 224.5)
+shape = SubResource("RectangleShape2D_g8sw3")
+
+[node name="Roof" type="CollisionShape2D" parent="Interior/Wall" unique_id=826860421]
+position = Vector2(-37, 6.9999924)
+shape = SubResource("RectangleShape2D_i4n63")
+
+[node name="Floor" type="CollisionShape2D" parent="Interior/Wall" unique_id=1103163513]
+position = Vector2(-38, 447)
+shape = SubResource("RectangleShape2D_vcas7")
+
+[node name="WallRight" type="CollisionShape2D" parent="Interior/Wall" unique_id=1178151929]
+position = Vector2(394.5, 225.5)
+shape = SubResource("RectangleShape2D_gkafe")
+
+[node name="CameraLimits" type="Node2D" parent="Interior" unique_id=1798953425]
+
+[node name="TopLeft" type="Marker2D" parent="Interior/CameraLimits" unique_id=1582268631]
+position = Vector2(-505, -309.71002)
+
+[node name="BottomRight" type="Marker2D" parent="Interior/CameraLimits" unique_id=1519700060]
+position = Vector2(485, 155.28998)
+
+[node name="InteriorPhantomCamera2D" type="Node2D" parent="Interior" unique_id=1710863261]
+top_level = true
+z_index = 9
+position = Vector2(-127.00001, -160.00003)
+scale = Vector2(0.51, 0.51)
+script = ExtResource("45_ckb2g")
+follow_mode = 1
+zoom = Vector2(0.4, 0.4)
+tween_resource = SubResource("Resource_gxpp8")
+draw_limits = true
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
 [node name="Audio" type="Node2D" parent="." unique_id=159789667]
 
@@ -893,10 +598,12 @@ stream = ExtResource("39_2u12w")
 volume_db = -2.0
 
 [node name="BuildingEntrance" type="Node2D" parent="." unique_id=1118754222]
+position = Vector2(-129, -392.28995)
+scale = Vector2(0.8, 0.8)
 script = ExtResource("1_g8sw3")
 interior_path = NodePath("../Interior")
 exit_area_path = NodePath("../Interior/TileMapLayer/ExitArea")
-walls_path = NodePath("../Interior/TileMapLayer/Wall")
+walls_path = NodePath("../Interior/Wall")
 audio_path = NodePath("../Audio")
 npc_fade_time = 0.5
 
@@ -917,7 +624,3 @@ scale = Vector2(0.83561647, 0.82716054)
 texture = SubResource("CanvasTexture_ckb2g")
 region_enabled = true
 region_rect = Rect2(1966.5, 1062.5, 146, 324)
-
-[editable path="Interior/TileMapLayer/Objects/NPC3"]
-[editable path="Interior/TileMapLayer/Objects/NPC"]
-[editable path="Interior/TileMapLayer/Objects/NPC2"]

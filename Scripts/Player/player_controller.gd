@@ -78,8 +78,12 @@ func get_scaled_gravity() -> float:
 # ==========================
 func _ready() -> void:
 	PlayerManager.register_player(self)
-	if not has_node("Camera2D"):
-		push_warning("MainPlayer: No Camera2D found. Add one manually to the scene.")
+
+	if not has_node("CameraTarget"):
+		push_warning("MainPlayer: No CameraTarget found.")
+
+	if not has_node("PlayerPhantomCamera2D"):
+		push_warning("MainPlayer: No PlayerPhantomCamera2D found.")
 	movement.initialize(self)
 	animation.initialize(self)
 	interaction.initialize(self)

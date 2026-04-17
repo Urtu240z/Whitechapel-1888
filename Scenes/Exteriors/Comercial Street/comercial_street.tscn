@@ -21,7 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://b8u1b1yp6fn43" path="res://Assets/Sprites/Building/Perfume Store.png" id="11_h2w1t"]
 [ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="11_nas3t"]
 [ext_resource type="Texture2D" uid="uid://blwmycta5s4us" path="res://Assets/Sprites/Building/Victoria Home.png" id="11_y0tni"]
-[ext_resource type="Texture2D" uid="uid://db0e7drmhg073" path="res://Assets/Sprites/Background/Ground.png" id="12_v2j58"]
 [ext_resource type="Texture2D" uid="uid://bhcdu34bwng3e" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand2_n.png" id="13_y0tni"]
 [ext_resource type="PackedScene" uid="uid://5o5jm036m674" path="res://Scenes/Atrezzo/Street_Lamp.tscn" id="14_3j0sx"]
 [ext_resource type="PackedScene" uid="uid://bt3ubgbvk60kv" path="res://Scenes/NPC/NPC_Companion.tscn" id="14_nsm0j"]
@@ -44,6 +43,9 @@
 [ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="26_145iq"]
 [ext_resource type="Texture2D" uid="uid://bgcml75mm387r" path="res://Assets/Sprites/Building/Perfume Store_n.png" id="27_okdt8"]
 [ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="43_ac4hn"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="45_qnasi"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="46_6ggpe"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="47_6ggpe"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_eoj0i"]
 blend_mode = 1
@@ -120,8 +122,8 @@ metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 diffuse_texture = ExtResource("16_7ajcb")
 normal_texture = ExtResource("13_y0tni")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_isxnx"]
-size = Vector2(216325.03, 2545.0005)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ggpe"]
+size = Vector2(50000, 600)
 
 [sub_resource type="Sky" id="Sky_p02g6"]
 
@@ -143,10 +145,16 @@ adjustment_brightness = 1.2
 adjustment_contrast = 1.1
 adjustment_saturation = 0.65
 
+[sub_resource type="Resource" id="Resource_bk7xh"]
+script = ExtResource("46_6ggpe")
+duration = 0.0
+
 [node name="ComercialStreet" type="Node2D" unique_id=1435527189]
 script = ExtResource("1_okdt8")
 outside_freeze_paths = Array[NodePath]([NodePath("OutsideAudiovisuals"), NodePath("OutsideActors"), NodePath("OutsideGameplay")])
 buildings_root_path = NodePath("OutsideBuildings")
+player_path = NodePath("Player")
+exterior_pcam_path = NodePath("ExteriorPhantomCamera2D")
 
 [node name="OutsideAudiovisuals" type="Node2D" parent="." unique_id=1767405400]
 
@@ -597,8 +605,9 @@ color_ramp = SubResource("Gradient_tl17h")
 scale = Vector2(4.9999995, 4.9999995)
 
 [node name="Ten_Bells" parent="OutsideBuildings" unique_id=526028377 instance=ExtResource("11_nas3t")]
-position = Vector2(469.60004, -384.60004)
-scale = Vector2(0.8000001, 0.8000001)
+position = Vector2(597.60004, 3.6000004)
+zoom_in = Vector2(1, 1)
+zoom_out = Vector2(1, 1)
 
 [node name="PrincessAlice" parent="OutsideBuildings" unique_id=91018013 instance=ExtResource("7_os2yf")]
 position = Vector2(1611.6001, -288.40002)
@@ -748,30 +757,19 @@ scale = Vector2(5, 5)
 
 [node name="Ground" type="StaticBody2D" parent="OutsideGameplay/Collisions" unique_id=1541999250]
 position = Vector2(0, 90)
-scale = Vector2(0.3, 0.2)
 collision_layer = 7
 collision_mask = 0
 
 [node name="GroundCobbelstoneSand2" type="Sprite2D" parent="OutsideGameplay/Collisions/Ground" unique_id=1538756005]
 z_index = -1
 texture_filter = 1
-position = Vector2(-30, 770.00006)
-scale = Vector2(8.615, 8.615)
+position = Vector2(5617.9995, 291)
+scale = Vector2(2.86, 2.28)
 texture = SubResource("CanvasTexture_fcpjw")
 
-[node name="BorderGround" type="Sprite2D" parent="OutsideGameplay/Collisions/Ground" unique_id=1863265908]
-modulate = Color(1.9909518, 1.1383917, 0.81074536, 1)
-z_index = -1
-position = Vector2(24.999996, -1045)
-scale = Vector2(200, 25)
-texture = ExtResource("12_v2j58")
-region_enabled = true
-region_rect = Rect2(0, 0, 1024, 19)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="OutsideGameplay/Collisions/Ground" unique_id=1757411227]
-position = Vector2(-1907.5137, 1142.4995)
-scale = Vector2(0.99999964, 0.99999964)
-shape = SubResource("RectangleShape2D_isxnx")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutsideGameplay/Collisions/Ground" unique_id=1107981376]
+position = Vector2(6791, 267)
+shape = SubResource("RectangleShape2D_6ggpe")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=1888029047]
 visible = false
@@ -780,7 +778,7 @@ blend_mode = 2
 
 [node name="Player" parent="." unique_id=722262165 instance=ExtResource("3_lwph6")]
 texture_filter = 2
-position = Vector2(2029, -424)
+position = Vector2(1264, -473)
 
 [node name="IluminacionAmbiental" type="CanvasModulate" parent="." unique_id=140341875]
 color = Color(1.224, 1.224, 1.224, 1)
@@ -802,3 +800,33 @@ color = Color(0, 0, 0, 1)
 environment = SubResource("Environment_p02g6")
 
 [node name="HUD" parent="." unique_id=3512527 instance=ExtResource("43_ac4hn")]
+
+[node name="ExteriorPhantomCamera2D" type="Node2D" parent="." unique_id=448402984]
+top_level = true
+position = Vector2(2029, -650)
+script = ExtResource("45_qnasi")
+priority = 10
+follow_mode = 2
+zoom = Vector2(0.3, 0.3)
+tween_resource = SubResource("Resource_bk7xh")
+limit_left = -16000
+limit_top = -5000
+limit_right = 28000
+limit_bottom = 550
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1629903068]
+top_level = true
+position = Vector2(2029, -650)
+zoom = Vector2(0.3, 0.3)
+limit_left = -16000
+limit_top = -5000
+limit_right = 28000
+limit_bottom = 550
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=807986062]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("47_6ggpe")
+interpolation_mode = 1
+metadata/_custom_type_script = "uid://bd046eokvcnu2"

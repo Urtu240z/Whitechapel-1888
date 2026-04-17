@@ -53,7 +53,6 @@ func _ready() -> void:
 func _refresh_slots() -> void:
 	for slot_key in SLOT_KEYS:
 		var slot_node := get_node_or_null(slot_key + "_Slot") as Control
-		print("Slot %s: %s" % [slot_key, slot_node])
 	if is_instance_valid(_context_menu):
 		_context_menu.queue_free()
 		_context_menu = null

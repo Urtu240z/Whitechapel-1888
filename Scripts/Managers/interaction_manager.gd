@@ -16,11 +16,12 @@ var _interactables: Array[Dictionary] = []
 # ================================================================
 
 func register(node: Node, priority: int, callback: Callable) -> void:
-	# Evitar duplicados
 	for entry in _interactables:
 		if entry["node"] == node:
 			return
+
 	_interactables.append({ "node": node, "priority": priority, "callback": callback })
+
 
 func unregister(node: Node) -> void:
 	_interactables = _interactables.filter(func(e): return e["node"] != node)

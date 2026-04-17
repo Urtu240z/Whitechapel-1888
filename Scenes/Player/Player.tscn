@@ -38,6 +38,8 @@
 [ext_resource type="Script" uid="uid://cpoagwkpmnixk" path="res://Scripts/Player/player_shadow.gd" id="34_lw74r"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="35_bmii2"]
 [ext_resource type="Texture2D" uid="uid://c1g68yk0hhhh8" path="res://addons/kenney_particle_pack/spark_02.png" id="36_tf3ct"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="39_fcbn2"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="40_hjq2i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ygan3"]
 size = Vector2(393, 792)
@@ -104,9 +106,9 @@ polygon = PackedVector2Array(-53, 470, -49, 461, -22, 480)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hmcse"]
 size = Vector2(707, 976)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r6t50"]
-radius = 128.7
-height = 850.24
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcbn2"]
+radius = 96.5
+height = 800.0
 
 [sub_resource type="Animation" id="Animation_v340a"]
 resource_name = "Crouch"
@@ -2577,19 +2579,23 @@ states/Walk_Silent/position = Vector2(762, 11.132538)
 transitions = ["Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_q284w"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_rj8q8"), "Walk", "Run", SubResource("AnimationNodeStateMachineTransition_b7epl"), "Run", "Walk", SubResource("AnimationNodeStateMachineTransition_ybri8"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_il54b"), "Idle", "Crouch_Down", SubResource("AnimationNodeStateMachineTransition_qdq1f"), "Crouch_Down", "Crouch_Idle", SubResource("AnimationNodeStateMachineTransition_12xgd"), "Crouch_Idle", "Crouch_Walk", SubResource("AnimationNodeStateMachineTransition_1g52f"), "Crouch_Walk", "Crouch_Idle", SubResource("AnimationNodeStateMachineTransition_7gg3n"), "Crouch_Up", "Idle", SubResource("AnimationNodeStateMachineTransition_y3vh2"), "Crouch_Idle", "Crouch_Up", SubResource("AnimationNodeStateMachineTransition_4qus3"), "Idle", "Faint", SubResource("AnimationNodeStateMachineTransition_lw74r"), "Faint", "Rise", SubResource("AnimationNodeStateMachineTransition_tf3ct"), "Rise", "Idle", SubResource("AnimationNodeStateMachineTransition_to4uw"), "Idle", "Slap", SubResource("AnimationNodeStateMachineTransition_ui31c"), "Idle", "Kick", SubResource("AnimationNodeStateMachineTransition_karlm"), "Slap", "Idle", SubResource("AnimationNodeStateMachineTransition_2avfq"), "Kick", "Idle", SubResource("AnimationNodeStateMachineTransition_d2y64"), "Walk", "Walk_Silent", SubResource("AnimationNodeStateMachineTransition_w4oha"), "Walk_Silent", "Run", SubResource("AnimationNodeStateMachineTransition_4ribq"), "Walk_Silent", "Walk", SubResource("AnimationNodeStateMachineTransition_jh1yi")]
 graph_offset = Vector2(-54, -85.86746)
 
+[sub_resource type="Gradient" id="Gradient_vrod0"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="Resource" id="Resource_ui31c"]
+script = ExtResource("40_hjq2i")
+
 [sub_resource type="Gradient" id="Gradient_wdekc"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_6rswy"]
 gradient = SubResource("Gradient_wdekc")
 
-[sub_resource type="Gradient" id="Gradient_vrod0"]
-colors = PackedColorArray(1, 0, 0, 1, 1, 1, 1, 0)
-
 [node name="Player" type="CharacterBody2D" unique_id=1458210690 groups=["player"]]
 z_index = 4
 collision_layer = 3
 collision_mask = 3
+safe_margin = 0.5
 script = ExtResource("1_0u84n")
 friction = 2500.0
 run_friction = 6000.0
@@ -2632,7 +2638,6 @@ visible = false
 script = ExtResource("13_g66pu")
 
 [node name="InteractionArea" type="Area2D" parent="Interaction" unique_id=902202576]
-visible = false
 collision_layer = 17
 collision_mask = 17
 
@@ -2871,13 +2876,13 @@ bone_angle = 42.711983
 
 [node name="LegR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=250582046]
 position = Vector2(-14.700328, 126.63689)
-rotation = -0.5327758
-scale = Vector2(0.99985707, 0.99985707)
+rotation = -0.53277624
+scale = Vector2(0.999857, 0.999857)
 rest = Transform2D(0.99116075, -0.1326665, 0.1326665, 0.99116075, -66, 103)
 
 [node name="KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegR" unique_id=1757211730]
 position = Vector2(1, 146)
-rotation = 0.5405026
+rotation = 0.54050314
 scale = Vector2(0.9998564, 0.9998564)
 rest = Transform2D(0.9880616, 0.15405944, -0.15405944, 0.9880616, 1, 146)
 auto_calculate_length_and_angle = false
@@ -3112,8 +3117,8 @@ shape = SubResource("RectangleShape2D_hmcse")
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=1724075595]
 visible = false
 z_index = 1
-position = Vector2(1, 60.5)
-shape = SubResource("CapsuleShape2D_r6t50")
+position = Vector2(-24.5, 87)
+shape = SubResource("CapsuleShape2D_fcbn2")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1366254268]
 libraries/ = SubResource("AnimationLibrary_ur43p")
@@ -3144,37 +3149,6 @@ texture = ExtResource("35_bmii2")
 [node name="Journal" parent="." unique_id=1260495271 instance=ExtResource("33_6rswy")]
 visible = false
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=430310312]
-physics_interpolation_mode = 2
-visible = false
-position = Vector2(242, -504)
-zoom = Vector2(0.3, 0.3)
-limit_enabled = false
-limit_left = -1800
-limit_top = -500
-limit_right = 1545
-limit_bottom = 133
-limit_smoothed = true
-position_smoothing_enabled = true
-position_smoothing_speed = 2.0
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_horizontal_offset = 0.37
-drag_vertical_offset = -0.02
-drag_left_margin = 0.34
-drag_top_margin = 0.99
-drag_right_margin = 0.18
-drag_bottom_margin = 0.86
-editor_draw_drag_margin = true
-
-[node name="OverlayBlack" type="Sprite2D" parent="Camera2D" unique_id=698112768]
-visible = false
-modulate = Color(1, 1, 1, 0)
-z_index = -1
-position = Vector2(1429.5552, 101.49237)
-scale = Vector2(477.82428, 253.3199)
-texture = SubResource("GradientTexture2D_6rswy")
-
 [node name="ShadowProjection" type="Sprite2D" parent="." unique_id=739175199]
 position = Vector2(-15, 472)
 scale = Vector2(2, 0.5)
@@ -3199,3 +3173,24 @@ scale_amount_min = 0.1
 scale_amount_max = 0.5
 color = Color(1, 0.03876, 0.025840001, 0.27100003)
 color_ramp = SubResource("Gradient_vrod0")
+
+[node name="CameraTarget" type="Node2D" parent="." unique_id=24500174]
+
+[node name="PlayerPhantomCamera2D" type="Node2D" parent="." unique_id=139900460 node_paths=PackedStringArray("follow_target")]
+top_level = true
+script = ExtResource("39_fcbn2")
+priority = 5
+follow_mode = 2
+follow_target = NodePath("../CameraTarget")
+zoom = Vector2(0.3, 0.3)
+tween_resource = SubResource("Resource_ui31c")
+draw_limits = true
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+
+[node name="OverlayBlack" type="Sprite2D" parent="." unique_id=698112768]
+visible = false
+modulate = Color(1, 1, 1, 0)
+z_index = -1
+position = Vector2(1671.5552, -402.50763)
+scale = Vector2(477.82428, 253.3199)
+texture = SubResource("GradientTexture2D_6rswy")

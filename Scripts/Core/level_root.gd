@@ -16,8 +16,15 @@ class_name LevelRoot
 @export_group("🔗 Level Structure")
 @export var outside_freeze_paths: Array[NodePath] = []
 @export var buildings_root_path: NodePath
+@export var player_path: NodePath
+@export var exterior_pcam_path: NodePath
 
 var _active_building: Node2D = null
+
+
+func _ready() -> void:
+	call_deferred("_setup_exterior_camera")
+	call_deferred("_debug_phantom_cameras")
 
 
 # ================================================================
@@ -127,3 +134,42 @@ func _set_buildings_visibility() -> void:
 			canvas_item.visible = should_show
 
 		child.process_mode = Node.PROCESS_MODE_INHERIT if should_show else Node.PROCESS_MODE_DISABLED
+
+func _setup_exterior_camera() -> void:
+	var player: Node = get_node_or_null(player_path)
+	var exterior_pcam: PhantomCamera2D = get_node_or_null(exterior_pcam_path) as PhantomCamera2D
+
+	if not is_instance_valid(player):
+		push_warning("LevelRoot: player_path no válido.")
+		return
+
+	if not is_instance_valid(exterior_pcam):
+		push_warning("LevelRoot: exterior_pcam_path no válido.")
+		return
+
+	var camera_target: Node2D = player.get_node_or_null("CameraTarget") as Node2D
+	if not is_instance_valid(camera_target):
+		push_warning("LevelRoot: no se encontró CameraTarget dentro del player.")
+		return
+
+	if exterior_pcam.follow_mode != 2:
+		push_warning("LevelRoot: ExteriorPhantomCamera2D no está en SIMPLE.")
+
+	exterior_pcam.set_follow_target(camera_target)
+
+func _debug_phantom_cameras() -> void:
+	var exterior: PhantomCamera2D = get_node_or_null(exterior_pcam_path) as PhantomCamera2D
+	print("=== DEBUG CAMERAS ===")
+	print("ExteriorPCam: ", exterior)
+	if exterior:
+		print("  priority=", exterior.priority, " follow_mode=", exterior.follow_mode, " follow_target=", exterior.follow_target)
+
+	var interiors: Array[Node] = find_children("InteriorPhantomCamera2D", "", true, false)
+	for cam_node in interiors:
+		var cam: PhantomCamera2D = cam_node as PhantomCamera2D
+		if cam:
+			print("InteriorPCam: ", cam.get_path())
+			print("  priority=", cam.priority, " follow_mode=", cam.follow_mode, " follow_target=", cam.follow_target, " visible=", cam.visible)
+
+	print("Viewport camera: ", get_viewport().get_camera_2d())
+	print("=== FIN DEBUG CAMERAS ===")

@@ -38,8 +38,6 @@ func save_game(slot: int = 0) -> bool:
 	file.close()
 
 	_busy = false
-	print("💾 Partida guardada en slot %d" % slot)
-	_log_stats("SAVE")
 	return true
 
 
@@ -96,8 +94,6 @@ func _do_load(data: Dictionary) -> void:
 
 	await get_tree().create_timer(1.0).timeout
 	await SceneManager.fade_in(1.0)
-
-	print("📂 Partida cargada")
 
 
 # =========================================================
@@ -321,7 +317,6 @@ func _apply_stats(data: Dictionary) -> void:
 
 	PlayerStats.sincronizar_reloj()
 	PlayerStats.actualizar_stats()
-	_log_stats("LOAD")
 
 
 func _convert_medicina_timer_from_save(data: Dictionary) -> float:
@@ -422,7 +417,6 @@ func _apply_world(data: Dictionary) -> void:
 				entrance.force_inside_state(true)
 				await get_tree().process_frame
 				player.global_position = building.to_global(Vector2(local_x, local_y))
-				print("✅ Interior restaurado: ", building.name)
 			else:
 				push_warning("SaveManager: BuildingEntrance no válido en %s" % building.name)
 		else:
@@ -437,8 +431,6 @@ func _apply_world(data: Dictionary) -> void:
 	# Restaurar nombres runtime de NPCs ya instanciados en la escena.
 	_restore_npc_runtime_names(data.get("npc_runtime_names", {}))
 
-	print("✅ Partida cargada — pos: ", player.global_position)
-
 
 # =========================================================
 # 🔧 UTILS
@@ -448,13 +440,3 @@ func _slot_path(slot: int) -> String:
 
 func is_busy() -> bool:
 	return _busy
-
-func _log_stats(label: String) -> void:
-	print("📊 [%s] dinero: %.1f | higiene: %.1f | sex_appeal: %.1f | sex_appeal_bonus: %.1f | perfume: %s" % [
-		label,
-		PlayerStats.dinero,
-		PlayerStats.higiene,
-		PlayerStats.sex_appeal,
-		PlayerStats.sex_appeal_bonus,
-		str(InventoryManager.get_equipped(ItemData.EquipSlot.NECK_PERFUME))
-	])

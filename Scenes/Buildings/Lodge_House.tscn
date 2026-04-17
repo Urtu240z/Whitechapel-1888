@@ -27,6 +27,8 @@
 [ext_resource type="Texture2D" uid="uid://b0y5oeotay27s" path="res://Assets/Sprites/Lights/180 Light.png" id="20_6lei8"]
 [ext_resource type="Shader" uid="uid://duaxbbg0a834o" path="res://Assets/Shaders/Interaction_Glow.gdshader" id="20_31840"]
 [ext_resource type="Texture2D" uid="uid://c5sqoyhdxo4s6" path="res://Assets/Sprites/Interiors/Bar Bells/Light.png" id="21_cm6gi"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="24_nddhr"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="25_m8ipo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ec4d"]
 texture = ExtResource("9_wtgbi")
@@ -84,6 +86,10 @@ blend_mode = 1
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xtf64"]
 size = Vector2(128.87479, 280.20502)
 
+[sub_resource type="Resource" id="Resource_txu1n"]
+script = ExtResource("25_m8ipo")
+duration = 0.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0l6d3"]
 size = Vector2(164, 273)
 
@@ -96,13 +102,8 @@ shader_parameter/fill_strength = 0.15
 
 [node name="Ambient" type="Node2D" unique_id=444969637]
 script = ExtResource("1_p8nmd")
-fade_time = 3.5
-zoom_in = Vector2(0.38, 0.38)
-zoom_out = Vector2(0.3, 0.3)
 open_sounds = Array[AudioStream]([ExtResource("2_4j78l"), ExtResource("3_1wgdf"), ExtResource("4_20bsc")])
 close_sounds = Array[AudioStream]([ExtResource("5_nddhr"), ExtResource("6_m8ipo"), ExtResource("7_txu1n")])
-sfx_volume_db_min = 0.0
-sfx_volume_db_max = 2.0
 building_name = "St. Jude's Refuge & Dispensary"
 street_name = "Commercial Street"
 
@@ -157,7 +158,6 @@ npc_display_name = "Hostal Keeper"
 dialog_timeline = "uid://d3uvod4y3u4ho"
 service_id = "lodge_reception"
 initial_facing_right = false
-skin_name = "NPC_HostalKeeper"
 
 [node name="Objects" type="Node2D" parent="Interior/TileMapLayer" unique_id=1834296797]
 position = Vector2(0, 145.99998)
@@ -377,6 +377,15 @@ position = Vector2(-870, -191)
 
 [node name="BottomRight" type="Marker2D" parent="Interior/CameraLimits" unique_id=243658893]
 position = Vector2(930, 496)
+
+[node name="InteriorPhantomCamera2D" type="Node2D" parent="Interior" unique_id=1203004611]
+top_level = true
+script = ExtResource("24_nddhr")
+follow_mode = 2
+zoom = Vector2(0.5, 0.5)
+tween_resource = SubResource("Resource_txu1n")
+draw_limits = true
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
 [node name="Audio" type="Node2D" parent="." unique_id=1996820493]
 

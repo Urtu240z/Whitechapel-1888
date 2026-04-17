@@ -18,7 +18,6 @@ var _nell_inside: bool = false
 # ================================================================
 func _ready() -> void:
 	_key_prompt = get_node_or_null("KeyPrompt")
-	print("KeyPrompt: ", _key_prompt)
 	if not _area:
 		push_error("HideZone: no se encontró Area2D")
 		return
@@ -29,9 +28,7 @@ func _ready() -> void:
 # DETECCIÓN
 # ================================================================
 func _on_body_entered(body: Node2D) -> void:
-	print("body entered: ", body.name)
 	if body.is_in_group("player"):
-		print("ES PLAYER, mostrando prompt, _key_prompt: ", _key_prompt)
 		_nell_inside = true
 		InteractionManager.register(self, InteractionManager.Priority.BUILDING, _on_interact)
 		if _key_prompt:

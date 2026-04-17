@@ -68,13 +68,46 @@ func on_exit() -> bool:
 	return true
 
 func get_interior_camera_limits() -> Dictionary:
-	var top_left     = get_node_or_null("Interior/CameraLimits/TopLeft")
-	var bottom_right = get_node_or_null("Interior/CameraLimits/BottomRight")
+	var top_left: Marker2D = get_node_or_null("Interior/CameraLimits/TopLeft") as Marker2D
+	var bottom_right: Marker2D = get_node_or_null("Interior/CameraLimits/BottomRight") as Marker2D
+
 	if top_left and bottom_right:
 		return {
-			"left":   int(top_left.global_position.x),
-			"top":    int(top_left.global_position.y),
-			"right":  int(bottom_right.global_position.x),
+			"left": int(top_left.global_position.x),
+			"top": int(top_left.global_position.y),
+			"right": int(bottom_right.global_position.x),
 			"bottom": int(bottom_right.global_position.y),
 		}
+
 	return {}
+
+
+func get_interior_pcam() -> PhantomCamera2D:
+	return get_node_or_null("Interior/InteriorPhantomCamera2D") as PhantomCamera2D
+
+
+func setup_interior_pcam(player: Node) -> void:
+	var pcam: PhantomCamera2D = get_interior_pcam()
+	if not is_instance_valid(pcam):
+		return
+
+	var camera_target: Node2D = player.get_node_or_null("CameraTarget") as Node2D
+	if not is_instance_valid(camera_target):
+		return
+
+	pcam.set_follow_target(camera_target)
+
+
+func apply_interior_pcam_limits() -> void:
+	var pcam: PhantomCamera2D = get_interior_pcam()
+	if not is_instance_valid(pcam):
+		return
+
+	var limits := get_interior_camera_limits()
+	if limits.is_empty():
+		return
+
+	pcam.set_limit_left(limits["left"])
+	pcam.set_limit_top(limits["top"])
+	pcam.set_limit_right(limits["right"])
+	pcam.set_limit_bottom(limits["bottom"])

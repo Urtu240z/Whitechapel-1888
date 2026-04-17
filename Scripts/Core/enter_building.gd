@@ -162,8 +162,6 @@ func _enter() -> void:
 		push_error("BuildingEntrance: PlayerManager.player_instance es null")
 		return
 
-	var camera: Camera2D = player.get_node_or_null("Camera2D")
-
 	player.disable_movement()
 
 	var fade_total: float = _config.fade_time
@@ -173,6 +171,13 @@ func _enter() -> void:
 
 	_mostrar_nombre_con_fade(_config.building_name, nombre_margen, nombre_duracion)
 	await SceneManager.fade_out(fade_half)
+
+	_config.setup_interior_pcam(player)
+	_config.apply_interior_pcam_limits()
+
+	var interior_pcam: PhantomCamera2D = _config.get_interior_pcam()
+	if is_instance_valid(interior_pcam):
+		interior_pcam.priority = 20
 
 	_set_level_inside_state(true)
 
@@ -185,27 +190,6 @@ func _enter() -> void:
 		_interior.modulate.a = 1.0
 
 	_set_walls_enabled(true)
-
-	if camera:
-		camera.zoom = _config.zoom_in
-
-		_original_limit_enabled = camera.limit_enabled
-		_original_limits = {
-			"left": camera.limit_left,
-			"top": camera.limit_top,
-			"right": camera.limit_right,
-			"bottom": camera.limit_bottom
-		}
-
-		var limits: Dictionary = _config.get_interior_camera_limits()
-		if not limits.is_empty():
-			camera.limit_enabled = true
-			camera.limit_left = limits["left"]
-			camera.limit_top = limits["top"]
-			camera.limit_right = limits["right"]
-			camera.limit_bottom = limits["bottom"]
-			camera.reset_smoothing()
-			camera.force_update_scroll()
 
 	await SceneManager.fade_in(fade_half)
 
@@ -229,8 +213,6 @@ func _exit() -> void:
 		push_error("BuildingEntrance: PlayerManager.player_instance es null")
 		return
 
-	var camera: Camera2D = player.get_node_or_null("Camera2D")
-
 	player.disable_movement()
 
 	var fade_total: float = _config.fade_time
@@ -240,6 +222,10 @@ func _exit() -> void:
 
 	_mostrar_nombre_con_fade(_config.street_name, nombre_margen, nombre_duracion)
 	await SceneManager.fade_out(fade_half)
+
+	var interior_pcam: PhantomCamera2D = _config.get_interior_pcam()
+	if is_instance_valid(interior_pcam):
+		interior_pcam.priority = 0
 
 	_set_inside_audio_paused(true)
 
@@ -254,17 +240,6 @@ func _exit() -> void:
 		(exterior as CanvasItem).visible = true
 
 	_set_level_inside_state(false)
-
-	if camera:
-		camera.zoom = _config.zoom_out
-		if not _original_limits.is_empty():
-			camera.limit_left = _original_limits["left"]
-			camera.limit_top = _original_limits["top"]
-			camera.limit_right = _original_limits["right"]
-			camera.limit_bottom = _original_limits["bottom"]
-			camera.limit_enabled = _original_limit_enabled
-			camera.reset_smoothing()
-			camera.force_update_scroll()
 
 	await SceneManager.fade_in(fade_half)
 
@@ -464,7 +439,6 @@ func _glow_pulse(mat: ShaderMaterial) -> void:
 # FORZAR ESTADO INTERIOR
 # ================================================================
 func force_inside_state(inside: bool) -> void:
-	print("🏠 FORZANDO ESTADO INTERIOR: ", inside, " en el edificio: ", _config.building_name)
 	_inside = inside
 
 	if _interior:

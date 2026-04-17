@@ -59,7 +59,6 @@ func _ready() -> void:
 	set_process(false)
 
 func start() -> void:
-	print("🎮 Minijuego iniciado")
 	visible      = true
 	_active      = true
 	_cursor_t    = 0.0

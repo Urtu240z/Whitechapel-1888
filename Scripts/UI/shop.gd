@@ -174,15 +174,6 @@ func _build_ui() -> void:
 	tw.tween_property(shop_panel, "scale", Vector2(1.0, 1.0), 0.3)
 	await tw.finished
 
-	print("🛒 Animación completada, shop listo para input")
-	print("🛒 shop_panel visible: ", shop_panel.visible)
-	print("🛒 shop_panel modulate.a: ", shop_panel.modulate.a)
-	print("🛒 shop_panel scale: ", shop_panel.scale)
-	print("🛒 CanvasLayer visible: ", visible)
-	print("🛒 Input mouse mode: ", Input.mouse_mode)
-	print("🛒 CanvasLayer layer: ", layer)
-	print("🛒 get_viewport().gui_get_focus_owner(): ", get_viewport().gui_get_focus_owner())
-
 # ================================================================
 # FILA DE ITEM
 # ================================================================
@@ -299,7 +290,6 @@ func _update_totals() -> void:
 # ================================================================
 
 func _on_buy_pressed() -> void:
-	print("🛒 _on_buy_pressed llamado")
 	var total = _calculate_total()
 
 	if total <= 0:
@@ -326,11 +316,6 @@ func _on_buy_pressed() -> void:
 		if not InventoryManager.has_item(item_entry["id"]):
 			slots_necesarios += 1
 
-	print("slots_libres: ", slots_libres)
-	print("slots_necesarios: ", slots_necesarios)
-	print("items_to_add: ", items_to_add)
-	print("pocket size: ", InventoryManager.get_pocket().size())
-	print("slots_activos: ", InventoryManager.get_slots_activos())
 	if slots_necesarios > slots_libres:
 		_show_error(tr("SHOP_NO_SPACE"))
 		return
@@ -362,7 +347,6 @@ func _on_buy_pressed() -> void:
 	await _animate_close()
 
 func _on_cancel_pressed() -> void:
-	print("🛒 _on_cancel_pressed llamado")
 	await _animate_close()
 
 # ================================================================
@@ -370,7 +354,6 @@ func _on_cancel_pressed() -> void:
 # ================================================================
 
 func _animate_close() -> void:
-	print("🛒 _animate_close llamado, is_instance_valid: ", is_instance_valid(self))
 	var tw = create_tween().set_parallel(true).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	if is_instance_valid(_overlay):
 		tw.tween_property(_overlay, "color:a", 0.0, 1)

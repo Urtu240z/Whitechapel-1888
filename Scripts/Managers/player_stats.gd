@@ -427,15 +427,6 @@ func actualizar_stats(_delta: float = 1.0) -> void:
 	_detectar_colapso()
 	stats_updated.emit()
 
-	if debug_mode:
-		print(
-			"📣 stats — hambre:", hambre,
-			" higiene:", higiene,
-			" salud:", salud,
-			" enfermedad:", enfermedad,
-			" sex_appeal:", sex_appeal
-		)
-
 func _detectar_colapso() -> void:
 	if sueno > 0.0 and _colapso_activo:
 		_colapso_activo = false

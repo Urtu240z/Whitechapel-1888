@@ -84,7 +84,6 @@ func _on_body_entered(body: Node) -> void:
 
 	var coste_chelines: float = data.cost / 12.0
 	if PlayerStats.dinero < coste_chelines:
-		print("💸 No tienes dinero suficiente (%.1f chelines requeridos)" % coste_chelines)
 		return
 
 	PlayerStats.gastar_dinero(coste_chelines)

@@ -314,7 +314,6 @@ func _on_save_slot_selected(slot: int) -> void:
 		_rebuild_menu(MenuMode.SAVE_CONFIRM)
 	else:
 		SaveManager.save_game(slot)
-		print("💾 Guardado en slot %d" % slot)
 		_rebuild_menu(MenuMode.SAVE)
 
 func _confirm_save_overwrite() -> void:
@@ -322,7 +321,6 @@ func _confirm_save_overwrite() -> void:
 		_rebuild_menu(MenuMode.SAVE)
 		return
 	SaveManager.save_game(_pending_save_slot)
-	print("💾 Sobrescrito slot %d" % _pending_save_slot)
 	_pending_save_slot = -1
 	_rebuild_menu(MenuMode.SAVE)
 
