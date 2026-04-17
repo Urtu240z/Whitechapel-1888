@@ -39,10 +39,6 @@ func _ready() -> void:
 	_build_nodes()
 	_connect_signals()
 
-	# Buscar cámara cuando cambia la escena — usando scene_tree_changed
-	# en lugar de tree_changed para no dispararse miles de veces
-	get_tree().node_added.connect(_on_node_added)
-
 	# Aplicar efectos iniciales al arrancar
 	call_deferred("refresh_effects")
 
@@ -99,26 +95,15 @@ func _connect_signals() -> void:
 		PlayerStats.stats_updated.connect(_on_stats_updated)
 
 # =========================================================
-# 📷 BUSCAR CÁMARA — solo cuando se añade un nodo Camera2D
-# Mucho más eficiente que tree_changed que se dispara constantemente
+# 📷 CÁMARA RUNTIME
+# Con Phantom, la referencia buena es siempre la Camera2D activa
+# del viewport, no buscar nodos Camera2D por el árbol.
 # =========================================================
-func _on_node_added(node: Node) -> void:
-	if node is Camera2D:
-		# Esperar un frame para que is_current() sea válido
-		await get_tree().process_frame
-		if is_instance_valid(node) and node.is_current():
-			_camera = node
+func _get_runtime_camera() -> Camera2D:
+	return get_viewport().get_camera_2d()
 
-func _find_camera() -> void:
-	var cameras := get_tree().get_nodes_in_group("camera")
-	for node in cameras:
-		if node is Camera2D and node.is_current():
-			_camera = node
-			return
-
-	var current_scene := get_tree().current_scene
-	if current_scene:
-		_camera = current_scene.find_child("Camera2D", true, false) as Camera2D
+func _refresh_runtime_camera() -> void:
+	_camera = _get_runtime_camera()
 
 # =========================================================
 # 🔄 PROCESS — solo stamina (necesita ser fluido) y parpadeos
@@ -136,6 +121,8 @@ func _is_gameplay_active() -> bool:
 	)
 
 func _process(delta: float) -> void:
+	_refresh_runtime_camera()
+
 	if not _is_gameplay_active():
 		if not _effects_hidden_by_state:
 			_set_visible_all(false)
@@ -246,8 +233,7 @@ func _update_disease() -> void:
 		_disease.visible = false
 
 func screen_shake(intensity: float = 10.0, _duration: float = 0.3) -> void:
-	if not _camera or not is_instance_valid(_camera):
-		_find_camera()
+	_refresh_runtime_camera()
 
 	# Flash blanco
 	_flash.visible = true
@@ -278,11 +264,15 @@ func screen_shake(intensity: float = 10.0, _duration: float = 0.3) -> void:
 		var steps: int = 10
 		for i in steps:
 			var decay: float = 1.0 - (float(i) / steps)
-			shake_tween.tween_property(_camera, "offset",
+			shake_tween.tween_property(
+				_camera,
+				"offset",
 				Vector2(
 					randf_range(-intensity, intensity) * decay,
 					randf_range(-intensity * 0.8, intensity * 0.8) * decay
-				), 0.025)
+				),
+				0.025
+			)
 		shake_tween.tween_property(_camera, "offset", Vector2.ZERO, 0.04)
 
 # =========================================================

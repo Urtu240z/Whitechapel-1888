@@ -24,7 +24,6 @@ var _active_building: Node2D = null
 
 func _ready() -> void:
 	call_deferred("_setup_exterior_camera")
-	call_deferred("_debug_phantom_cameras")
 
 
 # ================================================================
@@ -156,20 +155,3 @@ func _setup_exterior_camera() -> void:
 		push_warning("LevelRoot: ExteriorPhantomCamera2D no está en SIMPLE.")
 
 	exterior_pcam.set_follow_target(camera_target)
-
-func _debug_phantom_cameras() -> void:
-	var exterior: PhantomCamera2D = get_node_or_null(exterior_pcam_path) as PhantomCamera2D
-	print("=== DEBUG CAMERAS ===")
-	print("ExteriorPCam: ", exterior)
-	if exterior:
-		print("  priority=", exterior.priority, " follow_mode=", exterior.follow_mode, " follow_target=", exterior.follow_target)
-
-	var interiors: Array[Node] = find_children("InteriorPhantomCamera2D", "", true, false)
-	for cam_node in interiors:
-		var cam: PhantomCamera2D = cam_node as PhantomCamera2D
-		if cam:
-			print("InteriorPCam: ", cam.get_path())
-			print("  priority=", cam.priority, " follow_mode=", cam.follow_mode, " follow_target=", cam.follow_target, " visible=", cam.visible)
-
-	print("Viewport camera: ", get_viewport().get_camera_2d())
-	print("=== FIN DEBUG CAMERAS ===")

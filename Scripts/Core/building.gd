@@ -29,12 +29,6 @@ extends Node2D
 @export var enter_action: String = "interact"
 @export var fade_time: float = 3.5
 # ================================================================
-# 📷 CÁMARA
-# ================================================================
-@export_group("📷 Camera")
-@export var zoom_in: Vector2 = Vector2(0.38, 0.38)
-@export var zoom_out: Vector2 = Vector2(0.3, 0.3)
-# ================================================================
 # 🔊 AUDIO
 # ================================================================
 @export_group("🔊 Audio")
@@ -103,7 +97,7 @@ func apply_interior_pcam_limits() -> void:
 	if not is_instance_valid(pcam):
 		return
 
-	var limits := get_interior_camera_limits()
+	var limits: Dictionary = get_interior_camera_limits()
 	if limits.is_empty():
 		return
 

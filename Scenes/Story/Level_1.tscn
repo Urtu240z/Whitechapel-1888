@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c6sgmtp8dtf8q"]
 
-[ext_resource type="Material" uid="uid://brwt8d6kmkbt7" path="res://Data/Shaders/Oniric_Clouds.tres" id="3_nvx4s"]
-[ext_resource type="Material" uid="uid://ditkt3erwofpw" path="res://Data/Shaders/Oniric_Clouds_Blur.tres" id="4_x2fq1"]
+[ext_resource type="Material" uid="uid://brwt8d6kmkbt7" path="res://Data/Material/Oniric_Clouds.tres" id="3_nvx4s"]
+[ext_resource type="Material" uid="uid://ditkt3erwofpw" path="res://Data/Material/Oniric_Clouds_Blur.tres" id="4_x2fq1"]
 [ext_resource type="Shader" uid="uid://crt0rfb25vhke" path="res://Assets/Shaders/Painting_Animated.gdshader" id="5_kisme"]
 [ext_resource type="Texture2D" uid="uid://2nhlnbhlxper" path="res://Assets/Tilesets/ColorCloud.png" id="6_4ykg3"]
 [ext_resource type="PackedScene" uid="uid://b7bxdhh6ah23f" path="res://Scenes/Story/Orb.tscn" id="7_icp32"]

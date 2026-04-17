@@ -61,9 +61,7 @@ var _inside: bool = false
 var _player_near_enter: bool = false
 var _player_near_exit: bool = false
 var _transitioning: bool = false
-var _original_limits: Dictionary = {}
 var _interior_audio_started: bool = false
-var _original_limit_enabled: bool = false
 var _npcs_inside: Array[CharacterBody2D] = []
 
 # ================================================================
@@ -454,38 +452,16 @@ func force_inside_state(inside: bool) -> void:
 
 	var player: Node = PlayerManager.player_instance
 	if is_instance_valid(player):
-		var camera: Camera2D = player.get_node_or_null("Camera2D")
-		if camera:
-			if inside:
-				_original_limit_enabled = camera.limit_enabled
-				_original_limits = {
-					"left": camera.limit_left,
-					"top": camera.limit_top,
-					"right": camera.limit_right,
-					"bottom": camera.limit_bottom,
-				}
+		var interior_pcam: PhantomCamera2D = _config.get_interior_pcam()
 
-				camera.zoom = _config.zoom_in
-
-				var limits: Dictionary = _config.get_interior_camera_limits()
-				if not limits.is_empty():
-					camera.limit_enabled = true
-					camera.limit_left = limits["left"]
-					camera.limit_top = limits["top"]
-					camera.limit_right = limits["right"]
-					camera.limit_bottom = limits["bottom"]
-					camera.reset_smoothing()
-					camera.force_update_scroll()
-			else:
-				camera.zoom = _config.zoom_out
-				if not _original_limits.is_empty():
-					camera.limit_left = _original_limits["left"]
-					camera.limit_top = _original_limits["top"]
-					camera.limit_right = _original_limits["right"]
-					camera.limit_bottom = _original_limits["bottom"]
-					camera.limit_enabled = _original_limit_enabled
-					camera.reset_smoothing()
-					camera.force_update_scroll()
+		if inside:
+			_config.setup_interior_pcam(player)
+			_config.apply_interior_pcam_limits()
+			if is_instance_valid(interior_pcam):
+				interior_pcam.priority = 20
+		else:
+			if is_instance_valid(interior_pcam):
+				interior_pcam.priority = 0
 
 	if inside:
 		if not _interior_audio_started:

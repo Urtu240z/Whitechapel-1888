@@ -29,6 +29,9 @@
 [ext_resource type="AudioStream" uid="uid://ciyt77vs6vf83" path="res://Assets/Audio/Ambience/Countryside_ambient_sound_with_birds,_trees,_and_w_variation1.wav" id="23_o8wfu"]
 [ext_resource type="AudioStream" uid="uid://biea8wymmn235" path="res://Assets/Music/El susurro de Jack.wav" id="24_wk07h"]
 [ext_resource type="PackedScene" uid="uid://b0xag2npdwm1h" path="res://Scenes/Player/Thomas.tscn" id="29_clpkd"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="30_sfppk"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="31_yvf24"]
+[ext_resource type="PackedScene" uid="uid://br10pupaikeeo" path="res://Scenes/Core/Camera_Rig.tscn" id="32_yvf24"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mr8ke"]
 size = Vector2(11225, 4400)
@@ -146,6 +149,9 @@ size = Vector2(214.00012, 899)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xwmy8"]
 size = Vector2(122.17139, 832.5793)
+
+[sub_resource type="Resource" id="Resource_xkgv0"]
+script = ExtResource("31_yvf24")
 
 [node name="Intro_Game" type="Node2D" unique_id=1685960519]
 script = ExtResource("1_v63i2")
@@ -588,6 +594,19 @@ position = Vector2(-8641, -1892)
 
 [node name="BottomRight" type="Marker2D" parent="." unique_id=658116776]
 position = Vector2(7640, 759)
+
+[node name="ExteriorPhantomCamera2D" type="Node2D" parent="." unique_id=248564160]
+top_level = true
+position = Vector2(-1938, -564)
+script = ExtResource("30_sfppk")
+priority = 10
+follow_mode = 2
+zoom = Vector2(0.3, 0.3)
+tween_resource = SubResource("Resource_xkgv0")
+draw_limits = true
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+
+[node name="CameraRig" parent="." unique_id=309327357 instance=ExtResource("32_yvf24")]
 
 [connection signal="body_entered" from="OutfitZone_London" to="." method="_on_zona_city_body_entered"]
 [connection signal="body_entered" from="OutfitZone_Forest" to="." method="_on_zona_bosque_body_entered"]

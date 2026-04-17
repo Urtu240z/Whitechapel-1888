@@ -5,6 +5,9 @@ signal finished(data: Dictionary)
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var minigame: Control = $CanvasLayer/Minigame
 @onready var client_skins_root: Node2D = $Characters/NpcClient/Skins
+@onready var transition_pcam: PhantomCamera2D = $TransitionPhantomCamera2D
+@onready var transition_target: Node2D = $TransitionCameraTarget
+@onready var local_camera: Camera2D = $Camera2D
 
 var _acto: String = ""
 var _tipo: String = ""
@@ -17,12 +20,15 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	minigame.visible = false
 
-	_previous_camera = get_viewport().get_camera_2d()
-	$Camera2D.make_current()
+	if is_instance_valid(transition_pcam):
+		transition_pcam.follow_mode = 2 # SIMPLE
+		transition_pcam.set_follow_target(transition_target)
+		transition_pcam.set_priority(0)
+
 	minigame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	animation_player.animation_finished.connect(_on_animation_finished)
 	minigame.completed.connect(_on_minigame_completed)
-
+	visible = false
 func _unhandled_input(event: InputEvent) -> void:
 	if not _can_skip_animation:
 		return
@@ -38,7 +44,21 @@ func begin(acto: String, tipo: String, client_skin_name: String = "NPC_ClientPoo
 	_can_skip_animation = true
 	_animation_phase_done = false
 
+	_previous_camera = get_viewport().get_camera_2d()
+
+	if is_instance_valid(local_camera):
+		local_camera.make_current()
+
+	if is_instance_valid(transition_pcam):
+		transition_pcam.follow_mode = 2 # SIMPLE
+		transition_pcam.set_follow_target(transition_target)
+		transition_pcam.set_priority(90)
+
 	_apply_client_skin(_client_skin_name)
+
+	await get_tree().process_frame
+
+	visible = true
 	animation_player.play("ClientTransition1")
 
 func _apply_client_skin(skin_name: String) -> void:
@@ -47,7 +67,6 @@ func _apply_client_skin(skin_name: String) -> void:
 
 	var target := client_skins_root.get_node_or_null(skin_name)
 
-	# Fallback por si el nombre no existe
 	if target == null and client_skins_root.get_child_count() > 0:
 		target = client_skins_root.get_child(0)
 
@@ -94,6 +113,9 @@ func _on_animation_finished(anim_name: StringName) -> void:
 
 func _on_minigame_completed(satisfaction: float) -> void:
 	minigame.visible = false
+
+	if is_instance_valid(transition_pcam):
+		transition_pcam.set_priority(0)
 
 	if is_instance_valid(_previous_camera):
 		_previous_camera.make_current()

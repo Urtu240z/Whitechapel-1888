@@ -10,17 +10,15 @@ extends Node2D
 var audio_tween: Tween
 
 func _ready():
-	# Inicia con el audio del bosque
 	forest_ambient.volume_db = 0
-	london_ambient.volume_db = -80  # Silencio
-	
-	# Asegúrate de que ambos estén reproduciéndose
+	london_ambient.volume_db = -80
+
 	forest_ambient.play()
 	london_ambient.play()
-	
-	# Conecta las señales de las zonas
+
 	$OutfitZone_Forest.body_entered.connect(_on_zona_forest_body_entered)
 	$OutfitZone_London.body_entered.connect(_on_zona_london_body_entered)
+
 	call_deferred("_apply_camera_limits")
 
 func cambiar_zona_audio(zona_destino: String, duracion: float = 2.0):
@@ -56,15 +54,23 @@ func _on_zona_city_body_entered(body: Node2D) -> void:
 
 func _apply_camera_limits() -> void:
 	await get_tree().process_frame
-	var player = PlayerManager.player_instance
-	if not is_instance_valid(player): return
-	var cam = player.get_node_or_null("Camera2D")
-	if not cam: return
 
-	cam.limit_enabled = true
-	cam.limit_left   = int(top_left.global_position.x)
-	cam.limit_top    = int(top_left.global_position.y)
-	cam.limit_right  = int(bottom_right.global_position.x)
-	cam.limit_bottom = int(bottom_right.global_position.y)
-	cam.reset_smoothing()
-	cam.force_update_scroll()
+	var player: Node = PlayerManager.player_instance
+	if not is_instance_valid(player):
+		return
+
+	var camera_target: Node2D = player.get_node_or_null("CameraTarget") as Node2D
+	if not is_instance_valid(camera_target):
+		return
+
+	var pcam: PhantomCamera2D = get_node_or_null("ExteriorPhantomCamera2D") as PhantomCamera2D
+	if not is_instance_valid(pcam):
+		return
+
+	pcam.follow_mode = 2
+	pcam.set_follow_target(camera_target)
+
+	pcam.set_limit_left(int(top_left.global_position.x))
+	pcam.set_limit_top(int(top_left.global_position.y))
+	pcam.set_limit_right(int(bottom_right.global_position.x))
+	pcam.set_limit_bottom(int(bottom_right.global_position.y))

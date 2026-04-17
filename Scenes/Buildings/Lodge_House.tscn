@@ -120,7 +120,6 @@ collision_mask = 2
 polygon = PackedVector2Array(169, 533, -106, 534, -52, 478, 113, 478)
 
 [node name="Interior" type="Node2D" parent="." unique_id=1238585940]
-visible = false
 position = Vector2(3.9999998, -5.000002)
 scale = Vector2(1.005, 1.005)
 

@@ -35,6 +35,9 @@
 [ext_resource type="AudioStream" uid="uid://d7e5nakf36ad" path="res://Assets/Audio/WAVS/Man_Talk.wav" id="23_kdocs"]
 [ext_resource type="AudioStream" uid="uid://bslh8f2alrkb5" path="res://Assets/Music/Fog Over Whitechapel.mp3" id="24_4idvv"]
 [ext_resource type="Shader" uid="uid://51eilkdp7lo6" path="res://Assets/Shaders/Blur_Global.gdshader" id="31_lenwn"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="36_23fij"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="37_ewtmu"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="38_ewtmu"]
 
 [sub_resource type="Gradient" id="Gradient_a15mn"]
 offsets = PackedFloat32Array(0.8773842, 0.94550407)
@@ -291,290 +294,290 @@ length = 5.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:position")
+tracks/0/path = NodePath("Characters/NpcClient/IK Targets/Head Target:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 3.01),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0.7054871, 1.2561136, 2.347593, 3.4109983, 4.212312, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(475.59717, 894), Vector2(2128, 894)]
+"values": [Vector2(101, -270), Vector2(205.00003, -224), Vector2(60, -379), Vector2(148, -348), Vector2(148, -348), Vector2(148, -348)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Characters/NpcClient/IK Targets/Head Target:position")
+tracks/1/path = NodePath("Characters/NpcClient/IK Targets/Chest Target:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0.7054871, 1.2561136, 2.347593, 3.4109983, 4.212312, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(101, -270), Vector2(205.00003, -224), Vector2(60, -379), Vector2(148, -348), Vector2(148, -348), Vector2(148, -348)]
+"values": [Vector2(414, 144), Vector2(369.00006, 226), Vector2(377, -4), Vector2(712, 125), Vector2(712, 125), Vector2(274, -45)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Characters/NpcClient/IK Targets/Chest Target:position")
+tracks/2/path = NodePath("Characters/NpcClient/IK Targets/ArmR Target:position")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0.7054871, 1.2561136, 2.347593, 3.4109983, 4.212312, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(414, 144), Vector2(369.00006, 226), Vector2(377, -4), Vector2(712, 125), Vector2(712, 125), Vector2(274, -45)]
+"values": [Vector2(55.999996, 112), Vector2(3.0001183, 190.99995), Vector2(-36.000004, 196), Vector2(122, 122), Vector2(163, 42), Vector2(163, 42)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Characters/NpcClient/IK Targets/ArmR Target:position")
+tracks/3/path = NodePath("Characters/NpcClient/IK Targets/ArmL Target:position")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0.7054871, 1.2561136, 2.347593, 3.4109983, 4.212312, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(55.999996, 112), Vector2(3.0001183, 190.99995), Vector2(-36.000004, 196), Vector2(122, 122), Vector2(163, 42), Vector2(163, 42)]
+"values": [Vector2(75, 55), Vector2(96.00003, 31.99997), Vector2(106, 96), Vector2(240, 55), Vector2(242, 14), Vector2(242, 14)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Characters/NpcClient/IK Targets/ArmL Target:position")
+tracks/4/path = NodePath("Characters/NpcClient/IK Targets/Hip Target:position")
 tracks/4/interp = 2
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0.7054871, 1.2561136, 2.347593, 3.4109983, 4.212312, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(75, 55), Vector2(96.00003, 31.99997), Vector2(106, 96), Vector2(240, 55), Vector2(242, 14), Vector2(242, 14)]
+"values": [Vector2(10, 37), Vector2(5.531311e-05, 35.00006), Vector2(0, 0), Vector2(31, 2), Vector2(56, -23), Vector2(66, -5)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Characters/NpcClient/IK Targets/Hip Target:position")
+tracks/5/path = NodePath("Characters/NpcClient/IK Targets/FootR Target:position")
 tracks/5/interp = 2
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0.7054871, 1.2561136, 2.347593, 3.4109983, 4.212312, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(10, 37), Vector2(5.531311e-05, 35.00006), Vector2(0, 0), Vector2(31, 2), Vector2(56, -23), Vector2(66, -5)]
+"values": [Vector2(-47, 622), Vector2(-47, 622), Vector2(-47, 622), Vector2(-28, 558), Vector2(-28, 558), Vector2(7, 626)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Characters/NpcClient/IK Targets/FootR Target:position")
+tracks/6/path = NodePath("Characters/NpcClient/IK Targets/FootL Target:position")
 tracks/6/interp = 2
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0.7054871, 1.2561136, 2.347593, 3.4109983, 4.212312, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-47, 622), Vector2(-47, 622), Vector2(-47, 622), Vector2(-28, 558), Vector2(-28, 558), Vector2(7, 626)]
+"values": [Vector2(16, 726), Vector2(16, 726), Vector2(16, 726), Vector2(65, 570), Vector2(65, 570), Vector2(88, 570)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Characters/NpcClient/IK Targets/FootL Target:position")
+tracks/7/path = NodePath("Characters/NpcPlayer:scale")
 tracks/7/interp = 2
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.7054871, 1.2561136, 2.347593, 3.4109983, 4.212312, 5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(16, 726), Vector2(16, 726), Vector2(16, 726), Vector2(65, 570), Vector2(65, 570), Vector2(88, 570)]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("Characters/NpcPlayer:scale")
-tracks/8/interp = 2
-tracks/8/loop_wrap = true
-tracks/8/keys = {
 "times": PackedFloat32Array(2.347593),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-0.9, 0.9)]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Characters/NpcPlayer/IK Targets/Head Target:position")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(1.2333333, 1.7666667, 2.2666667, 2.8333333, 3.5526168, 4.266667, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(68.36871, -373.33337), Vector2(21, -389), Vector2(115.713005, -360.00003), Vector2(21, -389), Vector2(194.44456, -335.55557), Vector2(212.22235, -306.6667), Vector2(212.22235, -306.6667)]
+}
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Characters/NpcPlayer/IK Targets/Head Target:position")
+tracks/9/path = NodePath("Characters/NpcPlayer/IK Targets/Chest Target:position")
 tracks/9/interp = 2
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(1.2333333, 1.7666667, 2.2666667, 2.8333333, 3.5526168, 4.266667, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(68.36871, -373.33337), Vector2(21, -389), Vector2(115.713005, -360.00003), Vector2(21, -389), Vector2(194.44456, -335.55557), Vector2(212.22235, -306.6667), Vector2(212.22235, -306.6667)]
+"values": [Vector2(193.92421, -46.66672), Vector2(188, -43), Vector2(302.3796, 14.444393), Vector2(188, -43), Vector2(307.77783, 129.99995), Vector2(405.5556, 37.777725), Vector2(405.5556, 37.777725)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Characters/NpcPlayer/IK Targets/Chest Target:position")
+tracks/10/path = NodePath("Characters/NpcPlayer/IK Targets/ArmR Target:position")
 tracks/10/interp = 2
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(1.2333333, 1.7666667, 2.2666667, 2.8333333, 3.5526168, 4.266667, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(193.92421, -46.66672), Vector2(188, -43), Vector2(302.3796, 14.444393), Vector2(188, -43), Vector2(307.77783, 129.99995), Vector2(405.5556, 37.777725), Vector2(405.5556, 37.777725)]
+"values": [Vector2(-76.07575, 142.22218), Vector2(-159, 342), Vector2(139.04633, 68.888824), Vector2(-159, 342), Vector2(-3.333252, 35.55551), Vector2(97.777855, 35.555508), Vector2(-5.5554657, 67.77773)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Characters/NpcPlayer/IK Targets/ArmR Target:position")
+tracks/11/path = NodePath("Characters/NpcPlayer/IK Targets/ArmL Target:position")
 tracks/11/interp = 2
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(1.2333333, 1.7666667, 2.2666667, 2.8333333, 3.5526168, 4.266667, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-76.07575, 142.22218), Vector2(-159, 342), Vector2(139.04633, 68.888824), Vector2(-159, 342), Vector2(-3.333252, 35.55551), Vector2(97.777855, 35.555508), Vector2(-5.5554657, 67.77773)]
+"values": [Vector2(127.257385, 52.222168), Vector2(64, 122), Vector2(57.935005, 55.555496), Vector2(64, 122), Vector2(101.11101, 68.88883), Vector2(153.33324, 19.999939), Vector2(75.55546, 43.333275)]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Characters/NpcPlayer/IK Targets/ArmL Target:position")
+tracks/12/path = NodePath("Characters/NpcPlayer/IK Targets/Hip Target:position")
 tracks/12/interp = 2
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(1.2333333, 1.7666667, 2.2666667, 2.8333333, 3.5526168, 4.266667, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(127.257385, 52.222168), Vector2(64, 122), Vector2(57.935005, 55.555496), Vector2(64, 122), Vector2(101.11101, 68.88883), Vector2(153.33324, 19.999939), Vector2(75.55546, 43.333275)]
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-1.4007092e-06, 52.222218)]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("Characters/NpcPlayer/IK Targets/Hip Target:position")
+tracks/13/path = NodePath("Characters/NpcPlayer/IK Targets/FootR Target:position")
 tracks/13/interp = 2
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(1.2333333, 1.7666667, 2.2666667, 2.8333333, 3.5526168, 4.266667, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-1.4007092e-06, 52.222218)]
+"values": [Vector2(-167.18686, 546.6667), Vector2(-59, 585), Vector2(109.04634, 508.8889), Vector2(-59, 585), Vector2(-104.444336, 521.1111), Vector2(-81.111, 515.55554), Vector2(-81.111, 515.55554)]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("Characters/NpcPlayer/IK Targets/FootR Target:position")
+tracks/14/path = NodePath("Characters/NpcPlayer/IK Targets/FootL Target:position")
 tracks/14/interp = 2
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(1.2333333, 1.7666667, 2.2666667, 2.8333333, 3.5526168, 4.266667, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(-167.18686, 546.6667), Vector2(-59, 585), Vector2(109.04634, 508.8889), Vector2(-59, 585), Vector2(-104.444336, 521.1111), Vector2(-81.111, 515.55554), Vector2(-81.111, 515.55554)]
+"values": [Vector2(148.36865, 582.2222), Vector2(3, 614), Vector2(-184.28706, 601.11115), Vector2(3, 614), Vector2(13.333388, 596.6667), Vector2(13.333388, 596.6667), Vector2(13.333388, 596.6667)]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("Characters/NpcPlayer/IK Targets/FootL Target:position")
+tracks/15/path = NodePath("Characters/NpcPlayer:position")
 tracks/15/interp = 2
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(1.2333333, 1.7666667, 2.2666667, 2.8333333, 3.5526168, 4.266667, 5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(148.36865, 582.2222), Vector2(3, 614), Vector2(-184.28706, 601.11115), Vector2(3, 614), Vector2(13.333388, 596.6667), Vector2(13.333388, 596.6667), Vector2(13.333388, 596.6667)]
-}
-tracks/16/type = "value"
-tracks/16/imported = false
-tracks/16/enabled = true
-tracks/16/path = NodePath("Characters/NpcPlayer:position")
-tracks/16/interp = 2
-tracks/16/loop_wrap = true
-tracks/16/keys = {
 "times": PackedFloat32Array(0.9666667, 3.5333333),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(972, 191), Vector2(541.325, 191)]
 }
-tracks/17/type = "value"
-tracks/17/imported = false
-tracks/17/enabled = true
-tracks/17/path = NodePath("Audio/Ambient:playing")
-tracks/17/interp = 1
-tracks/17/loop_wrap = true
-tracks/17/keys = {
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("Audio/Ambient:playing")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
 }
-tracks/18/type = "value"
-tracks/18/imported = false
-tracks/18/enabled = true
-tracks/18/path = NodePath("Audio/Steps:playing")
-tracks/18/interp = 1
-tracks/18/loop_wrap = true
-tracks/18/keys = {
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Audio/Steps:playing")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
 "times": PackedFloat32Array(0.73333335, 1.721742, 2.1332276),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [true, false, true]
 }
-tracks/19/type = "value"
-tracks/19/imported = false
-tracks/19/enabled = true
-tracks/19/path = NodePath("Audio/Voices:playing")
-tracks/19/interp = 1
-tracks/19/loop_wrap = true
-tracks/19/keys = {
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Audio/Voices:playing")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
 "times": PackedFloat32Array(1.1666666, 5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
 }
-tracks/20/type = "value"
-tracks/20/imported = false
-tracks/20/enabled = true
-tracks/20/path = NodePath("Audio/Voices:volume_db")
-tracks/20/interp = 1
-tracks/20/loop_wrap = true
-tracks/20/keys = {
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("Audio/Voices:volume_db")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
 "times": PackedFloat32Array(2.4255989, 2.9886844, 3.9307697, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [-80.0, 0.0, 0.0, -80.0]
 }
-tracks/21/type = "value"
-tracks/21/imported = false
-tracks/21/enabled = true
-tracks/21/path = NodePath("Audio/Ambient:volume_db")
-tracks/21/interp = 1
-tracks/21/loop_wrap = true
-tracks/21/keys = {
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("Audio/Ambient:volume_db")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
 "times": PackedFloat32Array(0, 0.36817124, 5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [-80.0, -3.728, -3.728]
 }
-tracks/22/type = "value"
-tracks/22/imported = false
-tracks/22/enabled = true
-tracks/22/path = NodePath("CanvasLayer/Overlay:material:shader_parameter/blur_amount")
-tracks/22/interp = 2
-tracks/22/loop_wrap = true
-tracks/22/keys = {
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("CanvasLayer/Overlay:material:shader_parameter/blur_amount")
+tracks/21/interp = 2
+tracks/21/loop_wrap = true
+tracks/21/keys = {
 "times": PackedFloat32Array(0, 3.68, 5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [9.499999986672947e-08, 9.499999986672947e-08, 3.3420002537449998]
+"values": [9.49999998667295e-08, 9.49999998667295e-08, 3.342000253745]
 }
-tracks/23/type = "value"
-tracks/23/imported = false
-tracks/23/enabled = true
-tracks/23/path = NodePath("CanvasLayer/Overlay:material:shader_parameter/mix_amount")
-tracks/23/interp = 2
-tracks/23/loop_wrap = true
-tracks/23/keys = {
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("CanvasLayer/Overlay:material:shader_parameter/mix_amount")
+tracks/22/interp = 2
+tracks/22/loop_wrap = true
+tracks/22/keys = {
 "times": PackedFloat32Array(0, 0.35, 3.68, 4.33, 5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [1.0, 0.0, 0.0, 0.0, 1.0]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("TransitionCameraTarget:position")
+tracks/23/interp = 2
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 2.97),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-2870, 894), Vector2(2128, 894)]
 }
 
 [sub_resource type="Animation" id="Animation_6q4g3"]
@@ -582,211 +585,211 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera2D:position")
+tracks/0/path = NodePath("Characters/NpcClient/IK Targets/Head Target:position")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-3057, 894)]
+"values": [Vector2(60, -379)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Characters/NpcClient/IK Targets/Head Target:position")
+tracks/1/path = NodePath("Characters/NpcClient/IK Targets/Chest Target:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(60, -379)]
+"values": [Vector2(377, -4)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Characters/NpcClient/IK Targets/Chest Target:position")
+tracks/2/path = NodePath("Characters/NpcClient/IK Targets/ArmR Target:position")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(377, -4)]
+"values": [Vector2(-36.000004, 196)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Characters/NpcClient/IK Targets/ArmR Target:position")
+tracks/3/path = NodePath("Characters/NpcClient/IK Targets/ArmL Target:position")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-36.000004, 196)]
+"values": [Vector2(106, 96)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Characters/NpcClient/IK Targets/ArmL Target:position")
+tracks/4/path = NodePath("Characters/NpcClient/IK Targets/Hip Target:position")
 tracks/4/interp = 2
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(106, 96)]
+"values": [Vector2(0, 0)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Characters/NpcClient/IK Targets/Hip Target:position")
+tracks/5/path = NodePath("Characters/NpcClient/IK Targets/FootR Target:position")
 tracks/5/interp = 2
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(-47, 622)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("Characters/NpcClient/IK Targets/FootR Target:position")
+tracks/6/path = NodePath("Characters/NpcClient/IK Targets/FootL Target:position")
 tracks/6/interp = 2
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-47, 622)]
+"values": [Vector2(16, 726)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("Characters/NpcClient/IK Targets/FootL Target:position")
+tracks/7/path = NodePath("Characters/NpcPlayer:scale")
 tracks/7/interp = 2
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(16, 726)]
+"values": [Vector2(-0.9, 0.9)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("Characters/NpcPlayer:scale")
+tracks/8/path = NodePath("Characters/NpcPlayer/IK Targets/Head Target:position")
 tracks/8/interp = 2
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-0.9, 0.9)]
+"values": [Vector2(21, -389)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("Characters/NpcPlayer/IK Targets/Head Target:position")
+tracks/9/path = NodePath("Characters/NpcPlayer/IK Targets/Chest Target:position")
 tracks/9/interp = 2
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(21, -389)]
+"values": [Vector2(188, -43)]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("Characters/NpcPlayer/IK Targets/Chest Target:position")
+tracks/10/path = NodePath("Characters/NpcPlayer/IK Targets/ArmR Target:position")
 tracks/10/interp = 2
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(188, -43)]
+"values": [Vector2(-159, 342)]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("Characters/NpcPlayer/IK Targets/ArmR Target:position")
+tracks/11/path = NodePath("Characters/NpcPlayer/IK Targets/ArmL Target:position")
 tracks/11/interp = 2
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-159, 342)]
+"values": [Vector2(64, 122)]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
 tracks/12/enabled = true
-tracks/12/path = NodePath("Characters/NpcPlayer/IK Targets/ArmL Target:position")
+tracks/12/path = NodePath("Characters/NpcPlayer/IK Targets/Hip Target:position")
 tracks/12/interp = 2
 tracks/12/loop_wrap = true
 tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(64, 122)]
+"values": [Vector2(0, 0)]
 }
 tracks/13/type = "value"
 tracks/13/imported = false
 tracks/13/enabled = true
-tracks/13/path = NodePath("Characters/NpcPlayer/IK Targets/Hip Target:position")
+tracks/13/path = NodePath("Characters/NpcPlayer/IK Targets/FootR Target:position")
 tracks/13/interp = 2
 tracks/13/loop_wrap = true
 tracks/13/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Vector2(-59, 585)]
 }
 tracks/14/type = "value"
 tracks/14/imported = false
 tracks/14/enabled = true
-tracks/14/path = NodePath("Characters/NpcPlayer/IK Targets/FootR Target:position")
+tracks/14/path = NodePath("Characters/NpcPlayer/IK Targets/FootL Target:position")
 tracks/14/interp = 2
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-59, 585)]
+"values": [Vector2(3, 614)]
 }
 tracks/15/type = "value"
 tracks/15/imported = false
 tracks/15/enabled = true
-tracks/15/path = NodePath("Characters/NpcPlayer/IK Targets/FootL Target:position")
+tracks/15/path = NodePath("Characters/NpcPlayer:position")
 tracks/15/interp = 2
 tracks/15/loop_wrap = true
 tracks/15/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(3, 614)]
+"values": [Vector2(972, 191)]
 }
 tracks/16/type = "value"
 tracks/16/imported = false
 tracks/16/enabled = true
-tracks/16/path = NodePath("Characters/NpcPlayer:position")
-tracks/16/interp = 2
+tracks/16/path = NodePath("Audio/Ambient:playing")
+tracks/16/interp = 1
 tracks/16/loop_wrap = true
 tracks/16/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(972, 191)]
+"update": 1,
+"values": [false]
 }
 tracks/17/type = "value"
 tracks/17/imported = false
 tracks/17/enabled = true
-tracks/17/path = NodePath("Audio/Ambient:playing")
+tracks/17/path = NodePath("Audio/Steps:playing")
 tracks/17/interp = 1
 tracks/17/loop_wrap = true
 tracks/17/keys = {
@@ -798,7 +801,7 @@ tracks/17/keys = {
 tracks/18/type = "value"
 tracks/18/imported = false
 tracks/18/enabled = true
-tracks/18/path = NodePath("Audio/Steps:playing")
+tracks/18/path = NodePath("Audio/Voices:playing")
 tracks/18/interp = 1
 tracks/18/loop_wrap = true
 tracks/18/keys = {
@@ -810,62 +813,62 @@ tracks/18/keys = {
 tracks/19/type = "value"
 tracks/19/imported = false
 tracks/19/enabled = true
-tracks/19/path = NodePath("Audio/Voices:playing")
+tracks/19/path = NodePath("Audio/Voices:volume_db")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [0.0]
 }
 tracks/20/type = "value"
 tracks/20/imported = false
 tracks/20/enabled = true
-tracks/20/path = NodePath("Audio/Voices:volume_db")
+tracks/20/path = NodePath("Audio/Ambient:volume_db")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [-3.728]
 }
 tracks/21/type = "value"
 tracks/21/imported = false
 tracks/21/enabled = true
-tracks/21/path = NodePath("Audio/Ambient:volume_db")
+tracks/21/path = NodePath("CanvasLayer/Overlay:material:shader_parameter/blur_amount")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-3.728]
+"values": [9.49999998667295e-08]
 }
 tracks/22/type = "value"
 tracks/22/imported = false
 tracks/22/enabled = true
-tracks/22/path = NodePath("CanvasLayer/Overlay:material:shader_parameter/blur_amount")
+tracks/22/path = NodePath("CanvasLayer/Overlay:material:shader_parameter/mix_amount")
 tracks/22/interp = 1
 tracks/22/loop_wrap = true
 tracks/22/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [9.499999986672947e-08]
+"values": [0.0]
 }
 tracks/23/type = "value"
 tracks/23/imported = false
 tracks/23/enabled = true
-tracks/23/path = NodePath("CanvasLayer/Overlay:material:shader_parameter/mix_amount")
-tracks/23/interp = 1
+tracks/23/path = NodePath("TransitionCameraTarget:position")
+tracks/23/interp = 2
 tracks/23/loop_wrap = true
 tracks/23/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Vector2(-2870, 894)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nfifr"]
@@ -876,9 +879,13 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ducva"]
 shader = ExtResource("31_lenwn")
-shader_parameter/blur_amount = 9.499999986672947e-08
+shader_parameter/blur_amount = 9.49999998667295e-08
 shader_parameter/mix_amount = 0.0
 shader_parameter/color_over = Color(0, 0, 0, 1)
+
+[sub_resource type="Resource" id="Resource_px1j8"]
+script = ExtResource("37_ewtmu")
+duration = 0.0
 
 [node name="ClientTransition" type="Node2D" unique_id=1045312548]
 script = ExtResource("1_e5w53")
@@ -1658,8 +1665,8 @@ rest = Transform2D(0.9996896, -0.016820693, 0.016820693, 0.9996896, 0, 0)
 
 [node name="Chest" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip" unique_id=36364004]
 position = Vector2(-7.0579405, -56.13615)
-rotation = 0.39356393
-scale = Vector2(0.99969405, 0.99969405)
+rotation = 0.39356396
+scale = Vector2(0.9996935, 0.9996935)
 rest = Transform2D(0.97370666, 0.22645162, -0.22645162, 0.97370666, -7.0579405, -56.13615)
 
 [node name="Neck" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest" unique_id=1004495660]
@@ -1667,7 +1674,7 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Head" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest/Neck" unique_id=1851533722]
 position = Vector2(-21.552269, -163.67763)
-rotation = -0.10189395
+rotation = -0.10189432
 scale = Vector2(0.9996955, 0.9996955)
 rest = Transform2D(0.99658036, 0.07903025, -0.07903025, 0.99658036, -21.552269, -163.67763)
 auto_calculate_length_and_angle = false
@@ -1676,14 +1683,14 @@ bone_angle = -72.84197
 
 [node name="ArmR" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest" unique_id=1931602525]
 position = Vector2(-86.79408, -102.488594)
-rotation = 0.4545965
-scale = Vector2(0.99984264, 0.99984264)
+rotation = 0.45459244
+scale = Vector2(0.9998413, 0.9998413)
 rest = Transform2D(0.83090454, 0.556137, -0.556137, 0.83090454, -86.79408, -102.488594)
 
 [node name="ForeArmR" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest/ArmR" unique_id=1164801619]
 position = Vector2(103.411964, 108.07965)
-rotation = 0.6618963
-scale = Vector2(0.9998428, 0.9998428)
+rotation = 0.6619044
+scale = Vector2(0.99984115, 0.99984115)
 rest = Transform2D(0.6211967, 0.7834735, -0.7834735, 0.6211967, 103.411964, 108.07965)
 auto_calculate_length_and_angle = false
 length = 139.5
@@ -1691,14 +1698,14 @@ bone_angle = -40.055992
 
 [node name="ArmL" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest" unique_id=278888673]
 position = Vector2(49.899414, -105.89192)
-rotation = 2.489389
-scale = Vector2(0.9998389, 0.9998389)
+rotation = 2.4893863
+scale = Vector2(0.9998412, 0.9998412)
 rest = Transform2D(0.32011485, 0.94722396, -0.94722396, 0.32011485, 49.899414, -105.89192)
 
 [node name="ForeArmL" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/Chest/ArmL" unique_id=1595351540]
 position = Vector2(129.2485, -20.424229)
-rotation = -1.539106
-scale = Vector2(0.99986094, 0.99986094)
+rotation = -1.5391058
+scale = Vector2(0.99985725, 0.99985725)
 rest = Transform2D(0.9884388, 0.15055905, -0.15055905, 0.9884388, 129.2485, -20.424229)
 auto_calculate_length_and_angle = false
 length = 145.667
@@ -1706,14 +1713,14 @@ bone_angle = -33.018
 
 [node name="LegR" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip" unique_id=1817741692]
 position = Vector2(-44.77522, 45.260902)
-rotation = -1.1771895
-scale = Vector2(0.9998506, 0.9998506)
+rotation = -1.1771889
+scale = Vector2(0.99985003, 0.99985003)
 rest = Transform2D(0.44403812, -0.8958404, 0.8958404, 0.44403812, -44.77522, 45.260902)
 
 [node name="KneeR" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/LegR" unique_id=1755587305]
 position = Vector2(-130.53163, 94.41959)
-rotation = 1.2960199
-scale = Vector2(0.99983907, 0.99983907)
+rotation = 1.2960186
+scale = Vector2(0.99983877, 0.99983877)
 rest = Transform2D(0.35090968, 0.93623465, -0.93623465, 0.35090968, -130.53163, 94.41959)
 auto_calculate_length_and_angle = false
 length = 223.384
@@ -1722,7 +1729,7 @@ bone_angle = 91.99996
 [node name="LegL" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip" unique_id=455040614]
 position = Vector2(29.15951, 50.506165)
 rotation = 0.07556506
-scale = Vector2(0.99983907, 0.99983907)
+scale = Vector2(0.999835, 0.999835)
 rest = Transform2D(0.99983424, -0.0044851624, 0.0044851624, 0.99983424, 29.15951, 50.506165)
 auto_calculate_length_and_angle = false
 length = 311.968
@@ -1730,7 +1737,7 @@ bone_angle = 93.20517
 
 [node name="KneeL" type="Bone2D" parent="Characters/NpcClient/Bones/Skeleton2D/Hip/LegL" unique_id=1804634219]
 position = Vector2(3.5310373, 166.55461)
-rotation = 0.04817951
+rotation = 0.04817939
 scale = Vector2(0.9998569, 0.9998569)
 rest = Transform2D(0.9876027, 0.15605146, -0.15605146, 0.9876027, 3.5310373, 166.55461)
 auto_calculate_length_and_angle = false
@@ -1937,8 +1944,8 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Chest" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=1113128428]
 position = Vector2(-2, -53)
-rotation = -0.14760228
-scale = Vector2(0.9998251, 0.9998251)
+rotation = -0.14760229
+scale = Vector2(0.99982315, 0.99982315)
 rest = Transform2D(0.99793434, 0.06424214, -0.06424214, 0.99793434, -2, -53)
 
 [node name="Neck" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest" unique_id=1243787834]
@@ -1946,8 +1953,8 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Head" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest/Neck" unique_id=167744916]
 position = Vector2(-11, -162)
-rotation = 0.19494982
-scale = Vector2(0.99984205, 0.99984205)
+rotation = 0.19494933
+scale = Vector2(0.9998377, 0.9998377)
 rest = Transform2D(0.9999851, -0.00547044, 0.00547044, 0.9999851, -11, -162)
 auto_calculate_length_and_angle = false
 length = 53.297
@@ -1955,14 +1962,14 @@ bone_angle = -80.11498
 
 [node name="ArmR" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest" unique_id=992144047]
 position = Vector2(-72, -117)
-rotation = 0.24734358
-scale = Vector2(0.9998328, 0.9998328)
+rotation = 0.24733618
+scale = Vector2(0.99982965, 0.99982965)
 rest = Transform2D(0.99997807, 0.0066213235, -0.0066213235, 0.99997807, -72, -117)
 
 [node name="ForeArmR" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest/ArmR" unique_id=589080583]
 position = Vector2(-7, 135)
-rotation = 0.7348707
-scale = Vector2(0.99983895, 0.99983895)
+rotation = 0.73488516
+scale = Vector2(0.9998385, 0.9998385)
 rest = Transform2D(0.89776886, 0.44046685, -0.44046685, 0.89776886, -7, 135)
 auto_calculate_length_and_angle = false
 length = 155.0
@@ -1970,14 +1977,14 @@ bone_angle = 23.196201
 
 [node name="ArmL" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest" unique_id=1433338527]
 position = Vector2(29.69851, -130.1768)
-rotation = 0.17712283
-scale = Vector2(0.9998382, 0.9998382)
+rotation = 0.17711496
+scale = Vector2(0.9998381, 0.9998381)
 rest = Transform2D(1, 0, 0, 1, 47, -121)
 
 [node name="ForeArmL" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/Chest/ArmL" unique_id=2026602526]
 position = Vector2(22, 120)
-rotation = -0.056596994
-scale = Vector2(0.99984163, 0.99984163)
+rotation = -0.056585316
+scale = Vector2(0.9998358, 0.9998358)
 rest = Transform2D(0.99988055, 0.015455957, -0.015455957, 0.99988055, 22, 120)
 auto_calculate_length_and_angle = false
 length = 125.0
@@ -1985,14 +1992,14 @@ bone_angle = 42.711983
 
 [node name="LegR" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=1565375585]
 position = Vector2(-14.700328, 126.63689)
-rotation = -0.34270614
-scale = Vector2(0.999869, 0.999869)
+rotation = -0.34270474
+scale = Vector2(0.99986655, 0.99986655)
 rest = Transform2D(0.99116075, -0.1326665, 0.1326665, 0.99116075, -66, 103)
 
 [node name="KneeR" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/LegR" unique_id=1599005355]
 position = Vector2(1, 146)
-rotation = 0.633173
-scale = Vector2(0.9998743, 0.9998743)
+rotation = 0.63317025
+scale = Vector2(0.999877, 0.999877)
 rest = Transform2D(0.9880616, 0.15405944, -0.15405944, 0.9880616, 1, 146)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -2006,14 +2013,14 @@ occluder = SubResource("OccluderPolygon2D_pyfus")
 
 [node name="LegL" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=2087565263]
 position = Vector2(55.522446, 115.97094)
-rotation = -0.74112505
-scale = Vector2(0.9998471, 0.9998471)
+rotation = -0.7411222
+scale = Vector2(0.9998463, 0.9998463)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/LegL" unique_id=57242182]
 position = Vector2(-7, 125)
-rotation = 0.374618
-scale = Vector2(0.9998443, 0.9998443)
+rotation = 0.37461457
+scale = Vector2(0.9998432, 0.9998432)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -2028,14 +2035,14 @@ occluder = SubResource("OccluderPolygon2D_kgy3h")
 [node name="SkirtL" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip" unique_id=1451246380]
 visible = false
 position = Vector2(-19.953075, 7.672987)
-rotation = -0.32751438
-scale = Vector2(0.9998427, 0.9998427)
+rotation = -0.32751435
+scale = Vector2(0.9998432, 0.9998432)
 rest = Transform2D(1, 0, 0, 1, -68, 10)
 
 [node name="SkirtL2" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/SkirtL" unique_id=764267554]
 position = Vector2(-54.593754, 151.47455)
-rotation = 0.25865698
-scale = Vector2(0.9998754, 0.9998754)
+rotation = 0.25865647
+scale = Vector2(0.9998755, 0.9998755)
 rest = Transform2D(1, 0, 0, 1, -47, 168)
 auto_calculate_length_and_angle = false
 length = 130.0
@@ -2045,12 +2052,12 @@ bone_angle = 95.0
 visible = false
 position = Vector2(-1, 23)
 rotation = -0.18051071
-scale = Vector2(0.9998459, 0.9998459)
+scale = Vector2(0.99984753, 0.99984753)
 rest = Transform2D(1, 0, 0, 1, -1, 23)
 
 [node name="SkirtC2" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/SkirtC" unique_id=1612768243]
 position = Vector2(7, 173)
-rotation = -0.12770654
+rotation = -0.12770653
 scale = Vector2(0.9998646, 0.9998646)
 rest = Transform2D(1, 0, 0, 1, 7, 173)
 auto_calculate_length_and_angle = false
@@ -2061,12 +2068,12 @@ bone_angle = 95.0
 visible = false
 position = Vector2(59.01034, 22.864365)
 rotation = 1.0278492
-scale = Vector2(0.9998647, 0.9998647)
+scale = Vector2(0.99986446, 0.99986446)
 rest = Transform2D(1, 0, 0, 1, 43, 10)
 
 [node name="SkirtR2" type="Bone2D" parent="Characters/NpcPlayer/Bones/Skeleton2D/Hip/SkirtR" unique_id=633965446]
 position = Vector2(184.16289, 43.428574)
-rotation = -1.4264767
+rotation = -1.4264766
 scale = Vector2(0.9998596, 0.9998596)
 rest = Transform2D(1, 0, 0, 1, 27, 186)
 auto_calculate_length_and_angle = false
@@ -2213,12 +2220,6 @@ position = Vector2(-23.333334, 456.6667)
 scale = Vector2(0.565, 0.565)
 texture = ExtResource("15_8lfdw")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1464295922]
-physics_interpolation_mode = 2
-z_index = 100
-position = Vector2(-3057, 894)
-zoom = Vector2(0.43, 0.43)
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=96188591]
 libraries/ = SubResource("AnimationLibrary_nfifr")
 
@@ -2259,3 +2260,34 @@ pitch_scale = 0.75
 [node name="Ambient" type="AudioStreamPlayer" parent="Audio" unique_id=566522386]
 stream = ExtResource("24_4idvv")
 volume_db = -3.728
+
+[node name="TransitionPhantomCamera2D" type="Node2D" parent="." unique_id=816424864 node_paths=PackedStringArray("follow_target")]
+top_level = true
+position = Vector2(-2870, 894)
+script = ExtResource("36_23fij")
+follow_mode = 2
+follow_target = NodePath("../TransitionCameraTarget")
+zoom = Vector2(0.4, 0.4)
+frame_preview = false
+tween_resource = SubResource("Resource_px1j8")
+draw_limits = true
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+
+[node name="TransitionCameraTarget" type="Node2D" parent="." unique_id=1592954504]
+position = Vector2(-2870, 894)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1287006892]
+top_level = true
+position = Vector2(-2870, 894)
+zoom = Vector2(0.4, 0.4)
+limit_left = -16000
+limit_top = -5000
+limit_right = 28000
+limit_bottom = 550
+editor_draw_limits = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=1697350724]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("38_ewtmu")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
