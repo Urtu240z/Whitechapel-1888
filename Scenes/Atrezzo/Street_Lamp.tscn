@@ -1,59 +1,29 @@
 [gd_scene format=3 uid="uid://5o5jm036m674"]
 
 [ext_resource type="Texture2D" uid="uid://dnmrcoacx72qn" path="res://Assets/Sprites/Atrezzo/Street_Lamp.png" id="1_u5ynd"]
+[ext_resource type="Script" uid="uid://b0aed6q4cbn6c" path="res://Scripts/Core/street_lamp_controller.gd" id="2_27c2d"]
 [ext_resource type="Texture2D" uid="uid://b0y5oeotay27s" path="res://Assets/Sprites/Lights/180 Light.png" id="2_cpk3j"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="3_cpk3j"]
+[ext_resource type="PackedScene" uid="uid://xmldyo43a1ae" path="res://Scenes/Atrezzo/Swarm.tscn" id="4_qpjt1"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u5ynd"]
 blend_mode = 1
-
-[sub_resource type="Gradient" id="Gradient_gyoqv"]
-colors = PackedColorArray(0.18551108, 0.18551105, 0.18551111, 1, 0.3272701, 0.32726985, 0.32726997, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_qpjt1"]
-gradient = SubResource("Gradient_gyoqv")
-width = 4
-height = 4
-
-[sub_resource type="Gradient" id="Gradient_27c2d"]
-offsets = PackedFloat32Array(0, 0.0404423, 0.89668244, 1)
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.98039216, 1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_x3eg4"]
-gradient = SubResource("Gradient_27c2d")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e6qhh"]
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 75.21
-direction = Vector3(1, -1, 0)
-spread = 180.0
-initial_velocity_min = 18.0
-initial_velocity_max = 30.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -4.0000024
-radial_accel_max = 3.9999976
-tangential_accel_min = -10.000002
-tangential_accel_max = 9.999997
-damping_min = 8.0
-damping_max = 10.0
-scale_max = 1.1999999
-color_ramp = SubResource("GradientTexture1D_x3eg4")
 
 [node name="Street_Lamp" type="Sprite2D" unique_id=1667577496 groups=["street_lamp"]]
 light_mask = 2
 visibility_layer = 2
 z_index = 7
 texture = ExtResource("1_u5ynd")
+script = ExtResource("2_27c2d")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=643840350]
 light_mask = 2
 visibility_layer = 2
 z_index = 4
-position = Vector2(2, 104)
-scale = Vector2(3.5283203, 8.880127)
+position = Vector2(2, -133)
+scale = Vector2(11.823, 8.695)
 color = Color(0.9225023, 0.4751109, 1.1166334e-05, 1)
-energy = 6.0
+energy = 2.0
 range_layer_min = -1
 range_layer_max = 1
 shadow_enabled = true
@@ -61,14 +31,13 @@ shadow_color = Color(0, 0, 0, 0.8980392)
 shadow_filter = 2
 shadow_filter_smooth = 3.0
 texture = ExtResource("2_cpk3j")
-texture_scale = 2.0
-height = 50.0
+texture_scale = 1.3
 
 [node name="Lamp_Glow" type="Sprite2D" parent="." unique_id=1230130421]
-modulate = Color(0.30588236, 0.30588236, 0.30588236, 0.57254905)
+modulate = Color(0.61063546, 0.47391343, 0.33242884, 0.9137255)
 self_modulate = Color(1, 1, 1, 0.39215687)
 material = SubResource("CanvasItemMaterial_u5ynd")
-position = Vector2(9, -310)
+position = Vector2(9, -239)
 scale = Vector2(10.310547, 10.310547)
 texture = ExtResource("2_cpk3j")
 
@@ -87,16 +56,33 @@ scale = Vector2(0.6952765, 1.4898783)
 texture = ExtResource("3_cpk3j")
 
 [node name="LampBase" type="Marker2D" parent="." unique_id=682114682]
-position = Vector2(0, 663)
+position = Vector2(0, 445)
 
-[node name="BugParticles" type="GPUParticles2D" parent="." unique_id=1217990186]
-position = Vector2(0, -467)
-amount = 20
-texture = SubResource("GradientTexture2D_qpjt1")
-lifetime = 60.0
-preprocess = 8.0
-speed_scale = 8.0
-randomness = 0.8
-visibility_rect = Rect2(-250, -200, 500, 400)
-local_coords = true
-process_material = SubResource("ParticleProcessMaterial_e6qhh")
+[node name="Swarm" parent="." unique_id=2031569143 instance=ExtResource("4_qpjt1")]
+position = Vector2(6, -248)
+num_insects = 15
+radio_min = 120.0
+radio_max = 300.0
+velocidad_min = 6.0
+velocidad_max = 5.0
+wander_amplitud = 50.0
+color_insecto = Color(0.04088533, 0.0014229869, 0, 1)
+tamano_insecto = 3.0
+
+[node name="Swarm2" parent="." unique_id=1137460657 instance=ExtResource("4_qpjt1")]
+position = Vector2(-3, -452)
+modo_superficie = true
+num_insects = 8
+radio_min = 20.0
+radio_max = 50.0
+velocidad_min = 1.0
+velocidad_max = 1.0
+num_insects_sup = 8
+rect_ancho = 100.0
+rect_alto = 150.0
+velocidad_sup_min = 20.0
+velocidad_sup_max = 40.0
+wander_sup_amplitud = 30.0
+wander_sup_frecuencia = 10.0
+color_insecto = Color(0.21568628, 0.21568628, 0.21568628, 1)
+tamano_insecto = 3.0

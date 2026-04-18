@@ -2,6 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://cfs0s7thwppo1" path="res://Assets/Shaders/Blur_Sprite.gdshader" id="1_f1b4j"]
 [ext_resource type="Texture2D" uid="uid://dnmrcoacx72qn" path="res://Assets/Sprites/Atrezzo/Street_Lamp.png" id="1_xm5je"]
+[ext_resource type="Script" uid="uid://b0aed6q4cbn6c" path="res://Scripts/Core/street_lamp_controller.gd" id="3_oo4hw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xm5je"]
 shader = ExtResource("1_f1b4j")
@@ -21,63 +22,15 @@ gradient = SubResource("Gradient_mict6")
 fill = 1
 fill_from = Vector2(0.5, 0.50427353)
 
-[sub_resource type="Gradient" id="Gradient_gyoqv"]
-offsets = PackedFloat32Array(0, 0.61192244)
-colors = PackedColorArray(0.14150438, 0.14150435, 0.1415044, 1, 0.12938738, 0.12938738, 0.12938738, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_5ut3n"]
-gradient = SubResource("Gradient_gyoqv")
-width = 12
-height = 12
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
-[sub_resource type="Gradient" id="Gradient_oo4hw"]
-offsets = PackedFloat32Array(0, 0.0404423, 0.89668244, 1)
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.98039216, 1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_x3eg4"]
-gradient = SubResource("Gradient_oo4hw")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mk82p"]
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 75.21
-direction = Vector3(1, -1, 0)
-spread = 180.0
-initial_velocity_min = 18.0
-initial_velocity_max = 30.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -4.0000024
-radial_accel_max = 3.9999976
-tangential_accel_min = -10.000002
-tangential_accel_max = 9.999997
-damping_min = 8.0
-damping_max = 10.0
-scale_min = 1.1999999
-scale_max = 1.1999999
-color_ramp = SubResource("GradientTexture1D_x3eg4")
-
 [node name="Street_Lamp" type="Sprite2D" unique_id=2060761331]
 z_index = 8
 material = SubResource("ShaderMaterial_xm5je")
 texture = ExtResource("1_xm5je")
+script = ExtResource("3_oo4hw")
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1826853064]
 position = Vector2(3.49998, -456)
 scale = Vector2(4.5468745, 4.4062505)
 color = Color(0.92156863, 0.4745098, 0, 1)
-energy = 5.2
+energy = 4.28
 texture = SubResource("GradientTexture2D_xm5je")
-
-[node name="BugParticles" type="GPUParticles2D" parent="." unique_id=244318598]
-position = Vector2(0, -467)
-amount = 20
-texture = SubResource("GradientTexture2D_5ut3n")
-lifetime = 60.0
-preprocess = 8.0
-speed_scale = 8.0
-randomness = 0.8
-visibility_rect = Rect2(-250, -200, 500, 400)
-local_coords = true
-process_material = SubResource("ParticleProcessMaterial_mk82p")

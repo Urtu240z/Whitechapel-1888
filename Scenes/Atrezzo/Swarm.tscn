@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://xmldyo43a1ae"]
+
+[ext_resource type="Script" uid="uid://d2n0kebqojfc5" path="res://Scripts/Atrezzo/swarm.gd" id="1_xnbm6"]
+
+[node name="Swarm" type="Node2D" unique_id=2031569143]
+script = ExtResource("1_xnbm6")

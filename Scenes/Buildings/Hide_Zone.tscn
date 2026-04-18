@@ -21,6 +21,7 @@ size = Vector2(700, 1830)
 script = ExtResource("1_nevyb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2111509884]
+light_mask = 0
 scale = Vector2(5, 5)
 texture = SubResource("GradientTexture2D_nevyb")
 offset = Vector2(0, -200)
@@ -34,5 +35,6 @@ shape = SubResource("RectangleShape2D_v43yp")
 
 [node name="KeyPrompt" parent="." unique_id=361756385 instance=ExtResource("2_v43yp")]
 visible = true
+light_mask = 0
 position = Vector2(0, -1061)
 scale = Vector2(0.4, 0.4)
