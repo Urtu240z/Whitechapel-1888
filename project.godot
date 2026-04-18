@@ -253,7 +253,6 @@ common/physics_interpolation=true
 
 [rendering]
 
-textures/canvas_textures/default_texture_filter=0
 anti_aliasing/quality/msaa_2d=2
 anti_aliasing/quality/use_debanding=true
 environment/defaults/default_clear_color=Color(0.19793725, 0.19793722, 0.19793722, 1)

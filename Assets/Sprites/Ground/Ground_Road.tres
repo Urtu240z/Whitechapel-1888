@@ -1,0 +1,8 @@
+[gd_resource type="CanvasTexture" format=3 uid="uid://bd37f3m0b3qak"]
+
+[ext_resource type="Texture2D" uid="uid://beeb3l6qm0tli" path="res://Assets/Sprites/Ground/Ground_Road_512.png" id="1_8tl6j"]
+[ext_resource type="Texture2D" uid="uid://rntds1wmmgg4" path="res://Assets/Sprites/Ground/Ground_Road_512_n.png" id="2_mqqp5"]
+
+[resource]
+diffuse_texture = ExtResource("1_8tl6j")
+normal_texture = ExtResource("2_mqqp5")

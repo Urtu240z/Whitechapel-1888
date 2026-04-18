@@ -1,0 +1,144 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://sufipqvuten"]
+
+[sub_resource type="Shader" id="Shader_3xtrh"]
+code = "shader_type canvas_item;
+
+uniform vec2 tile_size = vec2(256.0, 256.0);
+
+uniform float color_variation : hint_range(0.0, 0.2) = 0.04;
+uniform float dirt_strength : hint_range(0.0, 1.0) = 0.30;
+uniform float crack_strength : hint_range(0.0, 1.0) = 0.18;
+uniform float stain_frequency : hint_range(0.0, 1.0) = 0.45;
+uniform float crack_frequency : hint_range(0.0, 1.0) = 0.25;
+uniform float stain_scale : hint_range(1.0, 12.0) = 4.0;
+uniform float crack_scale : hint_range(2.0, 30.0) = 12.0;
+uniform vec4 dirt_tint : source_color = vec4(0.22, 0.18, 0.14, 1.0);
+
+// CONTROLES DE SALIDA
+uniform float brightness : hint_range(0.0, 2.0) = 1.0;
+uniform float contrast : hint_range(0.0, 2.0) = 1.0;
+uniform float saturation : hint_range(0.0, 2.0) = 1.0;
+uniform vec4 final_modulate : source_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+varying vec2 local_pos;
+
+float hash12(vec2 p) {
+	p = fract(p * vec2(123.34, 456.21));
+	p += dot(p, p + 45.32);
+	return fract(p.x * p.y);
+}
+
+vec2 hash22(vec2 p) {
+	float n = hash12(p);
+	return vec2(n, hash12(p + n + 19.19));
+}
+
+float value_noise(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+
+	float a = hash12(i);
+	float b = hash12(i + vec2(1.0, 0.0));
+	float c = hash12(i + vec2(0.0, 1.0));
+	float d = hash12(i + vec2(1.0, 1.0));
+
+	vec2 u = f * f * (3.0 - 2.0 * f);
+	return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+}
+
+float fbm(vec2 p) {
+	float v = 0.0;
+	float a = 0.5;
+	for (int i = 0; i < 4; i++) {
+		v += value_noise(p) * a;
+		p *= 2.0;
+		a *= 0.5;
+	}
+	return v;
+}
+
+float crack_mask(vec2 uv, vec2 tile_id, float seed) {
+	vec2 p = uv * crack_scale;
+
+	p += vec2(
+		fbm(uv * 8.0 + tile_id * 1.7 + seed * 10.0),
+		fbm(uv * 8.0 + tile_id * 2.3 + seed * 20.0)
+	) * 0.35;
+
+	float line1 = abs(sin((p.x + seed * 6.2831) * 2.2 + p.y * 0.7));
+	float line2 = abs(sin((p.y + seed * 4.7123) * 2.8 + p.x * 0.4));
+
+	float c1 = smoothstep(0.06, 0.0, line1);
+	float c2 = smoothstep(0.045, 0.0, line2);
+
+	float breakup = fbm(uv * 10.0 + tile_id * 4.0 + seed * 15.0);
+
+	return max(c1, c2) * smoothstep(0.35, 0.75, breakup);
+}
+
+vec3 apply_color_controls(vec3 color) {
+	// brillo
+	color *= brightness;
+
+	// contraste
+	color = (color - 0.5) * contrast + 0.5;
+
+	// saturación
+	float luma = dot(color, vec3(0.299, 0.587, 0.114));
+	color = mix(vec3(luma), color, saturation);
+
+	return color;
+}
+
+void vertex() {
+	local_pos = VERTEX;
+}
+
+void fragment() {
+	vec4 base = texture(TEXTURE, UV);
+
+	vec2 tile_id = floor(local_pos / tile_size);
+	vec2 tile_uv = fract(local_pos / tile_size);
+
+	float seed = hash12(tile_id);
+
+	// Variación de tono MUCHO más sutil
+	float tone_shift = mix(-color_variation, color_variation, hash12(tile_id + 11.7));
+	base.rgb += vec3(tone_shift);
+
+	// Mancha / suciedad
+	float dirt_enable = step(hash12(tile_id + 21.3), stain_frequency);
+	float dirt_noise = fbm(tile_uv * stain_scale + hash22(tile_id + 8.4) * 9.0);
+	float dirt_mask = smoothstep(0.55, 0.82, dirt_noise) * dirt_enable;
+	base.rgb = mix(base.rgb, base.rgb * dirt_tint.rgb, dirt_mask * dirt_strength);
+
+	// Grietas
+	float crack_enable = step(hash12(tile_id + 39.9), crack_frequency);
+	float cracks = crack_mask(tile_uv, tile_id, seed) * crack_enable;
+	base.rgb *= 1.0 - cracks * crack_strength;
+
+	// Controles finales
+	base.rgb = apply_color_controls(base.rgb);
+
+	// Modulate final
+	base.rgb *= final_modulate.rgb;
+	base.a *= final_modulate.a;
+
+	COLOR = vec4(clamp(base.rgb, 0.0, 1.0), base.a);
+}"
+
+[resource]
+shader = SubResource("Shader_3xtrh")
+shader_parameter/tile_size = Vector2(512, 512)
+shader_parameter/color_variation = 0.0
+shader_parameter/dirt_strength = 0.41200001957
+shader_parameter/crack_strength = 1.0
+shader_parameter/stain_frequency = 0.246000011685
+shader_parameter/crack_frequency = 1.0
+shader_parameter/stain_scale = 7.69200031787
+shader_parameter/crack_scale = 2.0
+shader_parameter/dirt_tint = Color(0.13501766, 0.10767766, 0.08032692, 1)
+shader_parameter/brightness = 0.3690000175275
+shader_parameter/contrast = 1.0
+shader_parameter/saturation = 1.1690000555275
+shader_parameter/final_modulate = Color(1, 1, 1, 1)

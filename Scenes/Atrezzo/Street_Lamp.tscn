@@ -7,6 +7,39 @@
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u5ynd"]
 blend_mode = 1
 
+[sub_resource type="Gradient" id="Gradient_gyoqv"]
+colors = PackedColorArray(0.18551108, 0.18551105, 0.18551111, 1, 0.3272701, 0.32726985, 0.32726997, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qpjt1"]
+gradient = SubResource("Gradient_gyoqv")
+width = 4
+height = 4
+
+[sub_resource type="Gradient" id="Gradient_27c2d"]
+offsets = PackedFloat32Array(0, 0.0404423, 0.89668244, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.98039216, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_x3eg4"]
+gradient = SubResource("Gradient_27c2d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e6qhh"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 75.21
+direction = Vector3(1, -1, 0)
+spread = 180.0
+initial_velocity_min = 18.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -4.0000024
+radial_accel_max = 3.9999976
+tangential_accel_min = -10.000002
+tangential_accel_max = 9.999997
+damping_min = 8.0
+damping_max = 10.0
+scale_max = 1.1999999
+color_ramp = SubResource("GradientTexture1D_x3eg4")
+
 [node name="Street_Lamp" type="Sprite2D" unique_id=1667577496 groups=["street_lamp"]]
 light_mask = 2
 visibility_layer = 2
@@ -55,3 +88,15 @@ texture = ExtResource("3_cpk3j")
 
 [node name="LampBase" type="Marker2D" parent="." unique_id=682114682]
 position = Vector2(0, 663)
+
+[node name="BugParticles" type="GPUParticles2D" parent="." unique_id=1217990186]
+position = Vector2(0, -467)
+amount = 20
+texture = SubResource("GradientTexture2D_qpjt1")
+lifetime = 60.0
+preprocess = 8.0
+speed_scale = 8.0
+randomness = 0.8
+visibility_rect = Rect2(-250, -200, 500, 400)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_e6qhh")

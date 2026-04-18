@@ -1,0 +1,8 @@
+[gd_resource type="CanvasTexture" format=3 uid="uid://dew7vsx6rigi6"]
+
+[ext_resource type="Texture2D" uid="uid://cix1msch5aje2" path="res://Assets/Sprites/Ground/Ground_Cobblestone_Border_512.png" id="1_nutwy"]
+[ext_resource type="Texture2D" uid="uid://byr761oe2vxvt" path="res://Assets/Sprites/Ground/Ground_Cobblestone_Border_512_n.png" id="2_7j1ov"]
+
+[resource]
+diffuse_texture = ExtResource("1_nutwy")
+normal_texture = ExtResource("2_7j1ov")
