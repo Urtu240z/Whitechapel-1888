@@ -11,6 +11,9 @@ class_name LevelRoot
 # - OutsideActors         -> clients, companions, etc
 # - OutsideGameplay       -> portals, hide zones, POIs...
 # - OutsideBuildings      -> edificios persistentes
+#
+# Ahora solo registramos UNA luz direccional:
+# - ambient_light_path -> DirectionalLight2D
 # ================================================================
 
 @export_group("🔗 Level Structure")
@@ -19,11 +22,15 @@ class_name LevelRoot
 @export var player_path: NodePath
 @export var exterior_pcam_path: NodePath
 
+@export_group("💡 Iluminación Ambiental")
+@export var ambient_light_path: NodePath
+
 var _active_building: Node2D = null
 
 
 func _ready() -> void:
 	call_deferred("_setup_exterior_camera")
+	_setup_ambient_lighting()
 
 
 # ================================================================
@@ -44,8 +51,21 @@ func get_active_building() -> Node2D:
 	return _active_building
 
 
+# ================================================================
+# ILUMINACIÓN AMBIENTAL
+# ================================================================
+
 func is_player_inside_building() -> bool:
 	return _active_building != null
+
+
+func _setup_ambient_lighting() -> void:
+	var ambient: DirectionalLight2D = get_node_or_null(ambient_light_path) as DirectionalLight2D
+
+	if is_instance_valid(ambient):
+		DayNightManager.registrar_luz_ambiental(ambient)
+	else:
+		push_warning("LevelRoot: falta ambient_light_path o no es un DirectionalLight2D.")
 
 
 # ================================================================
@@ -133,6 +153,7 @@ func _set_buildings_visibility() -> void:
 			canvas_item.visible = should_show
 
 		child.process_mode = Node.PROCESS_MODE_INHERIT if should_show else Node.PROCESS_MODE_DISABLED
+
 
 func _setup_exterior_camera() -> void:
 	var player: Node = get_node_or_null(player_path)

@@ -133,6 +133,24 @@ gradient = SubResource("Gradient_27c1b")
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ac4hn"]
+polygon = PackedVector2Array(-15934, -3290, -10890, -3298, -10889, -3222, -15939, -3198)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qnasi"]
+polygon = PackedVector2Array(-9997, -1684, -5398, -1685, -5397, -1648, -9998, -1653)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_6ggpe"]
+polygon = PackedVector2Array(-4408, -3886, 2935, -3890, 3738, -3746, 3738, -3711, 2948, -3854, -4410, -3845)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_bk7xh"]
+polygon = PackedVector2Array(4704, -3940, 9274, -3939, 9276, -3867, 4703, -3864)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_1qgay"]
+polygon = PackedVector2Array(11141, -4393, 20427, -4391, 20429, -4327, 11138, -4325)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_h2w1t"]
+polygon = PackedVector2Array(20414, -3434, 27510, -3432, 27507, -3360, 20407, -3356)
+
 [sub_resource type="CanvasTexture" id="CanvasTexture_ac4hn"]
 diffuse_texture = ExtResource("11_h2w1t")
 normal_texture = ExtResource("27_okdt8")
@@ -185,21 +203,22 @@ size = Vector2(50000, 492)
 
 [sub_resource type="Environment" id="Environment_p02g6"]
 background_mode = 3
-background_canvas_max_layer = 7
+background_canvas_max_layer = 10
 sky = SubResource("Sky_p02g6")
-ambient_light_source = 2
-ambient_light_energy = 16.0
 reflected_light_source = 1
+tonemap_exposure = 1.5
 glow_enabled = true
+glow_levels/3 = 0.0
+glow_levels/4 = 0.0
 glow_normalized = true
-glow_intensity = 0.1
+glow_intensity = 0.2
 glow_hdr_threshold = 0.0
 glow_hdr_scale = 0.0
-glow_hdr_luminance_cap = 82.46
+glow_hdr_luminance_cap = 70.0
 adjustment_enabled = true
-adjustment_brightness = 1.62
-adjustment_contrast = 1.065
-adjustment_saturation = 0.65
+adjustment_brightness = 1.3
+adjustment_contrast = 1.1
+adjustment_saturation = 0.5
 
 [sub_resource type="Resource" id="Resource_bk7xh"]
 script = ExtResource("46_6ggpe")
@@ -232,6 +251,7 @@ outside_freeze_paths = Array[NodePath]([NodePath("OutsideAudiovisuals"), NodePat
 buildings_root_path = NodePath("OutsideBuildings")
 player_path = NodePath("Player")
 exterior_pcam_path = NodePath("ExteriorPhantomCamera2D")
+ambient_light_path = NodePath("OutsideAmbient/AmbientLight")
 
 [node name="OutsideAudiovisuals" type="Node2D" parent="." unique_id=1767405400]
 
@@ -365,7 +385,7 @@ texture = ExtResource("5_tp2us")
 
 [node name="ApartmentBlock3" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear" unique_id=1793552706]
 material = ExtResource("14_okdt8")
-position = Vector2(56587.508, -10370.001)
+position = Vector2(52715.004, -10370.001)
 scale = Vector2(24.094692, 19.999998)
 texture = ExtResource("5_tp2us")
 
@@ -401,7 +421,7 @@ scale = Vector2(0.99999994, 0.99999994)
 modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
 z_index = 3
 y_sort_enabled = true
-position = Vector2(-1413.0001, -105.80001)
+position = Vector2(-1413.0001, -87.80001)
 scale = Vector2(0.12500001, 0.12500001)
 move_speed = 110.0
 move_time_min = 5.0
@@ -413,7 +433,7 @@ pitch_variation = 0.7
 [node name="NPC2" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=1205373822 groups=["npcs_outside"] instance=ExtResource("9_bk7xh")]
 modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
 z_index = 3
-position = Vector2(-1193.0001, -104.80001)
+position = Vector2(-1193.0001, -88.00001)
 scale = Vector2(0.12500001, 0.12500001)
 move_speed = 85.0
 move_time_min = 5.0
@@ -425,7 +445,7 @@ pitch_variation = 1.0
 [node name="NPC3" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=1119784934 groups=["npcs_outside"] instance=ExtResource("9_bk7xh")]
 modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
 z_index = 3
-position = Vector2(-1075.0001, -108.80001)
+position = Vector2(-1075.0001, -88.20001)
 scale = Vector2(0.12500001, 0.12500001)
 move_speed = 100.0
 move_time_min = 5.0
@@ -628,11 +648,31 @@ offset_top = -369.0
 offset_right = 28937.0
 offset_bottom = 971.0
 
+[node name="Shadows" type="Node2D" parent="OutsideAudiovisuals" unique_id=1644657480]
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=580335033]
+occluder = SubResource("OccluderPolygon2D_ac4hn")
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=1044169949]
+occluder = SubResource("OccluderPolygon2D_qnasi")
+
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=10506172]
+occluder = SubResource("OccluderPolygon2D_6ggpe")
+
+[node name="LightOccluder2D4" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=1770915128]
+occluder = SubResource("OccluderPolygon2D_bk7xh")
+
+[node name="LightOccluder2D5" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=1630036100]
+occluder = SubResource("OccluderPolygon2D_1qgay")
+
+[node name="LightOccluder2D6" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=1141924337]
+occluder = SubResource("OccluderPolygon2D_h2w1t")
+
 [node name="OutsideBuildings" type="Node2D" parent="." unique_id=750250133]
 scale = Vector2(4.9999995, 4.9999995)
 
 [node name="Ten_Bells" parent="OutsideBuildings" unique_id=526028377 instance=ExtResource("11_nas3t")]
-modulate = Color(0.7708395, 0.77083945, 0.77083945, 1)
+modulate = Color(0.427493, 0.42749307, 0.42749307, 1)
 position = Vector2(597.60004, 4.0000005)
 
 [node name="PrincessAlice" parent="OutsideBuildings" unique_id=91018013 instance=ExtResource("7_os2yf")]
@@ -645,14 +685,14 @@ scale = Vector2(0.56000006, 0.56000006)
 [node name="Companions" type="Node2D" parent="OutsideActors" unique_id=815270617]
 
 [node name="NPCCompanion" parent="OutsideActors/Companions" unique_id=1093994703 instance=ExtResource("14_nsm0j")]
-position = Vector2(-1645, -522)
+position = Vector2(-1648, -366)
 companion_name = "Dolly"
 initial_facing_right = false
 body_scale = 1.1
 skin_name = "Bridget"
 
 [node name="NPCCompanion2" parent="OutsideActors/Companions" unique_id=1470067891 instance=ExtResource("14_nsm0j")]
-position = Vector2(973, -424)
+position = Vector2(973, -321)
 companion_name = "Bridget"
 skin_name = "Dolly"
 
@@ -684,38 +724,38 @@ skin_name = "NPC_PerfumeVendor"
 [node name="Clients" type="Node2D" parent="OutsideActors" unique_id=1556360124]
 
 [node name="NPCClient" parent="OutsideActors/Clients" unique_id=1640980566 instance=ExtResource("18_gb7vo")]
-position = Vector2(3091, -426.2)
+position = Vector2(3531, -340.99997)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
 
 [node name="NPCClient2" parent="OutsideActors/Clients" unique_id=400459338 instance=ExtResource("18_gb7vo")]
-position = Vector2(8541, -427.30002)
+position = Vector2(8541, -339)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
 skin_name = "NPC_ClientPoor2"
 
 [node name="NPCClient3" parent="OutsideActors/Clients" unique_id=635591008 instance=ExtResource("18_gb7vo")]
-position = Vector2(1576.0001, -419.6)
+position = Vector2(1576.0001, -337.99997)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
 skin_name = "NPC_ClientPoor3"
 
 [node name="NPCClient4" parent="OutsideActors/Clients" unique_id=2103339271 instance=ExtResource("18_gb7vo")]
-position = Vector2(-2987.6, -429.5)
+position = Vector2(-2987.6, -348)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
 skin_name = "NPC_ClientPoor4"
 
 [node name="NPCClient5" parent="OutsideActors/Clients" unique_id=383274618 instance=ExtResource("18_gb7vo")]
-position = Vector2(2812.7, -454.8)
+position = Vector2(3139, -409.00003)
 scale = Vector2(1.243, 1.243)
 dialog_timeline = "uid://c38evy5q65a84"
 skin_name = "NPC_ClientPoor6"
 
 [node name="NPCClient6" parent="OutsideActors/Clients" unique_id=1966185597 instance=ExtResource("18_gb7vo")]
-position = Vector2(-4192.1, -512)
+position = Vector2(-4192.1, -445)
 scale = Vector2(1.32, 1.32)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
@@ -731,8 +771,8 @@ position = Vector2(4185, -18)
 scale = Vector2(1.44, 1.301)
 
 [node name="HideZone" parent="OutsideGameplay/HideZones" unique_id=40068791 instance=ExtResource("19_lwph6")]
-position = Vector2(10501, -93)
-scale = Vector2(1.845, 1.845)
+position = Vector2(10226.001, -93)
+scale = Vector2(3.225, 1.955)
 
 [node name="HideZone3" parent="OutsideGameplay/HideZones" unique_id=1910397108 instance=ExtResource("19_lwph6")]
 z_index = -1
@@ -789,37 +829,26 @@ collision_layer = 7
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OutsideGameplay/Collisions/Ground" unique_id=1107981376]
+visible = false
 position = Vector2(6791, 321)
 shape = SubResource("RectangleShape2D_6ggpe")
 
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=1888029047]
-color = Color(0, 0, 0, 1)
-energy = 0.44
-blend_mode = 2
+[node name="OutsideAmbient" type="Node2D" parent="." unique_id=999737487]
+
+[node name="AmbientLight" type="DirectionalLight2D" parent="OutsideAmbient" unique_id=1888029047]
+rotation = -0.09250245
+energy = 0.68
+range_item_cull_mask = 1023
+shadow_enabled = true
+shadow_filter = 2
+height = 1.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="OutsideAmbient" unique_id=839120985]
+environment = SubResource("Environment_p02g6")
 
 [node name="Player" parent="." unique_id=722262165 instance=ExtResource("3_lwph6")]
 texture_filter = 2
-position = Vector2(1264, -473)
-
-[node name="IluminacionAmbiental" type="CanvasModulate" parent="." unique_id=140341875]
-visible = false
-color = Color(1.224, 1.224, 1.224, 1)
-
-[node name="LightOverlay" type="ColorRect" parent="." unique_id=2094051933]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -3080.0
-offset_top = -1388.0
-offset_right = 3461.0
-offset_bottom = 445.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=839120985]
-environment = SubResource("Environment_p02g6")
+position = Vector2(1264, -327)
 
 [node name="HUD" parent="." unique_id=3512527 instance=ExtResource("43_ac4hn")]
 

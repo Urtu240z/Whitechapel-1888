@@ -54,6 +54,8 @@
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_jhiha"]
 diffuse_texture = ExtResource("8_fh68x")
+specular_color = Color(0, 0, 0, 1)
+specular_shininess = 0.0
 
 [sub_resource type="Resource" id="Resource_gkafe"]
 script = ExtResource("9_2u12w")

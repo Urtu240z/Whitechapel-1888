@@ -2917,7 +2917,7 @@ rest = Transform2D(0.99116075, -0.1326665, 0.1326665, 0.99116075, -66, 103)
 
 [node name="KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegR" unique_id=1691631702]
 position = Vector2(1, 146)
-rotation = 0.5404941
+rotation = 0.540494
 scale = Vector2(0.999856, 0.999856)
 rest = Transform2D(0.9880616, 0.15405944, -0.15405944, 0.9880616, 1, 146)
 auto_calculate_length_and_angle = false
@@ -2938,7 +2938,7 @@ rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegL" unique_id=1844206024]
 position = Vector2(-7, 125)
-rotation = 0.2808265
+rotation = 0.28082648
 scale = Vector2(0.9998509, 0.9998509)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false

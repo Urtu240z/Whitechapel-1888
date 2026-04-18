@@ -3,13 +3,9 @@ extends Node
 # ================================================================
 # DAY NIGHT MANAGER — day_night_manager.gd
 # Autoload: DayNightManager
-# Gestiona el ciclo día/noche y la iluminación ambiental.
-# SleepManager puede pausar el ciclo y avanzar horas de juego.
-# CONFIG (game_config.tres) controla la duración de cada hora.
-#
-# IMPORTANTE:
-# - El juego EMPIEZA a las 08:00
-# - El día CAMBIA a las 00:00
+# Ahora usa UN SOLO DirectionalLight2D para:
+# - fase sol (6h -> 18h)
+# - fase luna (18h -> 6h)
 # ================================================================
 
 const CONFIG = preload("res://Data/Game/game_config.tres")
@@ -19,16 +15,40 @@ const HORA_INICIO_RELOJ: float = 8.0
 
 var hora_actual: float = HORA_INICIO_RELOJ
 var tiempo_acumulado: float = 0.0
-var canvas_modulate: CanvasModulate = null
-var tween: Tween = null
-var _ultimo_color_objetivo: Color = Color(-1.0, -1.0, -1.0, -1.0)
 var hora_anterior: int = int(HORA_INICIO_RELOJ)
 var _ultima_hora_total_emitida: int = 0
-
-# Controlado por SleepManager durante el sueño
 var pausado: bool = false
 
 signal hora_cambiada(hora_actual: float)
+
+# ================================================================
+# LUZ DIRECCIONAL ÚNICA
+# ================================================================
+
+var ambient_light: DirectionalLight2D = null
+
+const SUN_COLOR_ROJIZO  := Color(1.0, 0.28, 0.08)
+const SUN_COLOR_NARANJA := Color(1.0, 0.529, 0.341)
+const SUN_COLOR_ROSADO  := Color(1.0, 0.38, 0.52)
+
+# Ajusta este azul si quieres clavar el tono actual exacto de tu luna
+const MOON_COLOR_AZULADO := Color(0.55, 0.68, 1.0)
+
+# Rotaciones:
+# - amanecer  -> izquierda
+# - mediodía  -> centro
+# - atardecer -> derecha
+#
+# Si ves que la dirección de las sombras sale invertida,
+# cambia los signos: -65 <-> 65
+const ROTATION_START_DEG := -65.0
+const ROTATION_MID_DEG   := 0.0
+const ROTATION_END_DEG   := 65.0
+
+
+func registrar_luz_ambiental(p_ambient: DirectionalLight2D) -> void:
+	ambient_light = p_ambient
+	_actualizar_luz_ambiental()
 
 
 # ================================================================
@@ -36,65 +56,52 @@ signal hora_cambiada(hora_actual: float)
 # ================================================================
 
 func _ready() -> void:
-	_buscar_canvas_modulate()
 	_sincronizar_reloj(false)
-	_actualizar_estado_visual()
 
 
 func _process(delta: float) -> void:
-	# SleepManager pausa el ciclo mientras controla el tiempo manualmente
 	if pausado:
 		return
 
 	advance_seconds(delta)
+	_actualizar_luz_ambiental()
 
 
 # ================================================================
-# API PÚBLICA — usada por SleepManager / SaveManager / UI
+# API PÚBLICA
 # ================================================================
 
-# Avanza el reloj una cantidad de segundos reales.
 func advance_seconds(segundos: float) -> void:
 	if segundos <= 0.0:
-		_actualizar_estado_visual()
 		return
 
 	var hora_total_anterior: int = _get_hora_total_desde_tiempo(tiempo_acumulado)
-
 	tiempo_acumulado += segundos
 	hora_actual = _calcular_hora_desde_tiempo(tiempo_acumulado)
-
 	var hora_total_nueva: int = _get_hora_total_desde_tiempo(tiempo_acumulado)
 	_emitir_horas_cruzadas(hora_total_anterior, hora_total_nueva)
-	_actualizar_estado_visual()
 
 
-# Avanza el reloj una cantidad de horas de juego.
 func advance_hours(horas: float) -> void:
 	if horas <= 0.0:
 		return
+
 	advance_seconds(horas * get_segundos_por_hora())
 
 
-# Salta directamente a una hora específica.
-# Conserva el ciclo actual o avanza al siguiente si esa hora ya pasó.
 func set_hora(nueva_hora: float) -> void:
 	var segundos_por_dia: float = get_segundos_por_dia()
 	var ciclo_actual: int = int(floor(tiempo_acumulado / segundos_por_dia))
 	var tiempo_objetivo: float = ciclo_actual * segundos_por_dia + _hora_a_segundos_en_ciclo(nueva_hora)
 
-	# Si esa hora ya pasó dentro del ciclo actual, saltamos al siguiente.
 	if tiempo_objetivo < tiempo_acumulado - 0.001:
 		tiempo_objetivo += segundos_por_dia
 
 	set_total_time(tiempo_objetivo, true)
 
 
-# Fija el tiempo absoluto del juego.
-# SaveManager debe usar esto al cargar una partida.
 func set_total_time(nuevo_tiempo: float, emitir_eventos: bool = false) -> void:
 	var tiempo_anterior: float = tiempo_acumulado
-
 	tiempo_acumulado = maxf(nuevo_tiempo, 0.0)
 	hora_actual = _calcular_hora_desde_tiempo(tiempo_acumulado)
 
@@ -105,15 +112,13 @@ func set_total_time(nuevo_tiempo: float, emitir_eventos: bool = false) -> void:
 	else:
 		_sincronizar_reloj(false)
 
-	_actualizar_estado_visual()
+	_actualizar_luz_ambiental()
 
 
-# Pausa el avance del tiempo. Llamado por SleepManager al iniciar el sueño.
 func pausar() -> void:
 	pausado = true
 
 
-# Reanuda el avance del tiempo. Llamado por SleepManager al despertar.
 func reanudar() -> void:
 	pausado = false
 
@@ -126,22 +131,14 @@ func get_segundos_por_dia() -> float:
 	return get_segundos_por_hora() * float(horas_por_dia)
 
 
-# Horas de juego transcurridas desde el inicio de partida.
 func get_total_hours_elapsed() -> float:
 	return tiempo_acumulado / get_segundos_por_hora()
 
 
-# Hora absoluta desde el inicio del calendario del juego.
-# Ejemplo:
-# - inicio partida: 8.0
-# - medianoche del primer día: 24.0
-# - día 2 a las 07:00: 31.0
 func get_absolute_clock_hours() -> float:
 	return HORA_INICIO_RELOJ + get_total_hours_elapsed()
 
 
-# Día visible para HUD / Journal / Save.
-# CAMBIA a las 00:00, no a las 08:00.
 func get_current_day() -> int:
 	return int(floor(get_absolute_clock_hours() / 24.0)) + 1
 
@@ -152,7 +149,7 @@ func get_hour_float() -> float:
 
 func sincronizar_reloj() -> void:
 	_sincronizar_reloj(false)
-	_actualizar_estado_visual()
+	_actualizar_luz_ambiental()
 
 
 # ================================================================
@@ -170,8 +167,6 @@ func _calcular_hora_desde_tiempo(tiempo_total: float) -> float:
 	return fposmod(HORA_INICIO_RELOJ + horas_pasadas, float(horas_por_dia))
 
 
-# Convierte una hora visible del reloj (0-23) en segundos dentro del ciclo
-# de 24h contado desde la hora inicial del juego.
 func _hora_a_segundos_en_ciclo(hora: float) -> float:
 	var hora_normalizada: float = fposmod(hora, float(horas_por_dia))
 	var horas_desde_inicio: float = fposmod(
@@ -202,63 +197,114 @@ func _emitir_horas_cruzadas(hora_total_anterior: int, hora_total_nueva: int) -> 
 
 
 # ================================================================
-# ILUMINACIÓN
+# LUZ DIRECCIONAL — SOL / LUNA
 # ================================================================
 
-func _buscar_canvas_modulate() -> void:
-	var scene_root = get_tree().current_scene
-	if scene_root:
-		canvas_modulate = scene_root.get_node_or_null("IluminacionAmbiental")
-
-
-func _actualizar_estado_visual() -> void:
-	if not is_instance_valid(canvas_modulate):
-		canvas_modulate = null
-
-	if canvas_modulate == null:
-		_buscar_canvas_modulate()
-
-	if is_instance_valid(canvas_modulate):
-		_actualizar_iluminacion()
-
-
-func _actualizar_iluminacion() -> void:
-	if not is_instance_valid(canvas_modulate):
+func _actualizar_luz_ambiental() -> void:
+	if not is_instance_valid(ambient_light):
 		return
 
-	var target_color: Color
+	ambient_light.visible = true
 
-	if hora_actual >= 6 and hora_actual < 8:
-		target_color = Color(0.8, 0.7, 0.6)         # Amanecer — cálido
-	elif hora_actual >= 8 and hora_actual < 18:
-		target_color = Color(1.0, 1.0, 1.0)         # Día — blanco neutro
-	elif hora_actual >= 18 and hora_actual < 20:
-		target_color = Color(0.815, 0.336, 0.427)   # Atardecer — rojizo
+	if hora_actual >= 6.0 and hora_actual < 18.0:
+		_actualizar_fase_sol()
 	else:
-		target_color = Color(0.25, 0.25, 0.4)       # Noche — azul oscuro
+		_actualizar_fase_luna()
 
-	if _ultimo_color_objetivo.is_equal_approx(target_color):
-		return
 
-	_ultimo_color_objetivo = target_color
+func _actualizar_fase_sol() -> void:
+	# ------------------------------------------------------------
+	# ROTACIÓN
+	# 6h   -> inicio
+	# 12h  -> centro
+	# 18h  -> fin
+	# ------------------------------------------------------------
+	var rot_deg: float
 
-	if tween and tween.is_running():
-		tween.kill()
+	if hora_actual < 12.0:
+		var t_rot_morning: float = (hora_actual - 6.0) / 6.0
+		rot_deg = lerpf(ROTATION_START_DEG, ROTATION_MID_DEG, t_rot_morning)
+	else:
+		var t_rot_evening: float = (hora_actual - 12.0) / 6.0
+		rot_deg = lerpf(ROTATION_MID_DEG, ROTATION_END_DEG, t_rot_evening)
 
-	tween = create_tween()
-	tween.tween_property(canvas_modulate, "color", target_color, 0.35) \
-		.set_trans(Tween.TRANS_SINE) \
-		.set_ease(Tween.EASE_IN_OUT)
+	ambient_light.rotation_degrees = rot_deg
+
+	# ------------------------------------------------------------
+	# ENERGÍA
+	# 6-8   -> 1
+	# 8-12  -> 1 a 4
+	# 12-17 -> 4 a 1
+	# 17-18 -> 1
+	# ------------------------------------------------------------
+	var energy: float
+
+	if hora_actual < 8.0:
+		energy = 1.0
+	elif hora_actual < 12.0:
+		var t_energy_up: float = (hora_actual - 8.0) / 4.0
+		energy = lerpf(1.0, 4.0, t_energy_up)
+	elif hora_actual < 17.0:
+		var t_energy_down: float = (hora_actual - 12.0) / 5.0
+		energy = lerpf(4.0, 1.0, t_energy_down)
+	else:
+		energy = 1.0
+
+	ambient_light.energy = energy
+
+	# ------------------------------------------------------------
+	# COLOR
+	# 6-8   -> rojizo a naranja
+	# 8-17  -> naranja
+	# 17-18 -> naranja a rosado
+	# ------------------------------------------------------------
+	var color: Color
+
+	if hora_actual < 8.0:
+		var t_color_morning: float = (hora_actual - 6.0) / 2.0
+		color = SUN_COLOR_ROJIZO.lerp(SUN_COLOR_NARANJA, t_color_morning)
+	elif hora_actual < 17.0:
+		color = SUN_COLOR_NARANJA
+	else:
+		var t_color_evening: float = (hora_actual - 17.0) / 1.0
+		color = SUN_COLOR_NARANJA.lerp(SUN_COLOR_ROSADO, t_color_evening)
+
+	ambient_light.color = color
+
+
+func _actualizar_fase_luna() -> void:
+	# ------------------------------------------------------------
+	# 18h -> inicio
+	# 00h -> centro
+	# 06h -> fin
+	# ------------------------------------------------------------
+	var horas_desde_18: float
+
+	if hora_actual >= 18.0:
+		horas_desde_18 = hora_actual - 18.0
+	else:
+		horas_desde_18 = hora_actual + 6.0
+
+	var rot_deg: float
+
+	if horas_desde_18 < 6.0:
+		var t_rot_first_half: float = horas_desde_18 / 6.0
+		rot_deg = lerpf(ROTATION_START_DEG, ROTATION_MID_DEG, t_rot_first_half)
+	else:
+		var t_rot_second_half: float = (horas_desde_18 - 6.0) / 6.0
+		rot_deg = lerpf(ROTATION_MID_DEG, ROTATION_END_DEG, t_rot_second_half)
+
+	ambient_light.rotation_degrees = rot_deg
+
+	# Luna siempre azulada y energía 1
+	ambient_light.color = MOON_COLOR_AZULADO
+	ambient_light.energy = 1.0
 
 
 func reset() -> void:
-	# Vuelve al inicio del juego: día 1, 08:00.
 	tiempo_acumulado = 0.0
 	hora_actual = HORA_INICIO_RELOJ
 	hora_anterior = int(HORA_INICIO_RELOJ)
 	_ultima_hora_total_emitida = 0
 	pausado = false
-	_ultimo_color_objetivo = Color(-1.0, -1.0, -1.0, -1.0)
-	if tween and tween.is_running():
-		tween.kill()
-	_actualizar_estado_visual()
+	_actualizar_luz_ambiental()
