@@ -6,9 +6,11 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xm5je"]
 shader = ExtResource("1_f1b4j")
 shader_parameter/blur_strength = 3.0000001425
+shader_parameter/blur_quality = 3.0
+shader_parameter/center_preserve = 0.0
 shader_parameter/opacity = 1.0
 shader_parameter/brightness = 0.7690000365275
-shader_parameter/tint_color = Color(0.5609549, 0.5609549, 0.5609549, 1)
+shader_parameter/tint_color = Color(0.56, 0.56, 0.56, 1)
 
 [sub_resource type="Gradient" id="Gradient_mict6"]
 offsets = PackedFloat32Array(0, 0.66486484)

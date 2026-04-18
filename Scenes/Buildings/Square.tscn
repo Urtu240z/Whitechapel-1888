@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://b7m5ehvgbnh64"]
+
+[ext_resource type="Texture2D" uid="uid://c3bd6q6nv8xhc" path="res://Assets/Sprites/Building/Square.png" id="1_xvewx"]
+[ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="2_th7ar"]
+[ext_resource type="Script" uid="uid://dx87qkd75ne1c" path="res://Scripts/Core/Flame_Flicker.gd" id="3_5gjnt"]
+[ext_resource type="Texture2D" uid="uid://d046qlky05sps" path="res://Assets/Sprites/Effects/Smoke.png" id="4_8oy73"]
+
+[sub_resource type="Gradient" id="Gradient_d8f2x"]
+offsets = PackedFloat32Array(0, 0.43093923)
+colors = PackedColorArray(1, 1, 1, 0.08235294, 1, 1, 1, 0.654902)
+
+[node name="Square" type="Node2D" unique_id=1143885033]
+
+[node name="Square" type="Sprite2D" parent="." unique_id=2985867]
+light_mask = 4
+visibility_layer = 4
+texture_filter = 2
+scale = Vector2(3, 3)
+texture = ExtResource("1_xvewx")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=774505819]
+light_mask = 4
+visibility_layer = 4
+position = Vector2(5.4397774, 957.5996)
+scale = Vector2(5.4397945, 3.0785244)
+color = Color(1, 0.49411765, 0.29411766, 1)
+energy = 4.83
+range_item_cull_mask = 4
+shadow_item_cull_mask = 0
+texture = ExtResource("2_th7ar")
+texture_scale = 1.45
+script = ExtResource("3_5gjnt")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=182390955]
+modulate = Color(1, 1, 1, 0.34509805)
+light_mask = 4
+visibility_layer = 4
+position = Vector2(21.759167, 707.17334)
+scale = Vector2(5.4397945, 5.4397936)
+amount = 1500
+texture = ExtResource("4_8oy73")
+lifetime = 4.0
+preprocess = 0.05
+speed_scale = 0.4
+emission_shape = 2
+emission_sphere_radius = 11.09
+spread = 52.89
+gravity = Vector2(20, -100)
+initial_velocity_max = 35.08
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.0
+scale_amount_max = 0.2
+color = Color(0.27058825, 0.27058825, 0.27058825, 0.972549)
+color_ramp = SubResource("Gradient_d8f2x")

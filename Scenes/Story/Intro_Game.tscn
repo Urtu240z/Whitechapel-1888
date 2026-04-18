@@ -607,6 +607,3 @@ draw_limits = true
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
 [node name="CameraRig" parent="." unique_id=309327357 instance=ExtResource("32_yvf24")]
-
-[connection signal="body_entered" from="OutfitZone_London" to="." method="_on_zona_city_body_entered"]
-[connection signal="body_entered" from="OutfitZone_Forest" to="." method="_on_zona_bosque_body_entered"]

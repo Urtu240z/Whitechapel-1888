@@ -13,11 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://bgr8hp6ub6ebb" path="res://Scenes/Buildings/Princess_Alice.tscn" id="7_os2yf"]
 [ext_resource type="Texture2D" uid="uid://cqaib6xovfhpw" path="res://Assets/Sprites/NPC/NPC 1.png" id="7_qnasi"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="8_6ggpe"]
-[ext_resource type="Texture2D" uid="uid://c3bd6q6nv8xhc" path="res://Assets/Sprites/Building/Square.png" id="8_os2yf"]
-[ext_resource type="Script" uid="uid://dx87qkd75ne1c" path="res://Scripts/Core/Flame_Flicker.gd" id="9_7ajcb"]
 [ext_resource type="PackedScene" uid="uid://cg3wm3f0te243" path="res://Scenes/NPC/NPC_Charger.tscn" id="9_bk7xh"]
 [ext_resource type="PackedScene" uid="uid://36qdlvetmmi" path="res://Scenes/Vehicles/Carriage.tscn" id="10_1qgay"]
-[ext_resource type="Texture2D" uid="uid://d046qlky05sps" path="res://Assets/Sprites/Effects/Smoke.png" id="10_ee86v"]
 [ext_resource type="Texture2D" uid="uid://b8u1b1yp6fn43" path="res://Assets/Sprites/Building/Perfume Store.png" id="11_h2w1t"]
 [ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="11_nas3t"]
 [ext_resource type="Texture2D" uid="uid://blwmycta5s4us" path="res://Assets/Sprites/Building/Victoria Home.png" id="11_y0tni"]
@@ -30,7 +27,6 @@
 [ext_resource type="Texture2D" uid="uid://cuesydgcralbu" path="res://Assets/Sprites/Atrezzo/Street_Lamp_Blur.png" id="16_3duel"]
 [ext_resource type="Texture2D" uid="uid://njfqt2e88exo" path="res://Assets/Sprites/Background/Ground_Cobbelstone_Sand3.png" id="16_7ajcb"]
 [ext_resource type="Script" uid="uid://bbc6r2ife4inn" path="res://Scripts/Data/shop_item_data.gd" id="16_xxywj"]
-[ext_resource type="Texture2D" uid="uid://b38snj6t625s5" path="res://Assets/Sprites/Effects/Fog.png" id="17_h8mjo"]
 [ext_resource type="Resource" uid="uid://cwur32724y8dv" path="res://Data/Equip/perfume-bruma-mayo.tres" id="17_tjuru"]
 [ext_resource type="Resource" uid="uid://5cox3o6rs7ue" path="res://Data/Equip/perfume-susurro-seda.tres" id="18_f1cs3"]
 [ext_resource type="PackedScene" uid="uid://oebyjtwwcxhx" path="res://Scenes/NPC/NPC_Client.tscn" id="18_gb7vo"]
@@ -51,15 +47,80 @@
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_eoj0i"]
 blend_mode = 1
 
-[sub_resource type="Gradient" id="Gradient_peixa"]
-offsets = PackedFloat32Array(0, 0.43093923)
-colors = PackedColorArray(1, 1, 1, 0.08235294, 1, 1, 1, 0.654902)
-
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8oeb8"]
 blend_mode = 1
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_v2j58"]
 diffuse_texture = ExtResource("11_y0tni")
+
+[sub_resource type="Shader" id="Shader_6ggpe"]
+code = "shader_type canvas_item;
+
+uniform float blur_strength : hint_range(0.0, 24.0) = 7.0;
+uniform float blur_quality : hint_range(1.0, 3.0) = 3.0;
+uniform float center_preserve : hint_range(0.0, 1.0) = 0.0;
+
+uniform float opacity : hint_range(0.0, 1.0) = 1.0;
+uniform float brightness : hint_range(0.0, 2.0) = 0.3;
+uniform vec4 tint_color : source_color = vec4(1.0, 0.5, 0.2, 1.0);
+
+const int DIR_COUNT = 16;
+const int MAX_RINGS = 3;
+
+void fragment() {
+	vec2 px = TEXTURE_PIXEL_SIZE;
+
+	vec4 base_color = texture(TEXTURE, UV);
+	vec4 blur_color = vec4(0.0);
+	float total_weight = 0.0;
+
+	// Mantener bastante información del centro
+	float center_weight = 2.2 + center_preserve * 4.0;
+	blur_color += base_color * center_weight;
+	total_weight += center_weight;
+
+	float rings = max(blur_quality, 1.0);
+
+	for (int ring = 1; ring <= MAX_RINGS; ring++) {
+		if (float(ring) > rings) {
+			break;
+		}
+
+		// Radios repartidos: cercano, medio, lejano
+		float ring_t = float(ring) / rings;
+		float radius = blur_strength * ring_t;
+
+		// Más peso en anillos interiores, menos en exteriores
+		float ring_weight = mix(1.6, 0.55, ring_t);
+
+		for (int i = 0; i < DIR_COUNT; i++) {
+			float a = TAU * float(i) / float(DIR_COUNT);
+			vec2 dir = vec2(cos(a), sin(a));
+
+			vec2 offset = dir * px * radius;
+			blur_color += texture(TEXTURE, UV + offset) * ring_weight;
+			total_weight += ring_weight;
+		}
+	}
+
+	vec4 color = blur_color / max(total_weight, 0.0001);
+
+	color.rgb *= tint_color.rgb;
+	color.rgb *= brightness;
+	color.a *= tint_color.a;
+	color.a *= opacity;
+
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bk7xh"]
+shader = SubResource("Shader_6ggpe")
+shader_parameter/blur_strength = 6.766000321385
+shader_parameter/blur_quality = 3.0
+shader_parameter/center_preserve = 0.0
+shader_parameter/opacity = 1.0
+shader_parameter/brightness = 0.53200002527
+shader_parameter/tint_color = Color(0.64, 0.3904, 0.25599998, 1)
 
 [sub_resource type="Gradient" id="Gradient_27c1b"]
 offsets = PackedFloat32Array(0, 0.3561644, 0.61095893, 1)
@@ -69,10 +130,6 @@ colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0)
 gradient = SubResource("Gradient_27c1b")
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
-
-[sub_resource type="Gradient" id="Gradient_tl17h"]
-offsets = PackedFloat32Array(0, 0.25698325)
-colors = PackedColorArray(0, 0, 0, 0, 0.78352344, 0.7835234, 0.7835234, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ac4hn"]
 diffuse_texture = ExtResource("11_h2w1t")
@@ -150,7 +207,7 @@ adjustment_saturation = 0.65
 script = ExtResource("46_6ggpe")
 duration = 0.0
 
-[node name="ComercialStreet" type="Node2D" unique_id=1435527189]
+[node name="CPUParticles2D" type="Node2D" unique_id=1435527189]
 script = ExtResource("1_okdt8")
 outside_freeze_paths = Array[NodePath]([NodePath("OutsideAudiovisuals"), NodePath("OutsideActors"), NodePath("OutsideGameplay")])
 buildings_root_path = NodePath("OutsideBuildings")
@@ -197,50 +254,6 @@ texture = ExtResource("2_gb7vo")
 [node name="AttrezoBuildings" type="Node2D" parent="OutsideAudiovisuals/World/StaticOutside" unique_id=1928828764]
 modulate = Color(0.5014063, 0.5014066, 0.50140643, 1)
 scale = Vector2(0.040000003, 0.040000003)
-
-[node name="Square" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings" unique_id=1806577367]
-visible = false
-light_mask = 4
-visibility_layer = 4
-position = Vector2(19420, -23190)
-scale = Vector2(3, 3)
-texture = ExtResource("8_os2yf")
-
-[node name="PointLight2D" type="PointLight2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Square" unique_id=628324448]
-light_mask = 4
-visibility_layer = 4
-position = Vector2(1.8132591, 319.19986)
-scale = Vector2(1.8132648, 1.0261748)
-color = Color(1, 0.49411765, 0.29411766, 1)
-energy = 16.0
-range_item_cull_mask = 4
-shadow_item_cull_mask = 0
-texture = ExtResource("2_gb7vo")
-texture_scale = 1.45
-script = ExtResource("9_7ajcb")
-
-[node name="CPUParticles2D" type="CPUParticles2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Square" unique_id=317187057]
-modulate = Color(1, 1, 1, 0.34509805)
-light_mask = 4
-visibility_layer = 4
-position = Vector2(7.2530556, 235.72446)
-scale = Vector2(1.8132648, 1.8132645)
-amount = 1500
-texture = ExtResource("10_ee86v")
-lifetime = 4.0
-preprocess = 0.05
-speed_scale = 0.4
-emission_shape = 2
-emission_sphere_radius = 11.09
-spread = 52.89
-gravity = Vector2(20, -100)
-initial_velocity_max = 35.08
-angle_min = -720.0
-angle_max = 720.0
-scale_amount_min = 0.0
-scale_amount_max = 0.2
-color = Color(0.27058825, 0.27058825, 0.27058825, 0.972549)
-color_ramp = SubResource("Gradient_peixa")
 
 [node name="Front" type="Node2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings" unique_id=1795668460]
 
@@ -327,7 +340,7 @@ z_index = -1
 z_index = -1
 texture_filter = 1
 material = ExtResource("14_okdt8")
-position = Vector2(22940, -7680)
+position = Vector2(19365.004, -7680)
 scale = Vector2(15.905, 14.87)
 texture = ExtResource("5_tp2us")
 
@@ -352,8 +365,9 @@ material = SubResource("CanvasItemMaterial_8oeb8")
 texture = ExtResource("2_gb7vo")
 
 [node name="Npc1" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside" unique_id=1677684734]
-modulate = Color(0.45840502, 0.45840508, 0.45840502, 1)
-position = Vector2(896.4001, -99.60001)
+modulate = Color(0.20511743, 0.20511743, 0.20511743, 1)
+material = SubResource("ShaderMaterial_bk7xh")
+position = Vector2(817.6001, -99.60001)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("7_qnasi")
 
@@ -505,6 +519,7 @@ scroll_offset = Vector2(1009.0089, 500.90094)
 repeat_times = 4
 
 [node name="Lights_Foreground" type="Node2D" parent="OutsideAudiovisuals/World/Lights/Parallax2D2" unique_id=1877099797]
+modulate = Color(1, 1, 1, 0.85882354)
 scale = Vector2(1.2, 1.2)
 
 [node name="Street_Lamp2" parent="OutsideAudiovisuals/World/Lights/Parallax2D2/Lights_Foreground" unique_id=400567341 instance=ExtResource("15_5c5rf")]
@@ -579,31 +594,6 @@ position = Vector2(-1994.0796, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 texture = ExtResource("16_3duel")
 
-[node name="GPUParticles2D" type="CPUParticles2D" parent="OutsideAudiovisuals/World" unique_id=1326619843]
-visible = false
-modulate = Color(0.5287153, 0.5287153, 0.5287153, 0.49411765)
-z_index = 8
-position = Vector2(-2751.9998, 83.799995)
-scale = Vector2(0.19999999, 0.19999999)
-amount = 500
-texture = ExtResource("17_h8mjo")
-lifetime = 35.0
-preprocess = 10.0
-speed_scale = 0.1
-randomness = 0.5
-fixed_fps = 30
-draw_order = 1
-emission_shape = 3
-emission_rect_extents = Vector2(10, 100)
-direction = Vector2(1000, 0)
-gravity = Vector2(300, 0)
-angular_velocity_max = 70.09
-angle_min = -133.8
-angle_max = 70.1
-scale_amount_min = 1.4
-scale_amount_max = 1.4
-color_ramp = SubResource("Gradient_tl17h")
-
 [node name="Fog" type="Node2D" parent="OutsideAudiovisuals" unique_id=907223236]
 
 [node name="ColorRect" type="ColorRect" parent="OutsideAudiovisuals/Fog" unique_id=809441847]
@@ -621,7 +611,8 @@ scale = Vector2(4.9999995, 4.9999995)
 position = Vector2(597.60004, 3.6000004)
 
 [node name="PrincessAlice" parent="OutsideBuildings" unique_id=91018013 instance=ExtResource("7_os2yf")]
-position = Vector2(1611.6001, -288.40002)
+modulate = Color(0.6955032, 0.6955031, 0.6955031, 1)
+position = Vector2(1479.8003, -288.40002)
 scale = Vector2(0.56000006, 0.56000006)
 
 [node name="OutsideActors" type="Node2D" parent="." unique_id=776782275]
@@ -710,8 +701,9 @@ skin_name = "NPC_ClientPoor5"
 [node name="HideZones" type="Node2D" parent="OutsideGameplay" unique_id=204868614]
 
 [node name="HideZone2" parent="OutsideGameplay/HideZones" unique_id=173736521 instance=ExtResource("19_lwph6")]
-position = Vector2(4263, 83)
-scale = Vector2(1.715, 1.55)
+z_index = -1
+position = Vector2(4185, -18)
+scale = Vector2(1.44, 1.301)
 
 [node name="HideZone" parent="OutsideGameplay/HideZones" unique_id=40068791 instance=ExtResource("19_lwph6")]
 position = Vector2(10501, -93)

@@ -151,7 +151,4 @@ func _setup_exterior_camera() -> void:
 		push_warning("LevelRoot: no se encontró CameraTarget dentro del player.")
 		return
 
-	if exterior_pcam.follow_mode != 2:
-		push_warning("LevelRoot: ExteriorPhantomCamera2D no está en SIMPLE.")
-
 	exterior_pcam.set_follow_target(camera_target)

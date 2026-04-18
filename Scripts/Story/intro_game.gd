@@ -48,10 +48,6 @@ func _on_zona_london_body_entered(body):
 	if body.is_in_group("player"):
 		cambiar_zona_audio("london", 2.0)
 
-
-func _on_zona_city_body_entered(body: Node2D) -> void:
-	pass # Replace with function body.
-
 func _apply_camera_limits() -> void:
 	await get_tree().process_frame
 
@@ -67,7 +63,6 @@ func _apply_camera_limits() -> void:
 	if not is_instance_valid(pcam):
 		return
 
-	pcam.follow_mode = 2
 	pcam.set_follow_target(camera_target)
 
 	pcam.set_limit_left(int(top_left.global_position.x))

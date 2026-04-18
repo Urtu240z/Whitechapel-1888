@@ -40,7 +40,7 @@ func start_service(acto: String, tipo: String, client_skin_name: String = "NPC_C
 		player.velocity = Vector2.ZERO
 
 	# 1. Fade out audio del mundo
-	await WorldAudioManager.fade_out_world_audio(0.6)
+	await WorldAudioManager.fade_out_world_audio(0.5)
 
 	# 2. Fade visual a negro
 	await SceneManager.fade_out(0.5)
@@ -64,15 +64,20 @@ func start_service(acto: String, tipo: String, client_skin_name: String = "NPC_C
 	transition.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	get_tree().root.add_child(transition)
 
-	# 5. Mostrar ClientTransition
+	# 5. Preparar la transición MIENTRAS TODO SIGUE NEGRO
+	transition.prepare(acto, tipo, client_skin_name)
+
+	# 6. Dar 2 frames para que la Camera2D local + PhantomHost + PCam se asienten
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	# 7. Mostrar desde negro ya con la cámara correcta
 	SceneManager.snap_clear()
 
-	# 6. Arrancar transición
-	transition.begin(acto, tipo, client_skin_name)
+	# 8. Arrancar la animación ya visible
+	transition.play_transition()
 
-	# 7. Esperar resultado
-	# Guard: si transition se destruyó antes de emitir finished,
-	# forzamos cleanup para no dejar el juego con paused=true y mundo invisible.
+	# 9. Esperar resultado
 	if not is_instance_valid(transition):
 		push_error("ClientServiceManager: transition destruida antes de finished")
 		await _cleanup_service(world, player, null)
@@ -80,7 +85,7 @@ func start_service(acto: String, tipo: String, client_skin_name: String = "NPC_C
 
 	data = await transition.finished
 
-	# 8. Restaurar SIEMPRE todo antes de salir
+	# 10. Restaurar SIEMPRE todo antes de salir
 	await _cleanup_service(world, player, transition)
 	return data
 

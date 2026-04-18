@@ -18,26 +18,18 @@ var _animation_phase_done: bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	visible = false
 	minigame.visible = false
 
 	if is_instance_valid(transition_pcam):
-		transition_pcam.follow_mode = 2 # SIMPLE
 		transition_pcam.set_follow_target(transition_target)
 		transition_pcam.set_priority(0)
 
 	minigame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	animation_player.animation_finished.connect(_on_animation_finished)
 	minigame.completed.connect(_on_minigame_completed)
-	visible = false
-func _unhandled_input(event: InputEvent) -> void:
-	if not _can_skip_animation:
-		return
 
-	if event.is_action_pressed("interact"):
-		_skip_animation_to_minigame()
-		get_viewport().set_input_as_handled()
-
-func begin(acto: String, tipo: String, client_skin_name: String = "NPC_ClientPoor") -> void:
+func prepare(acto: String, tipo: String, client_skin_name: String = "NPC_ClientPoor") -> void:
 	_acto = acto
 	_tipo = tipo
 	_client_skin_name = client_skin_name
@@ -50,23 +42,33 @@ func begin(acto: String, tipo: String, client_skin_name: String = "NPC_ClientPoo
 		local_camera.make_current()
 
 	if is_instance_valid(transition_pcam):
-		transition_pcam.follow_mode = 2 # SIMPLE
 		transition_pcam.set_follow_target(transition_target)
 		transition_pcam.set_priority(90)
 
 	_apply_client_skin(_client_skin_name)
 
-	await get_tree().process_frame
+	# Dejar la animación colocada en frame 0, pero sin reproducir aún
+	animation_player.play("ClientTransition1")
+	animation_player.seek(0.0, true)
+	animation_player.stop()
 
+func play_transition() -> void:
 	visible = true
 	animation_player.play("ClientTransition1")
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not _can_skip_animation:
+		return
+
+	if event.is_action_pressed("interact"):
+		_skip_animation_to_minigame()
+		get_viewport().set_input_as_handled()
 
 func _apply_client_skin(skin_name: String) -> void:
 	if client_skins_root == null:
 		return
 
 	var target := client_skins_root.get_node_or_null(skin_name)
-
 	if target == null and client_skins_root.get_child_count() > 0:
 		target = client_skins_root.get_child(0)
 
