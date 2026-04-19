@@ -23,28 +23,29 @@ signal hora_cambiada(hora_actual: float)
 var sun: DirectionalLight2D = null
 var moon: DirectionalLight2D = null
 var ambient_light: DirectionalLight2D = null
-
-const SUN_COLOR_ROJIZO  := Color(1.0, 0.28, 0.08)
-const SUN_COLOR_NARANJA := Color(1.0, 0.529, 0.341)
-const SUN_COLOR_ROSADO  := Color(1.0, 0.38, 0.52)
-
-const MOON_COLOR_AZULADO := Color(0.55, 0.68, 1.0)
-
-const AMBIENT_DAY_COLOR   := Color("5995b0")
-const AMBIENT_NIGHT_COLOR := Color(0.0, 0.0, 0.0, 1.0)
-
-const ROTATION_START_DEG := -65.0
-const ROTATION_MID_DEG   := 0.0
-const ROTATION_END_DEG   := 65.0
+var _profile: LightingProfile2D = null
 
 # ================================================================
-# ENERGÍAS AJUSTABLES
+# DEFAULTS (si no hay perfil asignado)
 # ================================================================
 
-const SUN_MAX_ENERGY           := 2.0
-const MOON_MAX_ENERGY          := 1.0
-const AMBIENT_DAY_MAX_ENERGY   := 1.0
-const AMBIENT_NIGHT_MAX_ENERGY := 0.7
+const DEFAULT_SUN_COLOR_ROJIZO  := Color(1.0, 0.28, 0.08)
+const DEFAULT_SUN_COLOR_NARANJA := Color(1.0, 0.529, 0.341)
+const DEFAULT_SUN_COLOR_ROSADO  := Color(1.0, 0.38, 0.52)
+
+const DEFAULT_MOON_COLOR_AZULADO := Color(0.55, 0.68, 1.0)
+
+const DEFAULT_AMBIENT_DAY_COLOR   := Color("5995b0")
+const DEFAULT_AMBIENT_NIGHT_COLOR := Color(0.0, 0.0, 0.0, 1.0)
+
+const DEFAULT_ROTATION_START_DEG := -65.0
+const DEFAULT_ROTATION_MID_DEG   := 0.0
+const DEFAULT_ROTATION_END_DEG   := 65.0
+
+const DEFAULT_SUN_MAX_ENERGY           := 1.0
+const DEFAULT_MOON_MAX_ENERGY          := 0.1
+const DEFAULT_AMBIENT_DAY_MAX_ENERGY   := 1.0
+const DEFAULT_AMBIENT_NIGHT_MAX_ENERGY := 0.7
 
 # ================================================================
 # HORARIOS
@@ -66,11 +67,13 @@ const MOON_END_HOUR        := 6.0
 func registrar_luces(
 	p_sun: DirectionalLight2D,
 	p_moon: DirectionalLight2D,
-	p_ambient: DirectionalLight2D
+	p_ambient: DirectionalLight2D,
+	p_profile: LightingProfile2D = null
 ) -> void:
 	sun = p_sun
 	moon = p_moon
 	ambient_light = p_ambient
+	_profile = p_profile
 	_actualizar_luces_exteriores()
 
 
@@ -186,7 +189,7 @@ func get_ambient_night_factor() -> float:
 		return 0.0
 
 	return clampf(
-		ambient_light.energy / maxf(AMBIENT_NIGHT_MAX_ENERGY, 0.001),
+		ambient_light.energy / maxf(_ambient_night_max_energy(), 0.001),
 		0.0,
 		1.0
 	)
@@ -257,34 +260,34 @@ func _actualizar_sol() -> void:
 	var rot_deg: float
 	if hora_actual < SUN_PEAK_START_HOUR:
 		var t_rot_1: float = inverse_lerp(SUN_START_HOUR, SUN_PEAK_START_HOUR, hora_actual)
-		rot_deg = lerpf(ROTATION_START_DEG, ROTATION_MID_DEG, t_rot_1)
+		rot_deg = lerpf(_rotation_start_deg(), _rotation_mid_deg(), t_rot_1)
 	else:
 		var t_rot_2: float = inverse_lerp(SUN_PEAK_START_HOUR, SUN_END_HOUR, hora_actual)
-		rot_deg = lerpf(ROTATION_MID_DEG, ROTATION_END_DEG, t_rot_2)
+		rot_deg = lerpf(_rotation_mid_deg(), _rotation_end_deg(), t_rot_2)
 
 	sun.rotation_degrees = rot_deg
 
 	var energy: float
 	if hora_actual < SUN_PEAK_START_HOUR:
 		var t_in: float = inverse_lerp(SUN_START_HOUR, SUN_PEAK_START_HOUR, hora_actual)
-		energy = lerpf(0.0, SUN_MAX_ENERGY, t_in)
+		energy = lerpf(0.0, _sun_max_energy(), t_in)
 	elif hora_actual < SUN_PEAK_END_HOUR:
-		energy = SUN_MAX_ENERGY
+		energy = _sun_max_energy()
 	else:
 		var t_out: float = inverse_lerp(SUN_PEAK_END_HOUR, SUN_END_HOUR, hora_actual)
-		energy = lerpf(SUN_MAX_ENERGY, 0.0, t_out)
+		energy = lerpf(_sun_max_energy(), 0.0, t_out)
 
 	sun.energy = energy
 
 	var color: Color
 	if hora_actual < SUN_PEAK_START_HOUR:
 		var t_color_1: float = inverse_lerp(SUN_START_HOUR, SUN_PEAK_START_HOUR, hora_actual)
-		color = SUN_COLOR_ROJIZO.lerp(SUN_COLOR_NARANJA, t_color_1)
+		color = _sun_color_rojizo().lerp(_sun_color_naranja(), t_color_1)
 	elif hora_actual < SUN_PEAK_END_HOUR:
-		color = SUN_COLOR_NARANJA
+		color = _sun_color_naranja()
 	else:
 		var t_color_2: float = inverse_lerp(SUN_PEAK_END_HOUR, SUN_END_HOUR, hora_actual)
-		color = SUN_COLOR_NARANJA.lerp(SUN_COLOR_ROSADO, t_color_2)
+		color = _sun_color_naranja().lerp(_sun_color_rosado(), t_color_2)
 
 	sun.color = color
 
@@ -307,26 +310,26 @@ func _actualizar_luna() -> void:
 
 	if horas_desde_inicio < mitad_rotacion:
 		var t_rot_1: float = horas_desde_inicio / maxf(mitad_rotacion, 0.001)
-		rot_deg = lerpf(ROTATION_START_DEG, ROTATION_MID_DEG, t_rot_1)
+		rot_deg = lerpf(_rotation_start_deg(), _rotation_mid_deg(), t_rot_1)
 	else:
 		var t_rot_2: float = (horas_desde_inicio - mitad_rotacion) / maxf(mitad_rotacion, 0.001)
-		rot_deg = lerpf(ROTATION_MID_DEG, ROTATION_END_DEG, t_rot_2)
+		rot_deg = lerpf(_rotation_mid_deg(), _rotation_end_deg(), t_rot_2)
 
 	moon.rotation_degrees = rot_deg
 
 	var energy: float
 	if horas_desde_inicio < tramo_subida:
 		var t_in: float = horas_desde_inicio / maxf(tramo_subida, 0.001)
-		energy = lerpf(0.0, MOON_MAX_ENERGY, t_in)
+		energy = lerpf(0.0, _moon_max_energy(), t_in)
 	elif horas_desde_inicio < tramo_subida + tramo_meseta:
-		energy = MOON_MAX_ENERGY
+		energy = _moon_max_energy()
 	else:
 		var horas_en_bajada: float = horas_desde_inicio - tramo_subida - tramo_meseta
 		var t_out: float = horas_en_bajada / maxf(tramo_bajada, 0.001)
-		energy = lerpf(MOON_MAX_ENERGY, 0.0, t_out)
+		energy = lerpf(_moon_max_energy(), 0.0, t_out)
 
 	moon.energy = energy
-	moon.color = MOON_COLOR_AZULADO
+	moon.color = _moon_color_azulado()
 
 
 func _actualizar_ambient_light() -> void:
@@ -339,7 +342,7 @@ func _actualizar_ambient_light() -> void:
 	# Aquí energy = 0 y dejamos el blend listo para el día
 	if hora_actual >= MOON_END_HOUR and hora_actual < SUN_START_HOUR:
 		ambient_light.energy = 0.0
-		ambient_light.color = AMBIENT_DAY_COLOR
+		ambient_light.color = _ambient_day_color()
 		ambient_light.blend_mode = Light2D.BLEND_MODE_ADD
 		return
 
@@ -347,7 +350,7 @@ func _actualizar_ambient_light() -> void:
 	# Aquí energy = 0 y dejamos el blend listo para la noche
 	if hora_actual >= SUN_END_HOUR and hora_actual < MOON_START_HOUR:
 		ambient_light.energy = 0.0
-		ambient_light.color = AMBIENT_NIGHT_COLOR
+		ambient_light.color = _ambient_night_color()
 		ambient_light.blend_mode = Light2D.BLEND_MODE_MIX
 		return
 
@@ -358,22 +361,22 @@ func _actualizar_ambient_light() -> void:
 		var energy_day: float
 		if hora_actual < SUN_PEAK_START_HOUR:
 			var t_in_day: float = inverse_lerp(SUN_START_HOUR, SUN_PEAK_START_HOUR, hora_actual)
-			energy_day = lerpf(0.0, AMBIENT_DAY_MAX_ENERGY, t_in_day)
+			energy_day = lerpf(0.0, _ambient_day_max_energy(), t_in_day)
 		elif hora_actual < SUN_PEAK_END_HOUR:
-			energy_day = AMBIENT_DAY_MAX_ENERGY
+			energy_day = _ambient_day_max_energy()
 		else:
 			var t_out_day: float = inverse_lerp(SUN_PEAK_END_HOUR, SUN_END_HOUR, hora_actual)
-			energy_day = lerpf(AMBIENT_DAY_MAX_ENERGY, 0.0, t_out_day)
+			energy_day = lerpf(_ambient_day_max_energy(), 0.0, t_out_day)
 
 		var color_day: Color
 		if hora_actual < SUN_PEAK_START_HOUR:
 			var t_color_day_in: float = inverse_lerp(SUN_START_HOUR, SUN_PEAK_START_HOUR, hora_actual)
-			color_day = AMBIENT_NIGHT_COLOR.lerp(AMBIENT_DAY_COLOR, t_color_day_in)
+			color_day = _ambient_night_color().lerp(_ambient_day_color(), t_color_day_in)
 		elif hora_actual < SUN_PEAK_END_HOUR:
-			color_day = AMBIENT_DAY_COLOR
+			color_day = _ambient_day_color()
 		else:
 			var t_color_day_out: float = inverse_lerp(SUN_PEAK_END_HOUR, SUN_END_HOUR, hora_actual)
-			color_day = AMBIENT_DAY_COLOR.lerp(AMBIENT_NIGHT_COLOR, t_color_day_out)
+			color_day = _ambient_day_color().lerp(_ambient_night_color(), t_color_day_out)
 
 		ambient_light.energy = energy_day
 		ambient_light.color = color_day
@@ -382,7 +385,7 @@ func _actualizar_ambient_light() -> void:
 	# Noche
 	if _is_hour_in_range(hora_actual, MOON_START_HOUR, MOON_END_HOUR):
 		ambient_light.blend_mode = Light2D.BLEND_MODE_MIX
-		ambient_light.color = AMBIENT_NIGHT_COLOR
+		ambient_light.color = _ambient_night_color()
 
 		var horas_desde_inicio: float = _get_night_hours_since_start(hora_actual, MOON_START_HOUR)
 		var tramo_subida: float = _wrapped_hour_distance(MOON_START_HOUR, MOON_PEAK_START_HOUR)
@@ -392,13 +395,13 @@ func _actualizar_ambient_light() -> void:
 		var energy_night: float
 		if horas_desde_inicio < tramo_subida:
 			var t_in_night: float = horas_desde_inicio / maxf(tramo_subida, 0.001)
-			energy_night = lerpf(0.0, AMBIENT_NIGHT_MAX_ENERGY, t_in_night)
+			energy_night = lerpf(0.0, _ambient_night_max_energy(), t_in_night)
 		elif horas_desde_inicio < tramo_subida + tramo_meseta:
-			energy_night = AMBIENT_NIGHT_MAX_ENERGY
+			energy_night = _ambient_night_max_energy()
 		else:
 			var horas_en_bajada: float = horas_desde_inicio - tramo_subida - tramo_meseta
 			var t_out_night: float = horas_en_bajada / maxf(tramo_bajada, 0.001)
-			energy_night = lerpf(AMBIENT_NIGHT_MAX_ENERGY, 0.0, t_out_night)
+			energy_night = lerpf(_ambient_night_max_energy(), 0.0, t_out_night)
 
 		ambient_light.energy = energy_night
 		return
@@ -437,3 +440,59 @@ func _get_night_hours_since_start(hour: float, start_hour: float) -> float:
 
 func _wrapped_hour_distance(from_hour: float, to_hour: float) -> float:
 	return fposmod(to_hour - from_hour + 24.0, 24.0)
+
+
+# ================================================================
+# HELPERS PERFIL / DEFAULT
+# ================================================================
+
+func _sun_max_energy() -> float:
+	return _profile.sun_max_energy if is_instance_valid(_profile) else DEFAULT_SUN_MAX_ENERGY
+
+
+func _moon_max_energy() -> float:
+	return _profile.moon_max_energy if is_instance_valid(_profile) else DEFAULT_MOON_MAX_ENERGY
+
+
+func _ambient_day_max_energy() -> float:
+	return _profile.ambient_day_max_energy if is_instance_valid(_profile) else DEFAULT_AMBIENT_DAY_MAX_ENERGY
+
+
+func _ambient_night_max_energy() -> float:
+	return _profile.ambient_night_max_energy if is_instance_valid(_profile) else DEFAULT_AMBIENT_NIGHT_MAX_ENERGY
+
+
+func _ambient_day_color() -> Color:
+	return _profile.ambient_day_color if is_instance_valid(_profile) else DEFAULT_AMBIENT_DAY_COLOR
+
+
+func _ambient_night_color() -> Color:
+	return _profile.ambient_night_color if is_instance_valid(_profile) else DEFAULT_AMBIENT_NIGHT_COLOR
+
+
+func _rotation_start_deg() -> float:
+	return _profile.rotation_start_deg if is_instance_valid(_profile) else DEFAULT_ROTATION_START_DEG
+
+
+func _rotation_mid_deg() -> float:
+	return _profile.rotation_mid_deg if is_instance_valid(_profile) else DEFAULT_ROTATION_MID_DEG
+
+
+func _rotation_end_deg() -> float:
+	return _profile.rotation_end_deg if is_instance_valid(_profile) else DEFAULT_ROTATION_END_DEG
+
+
+func _sun_color_rojizo() -> Color:
+	return _profile.sun_color_rojizo if is_instance_valid(_profile) else DEFAULT_SUN_COLOR_ROJIZO
+
+
+func _sun_color_naranja() -> Color:
+	return _profile.sun_color_naranja if is_instance_valid(_profile) else DEFAULT_SUN_COLOR_NARANJA
+
+
+func _sun_color_rosado() -> Color:
+	return _profile.sun_color_rosado if is_instance_valid(_profile) else DEFAULT_SUN_COLOR_ROSADO
+
+
+func _moon_color_azulado() -> Color:
+	return _profile.moon_color_azulado if is_instance_valid(_profile) else DEFAULT_MOON_COLOR_AZULADO

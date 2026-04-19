@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LightingProfile2D" format=3 uid="uid://r6eygmbi4bjp"]
+
+[ext_resource type="Script" uid="uid://ccpw6he2htn3r" path="res://Scripts/Core/lighting_profile_2d.gd" id="1_s6iu6"]
+
+[resource]
+script = ExtResource("1_s6iu6")
+sun_color_rojizo = Color(1, 0.34237343, 0.086104214, 1)
+sun_color_naranja = Color(1, 0.7541437, 0.61885554, 1)
+sun_color_rosado = Color(1, 0.64995646, 0.7483791, 1)
+moon_max_energy = 0.5
+moon_color_azulado = Color(0.76737565, 0.8433892, 1, 1)
+metadata/_custom_type_script = "uid://ccpw6he2htn3r"

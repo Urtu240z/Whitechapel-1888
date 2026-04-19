@@ -2379,7 +2379,6 @@ parameters/Slap/TimeScale/scale = 0.7000000000000028
 parameters/Walk/TimeScale/scale = 1.5
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=569175778]
-z_index = 1
 position = Vector2(-9.002001, 428)
 texture = ExtResource("18_tfgen")
 

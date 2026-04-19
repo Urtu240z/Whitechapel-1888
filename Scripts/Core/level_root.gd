@@ -18,10 +18,6 @@ class_name LevelRoot
 # - AmbientLight  -> DirectionalLight2D (tinte general de escena)
 # ================================================================
 
-@export_group("📍 Scene Title")
-@export var scene_display_name: String = ""
-@export var show_scene_title_on_enter: bool = true
-
 @export_group("🔗 Level Structure")
 @export var outside_freeze_paths: Array[NodePath] = []
 @export var buildings_root_path: NodePath
@@ -32,6 +28,9 @@ class_name LevelRoot
 @export var sun_path: NodePath
 @export var moon_path: NodePath
 @export var ambient_light_path: NodePath
+
+@export_group("🌤 Lighting Profile")
+@export var lighting_profile: LightingProfile2D
 
 @export_group("🌙 Refuerzo visual nocturno")
 @export var lights_background_path: NodePath
@@ -45,9 +44,10 @@ var _lights_background: CanvasItem = null
 func _ready() -> void:
 	call_deferred("_setup_exterior_camera")
 	_setup_ambient_lighting()
-	call_deferred("_handle_scene_entry")
+	call_deferred("_apply_pending_portal_spawn")
 	_setup_visual_night_boost()
 	_update_visual_night_boost()
+
 
 func _process(_delta: float) -> void:
 	_update_visual_night_boost()
@@ -96,7 +96,7 @@ func _setup_ambient_lighting() -> void:
 		push_warning("LevelRoot: ambient_light_path no válido o no es DirectionalLight2D.")
 		return
 
-	DayNightManager.registrar_luces(sun, moon, ambient)
+	DayNightManager.registrar_luces(sun, moon, ambient, lighting_profile)
 
 
 func _setup_visual_night_boost() -> void:
@@ -225,10 +225,9 @@ func _setup_exterior_camera() -> void:
 	exterior_pcam.set_follow_target(camera_target)
 
 
-func _handle_scene_entry() -> void:
-	_apply_pending_portal_spawn()
-	_show_scene_title_if_needed()
-
+# ================================================================
+# PORTAL SPAWN
+# ================================================================
 
 func _apply_pending_portal_spawn() -> void:
 	if not PortalManager.has_pending_spawn():
@@ -270,15 +269,3 @@ func _apply_pending_portal_spawn() -> void:
 		return
 
 	push_warning("LevelRoot: no se encontró portal destino con id '%s'." % target_portal_id)
-
-
-func _show_scene_title_if_needed() -> void:
-	if not show_scene_title_on_enter:
-		return
-
-	if scene_display_name.strip_edges() == "":
-		return
-
-	var hud: Node = get_tree().get_first_node_in_group("hud")
-	if is_instance_valid(hud) and hud.has_method("show_location_name"):
-		hud.show_location_name(scene_display_name)

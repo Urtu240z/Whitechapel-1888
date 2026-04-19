@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://c1jur76mvisfp" path="res://Scripts/Core/level_root.gd" id="1_okdt8"]
 [ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="2_gb7vo"]
 [ext_resource type="AudioStream" uid="uid://bmvvrsiilllp7" path="res://Assets/Music/Shadows Beneath the Veil v2.wav" id="2_okdt8"]
+[ext_resource type="Resource" uid="uid://r6eygmbi4bjp" path="res://Data/Ambient/Wide_Street.tres" id="2_qnasi"]
 [ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="3_lwph6"]
 [ext_resource type="Texture2D" uid="uid://dck5x5gwvt7j6" path="res://Assets/Sprites/Building/5.png" id="4_ajpcj"]
 [ext_resource type="Texture2D" uid="uid://b1ryuwgxikqcc" path="res://Assets/Sprites/Background/Background_1.png" id="4_okdt8"]
@@ -133,6 +134,17 @@ gradient = SubResource("Gradient_27c1b")
 fill_from = Vector2(0.5, 1)
 fill_to = Vector2(0.5, 0)
 
+[sub_resource type="Gradient" id="Gradient_mh0du"]
+offsets = PackedFloat32Array(0.5714286, 0.80857146)
+colors = PackedColorArray(0, 0, 0, 0.74509805, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qnasi"]
+gradient = SubResource("Gradient_mh0du")
+width = 200
+height = 512
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ac4hn"]
 polygon = PackedVector2Array(-15934, -3290, -10890, -3298, -10889, -3222, -15939, -3198)
 
@@ -254,6 +266,7 @@ exterior_pcam_path = NodePath("ExteriorPhantomCamera2D")
 sun_path = NodePath("OutsideAmbient/SunLight")
 moon_path = NodePath("OutsideAmbient/MoonLight")
 ambient_light_path = NodePath("OutsideAmbient/AmbientLight")
+lighting_profile = ExtResource("2_qnasi")
 lights_background_path = NodePath("OutsideAudiovisuals/Lights/Parallax2D/Lights_background")
 lights_background_day_modulate = Color(0.556953, 0.556953, 0.556953, 1)
 lights_background_night_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
@@ -494,6 +507,13 @@ position = Vector2(116.400116, -9.9)
 scale = Vector2(109.58752, 1.0343752)
 texture = SubResource("GradientTexture2D_okdt8")
 
+[node name="Sprite2D2" type="Sprite2D" parent="OutsideAudiovisuals/World/Shadows" unique_id=2043321432]
+light_mask = 0
+position = Vector2(-2076.8003, 95.60002)
+scale = Vector2(1.67, 1.67)
+texture = SubResource("GradientTexture2D_qnasi")
+offset = Vector2(0, -200)
+
 [node name="Fog" type="Node2D" parent="OutsideAudiovisuals" unique_id=907223236]
 
 [node name="ColorRect" type="ColorRect" parent="OutsideAudiovisuals/Fog" unique_id=809441847]
@@ -709,6 +729,7 @@ position = Vector2(3531, -340.99997)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
+behavior_mode = 1
 
 [node name="NPCClient2" parent="OutsideActors/Clients" unique_id=400459338 instance=ExtResource("18_gb7vo")]
 position = Vector2(8541, -339)
@@ -721,12 +742,14 @@ skin_name = "NPC_ClientPoor2"
 position = Vector2(1576.0001, -337.99997)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
+behavior_mode = 1
 skin_name = "NPC_ClientPoor3"
 
 [node name="NPCClient4" parent="OutsideActors/Clients" unique_id=2103339271 instance=ExtResource("18_gb7vo")]
 position = Vector2(-2987.6, -348)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
+behavior_mode = 1
 skin_name = "NPC_ClientPoor4"
 
 [node name="NPCClient5" parent="OutsideActors/Clients" unique_id=383274618 instance=ExtResource("18_gb7vo")]
@@ -754,11 +777,6 @@ scale = Vector2(1.44, 1.301)
 [node name="HideZone" parent="OutsideGameplay/HideZones" unique_id=40068791 instance=ExtResource("19_lwph6")]
 position = Vector2(10226.001, -93)
 scale = Vector2(3.225, 1.955)
-
-[node name="HideZone3" parent="OutsideGameplay/HideZones" unique_id=1910397108 instance=ExtResource("19_lwph6")]
-z_index = -1
-position = Vector2(-10299, -93)
-scale = Vector2(1.845, 1.845)
 
 [node name="ScenePortals" type="Node2D" parent="OutsideGameplay" unique_id=1109195349]
 

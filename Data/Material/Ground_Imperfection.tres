@@ -141,4 +141,4 @@ shader_parameter/dirt_tint = Color(0.13501766, 0.10767766, 0.08032692, 1)
 shader_parameter/brightness = 0.3690000175275
 shader_parameter/contrast = 1.0
 shader_parameter/saturation = 1.1690000555275
-shader_parameter/final_modulate = Color(0.50534403, 0.5053441, 0.50534403, 1)
+shader_parameter/final_modulate = Color(0.3553134, 0.35531363, 0.3553135, 1)

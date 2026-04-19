@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="LightingProfile2D" format=3 uid="uid://4lxraavfchjg"]
+
+[ext_resource type="Script" uid="uid://ccpw6he2htn3r" path="res://Scripts/Core/lighting_profile_2d.gd" id="1_br8ss"]
+
+[resource]
+script = ExtResource("1_br8ss")
+sun_max_energy = 0.0
+ambient_day_color = Color(0, 0, 0, 1)
+ambient_night_max_energy = 0.8
+metadata/_custom_type_script = "uid://ccpw6he2htn3r"
