@@ -35,7 +35,7 @@
 [ext_resource type="AudioStream" uid="uid://cetbmnrsyejnj" path="res://Assets/Audio/Effects/Kick_4.ogg" id="31_sd6pm"]
 [ext_resource type="PackedScene" uid="uid://qrckrvjkyeu" path="res://Scenes/Core/Name_Tag.tscn" id="33_sd6pm"]
 [ext_resource type="Texture2D" uid="uid://cmiaxkdag50ib" path="res://Assets/Sprites/Player/Player_Shadow.png" id="35_j2evj"]
-[ext_resource type="Script" uid="uid://cjid154armajs" path="res://Scripts/NPC/Client/npc_client_shadow.gd" id="36_j2evj"]
+[ext_resource type="Script" uid="uid://dofhlchs8q43g" path="res://Scripts/NPC/npc_character_shadow.gd" id="36_j2evj"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ktbwa"]
 diffuse_texture = ExtResource("3_i4ikf")

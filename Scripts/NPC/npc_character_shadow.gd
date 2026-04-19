@@ -1,9 +1,16 @@
 extends Sprite2D
 
 # ================================================================
-# PLAYER SHADOW
-# Usa los exports del nodo padre (MainPlayer).
+# CHARACTER SHADOW
+# Para NPC Client y NPC Companion
 # ================================================================
+
+@export var shadow_max_distance: float = 1000.0
+@export var shadow_base_alpha: float = 1.7
+@export var shadow_max_rotation_left: float = 45.0
+@export var shadow_max_rotation_right: float = -45.0
+@export var shadow_max_scale: float = 1.5
+@export var shadow_max_skew: float = 0.05
 
 var _shader_mat: ShaderMaterial
 var _base_scale: Vector2 = Vector2.ONE
@@ -35,16 +42,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	var player: Node = get_parent()
-
-	var max_distance: float = player.shadow_max_distance
-	var base_alpha: float = player.shadow_base_alpha
-	var max_rot_l: float = player.shadow_max_rotation_left
-	var max_rot_r: float = player.shadow_max_rotation_right
-	var max_scale: float = player.shadow_max_scale
-	var max_skew: float = player.shadow_max_skew
-
-	var lamp: Node2D = _get_nearest_lit_lamp(max_distance)
+	var lamp: Node2D = _get_nearest_lit_lamp(shadow_max_distance)
 
 	if lamp == null:
 		_ocultar_sombra()
@@ -59,21 +57,21 @@ func _process(_delta: float) -> void:
 
 	var dir: Vector2 = lamp_pos - global_position
 	var dist: float = dir.length()
-	var factor: float = clamp(1.0 - (dist / max_distance), 0.0, 1.0)
+	var factor: float = clamp(1.0 - (dist / shadow_max_distance), 0.0, 1.0)
 
-	modulate.a = base_alpha * factor * light_factor
+	modulate.a = shadow_base_alpha * factor * light_factor
 
 	var inv: float = 1.0 - factor
 	var factor_rot: float = inv * inv * (3.0 - 2.0 * inv)
 	var side: float = sign(dir.x)
-	var max_rot: float = max_rot_r if side > 0.0 else max_rot_l
+	var max_rot: float = shadow_max_rotation_right if side > 0.0 else shadow_max_rotation_left
 	rotation = deg_to_rad(max_rot) * factor_rot
 
-	var s: float = 1.0 + (max_scale - 1.0) * factor
+	var s: float = 1.0 + (shadow_max_scale - 1.0) * factor
 	scale = _base_scale * s
 
 	var inv_skew: float = 1.0 - factor
-	var skew_val: float = max_skew * inv_skew * sign(dir.x) * -1.0
+	var skew_val: float = shadow_max_skew * inv_skew * sign(dir.x) * -1.0
 	_shader_mat.set_shader_parameter("skew_x", skew_val)
 	_shader_mat.set_shader_parameter("skew_y", 0.0)
 

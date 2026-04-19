@@ -13,8 +13,8 @@ seamless = true
 [resource]
 shader = ExtResource("1_3d74l")
 shader_parameter/noise_tex = SubResource("NoiseTexture2D_n6v34")
-shader_parameter/fog_color = Color(0.59048194, 0.38197657, 0.26852447, 1)
+shader_parameter/fog_color = Color(0.16470589, 0.18431373, 0.10980392, 1)
 shader_parameter/speed = Vector2(0.003, 0.01)
-shader_parameter/density = 0.6730000319675
+shader_parameter/density = 1.3830000656925
 shader_parameter/top_feathering = 0.2930000139175
 shader_parameter/bottom_feathering = 0.3250000154375

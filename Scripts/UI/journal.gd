@@ -13,8 +13,8 @@ signal journal_closing
 # NODOS
 # ================================================================
 @onready var overlay: ColorRect = $Overlay
-@onready var book_root: Node2D = $Node2D
-@onready var book: Node = $Node2D/PageFlip2D
+@onready var book_root: Node2D = $JournalViewportContainer/JournalViewport/JournalContent
+@onready var book: Node2D = $JournalViewportContainer/JournalViewport/JournalContent/PageFlip2D
 
 # ================================================================
 # ESTADO

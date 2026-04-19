@@ -1,50 +1,48 @@
-[gd_scene format=4 uid="uid://d03qxmhrly01w"]
+[gd_scene format=4 uid="uid://b2f6xe6s7cp7e"]
 
-[ext_resource type="AudioStream" uid="uid://l0xj4abbhyvo" path="res://Assets/Audio/Ambience/Firefly_audio_Atmosphere_of_a_street_whitout_cars_at_night,_crow_variation1.wav" id="1_27c1b"]
-[ext_resource type="Script" uid="uid://c1jur76mvisfp" path="res://Scripts/Core/level_root.gd" id="1_okdt8"]
-[ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="2_gb7vo"]
-[ext_resource type="AudioStream" uid="uid://bmvvrsiilllp7" path="res://Assets/Music/Shadows Beneath the Veil v2.wav" id="2_okdt8"]
-[ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="3_lwph6"]
-[ext_resource type="Texture2D" uid="uid://dck5x5gwvt7j6" path="res://Assets/Sprites/Building/5.png" id="4_ajpcj"]
-[ext_resource type="Texture2D" uid="uid://b1ryuwgxikqcc" path="res://Assets/Sprites/Background/Background_1.png" id="4_okdt8"]
-[ext_resource type="Texture2D" uid="uid://dtdsneob5tt8g" path="res://Assets/Sprites/Building/6.png" id="5_tp2us"]
-[ext_resource type="Texture2D" uid="uid://cgyukudfhtam8" path="res://Assets/Sprites/Building/Apartment_Block_1.png" id="6_y0tni"]
-[ext_resource type="Texture2D" uid="uid://c4n6ma1wesm0n" path="res://Assets/Sprites/Building/Apartment_Block_2.png" id="7_fcpjw"]
-[ext_resource type="PackedScene" uid="uid://bgr8hp6ub6ebb" path="res://Scenes/Buildings/Princess_Alice.tscn" id="7_os2yf"]
-[ext_resource type="Texture2D" uid="uid://cqaib6xovfhpw" path="res://Assets/Sprites/NPC/NPC 1.png" id="7_qnasi"]
-[ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="8_6ggpe"]
-[ext_resource type="PackedScene" uid="uid://cg3wm3f0te243" path="res://Scenes/NPC/NPC_Charger.tscn" id="9_bk7xh"]
-[ext_resource type="PackedScene" uid="uid://36qdlvetmmi" path="res://Scenes/Vehicles/Carriage.tscn" id="10_1qgay"]
-[ext_resource type="Texture2D" uid="uid://b8u1b1yp6fn43" path="res://Assets/Sprites/Building/Perfume Store.png" id="11_h2w1t"]
-[ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="11_nas3t"]
-[ext_resource type="Texture2D" uid="uid://blwmycta5s4us" path="res://Assets/Sprites/Building/Victoria Home.png" id="11_y0tni"]
-[ext_resource type="PackedScene" uid="uid://5o5jm036m674" path="res://Scenes/Atrezzo/Street_Lamp.tscn" id="14_3j0sx"]
-[ext_resource type="PackedScene" uid="uid://bt3ubgbvk60kv" path="res://Scenes/NPC/NPC_Companion.tscn" id="14_nsm0j"]
-[ext_resource type="Material" uid="uid://7aunpuk0twuj" path="res://Data/Material/Blur_Sprite.tres" id="14_okdt8"]
-[ext_resource type="PackedScene" uid="uid://g6e6vle2a0l2" path="res://Scenes/Atrezzo/Street_Lamp_Blur.tscn" id="15_5c5rf"]
-[ext_resource type="PackedScene" uid="uid://cmmlvd8ng8chj" path="res://Scenes/NPC/NPC_Service.tscn" id="15_c6pga"]
-[ext_resource type="Script" uid="uid://bbc6r2ife4inn" path="res://Scripts/Data/shop_item_data.gd" id="16_xxywj"]
-[ext_resource type="Resource" uid="uid://cwur32724y8dv" path="res://Data/Equip/perfume-bruma-mayo.tres" id="17_tjuru"]
-[ext_resource type="Resource" uid="uid://5cox3o6rs7ue" path="res://Data/Equip/perfume-susurro-seda.tres" id="18_f1cs3"]
-[ext_resource type="PackedScene" uid="uid://oebyjtwwcxhx" path="res://Scenes/NPC/NPC_Client.tscn" id="18_gb7vo"]
-[ext_resource type="Resource" uid="uid://cdjvk0atrrn85" path="res://Data/Equip/perfume-noche-oriente.tres" id="19_llt55"]
-[ext_resource type="PackedScene" uid="uid://c3m8fewa1n53m" path="res://Scenes/Buildings/Hide_Zone.tscn" id="19_lwph6"]
-[ext_resource type="Resource" uid="uid://cn103i3guppjr" path="res://Data/Equip/perfume-jardin-secreto.tres" id="20_8pgov"]
-[ext_resource type="Resource" uid="uid://ck7xn236c2k8a" path="res://Data/Equip/perfume-pecado-carmesi.tres" id="21_0t8rp"]
-[ext_resource type="Resource" uid="uid://btf4cqiava1u3" path="res://Data/Equip/equip-bolso.tres" id="22_721q0"]
-[ext_resource type="Material" uid="uid://88mldvpse4do" path="res://Data/Material/Under_Fog.tres" id="23_6ggpe"]
-[ext_resource type="PackedScene" uid="uid://csx4il2s0ov4r" path="res://Scenes/Core/Scene_Portal.tscn" id="25_atgof"]
-[ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="26_145iq"]
-[ext_resource type="Texture2D" uid="uid://bgcml75mm387r" path="res://Assets/Sprites/Building/Perfume Store_n.png" id="27_okdt8"]
-[ext_resource type="Script" uid="uid://coqq022k5vd4y" path="res://Scripts/Core/scene_portal.gd" id="35_ac4hn"]
-[ext_resource type="Material" uid="uid://sufipqvuten" path="res://Data/Material/Ground_Imperfection.tres" id="42_ac4hn"]
-[ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="43_ac4hn"]
-[ext_resource type="Texture2D" uid="uid://cg0b4tyotkq46" path="res://Assets/Sprites/Ground/Ground_Cobblestone.tres" id="43_qnasi"]
-[ext_resource type="Texture2D" uid="uid://dew7vsx6rigi6" path="res://Assets/Sprites/Ground/Ground_Cobblestone_Border.tres" id="44_6ggpe"]
-[ext_resource type="Texture2D" uid="uid://bd37f3m0b3qak" path="res://Assets/Sprites/Ground/Ground_Road.tres" id="45_bk7xh"]
-[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="45_qnasi"]
-[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="46_6ggpe"]
-[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="47_6ggpe"]
+[ext_resource type="Script" uid="uid://c1jur76mvisfp" path="res://Scripts/Core/level_root.gd" id="1_gh4po"]
+[ext_resource type="AudioStream" uid="uid://l0xj4abbhyvo" path="res://Assets/Audio/Ambience/Firefly_audio_Atmosphere_of_a_street_whitout_cars_at_night,_crow_variation1.wav" id="2_miabu"]
+[ext_resource type="AudioStream" uid="uid://bmvvrsiilllp7" path="res://Assets/Music/Shadows Beneath the Veil v2.wav" id="3_kn5ql"]
+[ext_resource type="Texture2D" uid="uid://b1ryuwgxikqcc" path="res://Assets/Sprites/Background/Background_1.png" id="4_ulrtv"]
+[ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="5_4e2va"]
+[ext_resource type="Texture2D" uid="uid://dck5x5gwvt7j6" path="res://Assets/Sprites/Building/5.png" id="6_mxob3"]
+[ext_resource type="Texture2D" uid="uid://c4n6ma1wesm0n" path="res://Assets/Sprites/Building/Apartment_Block_2.png" id="7_ktiny"]
+[ext_resource type="Texture2D" uid="uid://blwmycta5s4us" path="res://Assets/Sprites/Building/Victoria Home.png" id="8_cqqfy"]
+[ext_resource type="Texture2D" uid="uid://cgyukudfhtam8" path="res://Assets/Sprites/Building/Apartment_Block_1.png" id="9_y7018"]
+[ext_resource type="Material" uid="uid://7aunpuk0twuj" path="res://Data/Material/Blur_Sprite.tres" id="10_6ohfs"]
+[ext_resource type="Texture2D" uid="uid://dtdsneob5tt8g" path="res://Assets/Sprites/Building/6.png" id="11_uhfsb"]
+[ext_resource type="Texture2D" uid="uid://cqaib6xovfhpw" path="res://Assets/Sprites/NPC/NPC 1.png" id="12_ripvp"]
+[ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="13_53jnf"]
+[ext_resource type="PackedScene" uid="uid://cg3wm3f0te243" path="res://Scenes/NPC/NPC_Charger.tscn" id="14_34ksa"]
+[ext_resource type="Material" uid="uid://88mldvpse4do" path="res://Data/Material/Under_Fog.tres" id="16_wck5a"]
+[ext_resource type="PackedScene" uid="uid://5o5jm036m674" path="res://Scenes/Atrezzo/Street_Lamp.tscn" id="17_pl2ey"]
+[ext_resource type="PackedScene" uid="uid://g6e6vle2a0l2" path="res://Scenes/Atrezzo/Street_Lamp_Blur.tscn" id="18_a2cj3"]
+[ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="19_y5tkh"]
+[ext_resource type="PackedScene" uid="uid://bgr8hp6ub6ebb" path="res://Scenes/Buildings/Princess_Alice.tscn" id="20_l5jqj"]
+[ext_resource type="PackedScene" uid="uid://bt3ubgbvk60kv" path="res://Scenes/NPC/NPC_Companion.tscn" id="21_pw5dy"]
+[ext_resource type="Texture2D" uid="uid://b8u1b1yp6fn43" path="res://Assets/Sprites/Building/Perfume Store.png" id="22_mk1jo"]
+[ext_resource type="Texture2D" uid="uid://bgcml75mm387r" path="res://Assets/Sprites/Building/Perfume Store_n.png" id="23_bv7gw"]
+[ext_resource type="PackedScene" uid="uid://cmmlvd8ng8chj" path="res://Scenes/NPC/NPC_Service.tscn" id="24_1sytg"]
+[ext_resource type="Script" uid="uid://bbc6r2ife4inn" path="res://Scripts/Data/shop_item_data.gd" id="25_wi6b7"]
+[ext_resource type="Resource" uid="uid://cwur32724y8dv" path="res://Data/Equip/perfume-bruma-mayo.tres" id="26_mnt7h"]
+[ext_resource type="Resource" uid="uid://5cox3o6rs7ue" path="res://Data/Equip/perfume-susurro-seda.tres" id="27_npclh"]
+[ext_resource type="Resource" uid="uid://cdjvk0atrrn85" path="res://Data/Equip/perfume-noche-oriente.tres" id="28_0q7rx"]
+[ext_resource type="Resource" uid="uid://cn103i3guppjr" path="res://Data/Equip/perfume-jardin-secreto.tres" id="29_0wrea"]
+[ext_resource type="Resource" uid="uid://ck7xn236c2k8a" path="res://Data/Equip/perfume-pecado-carmesi.tres" id="30_tsr01"]
+[ext_resource type="Resource" uid="uid://btf4cqiava1u3" path="res://Data/Equip/equip-bolso.tres" id="31_jj7l4"]
+[ext_resource type="PackedScene" uid="uid://oebyjtwwcxhx" path="res://Scenes/NPC/NPC_Client.tscn" id="32_12gj1"]
+[ext_resource type="PackedScene" uid="uid://c3m8fewa1n53m" path="res://Scenes/Buildings/Hide_Zone.tscn" id="33_8d3k6"]
+[ext_resource type="PackedScene" uid="uid://csx4il2s0ov4r" path="res://Scenes/Core/Scene_Portal.tscn" id="34_bru24"]
+[ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="35_pfk0e"]
+[ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="36_qye73"]
+[ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="37_2mwf1"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="38_nmv65"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="39_jv531"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="40_b8s3w"]
+[ext_resource type="Material" uid="uid://sufipqvuten" path="res://Data/Material/Ground_Imperfection.tres" id="41_enha4"]
+[ext_resource type="Texture2D" uid="uid://cg0b4tyotkq46" path="res://Assets/Sprites/Ground/Ground_Cobblestone.tres" id="42_7yvgr"]
+[ext_resource type="Texture2D" uid="uid://dew7vsx6rigi6" path="res://Assets/Sprites/Ground/Ground_Cobblestone_Border.tres" id="43_xb4vk"]
+[ext_resource type="Texture2D" uid="uid://bd37f3m0b3qak" path="res://Assets/Sprites/Ground/Ground_Road.tres" id="44_dg5m1"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_eoj0i"]
 blend_mode = 1
@@ -53,7 +51,7 @@ blend_mode = 1
 blend_mode = 1
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_v2j58"]
-diffuse_texture = ExtResource("11_y0tni")
+diffuse_texture = ExtResource("8_cqqfy")
 
 [sub_resource type="Shader" id="Shader_6ggpe"]
 code = "shader_type canvas_item;
@@ -152,47 +150,47 @@ polygon = PackedVector2Array(11141, -4393, 20427, -4391, 20429, -4327, 11138, -4
 polygon = PackedVector2Array(20414, -3434, 27510, -3432, 27507, -3360, 20407, -3356)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ac4hn"]
-diffuse_texture = ExtResource("11_h2w1t")
-normal_texture = ExtResource("27_okdt8")
+diffuse_texture = ExtResource("22_mk1jo")
+normal_texture = ExtResource("23_bv7gw")
 
 [sub_resource type="Resource" id="Resource_k7r8x"]
-script = ExtResource("16_xxywj")
-item = ExtResource("17_tjuru")
+script = ExtResource("25_wi6b7")
+item = ExtResource("26_mnt7h")
 max_qty = 3
 metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
 [sub_resource type="Resource" id="Resource_l83om"]
-script = ExtResource("16_xxywj")
-item = ExtResource("18_f1cs3")
+script = ExtResource("25_wi6b7")
+item = ExtResource("27_npclh")
 max_qty = 3
 metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
 [sub_resource type="Resource" id="Resource_v1jka"]
-script = ExtResource("16_xxywj")
-item = ExtResource("19_llt55")
+script = ExtResource("25_wi6b7")
+item = ExtResource("28_0q7rx")
 max_qty = 2
 is_variable = true
 variable_chance = 0.6
 metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
 [sub_resource type="Resource" id="Resource_keg7c"]
-script = ExtResource("16_xxywj")
-item = ExtResource("20_8pgov")
+script = ExtResource("25_wi6b7")
+item = ExtResource("29_0wrea")
 max_qty = 2
 is_variable = true
 metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
 [sub_resource type="Resource" id="Resource_ubdd7"]
-script = ExtResource("16_xxywj")
-item = ExtResource("21_0t8rp")
+script = ExtResource("25_wi6b7")
+item = ExtResource("30_tsr01")
 max_qty = 1
 is_variable = true
 variable_chance = 0.3
 metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
 [sub_resource type="Resource" id="Resource_mlx1v"]
-script = ExtResource("16_xxywj")
-item = ExtResource("22_721q0")
+script = ExtResource("25_wi6b7")
+item = ExtResource("31_jj7l4")
 max_qty = 1
 metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
@@ -221,21 +219,21 @@ adjustment_contrast = 1.1
 adjustment_saturation = 0.5
 
 [sub_resource type="Resource" id="Resource_bk7xh"]
-script = ExtResource("46_6ggpe")
+script = ExtResource("39_jv531")
 duration = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1qgay"]
-texture = ExtResource("43_qnasi")
+texture = ExtResource("42_7yvgr")
 texture_region_size = Vector2i(512, 512)
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h2w1t"]
-texture = ExtResource("44_6ggpe")
+texture = ExtResource("43_xb4vk")
 texture_region_size = Vector2i(512, 512)
 0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w60mv"]
-texture = ExtResource("45_bk7xh")
+texture = ExtResource("44_dg5m1")
 texture_region_size = Vector2i(512, 512)
 0:0/0 = 0
 
@@ -245,8 +243,8 @@ sources/0 = SubResource("TileSetAtlasSource_1qgay")
 sources/1 = SubResource("TileSetAtlasSource_h2w1t")
 sources/2 = SubResource("TileSetAtlasSource_w60mv")
 
-[node name="ComercialStreet" type="Node2D" unique_id=1435527189]
-script = ExtResource("1_okdt8")
+[node name="TemplateStreet" type="Node2D" unique_id=1435527189]
+script = ExtResource("1_gh4po")
 outside_freeze_paths = Array[NodePath]([NodePath("OutsideAudiovisuals"), NodePath("OutsideActors"), NodePath("OutsideGameplay")])
 buildings_root_path = NodePath("OutsideBuildings")
 player_path = NodePath("Player")
@@ -254,7 +252,7 @@ exterior_pcam_path = NodePath("ExteriorPhantomCamera2D")
 sun_path = NodePath("OutsideAmbient/SunLight")
 moon_path = NodePath("OutsideAmbient/MoonLight")
 ambient_light_path = NodePath("OutsideAmbient/AmbientLight")
-lights_background_path = NodePath("OutsideAudiovisuals/Lights/Parallax2D/Lights_background")
+lights_background_path = NodePath("OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background")
 lights_background_day_modulate = Color(0.556953, 0.556953, 0.556953, 1)
 lights_background_night_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 
@@ -264,12 +262,12 @@ lights_background_night_modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 position = Vector2(-1135, -107)
 
 [node name="FireflyAudioAtmosphereOfAStreetWhitoutCarsAtNight,CrowVariation1" type="AudioStreamPlayer" parent="OutsideAudiovisuals/Audio" unique_id=1170112997 groups=["world_ambience"]]
-stream = ExtResource("1_27c1b")
+stream = ExtResource("2_miabu")
 volume_db = -10.0
 autoplay = true
 
 [node name="ShadowsBeneathTheVeilV2" type="AudioStreamPlayer" parent="OutsideAudiovisuals/Audio" unique_id=1753926858 groups=["world_music"]]
-stream = ExtResource("2_okdt8")
+stream = ExtResource("3_kn5ql")
 volume_db = 3.0
 autoplay = true
 
@@ -286,14 +284,14 @@ z_index = -5
 texture_filter = 2
 position = Vector2(777.2001, -2634.2002)
 scale = Vector2(9.968, 9.968)
-texture = ExtResource("4_okdt8")
+texture = ExtResource("4_ulrtv")
 
 [node name="360Light" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/SkyNight" unique_id=1050476300]
 modulate = Color(0, 0.2535772, 0.43682888, 1)
 material = SubResource("CanvasItemMaterial_eoj0i")
 position = Vector2(-70.124405, -171.4486)
 scale = Vector2(2.071084, 2.071084)
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
 [node name="AttrezoBuildings" type="Node2D" parent="OutsideAudiovisuals/World/StaticOutside" unique_id=1928828764]
 modulate = Color(0.5014063, 0.5014066, 0.50140643, 1)
@@ -305,7 +303,7 @@ scale = Vector2(0.040000003, 0.040000003)
 texture_filter = 1
 position = Vector2(-67060.01, -8594.999)
 scale = Vector2(4.61, 4.61)
-texture = ExtResource("4_ajpcj")
+texture = ExtResource("6_mxob3")
 
 [node name="PointLight2D3" type="PointLight2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock2" unique_id=594291234]
 position = Vector2(185.51505, 99.14103)
@@ -314,17 +312,17 @@ color = Color(1.2331204, 0.7472388, 0, 1)
 energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock2/PointLight2D3" unique_id=1167710293]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
 [node name="ApartmentBlock4" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=269792243]
 position = Vector2(-38500.008, -5920.0005)
 scale = Vector2(24.999998, 24.999998)
-texture = ExtResource("7_fcpjw")
+texture = ExtResource("7_ktiny")
 
 [node name="PointLight2D5" type="PointLight2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock4" unique_id=583068615]
 position = Vector2(151.56476, 45.23948)
@@ -333,12 +331,12 @@ color = Color(1.2331204, 0.7472388, 0, 1)
 energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock4/PointLight2D5" unique_id=185857427]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
 [node name="VictoriaHome" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=2002751111]
 position = Vector2(78915, -12075.001)
@@ -349,7 +347,7 @@ texture = SubResource("CanvasTexture_v2j58")
 texture_filter = 1
 position = Vector2(119745.01, -9885.001)
 scale = Vector2(45, 45)
-texture = ExtResource("6_y0tni")
+texture = ExtResource("9_y7018")
 
 [node name="PointLight2D" type="PointLight2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock1" unique_id=1453904529]
 position = Vector2(-104.44442, 130.44444)
@@ -357,12 +355,12 @@ color = Color(1.2331204, 0.7472388, 0, 1)
 energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock1/PointLight2D" unique_id=1136691930]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
 [node name="PointLight2D2" type="PointLight2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock1" unique_id=818147125]
 position = Vector2(90.55558, 130.44444)
@@ -370,12 +368,12 @@ color = Color(1.2331204, 0.7472388, 0, 1)
 energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock1/PointLight2D2" unique_id=660587124]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
 [node name="Rear" type="Node2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings" unique_id=315640050]
 z_index = -1
@@ -383,16 +381,16 @@ z_index = -1
 [node name="ApartmentBlock6" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear" unique_id=183269784]
 z_index = -1
 texture_filter = 1
-material = ExtResource("14_okdt8")
+material = ExtResource("10_6ohfs")
 position = Vector2(19365.004, -7680)
 scale = Vector2(15.905, 14.87)
-texture = ExtResource("5_tp2us")
+texture = ExtResource("11_uhfsb")
 
 [node name="ApartmentBlock3" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear" unique_id=1793552706]
-material = ExtResource("14_okdt8")
+material = ExtResource("10_6ohfs")
 position = Vector2(52715.004, -10370.001)
 scale = Vector2(24.094692, 19.999998)
-texture = ExtResource("5_tp2us")
+texture = ExtResource("11_uhfsb")
 
 [node name="PointLight2D4" type="PointLight2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear/ApartmentBlock3" unique_id=755997894]
 position = Vector2(185.66519, 198.23425)
@@ -401,28 +399,28 @@ color = Color(1.2331204, 0.7472388, 0, 1)
 energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear/ApartmentBlock3/PointLight2D4" unique_id=1780491686]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
 material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("2_gb7vo")
+texture = ExtResource("5_4e2va")
 
-[node name="Npc1" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside" unique_id=1677684734]
+[node name="Suspect_NPC" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside" unique_id=1677684734]
 modulate = Color(0.20511743, 0.20511743, 0.20511743, 1)
 material = SubResource("ShaderMaterial_bk7xh")
 position = Vector2(817.6001, -99.60001)
 scale = Vector2(0.15, 0.15)
-texture = ExtResource("7_qnasi")
+texture = ExtResource("12_ripvp")
 
-[node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/Npc1" unique_id=2113357338]
+[node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/Suspect_NPC" unique_id=2113357338]
 position = Vector2(-46.666664, 493.3334)
-texture = ExtResource("8_6ggpe")
+texture = ExtResource("13_53jnf")
 
 [node name="AmbientActors" type="Node2D" parent="OutsideAudiovisuals/World" unique_id=59863880]
 scale = Vector2(0.99999994, 0.99999994)
 
-[node name="NPC" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=1649721714 groups=["npcs_outside"] instance=ExtResource("9_bk7xh")]
+[node name="NPC" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=1649721714 groups=["npcs_outside"] instance=ExtResource("14_34ksa")]
 modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
 z_index = 3
 y_sort_enabled = true
@@ -434,56 +432,6 @@ move_time_max = 15.0
 dialog_timeline = "uid://bwcu6ifl26or8"
 talk_volume_db = 12.0
 pitch_variation = 0.7
-
-[node name="NPC2" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=1205373822 groups=["npcs_outside"] instance=ExtResource("9_bk7xh")]
-modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
-z_index = 3
-position = Vector2(-1193.0001, -88.00001)
-scale = Vector2(0.12500001, 0.12500001)
-move_speed = 85.0
-move_time_min = 5.0
-move_time_max = 15.0
-dialog_timeline = "uid://bwcu6ifl26or8"
-talk_volume_db = 12.0
-pitch_variation = 1.0
-
-[node name="NPC3" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=1119784934 groups=["npcs_outside"] instance=ExtResource("9_bk7xh")]
-modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
-z_index = 3
-position = Vector2(-1075.0001, -88.20001)
-scale = Vector2(0.12500001, 0.12500001)
-move_speed = 100.0
-move_time_min = 5.0
-move_time_max = 15.0
-dialog_timeline = "uid://bwcu6ifl26or8"
-talk_volume_db = 12.0
-
-[node name="Car3" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=496461941 groups=["npcs_outside"] instance=ExtResource("10_1qgay")]
-modulate = Color(0.35906908, 0.35906908, 0.35906908, 1)
-z_index = 3
-position = Vector2(-14242.001, -788.80005)
-scale = Vector2(4.9650006, 4.9650006)
-speed_min = 500.0
-speed_max = 800.0
-
-[node name="Car2" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=711814301 groups=["npcs_outside"] instance=ExtResource("10_1qgay")]
-modulate = Color(0.35906908, 0.35906908, 0.35906908, 1)
-z_index = 3
-position = Vector2(-23829.002, -796.80005)
-scale = Vector2(4.9650006, 4.9650006)
-speed_min = 500.0
-speed_max = 800.0
-
-[node name="Car" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=1269308661 groups=["npcs_outside"] instance=ExtResource("10_1qgay")]
-modulate = Color(0.35906908, 0.35906908, 0.35906908, 1)
-z_index = 3
-position = Vector2(-26761.002, -892.80005)
-scale = Vector2(4.9650006, 4.9650006)
-speed_min = 500.0
-speed_max = 800.0
-
-[node name="Services" type="Node2D" parent="OutsideAudiovisuals/World" unique_id=126837745]
-scale = Vector2(0.99999994, 0.99999994)
 
 [node name="Shadows" type="Node2D" parent="OutsideAudiovisuals/World" unique_id=218427250]
 scale = Vector2(0.9999998, 0.9999998)
@@ -498,165 +446,165 @@ texture = SubResource("GradientTexture2D_okdt8")
 
 [node name="ColorRect" type="ColorRect" parent="OutsideAudiovisuals/Fog" unique_id=809441847]
 z_index = 8
-material = ExtResource("23_6ggpe")
+material = ExtResource("16_wck5a")
 offset_left = -17323.0
 offset_top = -369.0
 offset_right = 28937.0
 offset_bottom = 971.0
 
-[node name="Shadows" type="Node2D" parent="OutsideAudiovisuals" unique_id=1644657480]
+[node name="DynamicShadows" type="Node2D" parent="OutsideAudiovisuals" unique_id=1644657480]
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=580335033]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="OutsideAudiovisuals/DynamicShadows" unique_id=580335033]
 occluder = SubResource("OccluderPolygon2D_ac4hn")
 
-[node name="LightOccluder2D2" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=1044169949]
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="OutsideAudiovisuals/DynamicShadows" unique_id=1044169949]
 occluder = SubResource("OccluderPolygon2D_qnasi")
 
-[node name="LightOccluder2D3" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=10506172]
+[node name="LightOccluder2D3" type="LightOccluder2D" parent="OutsideAudiovisuals/DynamicShadows" unique_id=10506172]
 occluder = SubResource("OccluderPolygon2D_6ggpe")
 
-[node name="LightOccluder2D4" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=1770915128]
+[node name="LightOccluder2D4" type="LightOccluder2D" parent="OutsideAudiovisuals/DynamicShadows" unique_id=1770915128]
 occluder = SubResource("OccluderPolygon2D_bk7xh")
 
-[node name="LightOccluder2D5" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=1630036100]
+[node name="LightOccluder2D5" type="LightOccluder2D" parent="OutsideAudiovisuals/DynamicShadows" unique_id=1630036100]
 occluder = SubResource("OccluderPolygon2D_1qgay")
 
-[node name="LightOccluder2D6" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=1141924337]
+[node name="LightOccluder2D6" type="LightOccluder2D" parent="OutsideAudiovisuals/DynamicShadows" unique_id=1141924337]
 occluder = SubResource("OccluderPolygon2D_h2w1t")
 
-[node name="Lights" type="Node2D" parent="OutsideAudiovisuals" unique_id=1386870515]
+[node name="DynamicLights" type="Node2D" parent="OutsideAudiovisuals" unique_id=1386870515]
 position = Vector2(-1945.9998, -143)
 scale = Vector2(1.1099999, 1.1099999)
 
-[node name="Parallax2D" type="Parallax2D" parent="OutsideAudiovisuals/Lights" unique_id=1465751157]
+[node name="Parallax2D" type="Parallax2D" parent="OutsideAudiovisuals/DynamicLights" unique_id=1465751157]
 scale = Vector2(4.2606587, 4.2606587)
 scroll_scale = Vector2(1.01, 1)
 scroll_offset = Vector2(960.3602, 588.2883)
 repeat_times = 4
 
-[node name="Lights_background" type="Node2D" parent="OutsideAudiovisuals/Lights/Parallax2D" unique_id=1833250996]
+[node name="Lights_background" type="Node2D" parent="OutsideAudiovisuals/DynamicLights/Parallax2D" unique_id=1833250996]
 position = Vector2(-231.11095, 0)
 scale = Vector2(1.3, 1.3)
 
-[node name="Street_Lamp" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=1073907964 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=1073907964 instance=ExtResource("17_pl2ey")]
 position = Vector2(-757.125, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp3" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=1826258392 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp3" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=1826258392 instance=ExtResource("17_pl2ey")]
 position = Vector2(-139.375, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp5" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=1022455554 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp5" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=1022455554 instance=ExtResource("17_pl2ey")]
 position = Vector2(538.9335, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp7" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=166615034 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp7" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=166615034 instance=ExtResource("17_pl2ey")]
 position = Vector2(1212.625, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp2" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=1002516225 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp2" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=1002516225 instance=ExtResource("17_pl2ey")]
 position = Vector2(1976.3203, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp4" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=1638640050 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp4" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=1638640050 instance=ExtResource("17_pl2ey")]
 position = Vector2(2594.0703, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp6" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=1606706790 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp6" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=1606706790 instance=ExtResource("17_pl2ey")]
 position = Vector2(3272.379, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp8" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=568382977 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp8" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=568382977 instance=ExtResource("17_pl2ey")]
 position = Vector2(3946.0703, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp9" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=2045315355 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp9" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=2045315355 instance=ExtResource("17_pl2ey")]
 position = Vector2(-3305.1873, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp10" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=895502003 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp10" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=895502003 instance=ExtResource("17_pl2ey")]
 position = Vector2(-2687.4373, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp11" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=747817035 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp11" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=747817035 instance=ExtResource("17_pl2ey")]
 position = Vector2(-2009.1287, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Street_Lamp12" parent="OutsideAudiovisuals/Lights/Parallax2D/Lights_background" unique_id=1878902081 instance=ExtResource("14_3j0sx")]
+[node name="Street_Lamp12" parent="OutsideAudiovisuals/DynamicLights/Parallax2D/Lights_background" unique_id=1878902081 instance=ExtResource("17_pl2ey")]
 position = Vector2(-1335.4373, -177.71143)
 scale = Vector2(0.23765433, 0.23765434)
 
-[node name="Parallax2D2" type="Parallax2D" parent="OutsideAudiovisuals/Lights" unique_id=2016238725]
+[node name="Parallax2D2" type="Parallax2D" parent="OutsideAudiovisuals/DynamicLights" unique_id=2016238725]
 z_index = 1
 scale = Vector2(4.2606587, 4.2606587)
 scroll_scale = Vector2(1.3, 1)
 scroll_offset = Vector2(121.62146, 500.90094)
 repeat_times = 4
 
-[node name="Lights_Foreground" type="Node2D" parent="OutsideAudiovisuals/Lights/Parallax2D2" unique_id=1877099797]
+[node name="Lights_Foreground" type="Node2D" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2" unique_id=1877099797]
 modulate = Color(0.7581918, 0.7581918, 0.7581917, 1)
 position = Vector2(310.40335, 0)
 scale = Vector2(1.5, 1.5)
 
-[node name="Street_Lamp2" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=400567341 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp2" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=400567341 instance=ExtResource("18_a2cj3")]
 light_mask = 0
 position = Vector2(-1095, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp4" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=800303584 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp4" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=800303584 instance=ExtResource("18_a2cj3")]
 light_mask = 0
 position = Vector2(-237.99998, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp6" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=1838405559 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp6" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=1838405559 instance=ExtResource("18_a2cj3")]
 light_mask = 0
 position = Vector2(699, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp8" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=25661548 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp8" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=25661548 instance=ExtResource("18_a2cj3")]
 position = Vector2(1642, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp3" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=374328388 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp3" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=374328388 instance=ExtResource("18_a2cj3")]
 position = Vector2(2587.2908, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp5" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=1460119693 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp5" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=1460119693 instance=ExtResource("18_a2cj3")]
 position = Vector2(3444.2908, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp7" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=58687929 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp7" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=58687929 instance=ExtResource("18_a2cj3")]
 position = Vector2(4381.291, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp9" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=1611544869 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp9" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=1611544869 instance=ExtResource("18_a2cj3")]
 position = Vector2(5324.291, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp10" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=2073684199 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp10" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=2073684199 instance=ExtResource("18_a2cj3")]
 position = Vector2(-4731.08, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp11" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=1571396672 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp11" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=1571396672 instance=ExtResource("18_a2cj3")]
 position = Vector2(-3874.0798, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp12" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=1370641713 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp12" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=1370641713 instance=ExtResource("18_a2cj3")]
 position = Vector2(-2937.0796, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
-[node name="Street_Lamp13" parent="OutsideAudiovisuals/Lights/Parallax2D2/Lights_Foreground" unique_id=567762387 instance=ExtResource("15_5c5rf")]
+[node name="Street_Lamp13" parent="OutsideAudiovisuals/DynamicLights/Parallax2D2/Lights_Foreground" unique_id=567762387 instance=ExtResource("18_a2cj3")]
 position = Vector2(-1994.0796, -148.94882)
 scale = Vector2(0.45463523, 0.45463517)
 
 [node name="OutsideBuildings" type="Node2D" parent="." unique_id=750250133]
 scale = Vector2(4.9999995, 4.9999995)
 
-[node name="Ten_Bells" parent="OutsideBuildings" unique_id=526028377 instance=ExtResource("11_nas3t")]
+[node name="Ten_Bells" parent="OutsideBuildings" unique_id=526028377 instance=ExtResource("19_y5tkh")]
 modulate = Color(0.427493, 0.42749307, 0.42749307, 1)
 position = Vector2(597.60004, 4.0000005)
 
-[node name="PrincessAlice" parent="OutsideBuildings" unique_id=91018013 instance=ExtResource("7_os2yf")]
+[node name="PrincessAlice" parent="OutsideBuildings" unique_id=91018013 instance=ExtResource("20_l5jqj")]
 modulate = Color(0.6955032, 0.6955031, 0.6955031, 1)
 position = Vector2(1479.8003, -288.40002)
 scale = Vector2(0.56000006, 0.56000006)
@@ -665,14 +613,14 @@ scale = Vector2(0.56000006, 0.56000006)
 
 [node name="Companions" type="Node2D" parent="OutsideActors" unique_id=815270617]
 
-[node name="NPCCompanion" parent="OutsideActors/Companions" unique_id=1093994703 instance=ExtResource("14_nsm0j")]
+[node name="NPCCompanion" parent="OutsideActors/Companions" unique_id=1093994703 instance=ExtResource("21_pw5dy")]
 position = Vector2(-1648, -366)
 companion_name = "Dolly"
 initial_facing_right = false
 body_scale = 1.1
 skin_name = "Bridget"
 
-[node name="NPCCompanion2" parent="OutsideActors/Companions" unique_id=1470067891 instance=ExtResource("14_nsm0j")]
+[node name="NPCCompanion2" parent="OutsideActors/Companions" unique_id=1470067891 instance=ExtResource("21_pw5dy")]
 position = Vector2(973, -321)
 companion_name = "Bridget"
 skin_name = "Dolly"
@@ -690,7 +638,7 @@ position = Vector2(-125.799995, -162.2)
 scale = Vector2(0.31999996, 0.31999996)
 texture = SubResource("CanvasTexture_ac4hn")
 
-[node name="NPCService" parent="OutsideActors/Services/PerfumeStore" unique_id=366796676 instance=ExtResource("15_c6pga")]
+[node name="NPCService" parent="OutsideActors/Services/PerfumeStore" unique_id=366796676 instance=ExtResource("24_1sytg")]
 position = Vector2(-119.80003, -143.00002)
 scale = Vector2(0.20000003, 0.20000003)
 npc_display_name = "Madame Colette"
@@ -698,44 +646,44 @@ dialog_timeline = "uid://bv2dnetct8j1v"
 service_id = "perfume_vendor"
 initial_facing_right = false
 body_scale = 0.9
-shop_items = Array[ExtResource("16_xxywj")]([SubResource("Resource_k7r8x"), SubResource("Resource_l83om"), SubResource("Resource_v1jka"), SubResource("Resource_keg7c"), SubResource("Resource_ubdd7"), SubResource("Resource_mlx1v")])
+shop_items = Array[ExtResource("25_wi6b7")]([SubResource("Resource_k7r8x"), SubResource("Resource_l83om"), SubResource("Resource_v1jka"), SubResource("Resource_keg7c"), SubResource("Resource_ubdd7"), SubResource("Resource_mlx1v")])
 shop_name_key = "PERFUME_VENDOR_SHOP_NAME"
 skin_name = "NPC_PerfumeVendor"
 
 [node name="Clients" type="Node2D" parent="OutsideActors" unique_id=1556360124]
 
-[node name="NPCClient" parent="OutsideActors/Clients" unique_id=1640980566 instance=ExtResource("18_gb7vo")]
+[node name="NPCClient" parent="OutsideActors/Clients" unique_id=1640980566 instance=ExtResource("32_12gj1")]
 position = Vector2(3531, -340.99997)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
 
-[node name="NPCClient2" parent="OutsideActors/Clients" unique_id=400459338 instance=ExtResource("18_gb7vo")]
+[node name="NPCClient2" parent="OutsideActors/Clients" unique_id=400459338 instance=ExtResource("32_12gj1")]
 position = Vector2(8541, -339)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
 skin_name = "NPC_ClientPoor2"
 
-[node name="NPCClient3" parent="OutsideActors/Clients" unique_id=635591008 instance=ExtResource("18_gb7vo")]
+[node name="NPCClient3" parent="OutsideActors/Clients" unique_id=635591008 instance=ExtResource("32_12gj1")]
 position = Vector2(1576.0001, -337.99997)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
 skin_name = "NPC_ClientPoor3"
 
-[node name="NPCClient4" parent="OutsideActors/Clients" unique_id=2103339271 instance=ExtResource("18_gb7vo")]
+[node name="NPCClient4" parent="OutsideActors/Clients" unique_id=2103339271 instance=ExtResource("32_12gj1")]
 position = Vector2(-2987.6, -348)
 scale = Vector2(1.1, 1.1)
 dialog_timeline = "uid://c38evy5q65a84"
 skin_name = "NPC_ClientPoor4"
 
-[node name="NPCClient5" parent="OutsideActors/Clients" unique_id=383274618 instance=ExtResource("18_gb7vo")]
+[node name="NPCClient5" parent="OutsideActors/Clients" unique_id=383274618 instance=ExtResource("32_12gj1")]
 position = Vector2(3139, -409.00003)
 scale = Vector2(1.243, 1.243)
 dialog_timeline = "uid://c38evy5q65a84"
 skin_name = "NPC_ClientPoor6"
 
-[node name="NPCClient6" parent="OutsideActors/Clients" unique_id=1966185597 instance=ExtResource("18_gb7vo")]
+[node name="NPCClient6" parent="OutsideActors/Clients" unique_id=1966185597 instance=ExtResource("32_12gj1")]
 position = Vector2(-4192.1, -445)
 scale = Vector2(1.32, 1.32)
 dialog_timeline = "uid://c38evy5q65a84"
@@ -746,70 +694,48 @@ skin_name = "NPC_ClientPoor5"
 
 [node name="HideZones" type="Node2D" parent="OutsideGameplay" unique_id=204868614]
 
-[node name="HideZone2" parent="OutsideGameplay/HideZones" unique_id=173736521 instance=ExtResource("19_lwph6")]
+[node name="HideZone2" parent="OutsideGameplay/HideZones" unique_id=173736521 instance=ExtResource("33_8d3k6")]
 z_index = -1
 position = Vector2(4185, -18)
 scale = Vector2(1.44, 1.301)
 
-[node name="HideZone" parent="OutsideGameplay/HideZones" unique_id=40068791 instance=ExtResource("19_lwph6")]
+[node name="HideZone" parent="OutsideGameplay/HideZones" unique_id=40068791 instance=ExtResource("33_8d3k6")]
 position = Vector2(10226.001, -93)
 scale = Vector2(3.225, 1.955)
 
-[node name="HideZone3" parent="OutsideGameplay/HideZones" unique_id=1910397108 instance=ExtResource("19_lwph6")]
+[node name="HideZone3" parent="OutsideGameplay/HideZones" unique_id=1910397108 instance=ExtResource("33_8d3k6")]
 z_index = -1
 position = Vector2(-10299, -93)
 scale = Vector2(1.845, 1.845)
 
 [node name="ScenePortals" type="Node2D" parent="OutsideGameplay" unique_id=1109195349]
 
-[node name="ScenePortal_Left" parent="OutsideGameplay/ScenePortals" unique_id=819414623 instance=ExtResource("25_atgof")]
-position = Vector2(-15915, 23)
-script = ExtResource("35_ac4hn")
-portal_id = ""
-target_scene_path = ""
-target_portal_id = ""
-require_interact = false
-interact_action = &"interact"
-fade_time = 2.0
-
-[node name="ScenePortal_Middle" parent="OutsideGameplay/ScenePortals" unique_id=1533950328 instance=ExtResource("25_atgof")]
-position = Vector2(-10875, 23)
-script = ExtResource("35_ac4hn")
-portal_id = "comercial_street_middle"
-target_scene_path = "uid://ex0se7fctlj4"
-target_portal_id = "flower_dean_street_left"
-require_interact = true
-interact_action = &"interact"
-fade_time = 2.0
-
-[node name="ScenePortal_Right" parent="OutsideGameplay/ScenePortals" unique_id=327744838 instance=ExtResource("25_atgof")]
+[node name="SceneChanger_ComercialStreet" parent="OutsideGameplay/ScenePortals" unique_id=1533950328 instance=ExtResource("34_bru24")]
 position = Vector2(26910, 23)
-script = ExtResource("35_ac4hn")
-portal_id = "comercial_street_right"
-target_scene_path = "uid://ex0se7fctlj4"
-target_portal_id = "flower_dean_street_right"
-require_interact = false
-interact_action = &"interact"
-fade_time = 2.0
+next_scene_path = "uid://cwgtlmcg3m7y2"
+
+[node name="SceneChanger_ComercialStreet2" parent="OutsideGameplay/ScenePortals" unique_id=819414623 instance=ExtResource("34_bru24")]
+position = Vector2(-15915, 23)
+next_scene_path = "uid://cwgtlmcg3m7y2"
 
 [node name="POIs" type="Node2D" parent="OutsideGameplay" unique_id=456185148]
 
-[node name="SceneryPOI" parent="OutsideGameplay/POIs" unique_id=797204525 instance=ExtResource("26_145iq")]
+[node name="SceneryPOI" parent="OutsideGameplay/POIs" unique_id=797204525 instance=ExtResource("35_pfk0e")]
 position = Vector2(1681, -458)
 poi_name = "Clients"
 slot_spacing = 320.0
 
-[node name="SceneryPOI2" parent="OutsideGameplay/POIs" unique_id=766777455 instance=ExtResource("26_145iq")]
+[node name="SceneryPOI2" parent="OutsideGameplay/POIs" unique_id=766777455 instance=ExtResource("35_pfk0e")]
 position = Vector2(-619, -438)
 poi_name = "Perfume"
 slot_spacing = 300.0
 
-[node name="SceneryPOI3" parent="OutsideGameplay/POIs" unique_id=1933858859 instance=ExtResource("26_145iq")]
+[node name="SceneryPOI3" parent="OutsideGameplay/POIs" unique_id=1933858859 instance=ExtResource("35_pfk0e")]
 position = Vector2(-6755, -511)
 poi_name = "Perfume"
 slot_spacing = 360.0
 
-[node name="SceneryPOI4" parent="OutsideGameplay/POIs" unique_id=640898538 instance=ExtResource("26_145iq")]
+[node name="SceneryPOI4" parent="OutsideGameplay/POIs" unique_id=640898538 instance=ExtResource("35_pfk0e")]
 position = Vector2(8085, -521)
 poi_name = "Perfume"
 slot_spacing = 190.0
@@ -873,16 +799,16 @@ height = 1.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="OutsideAmbient" unique_id=839120985]
 environment = SubResource("Environment_p02g6")
 
-[node name="Player" parent="." unique_id=722262165 instance=ExtResource("3_lwph6")]
+[node name="Player" parent="." unique_id=722262165 instance=ExtResource("36_qye73")]
 texture_filter = 2
 position = Vector2(1264, -327)
 
-[node name="HUD" parent="." unique_id=3512527 instance=ExtResource("43_ac4hn")]
+[node name="HUD" parent="." unique_id=3512527 instance=ExtResource("37_2mwf1")]
 
 [node name="ExteriorPhantomCamera2D" type="Node2D" parent="." unique_id=448402984]
 top_level = true
 position = Vector2(2029, -650)
-script = ExtResource("45_qnasi")
+script = ExtResource("38_nmv65")
 priority = 10
 follow_mode = 2
 zoom = Vector2(0.3, 0.3)
@@ -907,14 +833,14 @@ editor_draw_limits = true
 [node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=807986062]
 process_priority = 300
 process_physics_priority = 300
-script = ExtResource("47_6ggpe")
+script = ExtResource("40_b8s3w")
 interpolation_mode = 1
 metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1864490632]
 modulate = Color(0.37314087, 0.37314087, 0.37314087, 1)
 z_index = -1
-material = ExtResource("42_ac4hn")
+material = ExtResource("41_enha4")
 position = Vector2(0, 435)
 tile_map_data = PackedByteArray("AAD+////AAAAAAAAAAD8////AAAAAAAAAAD9////AAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAP//AAAAAAAAAAACAP//AAAAAAAAAAADAP//AAAAAAAAAAAEAP//AAAAAAAAAAAFAP//AAAAAAAAAAAGAP//AAAAAAAAAAAHAP//AAAAAAAAAAAIAP//AAAAAAAAAAAJAP//AAAAAAAAAAAKAP//AAAAAAAAAAALAP//AAAAAAAAAAAMAP//AAAAAAAAAAANAP//AAAAAAAAAAAOAP//AAAAAAAAAAAPAP//AAAAAAAAAAAQAP//AAAAAAAAAAARAP//AAAAAAAAAAASAP//AAAAAAAAAAATAP//AAAAAAAAAAAUAP//AAAAAAAAAAAVAP//AAAAAAAAAAAWAP//AAAAAAAAAAAXAP//AAAAAAAAAAAYAP//AAAAAAAAAAAZAP//AAAAAAAAAAAaAP//AAAAAAAAAAAbAP//AAAAAAAAAAAcAP//AAAAAAAAAAAdAP//AAAAAAAAAAAeAP//AAAAAAAAAAAfAP//AAAAAAAAAAAgAP//AAAAAAAAAAAhAP//AAAAAAAAAAAiAP//AAAAAAAAAAAjAP//AAAAAAAAAAAkAP//AAAAAAAAAAAlAP//AAAAAAAAAAAmAP//AAAAAAAAAAAnAP//AAAAAAAAAAAoAP//AAAAAAAAAAApAP//AAAAAAAAAAAqAP//AAAAAAAAAAArAP//AAAAAAAAAAAsAP//AAAAAAAAAAAtAP//AAAAAAAAAAAuAP//AAAAAAAAAAAvAP//AAAAAAAAAAAwAP//AAAAAAAAAAAxAP//AAAAAAAAAAAyAP//AAAAAAAAAAAzAP//AAAAAAAAAAA0AP//AAAAAAAAAAA1AP//AAAAAAAAAAA2AP//AAAAAAAAAAA3AP//AAAAAAAAAAA4AP//AAAAAAAAAAA5AP//AAAAAAAAAAA6AP//AAAAAAAAAAA7AP//AAAAAAAAAAA8AP//AAAAAAAAAAA9AP//AAAAAAAAAAA+AP//AAAAAAAAAAA/AP//AAAAAAAAAABAAP//AAAAAAAAAABBAP//AAAAAAAAAABCAP//AAAAAAAAAABDAP//AAAAAAAAAADY////AAAAAAAAAADZ////AAAAAAAAAADa////AAAAAAAAAADb////AAAAAAAAAADc////AAAAAAAAAADd////AAAAAAAAAADe////AAAAAAAAAADf////AAAAAAAAAADg////AAAAAAAAAADh////AAAAAAAAAADi////AAAAAAAAAADj////AAAAAAAAAADk////AAAAAAAAAADl////AAAAAAAAAADm////AAAAAAAAAADn////AAAAAAAAAADo////AAAAAAAAAADp////AAAAAAAAAADq////AAAAAAAAAADr////AAAAAAAAAADs////AAAAAAAAAADt////AAAAAAAAAADu////AAAAAAAAAADv////AAAAAAAAAADw////AAAAAAAAAADx////AAAAAAAAAADy////AAAAAAAAAADz////AAAAAAAAAAD0////AAAAAAAAAAD1////AAAAAAAAAAD2////AAAAAAAAAAD3////AAAAAAAAAAD4////AAAAAAAAAAD5////AAAAAAAAAAD6////AAAAAAAAAAD7////AAAAAAAAAADS////AAAAAAAAAADT////AAAAAAAAAADU////AAAAAAAAAADV////AAAAAAAAAADW////AAAAAAAAAADX////AAAAAAAAAAD9/wAAAQAAAAAAAAD+/wAAAQAAAAAAAADS/wAAAQAAAAAAAADT/wAAAQAAAAAAAADU/wAAAQAAAAAAAADV/wAAAQAAAAAAAADW/wAAAQAAAAAAAADX/wAAAQAAAAAAAADY/wAAAQAAAAAAAADZ/wAAAQAAAAAAAADa/wAAAQAAAAAAAADb/wAAAQAAAAAAAADc/wAAAQAAAAAAAADd/wAAAQAAAAAAAADe/wAAAQAAAAAAAADf/wAAAQAAAAAAAADg/wAAAQAAAAAAAADh/wAAAQAAAAAAAADi/wAAAQAAAAAAAADj/wAAAQAAAAAAAADk/wAAAQAAAAAAAADl/wAAAQAAAAAAAADm/wAAAQAAAAAAAADn/wAAAQAAAAAAAADo/wAAAQAAAAAAAADp/wAAAQAAAAAAAADq/wAAAQAAAAAAAADr/wAAAQAAAAAAAADs/wAAAQAAAAAAAADt/wAAAQAAAAAAAADu/wAAAQAAAAAAAADv/wAAAQAAAAAAAADw/wAAAQAAAAAAAADx/wAAAQAAAAAAAADy/wAAAQAAAAAAAADz/wAAAQAAAAAA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")
 tile_set = SubResource("TileSet_nsm0j")

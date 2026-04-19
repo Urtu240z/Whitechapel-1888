@@ -27,7 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://br10pupaikeeo" path="res://Scenes/Core/Camera_Rig.tscn" id="29_rmbcd"]
 [ext_resource type="PackedScene" uid="uid://c3m8fewa1n53m" path="res://Scenes/Buildings/Hide_Zone.tscn" id="30_kljef"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="31_f6c35"]
-[ext_resource type="PackedScene" uid="uid://csx4il2s0ov4r" path="res://Scenes/Core/Scene_Changer.tscn" id="31_xtbkx"]
+[ext_resource type="PackedScene" uid="uid://csx4il2s0ov4r" path="res://Scenes/Core/Scene_Portal.tscn" id="31_xtbkx"]
 [ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="32_b2rtk"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="32_dpp2x"]
 [ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="33_6sqwf"]

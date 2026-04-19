@@ -6,15 +6,21 @@ class_name LevelRoot
 # Controla qué partes del exterior se congelan/ocultan cuando
 # el player entra en un edificio.
 #
-# Con la nueva estructura:
-# - OutsideAudiovisuals   -> exterior visual + audio exterior
-# - OutsideActors         -> clients, companions, etc
-# - OutsideGameplay       -> portals, hide zones, POIs...
-# - OutsideBuildings      -> edificios persistentes
+# Estructura exterior:
+# - OutsideAudiovisuals
+# - OutsideActors
+# - OutsideGameplay
+# - OutsideBuildings
 #
-# Ahora solo registramos UNA luz direccional:
-# - ambient_light_path -> DirectionalLight2D
+# Iluminación exterior:
+# - SunLight      -> DirectionalLight2D (sombras + sol)
+# - MoonLight     -> DirectionalLight2D (sombras + luna)
+# - AmbientLight  -> DirectionalLight2D (tinte general de escena)
 # ================================================================
+
+@export_group("📍 Scene Title")
+@export var scene_display_name: String = ""
+@export var show_scene_title_on_enter: bool = true
 
 @export_group("🔗 Level Structure")
 @export var outside_freeze_paths: Array[NodePath] = []
@@ -23,14 +29,28 @@ class_name LevelRoot
 @export var exterior_pcam_path: NodePath
 
 @export_group("💡 Iluminación Ambiental")
+@export var sun_path: NodePath
+@export var moon_path: NodePath
 @export var ambient_light_path: NodePath
 
+@export_group("🌙 Refuerzo visual nocturno")
+@export var lights_background_path: NodePath
+@export var lights_background_day_modulate: Color = Color(1.0, 1.0, 1.0, 1.0)
+@export var lights_background_night_modulate: Color = Color(1.0, 1.0, 1.0, 1.0)
+
 var _active_building: Node2D = null
+var _lights_background: CanvasItem = null
 
 
 func _ready() -> void:
 	call_deferred("_setup_exterior_camera")
 	_setup_ambient_lighting()
+	call_deferred("_handle_scene_entry")
+	_setup_visual_night_boost()
+	_update_visual_night_boost()
+
+func _process(_delta: float) -> void:
+	_update_visual_night_boost()
 
 
 # ================================================================
@@ -51,21 +71,47 @@ func get_active_building() -> Node2D:
 	return _active_building
 
 
-# ================================================================
-# ILUMINACIÓN AMBIENTAL
-# ================================================================
-
 func is_player_inside_building() -> bool:
 	return _active_building != null
 
 
+# ================================================================
+# ILUMINACIÓN
+# ================================================================
+
 func _setup_ambient_lighting() -> void:
+	var sun: DirectionalLight2D = get_node_or_null(sun_path) as DirectionalLight2D
+	var moon: DirectionalLight2D = get_node_or_null(moon_path) as DirectionalLight2D
 	var ambient: DirectionalLight2D = get_node_or_null(ambient_light_path) as DirectionalLight2D
 
-	if is_instance_valid(ambient):
-		DayNightManager.registrar_luz_ambiental(ambient)
-	else:
-		push_warning("LevelRoot: falta ambient_light_path o no es un DirectionalLight2D.")
+	if not is_instance_valid(sun):
+		push_warning("LevelRoot: sun_path no válido o no es DirectionalLight2D.")
+		return
+
+	if not is_instance_valid(moon):
+		push_warning("LevelRoot: moon_path no válido o no es DirectionalLight2D.")
+		return
+
+	if not is_instance_valid(ambient):
+		push_warning("LevelRoot: ambient_light_path no válido o no es DirectionalLight2D.")
+		return
+
+	DayNightManager.registrar_luces(sun, moon, ambient)
+
+
+func _setup_visual_night_boost() -> void:
+	_lights_background = get_node_or_null(lights_background_path) as CanvasItem
+
+
+func _update_visual_night_boost() -> void:
+	if not is_instance_valid(_lights_background):
+		return
+
+	var t: float = DayNightManager.get_ambient_night_factor()
+	_lights_background.modulate = lights_background_day_modulate.lerp(
+		lights_background_night_modulate,
+		t
+	)
 
 
 # ================================================================
@@ -155,6 +201,10 @@ func _set_buildings_visibility() -> void:
 		child.process_mode = Node.PROCESS_MODE_INHERIT if should_show else Node.PROCESS_MODE_DISABLED
 
 
+# ================================================================
+# CÁMARA EXTERIOR
+# ================================================================
+
 func _setup_exterior_camera() -> void:
 	var player: Node = get_node_or_null(player_path)
 	var exterior_pcam: PhantomCamera2D = get_node_or_null(exterior_pcam_path) as PhantomCamera2D
@@ -173,3 +223,62 @@ func _setup_exterior_camera() -> void:
 		return
 
 	exterior_pcam.set_follow_target(camera_target)
+
+
+func _handle_scene_entry() -> void:
+	_apply_pending_portal_spawn()
+	_show_scene_title_if_needed()
+
+
+func _apply_pending_portal_spawn() -> void:
+	if not PortalManager.has_pending_spawn():
+		return
+
+	var target_portal_id: String = PortalManager.get_pending_target_portal_id()
+	if target_portal_id == "":
+		PortalManager.clear_pending_spawn()
+		return
+
+	var player: Node2D = get_node_or_null(player_path) as Node2D
+	if not is_instance_valid(player):
+		push_warning("LevelRoot: no se encontró player para aplicar spawn de portal.")
+		return
+
+	var portals: Array = get_tree().get_nodes_in_group("scene_portal")
+
+	for portal_variant in portals:
+		var portal: Node2D = portal_variant as Node2D
+		if not is_instance_valid(portal):
+			continue
+
+		if not portal.has_method("get_portal_id"):
+			continue
+
+		var portal_current_id: String = portal.get_portal_id()
+		if portal_current_id != target_portal_id:
+			continue
+
+		if portal.has_method("get_spawn_global_position"):
+			player.global_position = portal.get_spawn_global_position()
+		else:
+			player.global_position = portal.global_position
+
+		if player is CharacterBody2D:
+			(player as CharacterBody2D).velocity = Vector2.ZERO
+
+		PortalManager.clear_pending_spawn()
+		return
+
+	push_warning("LevelRoot: no se encontró portal destino con id '%s'." % target_portal_id)
+
+
+func _show_scene_title_if_needed() -> void:
+	if not show_scene_title_on_enter:
+		return
+
+	if scene_display_name.strip_edges() == "":
+		return
+
+	var hud: Node = get_tree().get_first_node_in_group("hud")
+	if is_instance_valid(hud) and hud.has_method("show_location_name"):
+		hud.show_location_name(scene_display_name)

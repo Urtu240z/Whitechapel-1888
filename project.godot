@@ -32,6 +32,7 @@ buses/size/mode=0
 
 StateManager="*res://Scripts/Managers/state_manager.gd"
 SceneManager="*res://Scripts/Managers/scene_manager.gd"
+PortalManager="*uid://dqpp4thk0a1xt"
 GameManager="*res://Scripts/Managers/game_manager.gd"
 DamageManager="*uid://bd7kh51hb5r2q"
 EffectsManager="*uid://vxabxav6ef78"
@@ -253,8 +254,6 @@ common/physics_interpolation=true
 
 [rendering]
 
-anti_aliasing/quality/msaa_2d=2
-anti_aliasing/quality/use_debanding=true
 environment/defaults/default_clear_color=Color(0.19793725, 0.19793722, 0.19793722, 1)
 
 [shader_library]

@@ -34,16 +34,16 @@ var insects: Array = []
 
 class Insect:
 	# Vuelo
-	var angulo: float
-	var radio: float
-	var velocidad: float
-	var wander_fase: float
-	var wander_vel: float
-	var punto: Vector2
+	var pos: Vector2          # posición actual
+	var vel: Vector2          # velocidad actual
+	var target: Vector2       # punto objetivo
+	var target_timer: float   # tiempo hasta cambiar objetivo
+	var wander_fase: float    # fase para micro-jitter
+	var speed: float          # velocidad máxima de este insecto
+	var punto: Vector2        # punto final de dibujo
 	# Superficie
-	var pos: Vector2
 	var dir: Vector2
-	var vel: float
+	var vel_sup: float
 	var wander_timer: float
 	var wander_target_dir: Vector2
 	# Estado
@@ -81,25 +81,38 @@ func _init_insects() -> void:
 	var count = num_insects_sup if modo_superficie else num_insects
 	for i in count:
 		var ins = Insect.new()
+		# Inicializa SIEMPRE todos los campos para evitar Nil
+		ins.pos             = Vector2.ZERO
+		ins.vel             = Vector2.ZERO
+		ins.vel_sup         = 0.0
+		ins.target          = Vector2.ZERO
+		ins.target_timer    = 0.0
+		ins.wander_fase     = randf() * TAU
+		ins.speed           = 0.0
+		ins.punto           = Vector2.ZERO
+		ins.dir             = Vector2.RIGHT
+		ins.wander_timer    = 0.0
+		ins.wander_target_dir = Vector2.RIGHT
+		ins.estado          = ESTADO_MOVIENDO
+		ins.estado_timer    = 0.0
+
 		if modo_superficie:
 			ins.pos = Vector2(
 				randf_range(-rect_ancho * 0.5, rect_ancho * 0.5),
 				randf_range(-rect_alto * 0.5, rect_alto * 0.5)
 			)
 			var angle = randf() * TAU
-			ins.dir = Vector2(cos(angle), sin(angle))
-			ins.vel = randf_range(velocidad_sup_min, velocidad_sup_max)
-			ins.wander_timer = randf_range(0.3, 1.2)
+			ins.dir             = Vector2(cos(angle), sin(angle))
+			ins.vel_sup         = randf_range(velocidad_sup_min, velocidad_sup_max)
+			ins.wander_timer    = randf_range(0.3, 1.2)
 			ins.wander_target_dir = ins.dir
-			ins.wander_fase = randf() * TAU
-			ins.estado = ESTADO_MOVIENDO
-			ins.estado_timer = randf_range(0.5, 2.0)
+			ins.estado_timer    = randf_range(0.5, 2.0)
 		else:
-			ins.angulo     = randf() * TAU
-			ins.radio      = randf_range(radio_min, radio_max)
-			ins.velocidad  = randf_range(velocidad_min, velocidad_max) * (1.0 if randf() > 0.5 else -1.0)
-			ins.wander_fase = randf() * TAU
-			ins.wander_vel  = randf_range(0.5, 1.5)
+			ins.pos          = Vector2(randf_range(-radio_max, radio_max), randf_range(-radio_max, radio_max))
+			ins.target       = _random_target()
+			ins.target_timer = randf_range(0.3, 1.5)
+			ins.speed        = randf_range(velocidad_min, velocidad_max)
+
 		insects.append(ins)
 
 func _process(delta: float) -> void:
@@ -118,7 +131,7 @@ func _process(delta: float) -> void:
 				ins.dir = ins.dir.lerp(ins.wander_target_dir, delta * wander_sup_frecuencia).normalized()
 				var jitter = sin(ins.wander_fase + t * 3.0) * 0.3
 				var move_dir = ins.dir.rotated(jitter)
-				ins.pos += move_dir * ins.vel * delta
+				ins.pos += move_dir * ins.vel_sup * delta
 
 				# Rebotes
 				if ins.pos.x < -rect_ancho * 0.5 or ins.pos.x > rect_ancho * 0.5:
@@ -148,9 +161,33 @@ func _process(delta: float) -> void:
 					ins.wander_target_dir = Vector2(cos(angle), sin(angle))
 	else:
 		for ins in insects:
-			ins.angulo += ins.velocidad * delta
-			var r_offset = sin(ins.wander_fase + t * ins.wander_vel) * wander_amplitud
-			ins.punto = Vector2(cos(ins.angulo), sin(ins.angulo) * 0.5) * (ins.radio + r_offset)
+			ins.target_timer -= delta
+
+			# Cambio de objetivo — cuando llega cerca O cuando se acaba el timer
+			if ins.target_timer <= 0.0 or ins.pos.distance_to(ins.target) < radio_min * 0.3:
+				ins.target       = _random_target()
+				ins.target_timer  = randf_range(0.2, 1.2)
+				# A veces da un "salto" brusco de dirección — como insecto real
+				if randf() > 0.6:
+					ins.vel *= -0.5
+
+			# Steering hacia el objetivo — suave pero nervioso
+			var dir_to_target = (ins.target - ins.pos).normalized()
+			var steering = dir_to_target * ins.speed * 180.0
+			ins.vel += steering * delta
+			# Limita la velocidad máxima
+			if ins.vel.length() > ins.speed * 60.0:
+				ins.vel = ins.vel.normalized() * ins.speed * 60.0
+
+			ins.pos += ins.vel * delta
+
+			# Micro-jitter de aleteo — alta frecuencia, baja amplitud
+			var jitter = Vector2(
+				sin(ins.wander_fase + t * 23.0),
+				cos(ins.wander_fase + t * 17.0)
+			) * wander_amplitud * 0.15
+
+			ins.punto = ins.pos + jitter
 
 	queue_redraw()
 
@@ -163,7 +200,15 @@ func _draw() -> void:
 			draw_circle(ins.punto, tamano_insecto, color_insecto)
 	else:
 		for ins in insects:
-			var alpha_mod = remap(ins.punto.y, -radio_max, radio_max, 0.4, 1.0)
+			var dist = ins.punto.length()
+			var alpha_mod = remap(dist, 0.0, radio_max, 1.0, 0.5)
 			var c = Color(color_insecto.r, color_insecto.g, color_insecto.b,
 				color_insecto.a * alpha_mod)
 			draw_circle(ins.punto, tamano_insecto, c)
+
+func _random_target() -> Vector2:
+	# Objetivo aleatorio dentro de una elipse (más ancha que alta, como una farola real)
+	var angle = randf() * TAU
+	var rx = randf_range(radio_min, radio_max)
+	var ry = rx * randf_range(0.3, 0.7)   # elipse irregular
+	return Vector2(cos(angle) * rx, sin(angle) * ry)

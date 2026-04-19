@@ -31,10 +31,11 @@
 [ext_resource type="PackedScene" uid="uid://oebyjtwwcxhx" path="res://Scenes/NPC/NPC_Client.tscn" id="28_wou45"]
 [ext_resource type="PackedScene" uid="uid://bt3ubgbvk60kv" path="res://Scenes/NPC/NPC_Companion.tscn" id="29_1dq73"]
 [ext_resource type="PackedScene" uid="uid://c3m8fewa1n53m" path="res://Scenes/Buildings/Hide_Zone.tscn" id="30_m2r2q"]
-[ext_resource type="PackedScene" uid="uid://csx4il2s0ov4r" path="res://Scenes/Core/Scene_Changer.tscn" id="31_2ofp6"]
+[ext_resource type="PackedScene" uid="uid://csx4il2s0ov4r" path="res://Scenes/Core/Scene_Portal.tscn" id="31_2ofp6"]
 [ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="32_qd1v8"]
 [ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="33_dg1ch"]
 [ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="34_oi45t"]
+
 
 [sub_resource type="Resource" id="Resource_k7r8x"]
 script = ExtResource("20_gxkef")
