@@ -1,0 +1,66 @@
+Perfecto. Por zona, lluvia de ideas sin filtro:
+
+COMMERCIAL STREET (eje base)
+Clientes: todos los tipos, es la zona más transitada. Servicios: acto en callejón lateral, conversación pagada en pub. Peligros: policía patrullando, carruajes. Eventos: Dolly y Bridget como companions aquí, vendedora de flores ambient, predicador metodista gritando en la esquina, periódico con noticias del Ripper que cambian según el acto.
+
+WHITECHAPEL HIGH STREET (eje comercial)
+Clientes: poor y medium, mucho tránsito. Servicios: venta de objetos robados a un perista, pedir limosna, venta de flores o cerillas como tapadera. Peligros: policía más presente que en otras zonas, inspector que reconoce a Nell. Eventos: mercado ambulante de día, totalmente distinto de noche, noticias del Ripper pegadas en paredes.
+
+GEORGE YARD (callejón peligro máximo)
+Clientes: solo poor desesperados y peligrosos. Servicios: acto rápido y barato, máximo riesgo. Peligros: Ripper event, sin luz a las 23h, soldado merodeador, rata de alcantarilla como evento de asco/enfermedad. Eventos: cuerpo de Martha Tabram en agosto, patio interior de George Yard Buildings accesible, rellano del crimen como zona explorable.
+
+FLOWER & DEAN STREET (hub social)
+Clientes: poor, algunas companions trabajan aquí. Servicios: dormir barato, conseguir información de otras mujeres, comprar comida de estraperlo. Peligros: pelea entre borrachos, proxeneta que reclama territorio, enfermedad por contacto. Eventos: reunión de mujeres del barrio, rumores sobre el Ripper, companion en apuros que necesita ayuda de Nell.
+
+HANBURY STREET (residencial obrera)
+Clientes: medium principalmente, más discretos. Servicios: acto en patio trasero, servicio de compañía larga duración por más dinero. Peligros: marido celoso que sale de casa, perro guardián. Eventos: Annie Chapman encontrada muerta en el patio del nº29 en septiembre — zona bloqueada por policía durante días, desvío obligatorio del jugador.
+
+DORSET STREET / MILLER'S COURT (la peor calle)
+Clientes: todos los tipos pero en contexto muy oscuro. Servicios: alquiler de habitación por horas en Miller's Court, acto en interior por primera vez. Peligros: proxeneta violento, Ripper event elevado en Acto III, trampa de cliente que no paga. Eventos: Mary Kelly vive aquí — NPC con quien Nell puede hablar, desaparece en noviembre. Miller's Court como escena final del juego.
+
+THRAWL STREET (miseria pura)
+Clientes: solo poor, los más miserables. Servicios: nada organizado, solo supervivencia. Peligros: enfermedad alta probabilidad, borracho agresivo sin dinero. Eventos: lodging house donde Nell puede dormir en el suelo por 2 peniques, compartiendo con desconocidos — evento de robo nocturno mientras duermes.
+
+ANGEL ALLEY (callejón sin salida)
+Clientes: ninguno, nadie va aquí voluntariamente. Servicios: ninguno. Peligros: trampa pura — si entras de noche hay alta probabilidad de encuentro violento. Eventos: escondite de objetos robados, Pearly Poll (companion de Martha Tabram) aparece aquí, acceso secreto a un sótano.
+
+FASHION STREET (comunidad judía)
+Clientes: medium, comunidad inmigrante judía, distintos valores y comportamientos. Servicios: comprar comida kosher barata, vender ropa robada en tienda de segunda mano. Peligros: tensión étnica con locales ingleses, redada policial por zona inmigrante. Eventos: shabat — zona cerrada y tranquila el viernes noche, fiesta en la calle el resto de la semana.
+
+FOURNIER STREET (iglesia/sinagoga)
+Clientes: medium-rich, más hipócritas y discretos — clérigos, burgueses. Servicios: compañía discreta, nada explícito en la calle. Peligros: ser reconocida por un cliente importante en un momento inoportuno, chantaje. Eventos: entrada a la sinagoga como refugio temporal, sermón en la calle sobre el vicio y la redención que afecta al ánimo de Nell.
+
+BRICK LANE (mercado y talleres)
+Clientes: poor y medium, trabajadores. Servicios: venta de objetos, trabajo alternativo en taller de costura por poco dinero — mecánica de minijuego diferente. Peligros: carterista que roba a Nell, accidente en taller. Eventos: mercado solo de día, de noche talleres con luz hasta tarde, inmigrantes judíos huyendo de los pogromos — NPC con historia.
+
+BRUSHFIELD / SPITALFIELDS MARKET (zona más luminosa)
+Clientes: medium y rich. Servicios: compañía de alta gama, perfume necesario para acceder a clientes rich. Peligros: mínimos de día, guardia de mercado que echa a las prostitutas. Eventos: mercado de flores y verduras al amanecer — única zona donde Nell puede sentirse casi normal, periodista investigando los crímenes.
+
+BUTCHER ROW (mataderos)
+Clientes: trabajadores de matadero, poor y muy brutos. Servicios: acto rápido, ambiente muy hostil. Peligros: violencia gratuita, herramientas de carnicero como arma en pelea, olor que baja la higiene de Nell automáticamente al estar en la zona. Eventos: carnicero que da comida gratis a cambio de favores, sangre en el suelo que mancha el vestido de Nell.
+
+GOULSTON STREET (mensaje del Ripper)
+Clientes: medium. Servicios: normales. Peligros: medio. Eventos: en octubre 1888 aparece escrito en la pared "The Juwes are the men that will not be blamed for nothing" — evento narrativo clave, Nell lo ve antes que la policía, puede decidir borrarlo o no, consecuencias distintas.
+
+MITRE SQUARE (plaza oscura)
+Clientes: ninguno habitual, es una trampa. Servicios: ninguno. Peligros: Ripper event más probable aquí que en ningún otro sitio, policía rondando después de octubre. Eventos: Catherine Eddowes en octubre — Nell puede presenciarlo o encontrar el cuerpo. Plaza completamente a oscuras, solo un farol roto.
+
+BERNER STREET (trabajadores portuarios)
+Clientes: marineros y portuarios, poor y medium con dinero de paga. Servicios: acto, compañía larga. Peligros: marinero borracho que se pone violento, navaja. Eventos: Elizabeth Stride en septiembre, club socialista internacional en el nº40 — NPC político que da información sobre movimientos de reforma social.
+
+BUCK'S ROW (primera víctima canónica)
+Clientes: poor nocturnos. Servicios: acto rápido. Peligros: Ripper event — aquí empieza todo el 31 de agosto. Eventos: Mary Ann Nichols — primera víctima que Nell puede conocer antes de agosto, su muerte activa el sistema de alerta Ripper en todo el mapa. Zona industrial con almacenes, poca visibilidad.
+
+ALDGATE (entrada a la City)
+Clientes: rich que cruzan desde la City, los mejor pagados. Servicios: compañía discreta y cara, perfume obligatorio. Peligros: policía de la City diferente a la metropolitana, más estricta. Eventos: contraste visual total — al cruzar Aldgate se ve riqueza real, Nell puede sentirse más humillada aquí que en ningún sitio.
+
+OLD MONTAGUE STREET (conector)
+Clientes: poor de paso. Servicios: básicos. Peligros: zona de tránsito, carruaje rápido peligroso. Eventos: farmacia donde comprar láudano, médico que trata enfermedades sin preguntar demasiado.
+
+CABLE STREET / MUELLES (junto al río)
+Clientes: marineros internacionales, exóticos, pagan bien pero impredecibles. Servicios: acto, compañía larga, traducción/comunicación como minijuego si el marinero no habla inglés. Peligros: caída al agua, tráfico de personas, shanghái (secuestro para barcos). Eventos: barco con destino a Australia — recordatorio constante del destino de Emily si Nell falla.
+
+WAPPING / ST. KATHERINE'S DOCKS (el río)
+Clientes: ricos del puerto, capitanes, comerciantes. Servicios: los más caros del juego. Peligros: tráfico de personas real, posibilidad de ser embarcada a la fuerza. Eventos: vista del Támesis — único momento de belleza en el juego, Nell puede ver barcos partiendo hacia Australia y pensar en Emily. Mecánica de esperanza/desesperación.
+
+Son 20 zonas con contenido diferenciado. Ahora dime cuáles te convencen, cuáles cambiarías y qué descartamos.
