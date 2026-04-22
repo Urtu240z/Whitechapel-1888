@@ -2,24 +2,6 @@ extends Node2D
 # ================================================================
 # BUILDING ENTRANCE — enter_building.gd
 # Nodo: BuildingEntrance (hijo del nodo raíz del edificio)
-# Lee su configuración del padre (building.gd)
-# ================================================================
-# ESTRUCTURA ESPERADA:
-# Edificio (Node2D) ← building.gd
-# ├── Exterior
-# ├── Interior (Node2D)
-# │   ├── TileMapLayer
-# │   │   ├── Wall (StaticBody2D)
-# │   │   └── ExitArea (Area2D)
-# │   ├── CameraLimits (Node2D, opcional)
-# │   │   ├── TopLeft (Marker2D)
-# │   │   └── BottomRight (Marker2D)
-# ├── Audio (Node2D) ← audio local del edificio
-# │   ├── Ambient (AudioStreamPlayer2D)
-# │   └── Music (AudioStreamPlayer2D)
-# └── BuildingEntrance (Node2D) ← este script
-#     ├── EnterArea (Area2D)
-#     └── DoorGlow (Sprite2D / Polygon2D)
 # ================================================================
 
 # ================================================================
@@ -37,8 +19,8 @@ var _door_glow: Node2D = null
 var _config: Node = null
 
 # ================================================================
-# 🔗 NODE REFERENCES — asignar desde el Inspector
-# Si están vacíos, se usan las rutas por defecto como fallback.
+# 🔗 NODE REFERENCES — asignar desde el Inspector si quieres
+# Si están vacíos, usa fallbacks.
 # ================================================================
 @export_group("🔗 Node References")
 @export var interior_path: NodePath
@@ -62,19 +44,24 @@ var _player_near_enter: bool = false
 var _player_near_exit: bool = false
 var _transitioning: bool = false
 var _interior_audio_started: bool = false
-var _npcs_inside: Array[CharacterBody2D] = []
+#var _npcs_inside: Array[CharacterBody2D] = []
 
 # ================================================================
 # READY
 # ================================================================
-func _resolve(path: NodePath, fallback: String) -> Node:
+func _resolve_many(path: NodePath, fallbacks: Array[String]) -> Node:
 	if not path.is_empty():
-		var resolved_node: Node = get_node_or_null(path)
-		if resolved_node:
-			return resolved_node
-		push_warning("BuildingEntrance: NodePath '%s' no encontrado, usando fallback '%s'" % [str(path), fallback])
+		var resolved_from_path: Node = get_node_or_null(path)
+		if resolved_from_path:
+			return resolved_from_path
+		push_warning("BuildingEntrance: NodePath '%s' no encontrado, usando fallbacks." % str(path))
 
-	return get_node_or_null(fallback)
+	for fallback: String in fallbacks:
+		var resolved_from_fallback: Node = get_node_or_null(fallback)
+		if resolved_from_fallback:
+			return resolved_from_fallback
+
+	return null
 
 func _ready() -> void:
 	_config = get_parent()
@@ -82,15 +69,13 @@ func _ready() -> void:
 	_audio_sfx = AudioStreamPlayer2D.new()
 	add_child(_audio_sfx)
 
-	# Nodos internos fijos
 	_enter_area = get_node_or_null("EnterArea")
 	_door_glow = get_node_or_null("DoorGlow")
 
-	# Nodos externos con fallback
-	_interior = _resolve(interior_path, "../Interior") as Node2D
-	_exit_area = _resolve(exit_area_path, "../Interior/TileMapLayer/ExitArea") as Area2D
-	_walls = _resolve(walls_path, "../Interior/TileMapLayer/Wall") as StaticBody2D
-	_inside_audio = _resolve(audio_path, "../Audio")
+	_interior = _resolve_many(interior_path, ["../Interior"]) as Node2D
+	_exit_area = _resolve_many(exit_area_path, ["../Interior/ExitArea", "../Interior/TileMapLayer/ExitArea"]) as Area2D
+	_walls = _resolve_many(walls_path, ["../Interior/Collisions/Wall", "../Interior/TileMapLayer/Wall"]) as StaticBody2D
+	_inside_audio = _resolve_many(audio_path, ["../Audio"])
 
 	if _interior:
 		_interior.visible = false
@@ -149,6 +134,21 @@ func _on_interact() -> void:
 		_transitioning = false
 
 # ================================================================
+# HELPERS PLAYER SPAWN
+# ================================================================
+func _move_player_to_position(player: Node, world_position: Vector2) -> void:
+	if not is_instance_valid(player):
+		return
+
+	if player is CharacterBody2D:
+		var body := player as CharacterBody2D
+		body.velocity = Vector2.ZERO
+		body.global_position = world_position
+		body.velocity = Vector2.ZERO
+	else:
+		player.global_position = world_position
+
+# ================================================================
 # ENTRAR
 # ================================================================
 func _enter() -> void:
@@ -176,6 +176,9 @@ func _enter() -> void:
 	var interior_pcam: PhantomCamera2D = _config.get_interior_pcam()
 	if is_instance_valid(interior_pcam):
 		interior_pcam.priority = 20
+
+	var interior_spawn: Vector2 = _config.get_interior_spawn_position(player.global_position)
+	_move_player_to_position(player, interior_spawn)
 
 	_set_level_inside_state(true)
 
@@ -236,6 +239,9 @@ func _exit() -> void:
 	var exterior: Node = get_parent().get_node_or_null("Exterior")
 	if exterior and exterior is CanvasItem:
 		(exterior as CanvasItem).visible = true
+
+	var exterior_spawn: Vector2 = _config.get_exterior_spawn_position(player.global_position)
+	_move_player_to_position(player, exterior_spawn)
 
 	_set_level_inside_state(false)
 
@@ -370,7 +376,6 @@ func _set_walls_enabled(enabled: bool) -> void:
 
 # ================================================================
 # CONGELAR MUNDO EXTERIOR
-# Fallback temporal si la escena no usa LevelRoot todavía.
 # ================================================================
 func _set_level_inside_state(inside: bool) -> void:
 	var current_scene: Node = get_tree().current_scene
@@ -521,131 +526,16 @@ func _tween_npc_reappear_visual(tween: Tween, fade_target: CanvasItem) -> void:
 		npc_fade_time
 	)
 
-func _tween_npc_disappear_visual(tween: Tween, fade_target: CanvasItem) -> void:
+func _apply_npc_reappear_progress(fade_target: CanvasItem, progress: float) -> void:
 	if not fade_target:
 		return
 
-	_apply_npc_disappear_progress(fade_target, 0.0)
-
-	tween.tween_method(
-		func(v: float) -> void:
-			_apply_npc_disappear_progress(fade_target, v),
+	var alpha: float = progress
+	var saturation_progress: float = clamp(
+		(progress - npc_color_reveal_start) / max(0.0001, 1.0 - npc_color_reveal_start),
 		0.0,
-		1.0,
-		npc_fade_time
+		1.0
 	)
 
-func _apply_npc_reappear_progress(fade_target: CanvasItem, t: float) -> void:
-	if not fade_target:
-		return
-
-	t = clamp(t, 0.0, 1.0)
-
-	var reveal_start: float = clamp(npc_color_reveal_start, 0.0, 0.99)
-	var color_t: float = 0.0
-
-	if t >= reveal_start:
-		color_t = (t - reveal_start) / (1.0 - reveal_start)
-
-	# Alpha sube de 0 a 1 desde el inicio.
-	# El color se queda negro hasta reveal_start, luego pasa a blanco.
-	fade_target.modulate = Color(color_t, color_t, color_t, t)
-
-
-func _apply_npc_disappear_progress(fade_target: CanvasItem, t: float) -> void:
-	if not fade_target:
-		return
-
-	t = clamp(t, 0.0, 1.0)
-
-	# t = 0  -> color normal, alpha 1
-	# t = 1  -> negro, alpha 0
-	var dark_t: float = min(t / 0.2, 1.0)
-	var alpha_t: float = 1.0 - t
-
-	var rgb: float = 1.0 - dark_t
-	fade_target.modulate = Color(rgb, rgb, rgb, alpha_t)
-
-func npc_enter(npc: CharacterBody2D, interior_position: Vector2) -> void:
-	if npc in _npcs_inside:
-		return
-
-	_npcs_inside.append(npc)
-
-	var original_parent: Node = npc.get_parent()
-	npc.set_meta("_original_parent_path", str(original_parent.get_path()))
-
-	_set_npc_transit_active(npc, true)
-
-	var fade_target: CanvasItem = _get_npc_fade_target(npc)
-	var tween: Tween = create_tween()
-
-	_tween_npc_disappear_visual(tween, fade_target)
-
-	tween.tween_callback(func():
-		var old_global_transform: Transform2D = npc.global_transform
-
-		if is_instance_valid(original_parent):
-			original_parent.remove_child(npc)
-
-		if _interior:
-			_interior.add_child(npc)
-
-		npc.global_transform = old_global_transform
-		npc.global_position = interior_position
-		npc.velocity = Vector2.ZERO
-
-		_play_npc_door_sfx(_config.open_sounds)
-	)
-
-	_tween_npc_reappear_visual(tween, fade_target)
-
-	tween.tween_callback(func():
-		npc.velocity = Vector2.ZERO
-		_set_npc_transit_active(npc, false)
-	)
-
-func npc_exit(npc: CharacterBody2D, exterior_position: Vector2) -> void:
-	if not npc in _npcs_inside:
-		return
-
-	_npcs_inside.erase(npc)
-
-	var original_path: String = str(npc.get_meta("_original_parent_path", ""))
-	var original_parent: Node = null
-
-	if original_path != "":
-		original_parent = get_node_or_null(original_path)
-
-	if not original_parent:
-		original_parent = get_tree().current_scene
-
-	_set_npc_transit_active(npc, true)
-
-	var fade_target: CanvasItem = _get_npc_fade_target(npc)
-	var tween: Tween = create_tween()
-
-	_tween_npc_disappear_visual(tween, fade_target)
-
-	tween.tween_callback(func():
-		var old_global_transform: Transform2D = npc.global_transform
-
-		var current_parent: Node = npc.get_parent()
-		if is_instance_valid(current_parent):
-			current_parent.remove_child(npc)
-
-		original_parent.add_child(npc)
-
-		npc.global_transform = old_global_transform
-		npc.global_position = exterior_position
-		npc.velocity = Vector2.ZERO
-
-		_play_npc_door_sfx(_config.close_sounds)
-	)
-
-	_tween_npc_reappear_visual(tween, fade_target)
-
-	tween.tween_callback(func():
-		npc.velocity = Vector2.ZERO
-		_set_npc_transit_active(npc, false)
-	)
+	var grey_value: float = lerp(0.35, 1.0, saturation_progress)
+	fade_target.modulate = Color(grey_value, grey_value, grey_value, alpha)

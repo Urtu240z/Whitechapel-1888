@@ -50,11 +50,11 @@
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_eoj0i"]
 blend_mode = 1
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8oeb8"]
-blend_mode = 1
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_v2j58"]
 diffuse_texture = ExtResource("11_y0tni")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_8oeb8"]
+blend_mode = 1
 
 [sub_resource type="Shader" id="Shader_6ggpe"]
 code = "shader_type canvas_item;
@@ -126,8 +126,8 @@ shader_parameter/brightness = 0.53200002527
 shader_parameter/tint_color = Color(0.64, 0.3904, 0.25599998, 1)
 
 [sub_resource type="Gradient" id="Gradient_27c1b"]
-offsets = PackedFloat32Array(0, 0.3561644, 0.61095893, 1)
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0, 0.20415226, 0.5432526, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.813, 0, 0, 0, 0.874, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_okdt8"]
 gradient = SubResource("Gradient_27c1b")
@@ -145,11 +145,8 @@ height = 512
 fill = 2
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ac4hn"]
-polygon = PackedVector2Array(-15934, -3290, -10890, -3298, -10889, -3222, -15939, -3198)
-
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qnasi"]
-polygon = PackedVector2Array(-9997, -1684, -5398, -1685, -5397, -1648, -9998, -1653)
+polygon = PackedVector2Array(-12768, -2554, -5721, -2559, -5720, -2502, -12747, -2492)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_6ggpe"]
 polygon = PackedVector2Array(-4408, -3886, 2935, -3890, 3738, -3746, 3738, -3711, 2948, -3854, -4410, -3845)
@@ -315,23 +312,11 @@ scale = Vector2(0.040000003, 0.040000003)
 [node name="Front" type="Node2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings" unique_id=1795668460]
 
 [node name="ApartmentBlock4" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=269792243]
-position = Vector2(-38500.008, -5920.0005)
+modulate = Color(0.5132329, 0.5132329, 0.5132329, 1)
+material = ExtResource("14_okdt8")
+position = Vector2(-25325.002, -5920.0005)
 scale = Vector2(24.999998, 24.999998)
 texture = ExtResource("7_fcpjw")
-
-[node name="PointLight2D5" type="PointLight2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock4" unique_id=583068615]
-position = Vector2(151.56476, 45.23948)
-scale = Vector2(2.1123493, 2.1123493)
-color = Color(1.2331204, 0.7472388, 0, 1)
-energy = 1.9
-shadow_enabled = true
-shadow_item_cull_mask = 3
-texture = ExtResource("2_gb7vo")
-
-[node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock4/PointLight2D5" unique_id=185857427]
-modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
-material = SubResource("CanvasItemMaterial_8oeb8")
-texture = ExtResource("2_gb7vo")
 
 [node name="VictoriaHome" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=2002751111]
 position = Vector2(78915, -12075.001)
@@ -483,8 +468,8 @@ scale = Vector2(0.9999998, 0.9999998)
 
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/Shadows" unique_id=1653320697]
 z_index = 1
-position = Vector2(116.400116, -9.9)
-scale = Vector2(109.58752, 1.0343752)
+position = Vector2(116.400116, -2.5999937)
+scale = Vector2(109.58752, 1.5062503)
 texture = SubResource("GradientTexture2D_okdt8")
 
 [node name="Sprite2D2" type="Sprite2D" parent="OutsideAudiovisuals/World/Shadows" unique_id=2043321432]
@@ -505,9 +490,6 @@ offset_right = 28937.0
 offset_bottom = 971.0
 
 [node name="Shadows" type="Node2D" parent="OutsideAudiovisuals" unique_id=1644657480]
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=580335033]
-occluder = SubResource("OccluderPolygon2D_ac4hn")
 
 [node name="LightOccluder2D2" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=1044169949]
 occluder = SubResource("OccluderPolygon2D_qnasi")
@@ -669,6 +651,11 @@ modulate = Color(0.6955032, 0.6955031, 0.6955031, 1)
 position = Vector2(1479.8003, -288.40002)
 scale = Vector2(0.56000006, 0.56000006)
 
+[node name="ProvidenceLodge" parent="OutsideBuildings" unique_id=484531651 instance=ExtResource("46_qnasi")]
+texture_filter = 2
+position = Vector2(-1800.0001, -312.60007)
+scale = Vector2(0.94549656, 0.94549656)
+
 [node name="OutsideActors" type="Node2D" parent="." unique_id=776782275]
 
 [node name="Companions" type="Node2D" parent="OutsideActors" unique_id=815270617]
@@ -688,11 +675,11 @@ skin_name = "Dolly"
 [node name="Services" type="Node2D" parent="OutsideActors" unique_id=1153520914]
 
 [node name="PerfumeStore" type="Node2D" parent="OutsideActors/Services" unique_id=1322244885]
-position = Vector2(-4289, 208.99998)
-scale = Vector2(4.999999, 4.999999)
+position = Vector2(-4502, 301)
+scale = Vector2(5.395, 5.395)
 
 [node name="PerfumeStall" type="Sprite2D" parent="OutsideActors/Services/PerfumeStore" unique_id=1655767352]
-modulate = Color(0.7162962, 0.7162962, 0.7162962, 1)
+modulate = Color(0.4661808, 0.46618086, 0.46618056, 1)
 z_index = 1
 position = Vector2(-125.799995, -162.2)
 scale = Vector2(0.31999996, 0.31999996)
@@ -779,7 +766,7 @@ interact_action = &"interact"
 fade_time = 2.0
 
 [node name="ScenePortal_Middle" parent="OutsideGameplay/ScenePortals" unique_id=1533950328 instance=ExtResource("25_atgof")]
-position = Vector2(-10875, 23)
+position = Vector2(-13633, 23)
 script = ExtResource("35_ac4hn")
 portal_id = "comercial_street_middle"
 target_scene_path = "uid://ex0se7fctlj4"
@@ -916,7 +903,3 @@ limit_top = -5000
 limit_right = 28000
 limit_bottom = 550
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
-
-[node name="ProvidenceLodge" parent="." unique_id=484531651 instance=ExtResource("46_qnasi")]
-position = Vector2(-8458.001, -1563.0001)
-scale = Vector2(4.7274823, 4.7274823)

@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform float speed : hint_range(0.1, 5.0) = 1.5;
+uniform float speed : hint_range(0.1, 50.0) = 1.5;
 uniform float strength : hint_range(0.0, 0.05) = 0.008;
 uniform vec3 target_color : source_color = vec3(0.8, 0.6, 0.1);
 uniform float color_threshold : hint_range(0.0, 1.0) = 0.3;

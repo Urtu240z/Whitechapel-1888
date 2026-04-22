@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://vsi28chd68ph" path="res://Assets/Audio/Buildings/Close_Door (2).wav" id="6_i4n63"]
 [ext_resource type="AudioStream" uid="uid://d1q5svthqkw2r" path="res://Assets/Audio/Buildings/Close_Door (3).wav" id="7_gkafe"]
 [ext_resource type="Texture2D" uid="uid://dehublgg56alq" path="res://Assets/Sprites/Building/Bar Ten Bells.png" id="8_fh68x"]
+[ext_resource type="Texture2D" uid="uid://w50sjr6mkdyt" path="res://Assets/Sprites/Building/Bar Ten Bells_HD.png" id="8_i4n63"]
 [ext_resource type="PackedScene" uid="uid://cmmlvd8ng8chj" path="res://Scenes/NPC/NPC_Service.tscn" id="8_nqx5a"]
 [ext_resource type="Script" uid="uid://bbc6r2ife4inn" path="res://Scripts/Data/shop_item_data.gd" id="9_2u12w"]
 [ext_resource type="Texture2D" uid="uid://cgxn1175hs054" path="res://Assets/Sprites/Building/Bar Ten Bells_n.png" id="9_fh68x"]
@@ -51,6 +52,11 @@
 [ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="42_rpjb7"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="45_ckb2g"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="46_i4n63"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gkafe"]
+diffuse_texture = ExtResource("8_i4n63")
+specular_color = Color(0, 0, 0, 1)
+specular_shininess = 0.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_jhiha"]
 diffuse_texture = ExtResource("8_fh68x")
@@ -204,11 +210,20 @@ open_sounds = Array[AudioStream]([ExtResource("2_mwmft"), ExtResource("3_fh68x")
 close_sounds = Array[AudioStream]([ExtResource("5_ckb2g"), ExtResource("6_i4n63"), ExtResource("7_gkafe")])
 building_name = "The Ten Bells"
 street_name = "Commercial Street"
+interior_spawn_path = NodePath("Interior/InteriorSpawn")
+exterior_spawn_path = NodePath("ExteriorSpawn")
 
-[node name="Exterior" type="Sprite2D" parent="." unique_id=107088786]
+[node name="Exterior" type="Sprite2D" parent="." unique_id=720354190]
 texture_filter = 1
-position = Vector2(-642, -462.28998)
-scale = Vector2(0.662, 0.662)
+position = Vector2(-642.30804, -462.1403)
+scale = Vector2(0.1655531, 0.16555308)
+texture = SubResource("CanvasTexture_gkafe")
+
+[node name="Exterior_lores" type="Sprite2D" parent="Exterior" unique_id=107088786]
+visible = false
+texture_filter = 1
+position = Vector2(1.8605957, -0.9042969)
+scale = Vector2(3.998717, 3.9987178)
 texture = SubResource("CanvasTexture_jhiha")
 
 [node name="Interior" type="Node2D" parent="." unique_id=936244711]
@@ -589,6 +604,9 @@ tween_resource = SubResource("Resource_gxpp8")
 draw_limits = true
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
+[node name="InteriorSpawn" type="Marker2D" parent="Interior" unique_id=535697679]
+position = Vector2(0, 64)
+
 [node name="Audio" type="Node2D" parent="." unique_id=159789667]
 
 [node name="Ambient" type="AudioStreamPlayer2D" parent="Audio" unique_id=573470269 groups=["world_ambience"]]
@@ -626,3 +644,7 @@ scale = Vector2(0.83561647, 0.82716054)
 texture = SubResource("CanvasTexture_ckb2g")
 region_enabled = true
 region_rect = Rect2(1966.5, 1062.5, 146, 324)
+
+[node name="ExteriorSpawn" type="Marker2D" parent="." unique_id=754947919]
+position = Vector2(-128, -64)
+scale = Vector2(0.662, 0.662)
