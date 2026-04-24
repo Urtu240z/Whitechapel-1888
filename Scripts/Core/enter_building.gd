@@ -259,7 +259,7 @@ func _mostrar_nombre_con_fade(nombre: String, delay: float, duracion: float) -> 
 		return
 
 	_name_label = CanvasLayer.new()
-	_name_label.layer = 20
+	_name_label.layer = 1100
 
 	var lbl := Label.new()
 	lbl.text = nombre

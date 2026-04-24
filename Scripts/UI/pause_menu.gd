@@ -2,6 +2,8 @@ extends CanvasLayer
 
 const MAIN_MENU_SCENE := "res://Scenes/UI/Main_Menu.tscn"
 
+const PAUSE_LOCK_REASON := "pause_menu"
+
 enum MenuMode {
 	MAIN,
 	SAVE,
@@ -36,6 +38,7 @@ var color_hover  = Color("#c8a45a")
 func _ready() -> void:
 	if not is_in_group("pause_menu"):
 		add_to_group("pause_menu")
+
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	visible = false
 	_build_ui()
@@ -55,27 +58,28 @@ func _input(event: InputEvent) -> void:
 				_rebuild_menu(MenuMode.SAVE)
 			_:
 				_rebuild_menu(MenuMode.MAIN)
+
 		get_viewport().set_input_as_handled()
 		return
 
-	var focused = get_viewport().gui_get_focus_owner()
+	var focused: Control = get_viewport().gui_get_focus_owner()
 	if focused == null:
 		call_deferred("_focus_first")
 		return
 
 	if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept"):
 		if focused is Button:
-			focused.emit_signal("pressed")
+			(focused as Button).pressed.emit()
 			get_viewport().set_input_as_handled()
 			return
 
 	if event.is_action_pressed("ui_up") or event.is_action_pressed("hide"):
-		var prev = focused.find_prev_valid_focus()
+		var prev: Control = focused.find_prev_valid_focus()
 		if prev:
 			prev.grab_focus()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_down") or event.is_action_pressed("crouch"):
-		var next = focused.find_next_valid_focus()
+		var next: Control = focused.find_next_valid_focus()
 		if next:
 			next.grab_focus()
 		get_viewport().set_input_as_handled()
@@ -84,32 +88,34 @@ func _input(event: InputEvent) -> void:
 func open() -> void:
 	if is_open:
 		return
+
 	is_open = true
 	_pending_save_slot = -1
 	_rebuild_menu(MenuMode.MAIN)
 	visible = true
+
+	PlayerManager.lock_player(PAUSE_LOCK_REASON, true)
 	get_tree().paused = true
+
 	call_deferred("_focus_first")
 
 
 func close() -> void:
 	if not is_open:
 		return
+
 	is_open = false
 	_pending_save_slot = -1
 	visible = false
-	get_tree().paused = false
-	StateManager.pop_state("resume")
 
-	var player = PlayerManager.player_instance
-	if is_instance_valid(player):
-		player.velocity = Vector2.ZERO
-		if player.has_node("Movement"):
-			var movement = player.get_node("Movement")
-			if movement.has_method("force_stop"):
-				movement.force_stop()
-			if movement.has_method("block_movement_input_until_release"):
-				movement.block_movement_input_until_release()
+	get_tree().paused = false
+	PlayerManager.unlock_player(PAUSE_LOCK_REASON)
+	PlayerManager.force_stop()
+	PlayerManager.block_movement_input_until_release()
+	get_viewport().gui_release_focus()
+
+	if StateManager.is_paused():
+		StateManager.pop_state("resume")
 
 
 func _build_ui() -> void:
@@ -118,12 +124,12 @@ func _build_ui() -> void:
 	_root.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(_root)
 
-	var overlay = ColorRect.new()
+	var overlay := ColorRect.new()
 	overlay.color = Color(0.0, 0.0, 0.0, 0.95)
 	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_root.add_child(overlay)
 
-	var center = CenterContainer.new()
+	var center := CenterContainer.new()
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_root.add_child(center)
 
@@ -148,7 +154,7 @@ func _build_ui() -> void:
 	_subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_panel.add_child(_subtitle)
 
-	var sep = HSeparator.new()
+	var sep := HSeparator.new()
 	sep.custom_minimum_size = Vector2(520, 16)
 	_panel.add_child(sep)
 
@@ -176,7 +182,7 @@ func _rebuild_menu(new_mode: int) -> void:
 			_title.text = "GUARDAR PARTIDA"
 			_subtitle.text = "Elige un slot"
 			for i in range(SaveManager.MAX_SLOTS):
-				var slot_index := i
+				var slot_index: int = i
 				_add_button(_get_save_slot_text(slot_index), func(): _on_save_slot_selected(slot_index))
 			_add_button("Volver", _on_back_pressed)
 
@@ -184,16 +190,16 @@ func _rebuild_menu(new_mode: int) -> void:
 			_title.text = "CARGAR PARTIDA"
 			_subtitle.text = "Elige un slot"
 			for i in range(SaveManager.MAX_SLOTS):
-				var slot_index := i
-				var btn := _add_button(_get_load_slot_text(slot_index), func(): await _load_from_slot(slot_index))
+				var slot_index: int = i
+				var btn: Button = _add_button(_get_load_slot_text(slot_index), func(): await _load_from_slot(slot_index))
 				btn.disabled = not SaveManager.slot_exists(slot_index)
 			_add_button("Volver", _on_back_pressed)
 
 		MenuMode.SAVE_CONFIRM:
-			var slot_num := _pending_save_slot + 1
+			var slot_num: int = _pending_save_slot + 1
 			_title.text = "SOBRESCRIBIR SLOT %d" % slot_num
 			if SaveManager.slot_exists(_pending_save_slot):
-				var info := SaveManager.get_slot_info(_pending_save_slot)
+				var info: Dictionary = SaveManager.get_slot_info(_pending_save_slot)
 				_subtitle.text = "Ya existe una partida en este slot.\n%s" % _format_slot_info(info)
 			else:
 				_subtitle.text = "Este slot está vacío."
@@ -204,8 +210,9 @@ func _rebuild_menu(new_mode: int) -> void:
 
 
 func _clear_buttons() -> void:
-	for child in _buttons_box.get_children():
+	for child: Node in _buttons_box.get_children():
 		child.queue_free()
+
 	_btn_continue = null
 	_btn_save = null
 	_btn_load = null
@@ -214,15 +221,14 @@ func _clear_buttons() -> void:
 
 
 func _focus_first() -> void:
-	for child in _buttons_box.get_children():
-		if child is Button and not child.disabled:
-			child.grab_focus()
-			get_viewport().gui_focus_changed.emit(child)
+	for child: Node in _buttons_box.get_children():
+		if child is Button and not (child as Button).disabled:
+			(child as Button).grab_focus()
 			return
 
 
 func _add_button(text: String, callback: Callable) -> Button:
-	var btn = Button.new()
+	var btn := Button.new()
 	btn.text = text
 	btn.custom_minimum_size = Vector2(520, 52)
 	btn.focus_mode = Control.FOCUS_ALL
@@ -235,14 +241,14 @@ func _add_button(text: String, callback: Callable) -> Button:
 	btn.add_theme_color_override("font_focus_color", color_hover)
 	btn.add_theme_color_override("font_disabled_color", Color(0.55, 0.55, 0.55, 0.8))
 
-	var normal = StyleBoxFlat.new()
+	var normal := StyleBoxFlat.new()
 	normal.bg_color = Color(0.15, 0.08, 0.02, 0.6)
 	normal.set_border_width_all(1)
 	normal.border_color = Color("#5a3a1a66")
 	normal.set_corner_radius_all(4)
 	btn.add_theme_stylebox_override("normal", normal)
 
-	var hover = StyleBoxFlat.new()
+	var hover := StyleBoxFlat.new()
 	hover.bg_color = Color(0.25, 0.15, 0.05, 0.8)
 	hover.set_border_width_all(1)
 	hover.border_color = Color("#c8a45a99")
@@ -250,7 +256,7 @@ func _add_button(text: String, callback: Callable) -> Button:
 	btn.add_theme_stylebox_override("hover", hover)
 	btn.add_theme_stylebox_override("focus", hover)
 
-	var disabled = StyleBoxFlat.new()
+	var disabled := StyleBoxFlat.new()
 	disabled.bg_color = Color(0.08, 0.05, 0.02, 0.45)
 	disabled.set_border_width_all(1)
 	disabled.border_color = Color("#3a2a1a55")
@@ -264,24 +270,24 @@ func _add_button(text: String, callback: Callable) -> Button:
 
 func _get_save_slot_text(slot: int) -> String:
 	if SaveManager.slot_exists(slot):
-		var info = SaveManager.get_slot_info(slot)
+		var info: Dictionary = SaveManager.get_slot_info(slot)
 		return "Guardar en Slot %d  —  %s" % [slot + 1, _format_slot_info(info)]
-	else:
-		return "Guardar en Slot %d  —  Vacío" % [slot + 1]
+
+	return "Guardar en Slot %d  —  Vacío" % [slot + 1]
 
 
 func _get_load_slot_text(slot: int) -> String:
 	if SaveManager.slot_exists(slot):
-		var info = SaveManager.get_slot_info(slot)
+		var info: Dictionary = SaveManager.get_slot_info(slot)
 		return "Cargar Slot %d  —  %s" % [slot + 1, _format_slot_info(info)]
-	else:
-		return "Cargar Slot %d  —  Vacío" % [slot + 1]
+
+	return "Cargar Slot %d  —  Vacío" % [slot + 1]
 
 
 func _format_slot_info(info: Dictionary) -> String:
-	var dia: int = info.get("dia", 1)
-	var hora: float = info.get("hora", 8.0)
-	var dinero: float = info.get("dinero", 0.0)
+	var dia: int = int(info.get("dia", 1))
+	var hora: float = float(info.get("hora", 8.0))
+	var dinero: float = float(info.get("dinero", 0.0))
 	return "Día %d | %s | £%s" % [dia, _format_hour(hora), str(snapped(dinero, 0.01))]
 
 
@@ -298,46 +304,59 @@ func _format_hour(hora_float: float) -> String:
 func _on_continue_pressed() -> void:
 	close()
 
+
 func _on_save_pressed() -> void:
 	_rebuild_menu(MenuMode.SAVE)
 
+
 func _on_load_pressed() -> void:
 	_rebuild_menu(MenuMode.LOAD)
+
 
 func _on_back_pressed() -> void:
 	_pending_save_slot = -1
 	_rebuild_menu(MenuMode.MAIN)
 
+
 func _on_save_slot_selected(slot: int) -> void:
 	if SaveManager.slot_exists(slot):
 		_pending_save_slot = slot
 		_rebuild_menu(MenuMode.SAVE_CONFIRM)
-	else:
-		SaveManager.save_game(slot)
-		_rebuild_menu(MenuMode.SAVE)
+		return
+
+	SaveManager.save_game(slot)
+	_rebuild_menu(MenuMode.SAVE)
+
 
 func _confirm_save_overwrite() -> void:
 	if _pending_save_slot < 0:
 		_rebuild_menu(MenuMode.SAVE)
 		return
+
 	SaveManager.save_game(_pending_save_slot)
 	_pending_save_slot = -1
 	_rebuild_menu(MenuMode.SAVE)
+
 
 func _cancel_save_overwrite() -> void:
 	_pending_save_slot = -1
 	_rebuild_menu(MenuMode.SAVE)
 
+
 func _load_from_slot(slot: int) -> void:
 	if not SaveManager.slot_exists(slot):
 		return
+
 	close()
 	await SaveManager.load_game(slot)
 
+
 func _on_main_menu_pressed() -> void:
 	close()
-	SceneManager.change_scene(MAIN_MENU_SCENE)
+	SceneManager.change_scene(MAIN_MENU_SCENE, 0.5, StateManager.State.MENU, "pause_to_main_menu")
+
 
 func _on_quit_pressed() -> void:
 	get_tree().paused = false
+	PlayerManager.unlock_player(PAUSE_LOCK_REASON)
 	get_tree().quit()

@@ -1,120 +1,261 @@
 extends Node
-# =========================================================
-# CLIENT SERVICE MANAGER
-# Orquesta:
-# - fade audio mundo
-# - fade visual a negro
-# - pausa del juego
-# - client transition + minijuego
-# - restauración del mundo
-# =========================================================
 
-const CLIENT_TRANSITION_SCENE := preload("res://Scenes/Client_Transition/Client_Transition.tscn")
+# ================================================================
+# CLIENT SERVICE MANAGER — Autoload
+# ================================================================
+# Orquesta el flujo especial de servicio con cliente.
+#
+# Flujo visual correcto:
+# - Transición hacia client service: efectos visibles.
+# - Animación / minijuego: efectos ocultos.
+# - Transición de vuelta al mundo: efectos visibles.
+# ================================================================
 
-signal world_hidden  # Emitida cuando el mundo está negro y pausado — momento seguro para queue_free NPCs
+const CLIENT_TRANSITION_SCENE: PackedScene = preload("res://Scenes/Client_Transition/Client_Transition.tscn")
+
+const LOCK_REASON: String = "client_service"
+const AUDIO_REASON: String = "client_service"
+
+const EFFECTS_TRANSITION_IN_REASON: String = "client_service_transition_in"
+const EFFECTS_TRANSITION_OUT_REASON: String = "client_service_transition_out"
+const EFFECTS_CONTENT_REASON: String = "client_service_content"
+
+const FADE_OUT_TIME: float = 0.5
+const FADE_IN_TIME: float = 0.5
+const AUDIO_FADE_OUT_TIME: float = 0.5
+const AUDIO_FADE_IN_TIME: float = 0.8
+
+signal service_started(acto: String, tipo: String, client_skin_name: String)
+signal service_finished(result: Dictionary)
+signal service_failed(reason: String)
+signal world_hidden
+signal world_restored
 
 var _active: bool = false
+var _current_transition: Node = null
+var _hidden_world: Node = null
 
+
+# ================================================================
+# READY
+# ================================================================
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
+
+# ================================================================
+# API
+# ================================================================
 func is_active() -> bool:
 	return _active
 
+
 func start_service(acto: String, tipo: String, client_skin_name: String = "NPC_ClientPoor") -> Dictionary:
 	if _active:
+		push_warning("ClientServiceManager.start_service(): ya hay un servicio activo.")
+		service_failed.emit("already_active")
 		return {}
 
+	if not StateManager.can_start_client_service():
+		push_warning("ClientServiceManager.start_service(): estado inválido: %s" % StateManager.current_name())
+		service_failed.emit("invalid_state")
+		return {}
+
+	# Queremos que los efectos NO se corten durante el fade hacia negro.
+	_effects_force_visible(EFFECTS_TRANSITION_IN_REASON)
+
 	if not StateManager.change_to(StateManager.State.CLIENT_SERVICE, "start_client_service"):
+		_effects_clear_force_visible(EFFECTS_TRANSITION_IN_REASON)
+		service_failed.emit("state_change_failed")
 		return {}
 
 	_active = true
+	service_started.emit(acto, tipo, client_skin_name)
 
-	var player = PlayerManager.player_instance
-	var world = get_tree().current_scene
-	var transition: Node = null
-	var data: Dictionary = {}
+	var world := get_tree().current_scene
+	_hidden_world = world
+	_current_transition = null
 
-	if is_instance_valid(player):
-		player.disable_movement()
-		player.velocity = Vector2.ZERO
+	PlayerManager.lock_player(LOCK_REASON, true)
+	PlayerManager.force_stop()
 
-	# 1. Fade out audio del mundo
-	await WorldAudioManager.fade_out_world_audio(0.5)
+	var result: Dictionary = {}
 
-	# 2. Fade visual a negro
-	await SceneManager.fade_out(0.5)
+	# 1. Fade out audio mundo.
+	await WorldAudioManager.fade_out_world_audio(AUDIO_FADE_OUT_TIME, AUDIO_REASON)
 
-	# 3. Ocultar mundo y pausar todo
-	if is_instance_valid(world):
-		world.visible = false
+	# 2. Fade visual a negro.
+	# Durante este fade, EffectsManager está forzado visible.
+	await SceneManager.fade_out(FADE_OUT_TIME, true, "client_service_fade_out")
 
+	# 3. A partir de pantalla negra, ocultamos efectos para animación/minijuego.
+	_effects_suppress(EFFECTS_CONTENT_REASON)
+	_effects_clear_force_visible(EFFECTS_TRANSITION_IN_REASON)
+
+	# 4. Ocultar mundo y pausar árbol.
+	_hide_world(world)
 	get_tree().paused = true
-
-	# Momento seguro — mundo negro y pausado. NPCs pueden hacer queue_free aquí.
 	world_hidden.emit()
 
-	# 4. Instanciar ClientTransition FUERA del mundo
-	transition = CLIENT_TRANSITION_SCENE.instantiate()
+	# 5. Instanciar transición fuera del mundo.
+	var transition := _create_transition()
 	if transition == null:
-		push_error("ClientServiceManager: no se pudo instanciar ClientTransition")
-		await _cleanup_service(world, player, null)
+		await _cleanup_service({}, "transition_create_failed")
+		service_failed.emit("transition_create_failed")
 		return {}
+
+	_current_transition = transition
+
+	# 6. Preparar transición con todo negro.
+	if transition.has_method("prepare"):
+		transition.prepare(acto, tipo, client_skin_name)
+	else:
+		push_error("ClientServiceManager: ClientTransition no tiene método prepare().")
+		await _cleanup_service({}, "transition_missing_prepare")
+		service_failed.emit("transition_missing_prepare")
+		return {}
+
+	# 7. Dar dos frames para cámara/local setup.
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	# 8. Mostrar transición desde negro.
+	# Los efectos siguen suprimidos aquí.
+	SceneManager.snap_clear("client_service_show_transition")
+
+	# 9. Arrancar animación/minijuego.
+	if transition.has_method("play_transition"):
+		transition.play_transition()
+	else:
+		push_error("ClientServiceManager: ClientTransition no tiene método play_transition().")
+		await _cleanup_service({}, "transition_missing_play_transition")
+		service_failed.emit("transition_missing_play_transition")
+		return {}
+
+	# 10. Esperar resultado.
+	if not is_instance_valid(transition):
+		push_error("ClientServiceManager: transition destruida antes de emitir finished.")
+		await _cleanup_service({}, "transition_destroyed")
+		service_failed.emit("transition_destroyed")
+		return {}
+
+	result = await transition.finished
+	if result == null:
+		result = {}
+
+	# 11. Restaurar todo.
+	await _cleanup_service(result, "finished")
+	service_finished.emit(result)
+	return result
+
+
+# ================================================================
+# CREACIÓN / MUNDO
+# ================================================================
+func _create_transition() -> Node:
+	var transition := CLIENT_TRANSITION_SCENE.instantiate()
+	if transition == null:
+		push_error("ClientServiceManager: no se pudo instanciar ClientTransition.")
+		return null
 
 	transition.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	get_tree().root.add_child(transition)
-
-	# 5. Preparar la transición MIENTRAS TODO SIGUE NEGRO
-	transition.prepare(acto, tipo, client_skin_name)
-
-	# 6. Dar 2 frames para que la Camera2D local + PhantomHost + PCam se asienten
-	await get_tree().process_frame
-	await get_tree().process_frame
-
-	# 7. Mostrar desde negro ya con la cámara correcta
-	SceneManager.snap_clear()
-
-	# 8. Arrancar la animación ya visible
-	transition.play_transition()
-
-	# 9. Esperar resultado
-	if not is_instance_valid(transition):
-		push_error("ClientServiceManager: transition destruida antes de finished")
-		await _cleanup_service(world, player, null)
-		return {}
-
-	data = await transition.finished
-
-	# 10. Restaurar SIEMPRE todo antes de salir
-	await _cleanup_service(world, player, transition)
-	return data
+	return transition
 
 
-func _cleanup_service(world: Node, player: Node, transition: Node) -> void:
-	# Recuperar negro global inmediatamente
-	SceneManager.snap_black()
+func _hide_world(world: Node) -> void:
+	if not is_instance_valid(world):
+		return
 
-	# Si la transición sigue viva, eliminarla
-	if is_instance_valid(transition):
-		transition.queue_free()
+	world.visible = false
 
-	# Reanudar árbol
+
+func _restore_world(world: Node) -> void:
+	if not is_instance_valid(world):
+		return
+
+	world.visible = true
+	world_restored.emit()
+
+
+# ================================================================
+# CLEANUP
+# ================================================================
+func _cleanup_service(_result: Dictionary = {}, reason: String = "cleanup") -> void:
+	# Pantalla negra inmediata antes de destruir la escena de transición.
+	SceneManager.snap_black("client_service_cleanup_black")
+
+	# La animación/minijuego termina aquí.
+	if is_instance_valid(_current_transition):
+		_current_transition.queue_free()
+
+	_current_transition = null
+
+	# Reanudar árbol antes de restaurar mundo/audio.
 	get_tree().paused = false
 
-	# Restaurar mundo
-	if is_instance_valid(world):
-		world.visible = true
+	# Restaurar mundo mientras aún está negro.
+	_restore_world(_hidden_world)
+	_hidden_world = null
 
-	# Restaurar audio del mundo
-	await WorldAudioManager.fade_in_world_audio(0.8)
+	# Para la transición de vuelta:
+	# - quitamos supresión del contenido
+	# - forzamos efectos visibles aunque StateManager siga en CLIENT_SERVICE
+	_effects_force_visible(EFFECTS_TRANSITION_OUT_REASON)
+	_effects_restore(EFFECTS_CONTENT_REASON)
 
-	# Fade visual de negro a transparente
-	await SceneManager.fade_in(0.5)
+	# Restaurar audio del mundo.
+	await WorldAudioManager.fade_in_world_audio(AUDIO_FADE_IN_TIME, AUDIO_REASON)
 
-	# Devolver control al player
-	if is_instance_valid(player):
-		player.enable_movement()
-		player.velocity = Vector2.ZERO
+	# Fade visual de negro a transparente.
+	# Durante este fade, los efectos vuelven a verse.
+	await SceneManager.fade_in(FADE_IN_TIME, true, "client_service_fade_in")
+
+	# Limpiar fuerza visual tras terminar la transición de vuelta.
+	_effects_clear_force_visible(EFFECTS_TRANSITION_OUT_REASON)
 
 	_active = false
-	StateManager.return_to_gameplay("end_client_service")
+
+	# Volver a gameplay.
+	if StateManager.is_client_service():
+		StateManager.return_to_gameplay("end_client_service_%s" % reason)
+	else:
+		StateManager.force_state(StateManager.State.GAMEPLAY, "client_service_cleanup_%s" % reason)
+
+	PlayerManager.unlock_player(LOCK_REASON)
+	PlayerManager.force_stop()
+
+
+# ================================================================
+# EFFECTS HELPERS
+# ================================================================
+func _effects_force_visible(reason: String) -> void:
+	if not is_instance_valid(EffectsManager):
+		return
+
+	if EffectsManager.has_method("force_visible"):
+		EffectsManager.force_visible(reason)
+
+
+func _effects_clear_force_visible(reason: String) -> void:
+	if not is_instance_valid(EffectsManager):
+		return
+
+	if EffectsManager.has_method("clear_force_visible"):
+		EffectsManager.clear_force_visible(reason)
+
+
+func _effects_suppress(reason: String) -> void:
+	if not is_instance_valid(EffectsManager):
+		return
+
+	if EffectsManager.has_method("suppress_for_ui"):
+		EffectsManager.suppress_for_ui(reason)
+
+
+func _effects_restore(reason: String) -> void:
+	if not is_instance_valid(EffectsManager):
+		return
+
+	if EffectsManager.has_method("restore_after_ui"):
+		EffectsManager.restore_after_ui(reason)
