@@ -460,13 +460,13 @@ func _open_shop() -> void:
 	if items_hoy.is_empty():
 		return
 
-	if not StateManager.can_enter(StateManager.State.SHOP):
+	if not StateManager.can_open_shop():
 		return
 
 	var shop = SHOP_SCENE.instantiate()
 	get_tree().root.add_child(shop)
 
-	StateManager.enter(StateManager.State.SHOP)
+	StateManager.push_state(StateManager.State.SHOP, "open_shop")
 	GameManager.show_mouse()
 
 	var player = PlayerManager.player_instance
@@ -480,7 +480,7 @@ func _open_shop() -> void:
 	)
 
 	shop.shop_closed.connect(func():
-		StateManager.exit(StateManager.State.SHOP)
+		StateManager.pop_state("close_shop")
 		GameManager.hide_mouse()
 		if is_instance_valid(player):
 			player.enable_movement()

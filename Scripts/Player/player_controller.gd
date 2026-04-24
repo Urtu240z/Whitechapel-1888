@@ -104,9 +104,16 @@ func _on_sueno_agotado() -> void:
 # MAIN LOOP
 func _physics_process(delta: float) -> void:
 	if not can_move:
-		velocity = Vector2.ZERO  # ← añade esta línea
+		velocity = Vector2.ZERO
 		move_and_slide()
+
+		# Aunque Nell no pueda moverse, algunos estados necesitan permitir F.
+		# Ejemplo: HIDING debe poder salir del escondite.
+		if interaction and StateManager.can_interact():
+			interaction.process_interactions()
+
 		return
+
 	movement.process_movement(delta)
 	move_and_slide()
 	animation.update_animation()

@@ -9,4 +9,4 @@ shader_parameter/blur_quality = 3.0
 shader_parameter/center_preserve = 0.0
 shader_parameter/opacity = 1.0
 shader_parameter/brightness = 0.53200002527
-shader_parameter/tint_color = Color(0.39875868, 0.39875868, 0.33183005, 1)
+shader_parameter/tint_color = Color(0.14676851, 0.14672542, 0.11492894, 1)

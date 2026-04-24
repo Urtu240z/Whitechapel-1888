@@ -36,10 +36,12 @@ func initialize(p: MainPlayer) -> void:
 # PROCESS INTERACTIONS
 # ==========================
 func process_interactions() -> void:
-	if not player or not player.can_move:
+	if not player:
 		return
-	if not StateManager.is_gameplay():
+
+	if not StateManager.can_interact():
 		return
+
 	if Input.is_action_just_pressed("interact"):
 		InteractionManager.try_interact()
 
@@ -80,10 +82,10 @@ func _start_dialog(npc) -> void:
 		npc.prepare_dialogic_variables()
 
 	await get_tree().process_frame
-	StateManager.enter(StateManager.State.DIALOG)
+	StateManager.change_to(StateManager.State.DIALOG, "start_dialog")
 	Dialogic.start(timeline)
 	Dialogic.timeline_ended.connect(func():
-		StateManager.exit(StateManager.State.DIALOG)
+		StateManager.return_to_gameplay("end_dialog")
 		player.enable_movement()
 		npc.movement.unfreeze()
 		npc.animation.unlock_facing()

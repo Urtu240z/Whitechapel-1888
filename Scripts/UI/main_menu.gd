@@ -19,7 +19,7 @@ var _options_panel: VBoxContainer
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
-	StateManager.enter(StateManager.State.MENU)
+	StateManager.change_to(StateManager.State.MENU, "main_menu")
 	_build_ui()
 
 
@@ -254,7 +254,7 @@ func _focus_first(panel: VBoxContainer) -> void:
 # 🔘 CALLBACKS
 # =========================================================
 func _on_continue_pressed() -> void:
-	StateManager.exit(StateManager.State.MENU)
+	StateManager.change_to(StateManager.State.GAMEPLAY, "leave_main_menu")
 	for i in range(3):
 		if SaveManager.slot_exists(i):
 			SaveManager.load_game(i)
@@ -262,7 +262,7 @@ func _on_continue_pressed() -> void:
 
 
 func _on_new_game_pressed() -> void:
-	StateManager.exit(StateManager.State.MENU)
+	StateManager.change_to(StateManager.State.GAMEPLAY, "leave_main_menu")
 	# Resetear todos los managers con estado de partida
 	PlayerStats.reset_stats()
 	InventoryManager.reset()
@@ -291,7 +291,7 @@ func _on_back_pressed() -> void:
 
 
 func _on_slot_load_pressed(slot: int) -> void:
-	StateManager.exit(StateManager.State.MENU)
+	StateManager.change_to(StateManager.State.GAMEPLAY, "leave_main_menu")
 	SaveManager.load_game(slot)
 
 

@@ -5,7 +5,7 @@ extends Node2D
 #
 # Lógica al pulsar F dentro del área:
 #   - Si hay cliente cercano con deal activo → complete_deal()
-#   - Si no                                 → esconderse (HIDDEN)
+#   - Si no                                 → esconderse (HIDING)
 # ================================================================
 
 @onready var _area: Area2D = $Area2D
@@ -39,8 +39,9 @@ func _on_body_exited(body: Node2D) -> void:
 		_nell_inside = false
 		InteractionManager.unregister(self)
 		# Si salía escondida, dejar de estarlo
-		if StateManager.is_state(StateManager.State.HIDDEN):
-			StateManager.exit(StateManager.State.HIDDEN)
+		if StateManager.is_hiding():
+			StateManager.exit_hiding("exit_hide_zone_by_leaving_area")
+			_set_hidden_visual(false)
 		if _key_prompt:
 			_key_prompt.hide_prompt()
 
@@ -78,12 +79,13 @@ func _start_client_deal(client: NPCClient) -> void:
 # ESCONDERSE
 # ================================================================
 func _toggle_hide() -> void:
-	if StateManager.is_state(StateManager.State.HIDDEN):
-		# Salir de escondite
-		StateManager.exit(StateManager.State.HIDDEN)
+	if StateManager.is_hiding():
+		StateManager.exit_hiding("exit_hide_zone")
 		_set_hidden_visual(false)
-	elif StateManager.can_enter(StateManager.State.HIDDEN):
-		StateManager.enter(StateManager.State.HIDDEN)
+		return
+
+	if StateManager.can_toggle_hide():
+		StateManager.enter_hiding("enter_hide_zone")
 		_set_hidden_visual(true)
 
 func _set_hidden_visual(is_hidden: bool) -> void:

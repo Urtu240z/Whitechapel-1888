@@ -25,7 +25,7 @@ func start_service(acto: String, tipo: String, client_skin_name: String = "NPC_C
 	if _active:
 		return {}
 
-	if not StateManager.enter(StateManager.State.CLIENT_SERVICE):
+	if not StateManager.change_to(StateManager.State.CLIENT_SERVICE, "start_client_service"):
 		return {}
 
 	_active = true
@@ -117,4 +117,4 @@ func _cleanup_service(world: Node, player: Node, transition: Node) -> void:
 		player.velocity = Vector2.ZERO
 
 	_active = false
-	StateManager.exit(StateManager.State.CLIENT_SERVICE)
+	StateManager.return_to_gameplay("end_client_service")

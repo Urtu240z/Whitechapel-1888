@@ -226,6 +226,15 @@ item = ExtResource("22_721q0")
 max_qty = 1
 metadata/_custom_type_script = "uid://bbc6r2ife4inn"
 
+[sub_resource type="Gradient" id="Gradient_qnasi"]
+offsets = PackedFloat32Array(0.8373702, 1)
+colors = PackedColorArray(0, 0, 0, 0.656, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6ggpe"]
+gradient = SubResource("Gradient_qnasi")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ggpe"]
 size = Vector2(50000, 492)
 
@@ -290,6 +299,7 @@ scale = Vector2(5, 5)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="SkyNight" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside" unique_id=1824478962]
+visible = false
 modulate = Color(1, 1, 1, 0.84313726)
 self_modulate = Color(0.7792914, 0.7792914, 0.7792913, 1)
 z_index = -5
@@ -319,23 +329,25 @@ scale = Vector2(24.999998, 24.999998)
 texture = ExtResource("7_fcpjw")
 
 [node name="VictoriaHome" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=2002751111]
-position = Vector2(78915, -12075.001)
-scale = Vector2(16.87953, 16.879526)
+position = Vector2(78843.78, -12234.425)
+scale = Vector2(12.261056, 12.261054)
 texture = SubResource("CanvasTexture_v2j58")
 
 [node name="ApartmentBlock1" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=1321002648]
+modulate = Color(0.646029, 0.646029, 0.646029, 1)
 texture_filter = 1
-position = Vector2(119745.01, -9885.001)
-scale = Vector2(45, 45)
+position = Vector2(120930.016, -10339.406)
+scale = Vector2(9.737403, 9.737402)
 texture = ExtResource("6_y0tni")
 
 [node name="PointLight2D" type="PointLight2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock1" unique_id=1453904529]
-position = Vector2(-104.44442, 130.44444)
+position = Vector2(447.24496, 619.71423)
 color = Color(1.2331204, 0.7472388, 0, 1)
-energy = 1.9
+energy = 2.0
 shadow_enabled = true
 shadow_item_cull_mask = 3
 texture = ExtResource("2_gb7vo")
+texture_scale = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock1/PointLight2D" unique_id=1136691930]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
@@ -343,12 +355,12 @@ material = SubResource("CanvasItemMaterial_8oeb8")
 texture = ExtResource("2_gb7vo")
 
 [node name="PointLight2D2" type="PointLight2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock1" unique_id=818147125]
-position = Vector2(90.55558, 130.44444)
+position = Vector2(-469.3245, 619.71423)
 color = Color(1.2331204, 0.7472388, 0, 1)
-energy = 1.9
 shadow_enabled = true
 shadow_item_cull_mask = 3
 texture = ExtResource("2_gb7vo")
+texture_scale = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front/ApartmentBlock1/PointLight2D2" unique_id=660587124]
 modulate = Color(1.1315061, 0.8335194, 0, 0.3254902)
@@ -366,9 +378,17 @@ position = Vector2(19365.004, -7680)
 scale = Vector2(15.905, 14.87)
 texture = ExtResource("5_tp2us")
 
+[node name="ApartmentBlock7" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear" unique_id=101990207]
+z_index = -1
+texture_filter = 1
+material = ExtResource("14_okdt8")
+position = Vector2(103740.01, -7140.0005)
+scale = Vector2(15.905, 14.87)
+texture = ExtResource("5_tp2us")
+
 [node name="ApartmentBlock3" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear" unique_id=1793552706]
 material = ExtResource("14_okdt8")
-position = Vector2(52715.004, -10370.001)
+position = Vector2(52715.004, -9765.001)
 scale = Vector2(24.094692, 19.999998)
 texture = ExtResource("5_tp2us")
 
@@ -504,6 +524,7 @@ occluder = SubResource("OccluderPolygon2D_bk7xh")
 occluder = SubResource("OccluderPolygon2D_1qgay")
 
 [node name="LightOccluder2D6" type="LightOccluder2D" parent="OutsideAudiovisuals/Shadows" unique_id=1141924337]
+position = Vector2(223, 0)
 occluder = SubResource("OccluderPolygon2D_h2w1t")
 
 [node name="Lights" type="Node2D" parent="OutsideAudiovisuals" unique_id=1386870515]
@@ -752,6 +773,11 @@ scale = Vector2(1.44, 1.301)
 [node name="HideZone" parent="OutsideGameplay/HideZones" unique_id=40068791 instance=ExtResource("19_lwph6")]
 position = Vector2(10226.001, -93)
 scale = Vector2(3.225, 1.955)
+
+[node name="Sprite2D" type="Sprite2D" parent="OutsideGameplay/HideZones" unique_id=108243455]
+position = Vector2(20545.5, -2159.4998)
+scale = Vector2(7.2968903, 72.234375)
+texture = SubResource("GradientTexture2D_6ggpe")
 
 [node name="ScenePortals" type="Node2D" parent="OutsideGameplay" unique_id=1109195349]
 

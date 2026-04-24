@@ -353,7 +353,7 @@ func start_dialog() -> void:
 		return
 	if not get_tree().root.has_node("Dialogic"):
 		return
-	if not StateManager.can_enter(StateManager.State.DIALOG):
+	if not StateManager.can_start_dialog():
 		return
 
 	var player := _get_player()
@@ -364,10 +364,10 @@ func start_dialog() -> void:
 	if animation and player:
 		animation.lock_facing(player.global_position.x > global_position.x)
 
-	StateManager.enter(StateManager.State.DIALOG)
+	StateManager.change_to(StateManager.State.DIALOG, "start_companion_dialog")
 	Dialogic.start(dialog_timeline)
 	Dialogic.timeline_ended.connect(func():
-		StateManager.exit(StateManager.State.DIALOG)
+		StateManager.return_to_gameplay("end_companion_dialog")
 		if is_instance_valid(self) and movement:
 			movement.unfreeze()
 		if animation:

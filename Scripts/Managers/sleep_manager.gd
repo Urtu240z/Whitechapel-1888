@@ -121,7 +121,10 @@ func start_sleep_forced(lugar_str: String, mensaje: String = "") -> void:
 	_cancelado = false
 	_durmiendo = true
 	_forzado = true
-	StateManager.enter(StateManager.State.SLEEPING)
+	if not StateManager.change_to(StateManager.State.SLEEPING, "start_sleep_forced"):
+		_durmiendo = false
+		_forzado = false
+		return
 
 	_mostrar_mensaje_colapso(mensaje)
 	await SceneManager.fade_out(2.0)
@@ -282,7 +285,9 @@ func _iniciar_sueno_directo() -> void:
 # ================================================================
 
 func _mostrar_selection() -> void:
-	StateManager.enter(StateManager.State.SLEEPING)
+	if not StateManager.change_to(StateManager.State.SLEEPING, "open_sleep_selection"):
+		return
+
 	DayNightManager.pausar()
 
 	var player = PlayerManager.player_instance
@@ -308,7 +313,9 @@ func _mostrar_selection() -> void:
 	_selection.connect("cancelado", _on_selection_cancelado)
 
 func _mostrar_aviso_hostal_cerrado() -> void:
-	StateManager.enter(StateManager.State.SLEEPING)
+	if not StateManager.change_to(StateManager.State.SLEEPING, "hostel_closed_notice"):
+		return
+
 	DayNightManager.pausar()
 
 	var player = PlayerManager.player_instance
@@ -321,7 +328,9 @@ func _mostrar_aviso_hostal_cerrado() -> void:
 	_selection.connect("cancelado", _on_selection_cancelado)
 
 func _mostrar_aviso_poco_tiempo() -> void:
-	StateManager.enter(StateManager.State.SLEEPING)
+	if not StateManager.change_to(StateManager.State.SLEEPING, "hostel_too_late_notice"):
+		return
+
 	DayNightManager.pausar()
 
 	var player = PlayerManager.player_instance
@@ -356,7 +365,7 @@ func _on_selection_confirmado(horas: float) -> void:
 
 func _on_selection_cancelado() -> void:
 	_limpiar_pago_hostal_pendiente()
-	StateManager.exit(StateManager.State.SLEEPING)
+	StateManager.return_to_gameplay("end_sleep")
 	DayNightManager.reanudar()
 
 	var player = PlayerManager.player_instance
@@ -526,11 +535,11 @@ func _finalizar_sueno() -> void:
 		await SceneManager.fade_in(1.5)
 		player.animation.play_rise()
 		await player.animation.anim_tree.animation_finished
-		StateManager.exit(StateManager.State.SLEEPING)
+		StateManager.return_to_gameplay("end_sleep")
 		player.enable_movement()
 	else:
 		await SceneManager.fade_in(1.5)
-		StateManager.exit(StateManager.State.SLEEPING)
+		StateManager.return_to_gameplay("end_sleep")
 
 	sleep_ended.emit(_horas_dormidas, not _cancelado)
 

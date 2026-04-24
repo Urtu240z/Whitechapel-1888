@@ -2,7 +2,11 @@ extends Area2D
 
 # ================================================================
 # SCENE PORTAL
-# Portal entre escenas con portal_id y target_portal_id
+# Portal entre escenas usando SceneManager.
+#
+# portal_id         = ID de este portal en esta escena.
+# target_scene_path = escena destino.
+# target_portal_id  = portal donde aparecerá Nell en la escena destino.
 # ================================================================
 
 @export_group("Portal IDs")
@@ -39,44 +43,54 @@ func _ready() -> void:
 func _on_body_entered(body: Node) -> void:
 	if _used:
 		return
+
 	if not body.is_in_group("player"):
 		return
 
 	if require_interact:
 		_player_inside = true
 		_player_ref = body
-	else:
-		_trigger_portal()
+		return
+
+	_trigger_portal()
 
 
 func _on_body_exited(body: Node) -> void:
-	if body == _player_ref:
-		_player_inside = false
-		_player_ref = null
+	if body != _player_ref:
+		return
+
+	_player_inside = false
+	_player_ref = null
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not require_interact:
 		return
+
 	if _used:
 		return
+
 	if not _player_inside:
 		return
 
-	if event.is_action_pressed(interact_action):
-		_trigger_portal()
+	if not event.is_action_pressed(interact_action):
+		return
+
+	if get_node_or_null("/root/StateManager") != null and not StateManager.can_interact():
+		return
+
+	get_viewport().set_input_as_handled()
+	_trigger_portal()
 
 
 func _trigger_portal() -> void:
 	if _used:
 		return
 
-	if target_scene_path.strip_edges() == "":
-		push_warning("ScenePortal: target_scene_path vacío en portal '%s'." % portal_id)
+	if SceneManager.is_transitioning():
 		return
 
-	if target_portal_id.strip_edges() == "":
-		push_warning("ScenePortal: target_portal_id vacío en portal '%s'." % portal_id)
+	if not _is_config_valid():
 		return
 
 	_used = true
@@ -86,12 +100,33 @@ func _trigger_portal() -> void:
 		_player_inside = false
 		_player_ref = null
 
-	PortalManager.travel_to_scene(
+	SceneManager.travel_to_scene(
 		target_scene_path,
 		target_portal_id,
 		use_fade,
-		fade_time
+		fade_time,
+		_get_final_state_after_travel(),
+		"scene_portal_%s" % portal_id
 	)
+
+
+func _get_final_state_after_travel() -> int:
+	if get_node_or_null("/root/StateManager") == null:
+		return SceneManager.TARGET_STATE_NONE
+
+	return StateManager.State.GAMEPLAY
+
+
+func _is_config_valid() -> bool:
+	if target_scene_path.strip_edges() == "":
+		push_warning("ScenePortal: target_scene_path vacío en portal '%s'." % portal_id)
+		return false
+
+	if target_portal_id.strip_edges() == "":
+		push_warning("ScenePortal: target_portal_id vacío en portal '%s'." % portal_id)
+		return false
+
+	return true
 
 
 func get_portal_id() -> String:

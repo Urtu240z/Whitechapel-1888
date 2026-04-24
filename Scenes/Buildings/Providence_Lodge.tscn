@@ -7,7 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://bq626yq3ebj5a" path="res://Assets/Audio/Buildings/Close_Door (1).wav" id="4_hfhj2"]
 [ext_resource type="AudioStream" uid="uid://vsi28chd68ph" path="res://Assets/Audio/Buildings/Close_Door (2).wav" id="5_foppm"]
 [ext_resource type="Texture2D" uid="uid://gwtsv0oq58ec" path="res://Assets/Sprites/Atrezzo/Stairs.png" id="6_cctr7"]
-[ext_resource type="Texture2D" uid="uid://bb6b47sgcb7im" path="res://Assets/Sprites/Building/Providence_Lodge_HD.png" id="6_uxkrb"]
 [ext_resource type="Texture2D" uid="uid://b0whticspjem6" path="res://Assets/Sprites/Atrezzo/Stairs_n.png" id="7_da3ww"]
 [ext_resource type="Texture2D" uid="uid://cido71qeghns5" path="res://Assets/Sprites/Interiors/Lodging House/Reception.png" id="8_lio1f"]
 [ext_resource type="PackedScene" uid="uid://cmmlvd8ng8chj" path="res://Scenes/NPC/NPC_Service.tscn" id="8_pera3"]
@@ -41,11 +40,6 @@
 [ext_resource type="Shader" uid="uid://duaxbbg0a834o" path="res://Assets/Shaders/Interaction_Glow.gdshader" id="43_n7dps"]
 [ext_resource type="Texture2D" uid="uid://dehublgg56alq" path="res://Assets/Sprites/Building/Bar Ten Bells.png" id="44_r7l5w"]
 [ext_resource type="Texture2D" uid="uid://cgxn1175hs054" path="res://Assets/Sprites/Building/Bar Ten Bells_n.png" id="45_381fc"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_p405w"]
-diffuse_texture = ExtResource("6_uxkrb")
-specular_color = Color(0, 0, 0, 1)
-specular_shininess = 0.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_g7bew"]
 diffuse_texture = ExtResource("1_et8nn")
@@ -216,17 +210,17 @@ street_name = "Comercial Street"
 interior_spawn_path = NodePath("Interior/InteriorSpawn")
 exterior_spawn_path = NodePath("ExteriorSpawn")
 
-[node name="Exterior" type="Sprite2D" parent="." unique_id=1151510799]
-modulate = Color(0.5330367, 0.5330367, 0.5330367, 1)
-position = Vector2(0.36561584, 0.5000181)
-scale = Vector2(0.3068436, 0.3065476)
-texture = SubResource("CanvasTexture_p405w")
+[node name="Exterior" type="Sprite2D" parent="." unique_id=881878240]
+modulate = Color(0.53333336, 0.53333336, 0.53333336, 1)
+position = Vector2(0.26917338, 0.6701607)
+scale = Vector2(0.41652647, 0.41652644)
+texture = ExtResource("1_et8nn")
 
 [node name="Exterior_lores" type="Sprite2D" parent="Exterior" unique_id=1608353721]
 visible = false
 modulate = Color(0.5330367, 0.5330367, 0.5330367, 1)
-position = Vector2(-1.1915381, -1.6311241)
-scale = Vector2(4.0014563, 4.00532)
+position = Vector2(-0.64623356, -1.6089251)
+scale = Vector2(2.947763, 2.9477634)
 texture = SubResource("CanvasTexture_g7bew")
 
 [node name="Interior" type="Node2D" parent="." unique_id=1107683034]

@@ -32,7 +32,6 @@ buses/size/mode=0
 
 StateManager="*res://Scripts/Managers/state_manager.gd"
 SceneManager="*res://Scripts/Managers/scene_manager.gd"
-PortalManager="*uid://dqpp4thk0a1xt"
 GameManager="*res://Scripts/Managers/game_manager.gd"
 DamageManager="*uid://bd7kh51hb5r2q"
 EffectsManager="*uid://vxabxav6ef78"

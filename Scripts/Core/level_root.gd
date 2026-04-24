@@ -230,12 +230,12 @@ func _setup_exterior_camera() -> void:
 # ================================================================
 
 func _apply_pending_portal_spawn() -> void:
-	if not PortalManager.has_pending_spawn():
+	if not SceneManager.has_pending_portal_spawn():
 		return
 
-	var target_portal_id: String = PortalManager.get_pending_target_portal_id()
+	var target_portal_id: String = SceneManager.get_pending_portal_id()
 	if target_portal_id == "":
-		PortalManager.clear_pending_spawn()
+		SceneManager.clear_pending_portal_spawn()
 		return
 
 	var player: Node2D = get_node_or_null(player_path) as Node2D
@@ -265,7 +265,7 @@ func _apply_pending_portal_spawn() -> void:
 		if player is CharacterBody2D:
 			(player as CharacterBody2D).velocity = Vector2.ZERO
 
-		PortalManager.clear_pending_spawn()
+		SceneManager.clear_pending_portal_spawn()
 		return
 
 	push_warning("LevelRoot: no se encontró portal destino con id '%s'." % target_portal_id)

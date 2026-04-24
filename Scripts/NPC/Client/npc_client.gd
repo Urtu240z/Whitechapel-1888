@@ -410,7 +410,7 @@ func start_dialog() -> void:
 
 	prepare_dialogic_variables()
 
-	if not StateManager.can_enter(StateManager.State.DIALOG):
+	if not StateManager.can_start_dialog():
 		return
 
 	var player := _get_player()
@@ -419,7 +419,7 @@ func start_dialog() -> void:
 	if movement:
 		movement.freeze()
 
-	StateManager.enter(StateManager.State.DIALOG)
+	StateManager.change_to(StateManager.State.DIALOG, "start_client_dialog")
 	Dialogic.start(dialog_timeline)
 
 	if _refused and animation:
@@ -438,7 +438,7 @@ func start_dialog() -> void:
 
 	Dialogic.timeline_ended.connect(func():
 		resolve_dialogic_result()
-		StateManager.exit(StateManager.State.DIALOG)
+		StateManager.return_to_gameplay("end_client_dialog")
 
 		if is_instance_valid(self) and movement:
 			movement.unfreeze()
@@ -534,7 +534,7 @@ func accept_deal(acto: String) -> void:
 func _on_player_too_far_warning() -> void:
 	if not get_tree().root.has_node("Dialogic"):
 		return
-	if not StateManager.can_enter(StateManager.State.DIALOG):
+	if not StateManager.can_start_dialog():
 		return
 
 	Dialogic.VAR.set_variable("client.deal_state", "warning")
@@ -545,12 +545,12 @@ func _on_player_too_far_warning() -> void:
 	if movement:
 		movement.freeze()
 
-	StateManager.enter(StateManager.State.DIALOG)
+	StateManager.change_to(StateManager.State.DIALOG, "start_client_dialog")
 	Dialogic.start(dialog_timeline)
 
 	Dialogic.timeline_ended.connect(func():
 		Dialogic.VAR.set_variable("client.deal_state", "")
-		StateManager.exit(StateManager.State.DIALOG)
+		StateManager.return_to_gameplay("end_client_dialog")
 
 		if is_instance_valid(self) and movement:
 			movement.unfreeze()
@@ -567,7 +567,7 @@ func _on_player_too_far_cancel() -> void:
 
 	if not get_tree().root.has_node("Dialogic"):
 		return
-	if not StateManager.can_enter(StateManager.State.DIALOG):
+	if not StateManager.can_start_dialog():
 		return
 
 	Dialogic.VAR.set_variable("client.deal_state", "cancel")
@@ -578,13 +578,13 @@ func _on_player_too_far_cancel() -> void:
 	if movement:
 		movement.freeze()
 
-	StateManager.enter(StateManager.State.DIALOG)
+	StateManager.change_to(StateManager.State.DIALOG, "start_client_dialog")
 	Dialogic.start(dialog_timeline)
 
 	Dialogic.timeline_ended.connect(func():
 		Dialogic.VAR.set_variable("client.deal_state", "")
 		Dialogic.VAR.set_variable("client.deal_active", has_active_deal())
-		StateManager.exit(StateManager.State.DIALOG)
+		StateManager.return_to_gameplay("end_client_dialog")
 
 		if is_instance_valid(self) and movement:
 			movement.unfreeze()

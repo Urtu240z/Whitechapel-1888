@@ -6,14 +6,14 @@
 [ext_resource type="AudioStream" uid="uid://bmvvrsiilllp7" path="res://Assets/Music/Shadows Beneath the Veil v2.wav" id="3_y75uc"]
 [ext_resource type="Texture2D" uid="uid://b1ryuwgxikqcc" path="res://Assets/Sprites/Background/Background_1.png" id="4_b16t0"]
 [ext_resource type="Texture2D" uid="uid://dwdtfi42cuah7" path="res://Assets/Sprites/Lights/360 Light.png" id="5_circm"]
+[ext_resource type="Texture2D" uid="uid://celyv1hqlxxcq" path="res://Assets/Sprites/Building/Destroyed_Building_1.png" id="7_liygm"]
 [ext_resource type="Texture2D" uid="uid://creqym16eeyee" path="res://Assets/Sprites/Building/5_lores.png" id="7_r5wsw"]
-[ext_resource type="Texture2D" uid="uid://cn1a6813t3s52" path="res://Assets/Sprites/Building/4.png" id="8_lraxb"]
-[ext_resource type="Texture2D" uid="uid://bs3m0iq3snn0r" path="res://Assets/Sprites/Building/3.png" id="9_57xgg"]
-[ext_resource type="Texture2D" uid="uid://c1gxfp7efr4bn" path="res://Assets/Sprites/Building/2.png" id="10_noggf"]
-[ext_resource type="Texture2D" uid="uid://dtdsneob5tt8g" path="res://Assets/Sprites/Building/6.png" id="11_hm7hp"]
+[ext_resource type="Texture2D" uid="uid://br8w77jif5dwl" path="res://Assets/Sprites/Building/Destroyed_Building_2.png" id="8_r5wsw"]
+[ext_resource type="Texture2D" uid="uid://b5137nklgfmi7" path="res://Assets/Sprites/Building/Destroyed_Building_3.png" id="9_lraxb"]
 [ext_resource type="Texture2D" uid="uid://cqaib6xovfhpw" path="res://Assets/Sprites/NPC/NPC 1.png" id="12_sl221"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="13_csii2"]
 [ext_resource type="PackedScene" uid="uid://cg3wm3f0te243" path="res://Scenes/NPC/NPC_Charger.tscn" id="14_dk2ch"]
+[ext_resource type="Script" uid="uid://dx87qkd75ne1c" path="res://Scripts/Core/Flame_Flicker.gd" id="15_57xgg"]
 [ext_resource type="Texture2D" uid="uid://b0y5oeotay27s" path="res://Assets/Sprites/Lights/180 Light.png" id="15_liygm"]
 [ext_resource type="Script" uid="uid://coqq022k5vd4y" path="res://Scripts/Core/scene_portal.gd" id="17_liygm"]
 [ext_resource type="PackedScene" uid="uid://c3m8fewa1n53m" path="res://Scenes/Buildings/Hide_Zone.tscn" id="32_vv5rx"]
@@ -102,8 +102,8 @@ shader_parameter/brightness = 0.8890000422275
 shader_parameter/tint_color = Color(0.07841007, 0.029567864, 0.011186116, 1)
 
 [sub_resource type="Gradient" id="Gradient_27c1b"]
-offsets = PackedFloat32Array(0, 0.3561644, 0.61095893, 1)
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0, 0.14532872, 0.6401384, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.915, 0, 0, 0, 0.94600004, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_okdt8"]
 gradient = SubResource("Gradient_27c1b")
@@ -252,6 +252,7 @@ scale = Vector2(5, 5)
 scale = Vector2(0.99999994, 0.99999994)
 
 [node name="SkyNight" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside" unique_id=1824478962]
+visible = false
 modulate = Color(1, 1, 1, 0.84313726)
 self_modulate = Color(0.7792914, 0.7792914, 0.7792913, 1)
 z_index = -5
@@ -274,37 +275,29 @@ scale = Vector2(0.040000003, 0.040000003)
 [node name="Front" type="Node2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings" unique_id=1795668460]
 modulate = Color(0.57700837, 0.5770084, 0.57700837, 1)
 
-[node name="6" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=375199775]
-light_mask = 2
-position = Vector2(-11195.001, -4405.0005)
-scale = Vector2(5.0000005, 5.0000005)
-texture = ExtResource("11_hm7hp")
+[node name="DestroyedBuilding1" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=1215911003]
+modulate = Color(3.1681983, 3.1681983, 3.1681983, 1)
+position = Vector2(-21400.002, -9145.001)
+scale = Vector2(9.089036, 9.089036)
+texture = ExtResource("7_liygm")
 
-[node name="5" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=894900703]
-modulate = Color(0.6977804, 0.69777995, 0.69778, 1)
-light_mask = 2
-position = Vector2(-32711.58, -8298.75)
-scale = Vector2(39.50359, 39.50359)
-texture = ExtResource("7_r5wsw")
+[node name="DestroyedBuilding4" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=1504033370]
+modulate = Color(3.1681983, 3.1681983, 3.1681983, 1)
+position = Vector2(-61570.008, -9145.001)
+scale = Vector2(-9.089, 9.089)
+texture = ExtResource("7_liygm")
 
-[node name="4" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=1433179133]
-light_mask = 2
-position = Vector2(-14595.001, -10110.001)
-scale = Vector2(36.354355, 36.354366)
-texture = ExtResource("8_lraxb")
+[node name="DestroyedBuilding2" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=1525774616]
+modulate = Color(2.5032542, 2.5032542, 2.5032542, 1)
+position = Vector2(-40860.008, -8424.353)
+scale = Vector2(-9.177665, 9.177666)
+texture = ExtResource("8_r5wsw")
 
-[node name="3" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=63368072]
-light_mask = 2
-position = Vector2(-55100.004, -10990.002)
-scale = Vector2(40.030193, 40.030193)
-texture = ExtResource("9_57xgg")
-
-[node name="2" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=1476488637]
-modulate = Color(1.4954206, 1.4954206, 1.4954206, 1)
-light_mask = 2
-position = Vector2(-360.47803, -9278.714)
-scale = Vector2(42.523933, 42.523933)
-texture = ExtResource("10_noggf")
+[node name="DestroyedBuilding3" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Front" unique_id=1701881141]
+modulate = Color(3.851815, 3.851815, 3.851815, 1)
+position = Vector2(16690, -7805.001)
+scale = Vector2(7.7354293, 7.7354293)
+texture = ExtResource("9_lraxb")
 
 [node name="Rear" type="Node2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings" unique_id=315640050]
 z_index = -1
@@ -312,13 +305,20 @@ z_index = -1
 [node name="7" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear" unique_id=768166108]
 modulate = Color(0.6977804, 0.69777995, 0.69778, 1)
 z_index = -2
-position = Vector2(-56710.004, -8298.75)
+position = Vector2(-5310.004, -8298.75)
+scale = Vector2(39.50359, 39.50359)
+texture = ExtResource("7_r5wsw")
+
+[node name="9" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear" unique_id=572936424]
+modulate = Color(0.6977804, 0.69777995, 0.69778, 1)
+z_index = -2
+position = Vector2(-46165.004, -8298.75)
 scale = Vector2(39.50359, 39.50359)
 texture = ExtResource("7_r5wsw")
 
 [node name="8" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear" unique_id=389973389]
 modulate = Color(0.6977804, 0.69777995, 0.69778, 1)
-position = Vector2(13405.001, -8298.75)
+position = Vector2(40055.004, -8298.75)
 scale = Vector2(39.50359, 39.50359)
 texture = ExtResource("7_r5wsw")
 
@@ -366,8 +366,8 @@ scale = Vector2(0.9999998, 0.9999998)
 
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/Shadows" unique_id=1653320697]
 z_index = 1
-position = Vector2(116.400116, -9.9)
-scale = Vector2(109.58752, 1.0343752)
+position = Vector2(116.400116, 35.4)
+scale = Vector2(109.58752, 2.4500003)
 texture = SubResource("GradientTexture2D_okdt8")
 
 [node name="Fog" type="Node2D" parent="OutsideAudiovisuals" unique_id=907223236]
@@ -390,7 +390,7 @@ scale = Vector2(1.1099999, 1.1099999)
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/DynamicLights" unique_id=549367222]
 modulate = Color(1, 0.6253981, 0, 0.17500001)
 material = SubResource("CanvasItemMaterial_r5wsw")
-position = Vector2(-1126.1265, -563.0631)
+position = Vector2(194.59448, -995.4956)
 scale = Vector2(5.935, 5.935)
 texture = ExtResource("15_liygm")
 
@@ -402,11 +402,12 @@ energy = 5.63
 range_item_cull_mask = 3
 texture = ExtResource("15_liygm")
 texture_scale = 5.16
+script = ExtResource("15_57xgg")
 
 [node name="Sprite2D2" type="Sprite2D" parent="OutsideAudiovisuals/DynamicLights" unique_id=1599087952]
 modulate = Color(1, 0.6253981, 0, 0.17500001)
 material = SubResource("CanvasItemMaterial_r5wsw")
-position = Vector2(-2828.8293, -645.04504)
+position = Vector2(-11621.623, -976.57666)
 scale = Vector2(5.935, 5.935)
 texture = ExtResource("15_liygm")
 
@@ -418,11 +419,12 @@ energy = 5.63
 range_item_cull_mask = 3
 texture = ExtResource("15_liygm")
 texture_scale = 5.16
+script = ExtResource("15_57xgg")
 
 [node name="Sprite2D3" type="Sprite2D" parent="OutsideAudiovisuals/DynamicLights" unique_id=1660448226]
 modulate = Color(1, 0.6253981, 0, 0.17500001)
 material = SubResource("CanvasItemMaterial_r5wsw")
-position = Vector2(-8106.307, -645.04504)
+position = Vector2(4068.4692, -690.09015)
 scale = Vector2(5.935, 5.935)
 texture = ExtResource("15_liygm")
 
@@ -434,12 +436,13 @@ energy = 5.63
 range_item_cull_mask = 3
 texture = ExtResource("15_liygm")
 texture_scale = 5.16
+script = ExtResource("15_57xgg")
 
 [node name="Sprite2D4" type="Sprite2D" parent="OutsideAudiovisuals/DynamicLights" unique_id=1634676350]
 modulate = Color(1, 0.6253981, 0, 0.17500001)
 z_index = -1
 material = SubResource("CanvasItemMaterial_r5wsw")
-position = Vector2(-6384.6855, -754.955)
+position = Vector2(6239.64, -1637.838)
 scale = Vector2(5.935, 5.935)
 texture = ExtResource("15_liygm")
 
@@ -450,6 +453,7 @@ color = Color(1, 0.49010885, 0, 1)
 energy = 7.59
 texture = ExtResource("15_liygm")
 texture_scale = 5.16
+script = ExtResource("15_57xgg")
 
 [node name="OutsideBuildings" type="Node2D" parent="." unique_id=750250133]
 scale = Vector2(4.9999995, 4.9999995)
@@ -466,24 +470,28 @@ scale = Vector2(4.9999995, 4.9999995)
 
 [node name="HideZones" type="Node2D" parent="OutsideGameplay" unique_id=204868614]
 
+[node name="HideZone3" parent="OutsideGameplay/HideZones" unique_id=1910397108 instance=ExtResource("32_vv5rx")]
+z_index = -1
+position = Vector2(-14209, -93.00001)
+scale = Vector2(1.845, 1.845)
+
 [node name="HideZone2" parent="OutsideGameplay/HideZones" unique_id=173736521 instance=ExtResource("32_vv5rx")]
 z_index = -1
-position = Vector2(-9467, -18)
+position = Vector2(-6892.001, -18)
 scale = Vector2(2.134, 1.861)
 
 [node name="HideZone" parent="OutsideGameplay/HideZones" unique_id=40068791 instance=ExtResource("32_vv5rx")]
-position = Vector2(2445.0002, 364)
+position = Vector2(-366.99976, 364)
 scale = Vector2(3.225, 1.955)
 
-[node name="HideZone3" parent="OutsideGameplay/HideZones" unique_id=1910397108 instance=ExtResource("32_vv5rx")]
-z_index = -1
-position = Vector2(-12517, -93.00001)
-scale = Vector2(1.845, 1.845)
+[node name="HideZone4" parent="OutsideGameplay/HideZones" unique_id=385025722 instance=ExtResource("32_vv5rx")]
+position = Vector2(6973, 364)
+scale = Vector2(3.225, 1.955)
 
 [node name="ScenePortals" type="Node2D" parent="OutsideGameplay" unique_id=1109195349]
 
 [node name="ScenePortal_Left" parent="OutsideGameplay/ScenePortals" unique_id=819414623 instance=ExtResource("33_ao38m")]
-position = Vector2(-12663, -72)
+position = Vector2(-13879, -72)
 script = ExtResource("17_liygm")
 portal_id = "flower_dean_street_left"
 target_scene_path = "uid://d03qxmhrly01w"
@@ -493,7 +501,7 @@ interact_action = &"interact"
 fade_time = 2.0
 
 [node name="ScenePortal_Right" parent="OutsideGameplay/ScenePortals" unique_id=1533950328 instance=ExtResource("33_ao38m")]
-position = Vector2(1832, -27)
+position = Vector2(6057, -27)
 script = ExtResource("17_liygm")
 portal_id = "flower_dean_street_right"
 target_scene_path = "uid://d03qxmhrly01w"

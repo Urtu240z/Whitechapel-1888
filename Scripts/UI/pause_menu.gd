@@ -99,7 +99,7 @@ func close() -> void:
 	_pending_save_slot = -1
 	visible = false
 	get_tree().paused = false
-	StateManager.exit(StateManager.State.PAUSED)
+	StateManager.pop_state("resume")
 
 	var player = PlayerManager.player_instance
 	if is_instance_valid(player):

@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://vsi28chd68ph" path="res://Assets/Audio/Buildings/Close_Door (2).wav" id="6_i4n63"]
 [ext_resource type="AudioStream" uid="uid://d1q5svthqkw2r" path="res://Assets/Audio/Buildings/Close_Door (3).wav" id="7_gkafe"]
 [ext_resource type="Texture2D" uid="uid://dehublgg56alq" path="res://Assets/Sprites/Building/Bar Ten Bells.png" id="8_fh68x"]
-[ext_resource type="Texture2D" uid="uid://w50sjr6mkdyt" path="res://Assets/Sprites/Building/Bar Ten Bells_HD.png" id="8_i4n63"]
+[ext_resource type="Texture2D" uid="uid://blanr7qkp7rp5" path="res://Assets/Sprites/Building/Ten Bells.png" id="8_i4n63"]
 [ext_resource type="PackedScene" uid="uid://cmmlvd8ng8chj" path="res://Scenes/NPC/NPC_Service.tscn" id="8_nqx5a"]
 [ext_resource type="Script" uid="uid://bbc6r2ife4inn" path="res://Scripts/Data/shop_item_data.gd" id="9_2u12w"]
 [ext_resource type="Texture2D" uid="uid://cgxn1175hs054" path="res://Assets/Sprites/Building/Bar Ten Bells_n.png" id="9_fh68x"]
@@ -214,16 +214,15 @@ interior_spawn_path = NodePath("Interior/InteriorSpawn")
 exterior_spawn_path = NodePath("ExteriorSpawn")
 
 [node name="Exterior" type="Sprite2D" parent="." unique_id=720354190]
-texture_filter = 1
-position = Vector2(-642.30804, -462.1403)
-scale = Vector2(0.1655531, 0.16555308)
+position = Vector2(-641.60706, -462.338)
+scale = Vector2(0.4367745, 0.4367745)
 texture = SubResource("CanvasTexture_gkafe")
 
 [node name="Exterior_lores" type="Sprite2D" parent="Exterior" unique_id=107088786]
 visible = false
 texture_filter = 1
-position = Vector2(1.8605957, -0.9042969)
-scale = Vector2(3.998717, 3.9987178)
+position = Vector2(-0.8996582, 0.10986328)
+scale = Vector2(1.5156565, 1.5156566)
 texture = SubResource("CanvasTexture_jhiha")
 
 [node name="Interior" type="Node2D" parent="." unique_id=936244711]
