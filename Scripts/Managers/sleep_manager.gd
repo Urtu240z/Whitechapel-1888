@@ -28,6 +28,8 @@ const SUENO_MINIMO_DESPERTAR: float = 40.0
 const SCENE_SELECTION = preload("res://Scenes/Core/Sleep_Selection.tscn")
 const SCENE_SCREEN = preload("res://Scenes/Core/Sleep_Screen.tscn")
 
+const LOCK_REASON: String = "sleep"
+
 # ================================================================
 # ESTADO INTERNO
 # ================================================================
@@ -93,6 +95,10 @@ func start_sleep(lugar_str: String) -> void:
 	if _durmiendo or _selection != null or _screen != null:
 		return
 
+	if not StateManager.can_start_sleep():
+		push_warning("SleepManager.start_sleep(): estado inválido: %s" % StateManager.current_name())
+		return
+
 	_lugar = _parsear_lugar(lugar_str)
 	_hora_inicio = DayNightManager.get_hour_float()
 
@@ -113,6 +119,9 @@ func start_sleep_forced(lugar_str: String, mensaje: String = "") -> void:
 	if _durmiendo or _screen != null:
 		return
 
+	if not _enter_sleep_mode("forced_sleep"):
+		return
+
 	_lugar = _parsear_lugar(lugar_str)
 	_hora_inicio = DayNightManager.get_hour_float()
 	_horas_totales = _calcular_horas_para_recuperar_forzado()
@@ -121,13 +130,9 @@ func start_sleep_forced(lugar_str: String, mensaje: String = "") -> void:
 	_cancelado = false
 	_durmiendo = true
 	_forzado = true
-	if not StateManager.change_to(StateManager.State.SLEEPING, "start_sleep_forced"):
-		_durmiendo = false
-		_forzado = false
-		return
 
 	_mostrar_mensaje_colapso(mensaje)
-	await SceneManager.fade_out(2.0)
+	await SceneManager.fade_out(2.0, true, "forced_sleep_fade_out")
 	_limpiar_mensaje_colapso()
 	await _iniciar_sueno_directo()
 
@@ -195,6 +200,12 @@ func start_hostel_rental_flow(coste: float) -> Dictionary:
 			"reason": "busy"
 		}
 
+	if not StateManager.can_start_sleep():
+		return {
+			"success": false,
+			"reason": "invalid_state"
+		}
+
 	_lugar = Lugar.HOSTAL
 	_hora_inicio = DayNightManager.get_hour_float()
 
@@ -223,6 +234,55 @@ func start_hostel_rental_flow(coste: float) -> Dictionary:
 	}
 
 # ================================================================
+# ESTADO / BLOQUEO GLOBAL
+# ================================================================
+func _enter_sleep_mode(reason: String) -> bool:
+	if StateManager.is_sleeping():
+		PlayerManager.lock_player(LOCK_REASON, true)
+		DayNightManager.pausar()
+		return true
+
+	if not StateManager.can_start_sleep():
+		push_warning("SleepManager: no se puede iniciar sueño desde %s" % StateManager.current_name())
+		return false
+
+	if not StateManager.change_to(StateManager.State.SLEEPING, reason):
+		return false
+
+	PlayerManager.lock_player(LOCK_REASON, true)
+	PlayerManager.force_stop()
+	DayNightManager.pausar()
+	return true
+
+
+func _exit_sleep_mode(reason: String) -> void:
+	DayNightManager.reanudar()
+
+	if StateManager.is_sleeping():
+		StateManager.return_to_gameplay(reason)
+	elif StateManager.is_hard_lock_state():
+		StateManager.force_state(StateManager.State.GAMEPLAY, reason)
+
+	PlayerManager.unlock_player(LOCK_REASON)
+	PlayerManager.force_stop()
+
+
+func _play_player_rise_animation(player: Node) -> void:
+	if not is_instance_valid(player):
+		return
+
+	var animation = player.get("animation")
+	if animation == null:
+		return
+
+	if animation.has_method("play_rise"):
+		animation.play_rise()
+
+	var anim_tree = animation.get("anim_tree")
+	if anim_tree != null and anim_tree.has_signal("animation_finished"):
+		await anim_tree.animation_finished
+
+# ================================================================
 # MENSAJE DE COLAPSO
 # ================================================================
 
@@ -233,7 +293,7 @@ func _mostrar_mensaje_colapso(mensaje: String) -> void:
 		return
 
 	_collapse_label = CanvasLayer.new()
-	_collapse_label.layer = 20
+	_collapse_label.layer = 1100
 
 	var lbl := Label.new()
 	lbl.text = mensaje
@@ -276,7 +336,7 @@ func _iniciar_sueno_directo() -> void:
 		if _screen.has_method("set_sleep_preview"):
 			_screen.call("set_sleep_preview", PlayerStats.sueno)
 
-	await SceneManager.fade_in(1.5)
+	await SceneManager.fade_in(1.5, true, "sleep_fade_in")
 
 	_arrancar_tramo_visual(_hora_inicio, _hora_fin, _horas_totales)
 
@@ -285,14 +345,8 @@ func _iniciar_sueno_directo() -> void:
 # ================================================================
 
 func _mostrar_selection() -> void:
-	if not StateManager.change_to(StateManager.State.SLEEPING, "open_sleep_selection"):
+	if not _enter_sleep_mode("sleep_selection"):
 		return
-
-	DayNightManager.pausar()
-
-	var player = PlayerManager.player_instance
-	if player:
-		player.disable_movement()
 
 	_selection = SCENE_SELECTION.instantiate()
 	get_tree().root.add_child(_selection)
@@ -313,14 +367,8 @@ func _mostrar_selection() -> void:
 	_selection.connect("cancelado", _on_selection_cancelado)
 
 func _mostrar_aviso_hostal_cerrado() -> void:
-	if not StateManager.change_to(StateManager.State.SLEEPING, "hostel_closed_notice"):
+	if not _enter_sleep_mode("hostel_closed_notice"):
 		return
-
-	DayNightManager.pausar()
-
-	var player = PlayerManager.player_instance
-	if player:
-		player.disable_movement()
 
 	_selection = SCENE_SELECTION.instantiate()
 	get_tree().root.add_child(_selection)
@@ -328,14 +376,8 @@ func _mostrar_aviso_hostal_cerrado() -> void:
 	_selection.connect("cancelado", _on_selection_cancelado)
 
 func _mostrar_aviso_poco_tiempo() -> void:
-	if not StateManager.change_to(StateManager.State.SLEEPING, "hostel_too_late_notice"):
+	if not _enter_sleep_mode("hostel_not_enough_time_notice"):
 		return
-
-	DayNightManager.pausar()
-
-	var player = PlayerManager.player_instance
-	if player:
-		player.disable_movement()
 
 	_selection = SCENE_SELECTION.instantiate()
 	get_tree().root.add_child(_selection)
@@ -350,7 +392,7 @@ func _on_selection_confirmado(horas: float) -> void:
 			_on_selection_cancelado()
 			return
 
-		PlayerStats.dias_sin_pagar_hostal = 0
+		PlayerStats.apply_sleep_result({"dias_sin_pagar_hostal": 0})
 		PlayerStats.sync_dialogic_variables_now()
 		_limpiar_pago_hostal_pendiente()
 
@@ -365,13 +407,7 @@ func _on_selection_confirmado(horas: float) -> void:
 
 func _on_selection_cancelado() -> void:
 	_limpiar_pago_hostal_pendiente()
-	StateManager.return_to_gameplay("end_sleep")
-	DayNightManager.reanudar()
-
-	var player = PlayerManager.player_instance
-	if player:
-		player.enable_movement()
-
+	_exit_sleep_mode("cancel_sleep_selection")
 	_cerrar_selection()
 
 # ================================================================
@@ -381,7 +417,7 @@ func _on_selection_cancelado() -> void:
 func _iniciar_sueno() -> void:
 	DayNightManager.pausar()
 
-	await SceneManager.fade_out(1.5)
+	await SceneManager.fade_out(1.5, true, "sleep_fade_out")
 
 	_screen = SCENE_SCREEN.instantiate()
 	get_tree().root.add_child(_screen)
@@ -396,7 +432,7 @@ func _iniciar_sueno() -> void:
 		if _screen.has_method("set_sleep_preview"):
 			_screen.call("set_sleep_preview", PlayerStats.sueno)
 
-	await SceneManager.fade_in(1.5)
+	await SceneManager.fade_in(1.5, true, "sleep_fade_in")
 
 	_arrancar_tramo_visual(_hora_inicio, _hora_fin, _horas_totales)
 
@@ -501,16 +537,22 @@ func _aplicar_recuperacion_por_horas(horas: float) -> void:
 	if horas <= 0.0:
 		return
 
+	var deltas: Dictionary = {}
+
 	match _lugar:
 		Lugar.HOSTAL:
-			PlayerStats.sueno = minf(PlayerStats.sueno + CONFIG.recuperacion_hostal_por_hora * horas, 100.0)
-			PlayerStats.salud = minf(PlayerStats.salud + SALUD_HOSTAL_POR_HORA * horas, 100.0)
-			PlayerStats.estres = maxf(PlayerStats.estres - ESTRES_HOSTAL_POR_HORA * horas, 0.0)
+			deltas = {
+				"sueno": CONFIG.recuperacion_hostal_por_hora * horas,
+				"salud": SALUD_HOSTAL_POR_HORA * horas,
+				"estres": -ESTRES_HOSTAL_POR_HORA * horas,
+			}
 		_:
 			var recuperacion: float = RECUPERACION_COLAPSO_POR_HORA if _forzado else CONFIG.recuperacion_calle_por_hora
-			PlayerStats.sueno = minf(PlayerStats.sueno + recuperacion * horas, 100.0)
+			deltas = {
+				"sueno": recuperacion * horas,
+			}
 
-	PlayerStats.actualizar_stats()
+	PlayerStats.apply_stat_deltas(deltas, "sleep_recovery")
 
 # ================================================================
 # FINALIZACIÓN
@@ -522,7 +564,7 @@ func _finalizar_sueno() -> void:
 	_reset_segment_state()
 	_aplicar_efectos_al_despertar()
 
-	await SceneManager.fade_out(1.5)
+	await SceneManager.fade_out(1.5, true, "sleep_fade_out")
 
 	if _screen:
 		_screen.queue_free()
@@ -530,34 +572,34 @@ func _finalizar_sueno() -> void:
 
 	DayNightManager.reanudar()
 
-	var player = PlayerManager.player_instance
+	var player := PlayerManager.get_player()
 	if player:
-		await SceneManager.fade_in(1.5)
-		player.animation.play_rise()
-		await player.animation.anim_tree.animation_finished
-		StateManager.return_to_gameplay("end_sleep")
-		player.enable_movement()
+		await SceneManager.fade_in(1.5, true, "sleep_wake_fade_in")
+		await _play_player_rise_animation(player)
+		_exit_sleep_mode("end_sleep")
 	else:
-		await SceneManager.fade_in(1.5)
-		StateManager.return_to_gameplay("end_sleep")
+		await SceneManager.fade_in(1.5, true, "sleep_wake_fade_in")
+		_exit_sleep_mode("end_sleep_no_player")
 
 	sleep_ended.emit(_horas_dormidas, not _cancelado)
 
 func _aplicar_efectos_al_despertar() -> void:
 	match _lugar:
 		Lugar.HOSTAL:
-			pass
+			return
 		Lugar.CALLE, Lugar.CALLEJON:
-			PlayerStats.alcohol = maxf(PlayerStats.alcohol - ALCOHOL_PERDIDO_CALLE, 0.0)
-			PlayerStats.laudano = maxf(PlayerStats.laudano - LAUDANO_PERDIDO_CALLE, 0.0)
+			var deltas: Dictionary = {
+				"alcohol": -ALCOHOL_PERDIDO_CALLE,
+				"laudano": -LAUDANO_PERDIDO_CALLE,
+			}
 
 			var roll: float = randf()
 			if roll < PROB_CURAR_CALLE:
-				PlayerStats.enfermedad = maxf(PlayerStats.enfermedad - 20.0, 0.0)
+				deltas["enfermedad"] = -20.0
 			elif roll < PROB_CURAR_CALLE + PROB_EMPEORAR_CALLE:
-				PlayerStats.enfermedad = minf(PlayerStats.enfermedad + EMPEORAMIENTO_CALLE, 100.0)
+				deltas["enfermedad"] = EMPEORAMIENTO_CALLE
 
-	PlayerStats.actualizar_stats()
+			PlayerStats.apply_stat_deltas(deltas, "wake_up_street")
 
 # ================================================================
 # CÁLCULOS
@@ -628,6 +670,25 @@ func _lugar_a_string(lugar: Lugar) -> String:
 			return "callejon"
 		_:
 			return "calle"
+
+func is_sleeping_flow_active() -> bool:
+	return _durmiendo or _selection != null or _screen != null
+
+
+func get_save_data() -> Dictionary:
+	# De momento no guardamos partida a mitad de sueño.
+	# Este bloque deja preparada la API para SaveManager.
+	return {
+		"is_sleeping": is_sleeping_flow_active(),
+		"lugar": _lugar_a_string(_lugar),
+		"horas_dormidas": _horas_dormidas,
+	}
+
+
+func apply_save_data(_data: Dictionary) -> void:
+	# Si una partida se carga mientras había sueño activo, restauramos a limpio.
+	# Más adelante se puede implementar guardado real mid-sleep.
+	reset()
 
 func reset() -> void:
 	# Limpia todo el estado de sueño para una nueva partida.

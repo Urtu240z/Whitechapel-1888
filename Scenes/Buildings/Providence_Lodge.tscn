@@ -211,6 +211,7 @@ interior_spawn_path = NodePath("Interior/InteriorSpawn")
 exterior_spawn_path = NodePath("ExteriorSpawn")
 
 [node name="Exterior" type="Sprite2D" parent="." unique_id=881878240]
+visible = false
 modulate = Color(0.53333336, 0.53333336, 0.53333336, 1)
 position = Vector2(0.26917338, 0.6701607)
 scale = Vector2(0.41652647, 0.41652644)
@@ -224,7 +225,6 @@ scale = Vector2(2.947763, 2.9477634)
 texture = SubResource("CanvasTexture_g7bew")
 
 [node name="Interior" type="Node2D" parent="." unique_id=1107683034]
-visible = false
 
 [node name="Tilemaps" type="Node2D" parent="Interior" unique_id=500692117]
 modulate = Color(0.60933006, 0.6093301, 0.60933006, 1)
@@ -765,7 +765,7 @@ texture = ExtResource("28_rgint")
 [node name="CameraLimits" type="Node2D" parent="Interior" unique_id=723739343]
 
 [node name="TopLeft" type="Marker2D" parent="Interior/CameraLimits" unique_id=1524008919]
-position = Vector2(-805, -230)
+position = Vector2(-805, -343)
 
 [node name="BottomRight" type="Marker2D" parent="Interior/CameraLimits" unique_id=1558205657]
 position = Vector2(729, 459)
@@ -785,13 +785,12 @@ position = Vector2(-103, -149)
 shape = SubResource("RectangleShape2D_cu1mi")
 
 [node name="InteriorPhantomCamera2D" type="Node2D" parent="Interior" unique_id=181938167]
-visible = false
 top_level = true
 z_index = 9
 position = Vector2(-127.00001, -160.00003)
 scale = Vector2(0.51, 0.51)
 script = ExtResource("38_vn256")
-follow_mode = 1
+follow_mode = 2
 zoom = Vector2(0.4, 0.4)
 tween_resource = SubResource("Resource_ktofo")
 draw_limits = true
