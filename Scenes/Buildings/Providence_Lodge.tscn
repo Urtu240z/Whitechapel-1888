@@ -211,7 +211,6 @@ interior_spawn_path = NodePath("Interior/InteriorSpawn")
 exterior_spawn_path = NodePath("ExteriorSpawn")
 
 [node name="Exterior" type="Sprite2D" parent="." unique_id=881878240]
-visible = false
 modulate = Color(0.53333336, 0.53333336, 0.53333336, 1)
 position = Vector2(0.26917338, 0.6701607)
 scale = Vector2(0.41652647, 0.41652644)
@@ -225,6 +224,7 @@ scale = Vector2(2.947763, 2.9477634)
 texture = SubResource("CanvasTexture_g7bew")
 
 [node name="Interior" type="Node2D" parent="." unique_id=1107683034]
+visible = false
 
 [node name="Tilemaps" type="Node2D" parent="Interior" unique_id=500692117]
 modulate = Color(0.60933006, 0.6093301, 0.60933006, 1)
@@ -309,6 +309,7 @@ scale = Vector2(0.23, 0.23)
 z_index = -1
 position = Vector2(2434.7825, 1308.6956)
 dialog_timeline = "uid://d3uvod4y3u4ho"
+service_id = "lodge_reception"
 initial_facing_right = false
 
 [node name="Collisions" type="Node2D" parent="Interior" unique_id=1294757112]

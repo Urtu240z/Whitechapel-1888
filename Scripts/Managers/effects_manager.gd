@@ -262,6 +262,7 @@ func _should_show_effects() -> bool:
 		or StateManager.is_dialog()
 		or StateManager.is_journal()
 		or StateManager.is_transitioning()
+		or StateManager.is_debug_menu()
 	)
 
 

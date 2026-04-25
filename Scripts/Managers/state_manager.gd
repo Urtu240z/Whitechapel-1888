@@ -22,6 +22,7 @@ enum State {
 	MENU,
 	GAMEPLAY,
 	HIDING,
+	DEBUG_MENU,
 	PAUSED,
 	JOURNAL,
 	DIALOG,
@@ -327,6 +328,7 @@ func can_change_to(target_state: State) -> bool:
 				or target_state == State.CLIENT_SERVICE
 				or target_state == State.CUTSCENE
 				or target_state == State.GAME_OVER
+				or target_state == State.DEBUG_MENU
 			)
 
 		State.HIDING:
@@ -336,6 +338,7 @@ func can_change_to(target_state: State) -> bool:
 				or target_state == State.TRANSITIONING
 				or target_state == State.CUTSCENE
 				or target_state == State.GAME_OVER
+				or target_state == State.DEBUG_MENU
 			)
 
 		State.PAUSED:
@@ -412,7 +415,11 @@ func can_change_to(target_state: State) -> bool:
 				target_state == State.MENU
 				or target_state == State.GAMEPLAY
 			)
-
+		State.DEBUG_MENU:
+			return (
+				target_state == State.GAMEPLAY
+				or target_state == State.HIDING
+	)
 	return false
 
 
@@ -508,6 +515,8 @@ func enter_hiding(reason: String = "enter_hiding") -> bool:
 func exit_hiding(reason: String = "exit_hiding") -> bool:
 	return change_to(State.GAMEPLAY, reason)
 
+func is_debug_menu() -> bool:
+	return _current_state == State.DEBUG_MENU
 
 # ================================================================
 # FORZADOS
@@ -560,7 +569,7 @@ func _set_state_without_validation(target_state: State, reason: String = "") -> 
 
 func _apply_mouse_mode(state: State) -> void:
 	match state:
-		State.MENU, State.PAUSED, State.JOURNAL, State.SHOP, State.GAME_OVER:
+		State.MENU, State.PAUSED, State.JOURNAL, State.SHOP, State.GAME_OVER, State.DEBUG_MENU:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 		State.GAMEPLAY, State.HIDING, State.DIALOG, State.SLEEPING, State.TRANSITIONING, State.CLIENT_SERVICE, State.CUTSCENE:
