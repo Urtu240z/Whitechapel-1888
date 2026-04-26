@@ -381,6 +381,20 @@ func _get_exterior_spawn_position(fallback_position: Vector2) -> Vector2:
 
 
 # ================================================================
+# SPAWNS PARA NPCs
+# ================================================================
+# Los NPCs usan los mismos puntos de entrada/salida que el player.
+# Esto evita depender de ExitArea como punto de aparición interior,
+# que en algunos edificios no coincide con el punto seguro de spawn.
+func get_npc_interior_spawn_position(fallback_position: Vector2) -> Vector2:
+	return _get_interior_spawn_position(fallback_position)
+
+
+func get_npc_exterior_spawn_position(fallback_position: Vector2) -> Vector2:
+	return _get_exterior_spawn_position(fallback_position)
+
+
+# ================================================================
 # VISIBILIDAD INTERIOR / EXTERIOR
 # ================================================================
 func _set_interior_visible(value: bool) -> void:

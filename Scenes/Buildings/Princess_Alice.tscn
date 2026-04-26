@@ -191,6 +191,8 @@ shader_parameter/fill_strength = 0.150000007125
 script = ExtResource("1_0jlmm")
 building_name = "Princess Alice"
 street_name = "Commercial Street"
+interior_spawn_path = NodePath("Interior/InteriorSpawn")
+exterior_spawn_path = NodePath("ExteriorSpawn")
 
 [node name="Exterior" type="Sprite2D" parent="." unique_id=1832047386]
 modulate = Color(0.89059, 0.89059, 0.8905901, 1)
@@ -870,6 +872,9 @@ position = Vector2(-6.020661, -85.26572)
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_jhgva")
 
+[node name="InteriorSpawn" type="Marker2D" parent="Interior"]
+position = Vector2(0, 476)
+
 [node name="CameraLimits" type="Node2D" parent="Interior" unique_id=1671991530]
 
 [node name="TopLeft" type="Marker2D" parent="Interior/CameraLimits" unique_id=230458512]
@@ -930,6 +935,9 @@ scale = Vector2(0.83561647, 0.82716054)
 texture = ExtResource("2_1ykdj")
 region_enabled = true
 region_rect = Rect2(1079.6365, 1312.8846, 202.78601, 362.38818)
+
+[node name="ExteriorSpawn" type="Marker2D" parent="."]
+position = Vector2(1, 347)
 
 [editable path="Interior/TileMapLayer/Objects/NPC3"]
 [editable path="Interior/TileMapLayer/Objects/NPC"]

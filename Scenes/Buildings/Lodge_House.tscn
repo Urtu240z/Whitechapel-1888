@@ -106,6 +106,8 @@ open_sounds = Array[AudioStream]([ExtResource("2_4j78l"), ExtResource("3_1wgdf")
 close_sounds = Array[AudioStream]([ExtResource("5_nddhr"), ExtResource("6_m8ipo"), ExtResource("7_txu1n")])
 building_name = "St. Jude's Refuge & Dispensary"
 street_name = "Commercial Street"
+interior_spawn_path = NodePath("Interior/InteriorSpawn")
+exterior_spawn_path = NodePath("ExteriorSpawn")
 
 [node name="Exterior" type="Sprite2D" parent="." unique_id=1915103148]
 position = Vector2(8.999985, 18.99997)
@@ -369,6 +371,9 @@ position = Vector2(1.9526486, 19.03833)
 scale = Vector2(0.9999999, 0.9999999)
 shape = SubResource("RectangleShape2D_xtf64")
 
+[node name="InteriorSpawn" type="Marker2D" parent="Interior"]
+position = Vector2(17, 322)
+
 [node name="CameraLimits" type="Node2D" parent="Interior" unique_id=79935523]
 
 [node name="TopLeft" type="Marker2D" parent="Interior/CameraLimits" unique_id=1995321068]
@@ -419,3 +424,6 @@ scale = Vector2(1.831, 1.831)
 texture = ExtResource("8_i0ema")
 region_enabled = true
 region_rect = Rect2(605.2232, 436.10205, 85.70618, 124.74066)
+
+[node name="ExteriorSpawn" type="Marker2D" parent="."]
+position = Vector2(29, 346)

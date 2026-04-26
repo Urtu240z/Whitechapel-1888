@@ -61,17 +61,36 @@ func get_exterior_door_pos() -> Vector2:
 	if not entrance:
 		return global_position
 
+	var building_root: Node = entrance.get_parent()
+	var fallback_position: Vector2 = entrance.global_position
+
 	var enter_area := entrance.get_node_or_null("EnterArea") as Node2D
-	return enter_area.global_position if enter_area else entrance.global_position
+	if enter_area:
+		fallback_position = enter_area.global_position
+
+	if is_instance_valid(building_root) and building_root.has_method("get_exterior_spawn_position"):
+		return building_root.get_exterior_spawn_position(fallback_position)
+
+	return fallback_position
+
 
 func get_interior_door_pos() -> Vector2:
 	var entrance := get_building_entrance()
 	if not entrance:
 		return global_position
 
-	var building_root := entrance.get_parent()
-	var exit_area := building_root.get_node_or_null("Interior/TileMapLayer/ExitArea") as Node2D
-	return exit_area.global_position if exit_area else global_position
+	var building_root: Node = entrance.get_parent()
+	var fallback_position: Vector2 = global_position
+
+	var exit_node: Node2D = get_interior_exit_node()
+	if exit_node:
+		fallback_position = exit_node.global_position
+
+	if is_instance_valid(building_root) and building_root.has_method("get_interior_spawn_position"):
+		return building_root.get_interior_spawn_position(fallback_position)
+
+	return fallback_position
+
 
 func get_interior_exit_node() -> Node2D:
 	var entrance := get_building_entrance()
@@ -79,7 +98,22 @@ func get_interior_exit_node() -> Node2D:
 		return null
 
 	var building_root := entrance.get_parent()
-	return building_root.get_node_or_null("Interior/TileMapLayer/ExitArea") as Node2D
+	if not is_instance_valid(building_root):
+		return null
+
+	var paths: Array[String] = [
+		"Interior/TileMapLayer/ExitArea",
+		"Interior/ExitArea",
+		"Interior/SpawnPoints/ExitArea"
+	]
+
+	for path: String in paths:
+		var node := building_root.get_node_or_null(path) as Node2D
+		if node:
+			return node
+
+	return null
+
 
 func get_interior_node() -> Node2D:
 	var entrance := get_building_entrance()

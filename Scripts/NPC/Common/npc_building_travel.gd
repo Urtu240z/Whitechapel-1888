@@ -75,7 +75,13 @@ func enter_building_for_poi(poi: SceneryPOI) -> bool:
 	_interior_exit_node = poi.get_interior_exit_node()
 	_inside_building = true
 
-	await entrance.npc_enter(npc, poi.get_interior_door_pos())
+	var fallback_interior_position: Vector2 = poi.get_interior_door_pos()
+	var interior_spawn_position: Vector2 = _get_npc_interior_spawn_position(
+		entrance,
+		fallback_interior_position
+	)
+
+	await entrance.npc_enter(npc, interior_spawn_position)
 	return is_instance_valid(npc)
 
 
@@ -98,7 +104,12 @@ func exit_current_building(exterior_position: Vector2) -> bool:
 		_clear_state()
 		return false
 
-	await _current_entrance.npc_exit(npc, exterior_position)
+	var exterior_spawn_position: Vector2 = _get_npc_exterior_spawn_position(
+		_current_entrance,
+		exterior_position
+	)
+
+	await _current_entrance.npc_exit(npc, exterior_spawn_position)
 	_clear_state()
 	return is_instance_valid(npc)
 
@@ -114,6 +125,23 @@ func force_exit_to_poi_door() -> bool:
 		exited = await exit_current_building(npc.global_position)
 
 	return exited
+
+
+# ============================================================================
+# SPAWN HELPERS
+# ============================================================================
+func _get_npc_interior_spawn_position(entrance: Node, fallback_position: Vector2) -> Vector2:
+	if is_instance_valid(entrance) and entrance.has_method("get_npc_interior_spawn_position"):
+		return entrance.get_npc_interior_spawn_position(fallback_position)
+
+	return fallback_position
+
+
+func _get_npc_exterior_spawn_position(entrance: Node, fallback_position: Vector2) -> Vector2:
+	if is_instance_valid(entrance) and entrance.has_method("get_npc_exterior_spawn_position"):
+		return entrance.get_npc_exterior_spawn_position(fallback_position)
+
+	return fallback_position
 
 
 # ============================================================================
