@@ -459,7 +459,7 @@ func _apply_time_data(data: Dictionary) -> void:
 	var total_time: float = float(time_data.get("tiempo_acumulado", data.get("tiempo_acumulado", 0.0)))
 
 	DayNightManager.set_total_time(total_time, false)
-	DayNightManager.pausado = false
+	DayNightManager.set_paused(false)
 
 
 func _apply_player_stats_and_inventory(data: Dictionary) -> void:
@@ -644,10 +644,10 @@ func _restore_player_runtime_after_load() -> void:
 			movement.call("force_stop")
 
 	# Asegurar árbol de animación y control base.
-	# No llamamos directamente a enable_movement(): PlayerManager decide
-	# si el player puede moverse según StateManager y locks activos.
 	PlayerManager.set_animation_tree_active(true)
-	PlayerManager.clear_locks()
+	if player.has_method("enable_movement"):
+		player.call("enable_movement")
+
 	PlayerManager.force_stop()
 
 

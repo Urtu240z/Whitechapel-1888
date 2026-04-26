@@ -29,6 +29,7 @@ const HORA_INICIO_RELOJ: float = 8.0
 var hora_actual: float = HORA_INICIO_RELOJ
 var tiempo_acumulado: float = 0.0
 var pausado: bool = false
+var _effective_time_paused: bool = false
 
 # Señal legacy: muchos scripts ya la usan.
 signal hora_cambiada(hora_actual: float)
@@ -98,18 +99,50 @@ var _current_period: String = PERIOD_DAY
 # READY / PROCESS
 # ================================================================
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	_connect_state_manager()
 	_sincronizar_reloj()
 	_last_day = get_current_day()
 	_current_period = get_period_id()
 	_actualizar_luces_exteriores()
+	_update_effective_pause_state(true)
 
 
 func _process(delta: float) -> void:
-	if pausado:
+	if not can_tick_time():
 		return
 
 	advance_seconds(delta)
 	_actualizar_luces_exteriores()
+
+
+# ================================================================
+# SINCRONIZACIÓN CON STATE MANAGER
+# ================================================================
+func _connect_state_manager() -> void:
+	if not StateManager.state_changed.is_connected(_on_state_manager_state_changed):
+		StateManager.state_changed.connect(_on_state_manager_state_changed)
+
+
+func _on_state_manager_state_changed(_from_state: int, _to_state: int) -> void:
+	_update_effective_pause_state()
+
+
+func _update_effective_pause_state(force_emit: bool = false) -> void:
+	var new_effective_pause: bool = _calculate_effective_pause()
+
+	if not force_emit and _effective_time_paused == new_effective_pause:
+		return
+
+	_effective_time_paused = new_effective_pause
+	time_paused_changed.emit(_effective_time_paused)
+
+
+func _calculate_effective_pause() -> bool:
+	if pausado:
+		return true
+
+	return not StateManager.can_advance_time()
 
 
 # ================================================================
@@ -207,7 +240,7 @@ func reset() -> void:
 	_current_period = get_period_id()
 	_actualizar_luces_exteriores()
 	time_synced.emit(hora_actual, _last_day, tiempo_acumulado)
-	time_paused_changed.emit(false)
+	_update_effective_pause_state(true)
 
 
 # ================================================================
@@ -226,11 +259,23 @@ func set_paused(value: bool) -> void:
 		return
 
 	pausado = value
-	time_paused_changed.emit(pausado)
+	_update_effective_pause_state()
 
 
 func is_paused() -> bool:
+	return _effective_time_paused
+
+
+func is_manually_paused() -> bool:
 	return pausado
+
+
+func can_tick_time() -> bool:
+	return not _effective_time_paused
+
+
+func is_time_advancing() -> bool:
+	return can_tick_time()
 
 
 # ================================================================
