@@ -14,3 +14,9 @@ Lodge - Si le doy a dormir y mientras sleep screen esta en marcha pongo desperta
 
 Acto cliente - Falta pulir fades in y out sobre todo audio.
 			Cuando pulso F salta la animacion, y el audio empieza de nuevo
+
+ScenePortal - Cuando entro corriendo o andando a un portal para cambiar escena,
+			el player se queda parado inmediatamente.
+			Me gustaria que fuera mas organico, que el player siguiera caminando 
+			en la misma direccion mientras hay el fade out, luego bloquearlo
+			mientras carga.
