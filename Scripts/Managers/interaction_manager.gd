@@ -18,6 +18,7 @@ extends Node
 enum Priority {
 	PICKUP = 1,
 	NPC = 5,
+	PORTAL = 8,
 	BUILDING = 10,
 }
 
@@ -336,6 +337,8 @@ func _guess_label(node: Node, priority: int) -> String:
 			return "Hablar"
 		Priority.BUILDING:
 			return "Interactuar"
+		Priority.PORTAL:
+			return "Cambiar zona"
 		Priority.PICKUP:
 			return "Recoger"
 

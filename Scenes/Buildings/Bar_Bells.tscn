@@ -608,11 +608,11 @@ position = Vector2(0, 64)
 
 [node name="Audio" type="Node2D" parent="." unique_id=159789667]
 
-[node name="Ambient" type="AudioStreamPlayer2D" parent="Audio" unique_id=573470269 groups=["world_ambience"]]
+[node name="Ambient" type="AudioStreamPlayer" parent="Audio" unique_id=2077102776 groups=["world_ambience"]]
 stream = ExtResource("25_fq600")
 volume_db = 7.6
 
-[node name="Music" type="AudioStreamPlayer2D" parent="Audio" unique_id=855870938 groups=["world_music"]]
+[node name="Music" type="AudioStreamPlayer" parent="Audio" unique_id=660369865 groups=["world_music"]]
 stream = ExtResource("39_2u12w")
 volume_db = -2.0
 

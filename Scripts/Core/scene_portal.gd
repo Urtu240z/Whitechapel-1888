@@ -4,9 +4,10 @@ extends Area2D
 # SCENE PORTAL
 # Portal entre escenas usando SceneManager.
 #
-# portal_id         = ID de este portal en esta escena.
-# target_scene_path = escena destino.
-# target_portal_id  = portal donde aparecerá Nell en la escena destino.
+# portal_id          = ID de este portal en esta escena.
+# target_scene_path  = escena destino.
+# target_portal_id   = portal donde aparecerá Nell en la escena destino.
+# require_interact   = si true, se registra en InteractionManager y requiere F.
 # ================================================================
 
 @export_group("Portal IDs")
@@ -18,6 +19,10 @@ extends Area2D
 @export var require_interact: bool = false
 @export var interact_action: StringName = &"interact"
 @export var one_shot: bool = true
+
+@export_group("Interaction UI")
+@export var interaction_label: String = ""
+@export var interaction_priority: int = 8
 
 @export_group("Transition")
 @export var use_fade: bool = true
@@ -38,7 +43,12 @@ func _ready() -> void:
 	if not body_exited.is_connected(_on_body_exited):
 		body_exited.connect(_on_body_exited)
 
-	set_process_unhandled_input(require_interact)
+	if not tree_exiting.is_connected(_on_tree_exiting):
+		tree_exiting.connect(_on_tree_exiting)
+
+	# El input lo lee PlayerInteraction -> InteractionManager.try_interact().
+	# El portal solo se registra/desregistra como interactuable.
+	set_process_unhandled_input(false)
 
 
 func _on_body_entered(body: Node) -> void:
@@ -48,9 +58,11 @@ func _on_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):
 		return
 
+	_player_inside = true
+	_player_ref = body
+
 	if require_interact:
-		_player_inside = true
-		_player_ref = body
+		_register_interaction()
 		return
 
 	_trigger_portal()
@@ -60,41 +72,71 @@ func _on_body_exited(body: Node) -> void:
 	if body != _player_ref:
 		return
 
+	_unregister_interaction()
 	_player_inside = false
 	_player_ref = null
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not require_interact:
-		return
+func _on_tree_exiting() -> void:
+	_unregister_interaction()
 
+
+# ================================================================
+# INTERACTION MANAGER
+# ================================================================
+func _register_interaction() -> void:
 	if _used:
 		return
 
 	if not _player_inside:
 		return
 
-	if not event.is_action_pressed(interact_action):
-		return
+	InteractionManager.register(
+		self,
+		interaction_priority,
+		Callable(self, "_trigger_portal"),
+		get_interaction_label(),
+		str(interact_action)
+	)
 
-	if get_node_or_null("/root/StateManager") != null and not StateManager.can_interact():
-		return
 
-	get_viewport().set_input_as_handled()
-	_trigger_portal()
+func _unregister_interaction() -> void:
+	InteractionManager.unregister(self)
 
 
+func get_interaction_label() -> String:
+	var clean_label: String = interaction_label.strip_edges()
+	if not clean_label.is_empty():
+		return clean_label
+
+	var clean_title: String = transition_title.strip_edges()
+	if not clean_title.is_empty():
+		return "Ir a %s" % clean_title
+
+	return "Cambiar zona"
+
+
+# ================================================================
+# TRAVEL
+# ================================================================
 func _trigger_portal() -> void:
 	if _used:
 		return
 
+	if require_interact and not _player_inside:
+		return
+
 	if SceneManager.is_transitioning():
+		return
+
+	if require_interact and get_node_or_null("/root/StateManager") != null and not StateManager.can_interact():
 		return
 
 	if not _is_config_valid():
 		return
 
 	_used = true
+	_unregister_interaction()
 
 	if one_shot:
 		set_deferred("monitoring", false)

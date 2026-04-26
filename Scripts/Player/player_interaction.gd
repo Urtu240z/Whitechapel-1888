@@ -3,13 +3,12 @@ extends Node
 # INTERACTION MODULE
 # ==========================
 # Gestiona las interacciones del jugador con el mundo:
-# - Iniciar diálogos con NPCs via Dialogic → tecla "interact"
+# - Delegar la tecla "interact" al InteractionManager.
 #
 # Los pickups NO se gestionan aquí.
 # El nodo Pickup.tscn se auto-aplica via body_entered en su propio script.
 #
-# Los edificios NO se gestionan aquí.
-# enter_building.gd en BuildingEntrance gestiona su propia entrada/salida.
+# Los edificios, portales y NPCs modernos se registran en InteractionManager.
 # ==========================
 
 var player: MainPlayer = null
