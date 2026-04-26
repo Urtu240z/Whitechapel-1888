@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://u0wm8puw7way" path="res://Scripts/NPC/Client/npc_client.gd" id="1_i4ikf"]
 [ext_resource type="Resource" uid="uid://dxlm5sy6n08dh" path="res://Data/NPC/npc_name_pools.tres" id="2_n1eow"]
-[ext_resource type="Script" uid="uid://co3747fqwkiil" path="res://Scripts/NPC/Common/npc_skin_component.gd" id="3_3dit1"]
+[ext_resource type="Script" path="res://Scripts/NPC/Common/npc_skin_component.gd" id="3_3dit1"]
 [ext_resource type="Texture2D" uid="uid://dxy5o2ua2u643" path="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_1_Pieces.png" id="3_i4ikf"]
 [ext_resource type="Texture2D" uid="uid://ctqh0sstagorg" path="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_1_Pieces_n.png" id="4_olur3"]
 [ext_resource type="Texture2D" uid="uid://druaputhau1q1" path="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_2_Pieces.png" id="5_6145x"]
@@ -26,8 +26,8 @@
 [ext_resource type="Texture2D" uid="uid://cimhb8qu0gyen" path="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_6_Pieces_n.png" id="14_e7yll"]
 [ext_resource type="AudioStream" uid="uid://d7e5nakf36ad" path="res://Assets/Audio/WAVS/Man_Talk.wav" id="17_n1eow"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="18_tfgen"]
-[ext_resource type="Script" uid="uid://caln2nu8dogpj" path="res://Scripts/NPC/Common/npc_animation_component.gd" id="25_3dit1"]
-[ext_resource type="Script" uid="uid://bsv5i6k0wkl6h" path="res://Scripts/NPC/Common/npc_audio_component.gd" id="26_j2evj"]
+[ext_resource type="Script" path="res://Scripts/NPC/Common/npc_animation_component.gd" id="25_3dit1"]
+[ext_resource type="Script" path="res://Scripts/NPC/Common/npc_audio_component.gd" id="26_j2evj"]
 [ext_resource type="AudioStream" uid="uid://cw8au1tsa1iy3" path="res://Assets/Audio/Walk_Foot_1.ogg" id="27_3dit1"]
 [ext_resource type="AudioStream" uid="uid://xism6a1scs46" path="res://Assets/Audio/Walk_Foot_4.ogg" id="27_y4vgp"]
 [ext_resource type="AudioStream" uid="uid://dpd1hrm3tip4t" path="res://Assets/Audio/Walk_Foot_3.ogg" id="28_4wdri"]
@@ -36,11 +36,11 @@
 [ext_resource type="AudioStream" uid="uid://cb1jp7368p0in" path="res://Assets/Audio/Walk_Wood_1.ogg" id="31_32ctb"]
 [ext_resource type="AudioStream" uid="uid://cetbmnrsyejnj" path="res://Assets/Audio/Effects/Kick_4.ogg" id="31_sd6pm"]
 [ext_resource type="AudioStream" uid="uid://i35241s7pi52" path="res://Assets/Audio/Walk_Wood_2.ogg" id="32_gcgcv"]
-[ext_resource type="Script" uid="uid://b5ecgdqsqf1uv" path="res://Scripts/NPC/Common/npc_interaction_area.gd" id="33_j2evj"]
+[ext_resource type="Script" path="res://Scripts/NPC/Common/npc_interaction_area.gd" id="33_j2evj"]
 [ext_resource type="AudioStream" uid="uid://ct8ro6fdw0mil" path="res://Assets/Audio/Walk_Wood_3.ogg" id="33_r678d"]
 [ext_resource type="PackedScene" uid="uid://qrckrvjkyeu" path="res://Scenes/Core/Name_Tag.tscn" id="33_sd6pm"]
 [ext_resource type="Texture2D" uid="uid://cmiaxkdag50ib" path="res://Assets/Sprites/Player/Player_Shadow.png" id="35_j2evj"]
-[ext_resource type="Script" uid="uid://dj1d5vsxcxt5x" path="res://Scripts/NPC/Common/npc_shadow_component.gd" id="41_3dit1"]
+[ext_resource type="Script" path="res://Scripts/NPC/Common/npc_shadow_component.gd" id="41_3dit1"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ktbwa"]
 diffuse_texture = ExtResource("3_i4ikf")

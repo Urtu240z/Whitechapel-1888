@@ -73,6 +73,7 @@ var _last_preview_display_name: String = ""
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _base_shadow_position: Vector2 = Vector2.ZERO
 var _base_shadow_scale: Vector2 = Vector2.ONE
+var _dialog_active: bool = false
 
 const PLAYER_LOCK_DIALOG: String = "npc_companion_dialog"
 var _body_scale_refs_cached: bool = false
@@ -352,13 +353,16 @@ func _apply_behavior_mode() -> void:
 # ============================================================================
 func start_dialog() -> void:
 	if dialog_timeline.is_empty():
-		push_warning("NPCCompanion '%s': no tiene dialog_timeline asignado." % companion_name)
+		push_warning("NPCCompanion '%s': no tiene dialog_timeline asignado." % get_display_name())
 		return
 	if not get_tree().root.has_node("Dialogic"):
+		return
+	if _dialog_active:
 		return
 	if not StateManager.can_start_dialog():
 		return
 
+	_dialog_active = true
 	var player := _get_player()
 	PlayerManager.lock_player(PLAYER_LOCK_DIALOG)
 	if movement:
@@ -367,15 +371,24 @@ func start_dialog() -> void:
 		animation.lock_facing(player.global_position.x > global_position.x)
 
 	StateManager.change_to(StateManager.State.DIALOG, "start_companion_dialog")
-	Dialogic.start(dialog_timeline)
+
 	Dialogic.timeline_ended.connect(func():
-		StateManager.return_to_gameplay("end_companion_dialog")
-		if is_instance_valid(self) and movement:
-			movement.unfreeze()
-		if animation:
-			animation.unlock_facing()
-		PlayerManager.unlock_player(PLAYER_LOCK_DIALOG)
+		_finish_dialog_flow(PLAYER_LOCK_DIALOG, "end_companion_dialog")
 	, CONNECT_ONE_SHOT)
+
+	Dialogic.start(dialog_timeline)
+
+func _finish_dialog_flow(lock_reason: String, return_reason: String) -> void:
+	StateManager.return_to_gameplay(return_reason)
+
+	if is_instance_valid(self) and movement:
+		movement.unfreeze()
+
+	if animation:
+		animation.unlock_facing()
+
+	PlayerManager.unlock_player(lock_reason)
+	_dialog_active = false
 
 # ============================================================================
 # HELPERS

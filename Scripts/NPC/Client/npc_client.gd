@@ -90,6 +90,7 @@ var _last_preview_facing_right: bool = true
 var _last_preview_body_scale: float = 1.0
 var _last_preview_display_name: String = ""
 var _last_attack: String = "Slap"
+var _dialog_active: bool = false
 
 var _behavior_before_follow: BehaviorMode = BehaviorMode.STATIC
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -407,22 +408,33 @@ func restore_behavior_after_follow() -> void:
 # DIALOGIC — ABRIR DIÁLOGO
 # ============================================================================
 func start_dialog() -> void:
+	if dialog_timeline.is_empty():
+		push_warning("NPCClient '%s': no tiene dialog_timeline asignado." % get_display_name())
+		return
 	if not get_tree().root.has_node("Dialogic"):
+		return
+	if _dialog_active:
+		return
+	if not StateManager.can_start_dialog():
 		return
 
 	prepare_dialogic_variables()
 
-	if not StateManager.can_start_dialog():
-		return
-
+	_dialog_active = true
 	PlayerManager.lock_player(PLAYER_LOCK_DIALOG)
 	if movement:
 		movement.freeze()
 
 	StateManager.change_to(StateManager.State.DIALOG, "start_client_dialog")
+
+	Dialogic.timeline_ended.connect(func():
+		resolve_dialogic_result()
+		_finish_dialog_flow(PLAYER_LOCK_DIALOG, "end_client_dialog", true, true)
+	, CONNECT_ONE_SHOT)
+
 	Dialogic.start(dialog_timeline)
 
-	if _refused and animation:
+	if _refused and animation and _dialog_active:
 		var attack_player := _get_player()
 		var facing_right: bool = true
 		if attack_player:
@@ -431,23 +443,13 @@ func start_dialog() -> void:
 		animation.lock_facing(facing_right)
 		await get_tree().create_timer(1.0).timeout
 
+		if not _dialog_active:
+			return
+
 		var next_attack: String = "Kick" if _last_attack == "Slap" else "Slap"
 		_last_attack = next_attack
 		animation.play_attack(next_attack)
 		animation.attack_hit.connect(_on_attack_hit, CONNECT_ONE_SHOT)
-
-	Dialogic.timeline_ended.connect(func():
-		resolve_dialogic_result()
-		StateManager.return_to_gameplay("end_client_dialog")
-
-		if is_instance_valid(self) and movement:
-			movement.unfreeze()
-
-		if animation:
-			animation.unlock_facing()
-
-		PlayerManager.unlock_player(PLAYER_LOCK_DIALOG)
-	, CONNECT_ONE_SHOT)
 
 # ============================================================================
 # ATAQUE
@@ -459,6 +461,18 @@ func _on_attack_hit(attack_type: String) -> void:
 
 	var knockback_dir: float = 1.0 if hit_player.global_position.x > global_position.x else -1.0
 	DamageManager.take_damage(attack_damage, DamageManager.Source.CLIENT, knockback_dir, attack_type)
+
+func _finish_dialog_flow(lock_reason: String, return_reason: String, unfreeze_movement: bool, unlock_facing: bool) -> void:
+	StateManager.return_to_gameplay(return_reason)
+
+	if is_instance_valid(self) and movement and unfreeze_movement:
+		movement.unfreeze()
+
+	if animation and unlock_facing:
+		animation.unlock_facing()
+
+	PlayerManager.unlock_player(lock_reason)
+	_dialog_active = false
 
 # ============================================================================
 # DIALOGIC — PREPARAR VARIABLES
@@ -530,11 +544,17 @@ func accept_deal(acto: String) -> void:
 	deal_accepted.emit(self, acto)
 
 func _on_player_too_far_warning() -> void:
+	if dialog_timeline.is_empty():
+		push_warning("NPCClient '%s': no tiene dialog_timeline asignado." % get_display_name())
+		return
 	if not get_tree().root.has_node("Dialogic"):
+		return
+	if _dialog_active:
 		return
 	if not StateManager.can_start_dialog():
 		return
 
+	_dialog_active = true
 	Dialogic.VAR.set_variable("client.deal_state", "warning")
 
 	PlayerManager.lock_player(PLAYER_LOCK_DISTANCE_WARNING)
@@ -542,28 +562,30 @@ func _on_player_too_far_warning() -> void:
 		movement.freeze()
 
 	StateManager.change_to(StateManager.State.DIALOG, "start_client_dialog")
-	Dialogic.start(dialog_timeline)
 
 	Dialogic.timeline_ended.connect(func():
 		Dialogic.VAR.set_variable("client.deal_state", "")
-		StateManager.return_to_gameplay("end_client_dialog")
-
-		if is_instance_valid(self) and movement:
-			movement.unfreeze()
-
-		PlayerManager.unlock_player(PLAYER_LOCK_DISTANCE_WARNING)
+		_finish_dialog_flow(PLAYER_LOCK_DISTANCE_WARNING, "end_client_dialog", true, false)
 	, CONNECT_ONE_SHOT)
+
+	Dialogic.start(dialog_timeline)
 
 func _on_player_too_far_cancel() -> void:
 	_deal_acto = ""
 	_refused = true
 	_refused_timer = REFUSED_RESET_SECS
 
+	if dialog_timeline.is_empty():
+		push_warning("NPCClient '%s': no tiene dialog_timeline asignado." % get_display_name())
+		return
 	if not get_tree().root.has_node("Dialogic"):
+		return
+	if _dialog_active:
 		return
 	if not StateManager.can_start_dialog():
 		return
 
+	_dialog_active = true
 	Dialogic.VAR.set_variable("client.deal_state", "cancel")
 
 	PlayerManager.lock_player(PLAYER_LOCK_DISTANCE_CANCEL)
@@ -571,20 +593,16 @@ func _on_player_too_far_cancel() -> void:
 		movement.freeze()
 
 	StateManager.change_to(StateManager.State.DIALOG, "start_client_dialog")
-	Dialogic.start(dialog_timeline)
 
 	Dialogic.timeline_ended.connect(func():
 		Dialogic.VAR.set_variable("client.deal_state", "")
 		Dialogic.VAR.set_variable("client.deal_active", has_active_deal())
-		StateManager.return_to_gameplay("end_client_dialog")
-
-		if is_instance_valid(self) and movement:
-			movement.unfreeze()
-			if not has_active_deal():
-				restore_behavior_after_follow()
-
-		PlayerManager.unlock_player(PLAYER_LOCK_DISTANCE_CANCEL)
+		_finish_dialog_flow(PLAYER_LOCK_DISTANCE_CANCEL, "end_client_dialog", true, false)
+		if is_instance_valid(self) and movement and not has_active_deal():
+			restore_behavior_after_follow()
 	, CONNECT_ONE_SHOT)
+
+	Dialogic.start(dialog_timeline)
 
 func complete_deal() -> void:
 	if _deal_acto.is_empty():
