@@ -191,6 +191,8 @@ func unfreeze() -> void:
 
 func stop_all() -> void:
 	_release_current_poi_slot()
+	_current_poi = null
+	_current_poi_target = Vector2.ZERO
 	_target = null
 	_set_mode(Mode.STATIC)
 	_stop_horizontal_motion()
@@ -260,6 +262,8 @@ func stop_wander() -> void:
 		return
 
 	_release_current_poi_slot()
+	_current_poi = null
+	_current_poi_target = Vector2.ZERO
 	_set_mode(Mode.STATIC)
 	_stop_horizontal_motion()
 
