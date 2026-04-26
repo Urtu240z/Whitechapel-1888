@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dfq145yybs3t3" path="res://Scripts/UI/debug_menu.gd" id="1_ehall"]
 
-[node name="DebugMenu" type="CanvasLayer" unique_id=1038777979]
+[node name="DebugMenu" type="CanvasLayer" unique_id=1038777979 groups=["debug_menu"]]
 script = ExtResource("1_ehall")
+panel_path = NodePath("PanelContainer")
+info_label_path = NodePath("PanelContainer/VBoxContainer/InfoLabel")
+hour_spin_path = NodePath("PanelContainer/VBoxContainer/SetHourRow/HourSpin")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=285674580]
 offset_right = 40.0

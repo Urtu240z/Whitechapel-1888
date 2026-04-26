@@ -137,8 +137,8 @@ func unregister(node: Node) -> void:
 	_refresh_active_interactable()
 
 
-func unregister_by_owner(owner: Node) -> void:
-	unregister(owner)
+func unregister_by_owner(interaction_owner: Node) -> void:
+	unregister(interaction_owner)
 
 
 # ================================================================

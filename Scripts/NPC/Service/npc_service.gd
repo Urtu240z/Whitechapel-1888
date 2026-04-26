@@ -447,8 +447,8 @@ func _open_shop() -> void:
 		if item_entry.item == null:
 			continue
 
-		var item_id = item_entry.item.name
-		var stock = _stock_actual.get(item_id, 0)
+		var item_id: String = item_entry.item.name
+		var stock: int = int(_stock_actual.get(item_id, 0))
 		if stock <= 0:
 			continue
 
@@ -463,27 +463,38 @@ func _open_shop() -> void:
 	if not StateManager.can_open_shop():
 		return
 
-	var shop = SHOP_SCENE.instantiate()
+	# La tienda es un estado temporal. Si venimos desde GAMEPLAY vuelve a GAMEPLAY;
+	# si venimos desde DIALOG volverá a DIALOG. PlayerManager mantendrá el bloqueo
+	# correspondiente al estado.
+	if not StateManager.push_state(StateManager.State.SHOP, "open_shop_%s" % service_id):
+		return
+
+	PlayerManager.lock_player("shop", true)
+	PlayerManager.force_stop()
+
+	var shop := SHOP_SCENE.instantiate()
+	if shop == null:
+		PlayerManager.unlock_player("shop")
+		if StateManager.is_shop():
+			StateManager.pop_state("open_shop_failed")
+		return
+
+	shop.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().root.add_child(shop)
 
-	StateManager.push_state(StateManager.State.SHOP, "open_shop")
-	GameManager.show_mouse()
-
-	var player = PlayerManager.player_instance
-	if player:
-		player.disable_movement()
-
-	shop.items_purchased.connect(func(purchased: Dictionary):
+	shop.items_purchased.connect(func(purchased: Dictionary) -> void:
 		for item_id in purchased:
 			if _stock_actual.has(item_id):
-				_stock_actual[item_id] = max(0, _stock_actual[item_id] - purchased[item_id])
+				_stock_actual[item_id] = max(0, int(_stock_actual[item_id]) - int(purchased[item_id]))
 	)
 
-	shop.shop_closed.connect(func():
-		StateManager.pop_state("close_shop")
-		GameManager.hide_mouse()
-		if is_instance_valid(player):
-			player.enable_movement()
+	shop.shop_closed.connect(func() -> void:
+		PlayerManager.unlock_player("shop")
+		get_viewport().gui_release_focus()
+
+		if StateManager.is_shop():
+			StateManager.pop_state("close_shop_%s" % service_id)
 	)
 
-	shop.open(tr(shop_name_key) if not shop_name_key.is_empty() else npc_display_name, items_hoy)
+	var title: String = tr(shop_name_key) if not shop_name_key.is_empty() else get_display_name()
+	shop.open(title, items_hoy)

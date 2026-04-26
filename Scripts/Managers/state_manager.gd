@@ -118,6 +118,10 @@ func is_hiding() -> bool:
 	return _current_state == State.HIDING
 
 
+func is_debug_menu() -> bool:
+	return _current_state == State.DEBUG_MENU
+
+
 func is_paused() -> bool:
 	return _current_state == State.PAUSED
 
@@ -163,6 +167,7 @@ func is_ui_state() -> bool:
 		or _current_state == State.PAUSED
 		or _current_state == State.JOURNAL
 		or _current_state == State.SHOP
+		or _current_state == State.DEBUG_MENU
 		or _current_state == State.GAME_OVER
 	)
 
@@ -514,9 +519,6 @@ func enter_hiding(reason: String = "enter_hiding") -> bool:
 
 func exit_hiding(reason: String = "exit_hiding") -> bool:
 	return change_to(State.GAMEPLAY, reason)
-
-func is_debug_menu() -> bool:
-	return _current_state == State.DEBUG_MENU
 
 # ================================================================
 # FORZADOS

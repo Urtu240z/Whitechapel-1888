@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://csx4il2s0ov4r"]
 
-[ext_resource type="Script" uid="uid://crm7wt4vyued" path="res://Scripts/Core/scene_changer.gd" id="1_x7b1d"]
+[ext_resource type="Script" uid="uid://coqq022k5vd4y" path="res://Scripts/Core/scene_portal.gd" id="1_2t7o6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_byt0t"]
 size = Vector2(880, 2682.5)
@@ -8,7 +8,7 @@ size = Vector2(880, 2682.5)
 [node name="ScenePortal" type="Area2D" unique_id=1533950328]
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("1_x7b1d")
+script = ExtResource("1_2t7o6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1949894590]
 position = Vector2(440, -1341)

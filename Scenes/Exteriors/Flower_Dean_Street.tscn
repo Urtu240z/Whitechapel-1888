@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://cg3wm3f0te243" path="res://Scenes/NPC/NPC_Charger.tscn" id="14_dk2ch"]
 [ext_resource type="Script" uid="uid://dx87qkd75ne1c" path="res://Scripts/Core/Flame_Flicker.gd" id="15_57xgg"]
 [ext_resource type="Texture2D" uid="uid://b0y5oeotay27s" path="res://Assets/Sprites/Lights/180 Light.png" id="15_liygm"]
-[ext_resource type="Script" uid="uid://coqq022k5vd4y" path="res://Scripts/Core/scene_portal.gd" id="17_liygm"]
 [ext_resource type="PackedScene" uid="uid://c3m8fewa1n53m" path="res://Scenes/Buildings/Hide_Zone.tscn" id="32_vv5rx"]
 [ext_resource type="PackedScene" uid="uid://csx4il2s0ov4r" path="res://Scenes/Core/Scene_Portal.tscn" id="33_ao38m"]
 [ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="34_dxfbk"]
@@ -310,7 +309,7 @@ scale = Vector2(39.50359, 39.50359)
 texture = ExtResource("7_r5wsw")
 
 [node name="9" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/AttrezoBuildings/Rear" unique_id=572936424]
-modulate = Color(0.6977804, 0.69777995, 0.69778, 1)
+modulate = Color(0.41981313, 0.41981313, 0.41981304, 1)
 z_index = -2
 position = Vector2(-46165.004, -8298.75)
 scale = Vector2(39.50359, 39.50359)
@@ -325,8 +324,8 @@ texture = ExtResource("7_r5wsw")
 [node name="Suspect_NPC" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside" unique_id=1677684734]
 modulate = Color(0.20511743, 0.20511743, 0.20511743, 1)
 material = SubResource("ShaderMaterial_bk7xh")
-position = Vector2(365.80005, -99.60001)
-scale = Vector2(0.15, 0.15)
+position = Vector2(-1112.0001, -68.8)
+scale = Vector2(0.19, 0.19)
 texture = ExtResource("12_sl221")
 
 [node name="Sprite2D" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside/Suspect_NPC" unique_id=2113357338]
@@ -336,8 +335,9 @@ texture = ExtResource("13_csii2")
 [node name="Suspect_NPC2" type="Sprite2D" parent="OutsideAudiovisuals/World/StaticOutside" unique_id=1869285755]
 modulate = Color(0.17641908, 0.17641911, 0.17641902, 1)
 light_mask = 2
+z_index = -1
 material = SubResource("ShaderMaterial_bk7xh")
-position = Vector2(-1818.0002, -94.600006)
+position = Vector2(-1860.0002, -94.600006)
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("12_sl221")
 
@@ -492,23 +492,19 @@ scale = Vector2(3.225, 1.955)
 
 [node name="ScenePortal_Left" parent="OutsideGameplay/ScenePortals" unique_id=819414623 instance=ExtResource("33_ao38m")]
 position = Vector2(-13879, -72)
-script = ExtResource("17_liygm")
 portal_id = "flower_dean_street_left"
 target_scene_path = "uid://d03qxmhrly01w"
 target_portal_id = "comercial_street_middle"
-require_interact = false
-interact_action = &"interact"
 fade_time = 2.0
+transition_title = "Commercial Street"
 
 [node name="ScenePortal_Right" parent="OutsideGameplay/ScenePortals" unique_id=1533950328 instance=ExtResource("33_ao38m")]
 position = Vector2(6057, -27)
-script = ExtResource("17_liygm")
 portal_id = "flower_dean_street_right"
 target_scene_path = "uid://d03qxmhrly01w"
 target_portal_id = "comercial_street_right"
-require_interact = false
-interact_action = &"interact"
 fade_time = 2.0
+transition_title = "Commercial Street"
 
 [node name="POIs" type="Node2D" parent="OutsideGameplay" unique_id=456185148]
 

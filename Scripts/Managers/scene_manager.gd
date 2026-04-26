@@ -22,7 +22,10 @@ signal pending_portal_spawn_cleared()
 const DEBUG_LOGS: bool = true
 const DEFAULT_LAYER: int = 1000
 const TARGET_STATE_NONE: int = -1
+const TRANSITION_TITLE_LAYER: int = 1100
+const TRANSITION_TITLE_FONT_PATH: String = "res://Assets/Fonts/IMFellEnglish.ttf"
 
+var _title_layer: CanvasLayer = null
 var _layer: CanvasLayer
 var _fade: ColorRect
 var _blocking: Control
@@ -234,6 +237,53 @@ func fade_in(duration: float = 0.5, manage_transition: bool = true, reason: Stri
 
 	if manage_transition:
 		_finish_transition(reason, TARGET_STATE_NONE)
+
+func show_transition_title(title: String, total_duration: float = 1.0) -> void:
+	var clean_title := title.strip_edges()
+	if clean_title == "":
+		return
+
+	_clear_transition_title()
+
+	_title_layer = CanvasLayer.new()
+	_title_layer.name = "TransitionTitleLayer"
+	_title_layer.layer = TRANSITION_TITLE_LAYER
+	get_tree().root.add_child(_title_layer)
+
+	var lbl := Label.new()
+	lbl.text = clean_title
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
+
+	var font := load(TRANSITION_TITLE_FONT_PATH) as FontFile
+	if font:
+		lbl.add_theme_font_override("font", font)
+
+	lbl.add_theme_font_size_override("font_size", 36)
+	lbl.add_theme_color_override("font_color", Color(0.9, 0.85, 0.75))
+	lbl.modulate.a = 0.0
+
+	_title_layer.add_child(lbl)
+
+	var title_duration: float = total_duration * (2.0 / 3.0)
+	var title_delay: float = (total_duration - title_duration) * 0.5
+	var fade_title: float = title_duration * 0.2
+	var visible_time: float = max(title_duration - fade_title * 2.0, 0.0)
+
+	var tween := _title_layer.create_tween()
+	tween.tween_interval(title_delay)
+	tween.tween_property(lbl, "modulate:a", 1.0, fade_title)
+	tween.tween_interval(visible_time)
+	tween.tween_property(lbl, "modulate:a", 0.0, fade_title)
+	tween.tween_callback(_clear_transition_title)
+
+
+func _clear_transition_title() -> void:
+	if _title_layer and is_instance_valid(_title_layer):
+		_title_layer.queue_free()
+
+	_title_layer = null
 
 
 func snap_black(reason: String = "snap_black") -> void:

@@ -22,6 +22,7 @@ extends Area2D
 @export_group("Transition")
 @export var use_fade: bool = true
 @export var fade_time: float = 0.5
+@export var transition_title: String = ""
 
 var _used: bool = false
 var _player_inside: bool = false
@@ -99,6 +100,9 @@ func _trigger_portal() -> void:
 		set_deferred("monitoring", false)
 		_player_inside = false
 		_player_ref = null
+
+	if transition_title.strip_edges() != "":
+		SceneManager.show_transition_title(transition_title, fade_time * 2.0)
 
 	SceneManager.travel_to_scene(
 		target_scene_path,

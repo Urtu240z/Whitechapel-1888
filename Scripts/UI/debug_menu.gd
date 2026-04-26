@@ -3,81 +3,87 @@ extends CanvasLayer
 # ================================================================
 # DEBUG MENU
 # ================================================================
-# Toggle: acción "debug_toggle_menu" / tecla I.
+# Lo abre/cierra GameManager llamando a toggle_debug_menu().
 #
-# Requiere en StateManager:
-# - State.DEBUG_MENU
-# - is_debug_menu()
-#
-# Comportamiento:
-# - No usa PAUSED.
-# - Muestra ratón.
-# - Permite ver efectos en tiempo real si EffectsManager permite DEBUG_MENU.
-# - Bloquea movimiento por estado, no por pause global.
+# No instancia UI nueva.
+# No usa PAUSED.
+# Permite ver efectos en tiempo real.
 # ================================================================
-
-@export var panel_path: NodePath
-@export var info_label_path: NodePath
-@export var close_button_path: NodePath
 
 var is_open: bool = false
+var _mouse_mode_before_open: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 
-var _panel: Control = null
-var _info_label: Label = null
-var _close_button: Button = null
+var _root_control: Control
+var _panel: PanelContainer
+var _info_label: Label
+var _hour_spin: SpinBox
+
+var _btn_plus_1: Button
+var _btn_plus_6: Button
+var _btn_plus_12: Button
+var _btn_plus_24: Button
+var _btn_set_hour: Button
+var _btn_save_1: Button
+var _btn_load_1: Button
+var _btn_close: Button
+var _money_spin: SpinBox
+var _btn_add_money: Button
 
 
-# ================================================================
-# READY
-# ================================================================
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	layer = 1200
+
+	if not OS.is_debug_build():
+		queue_free()
+		return
+
+	add_to_group("debug_menu")
+
+	_build_ui()
 	visible = false
 
-	_cache_nodes()
-	_connect_buttons()
+	if get_viewport():
+		get_viewport().size_changed.connect(_recenter_panel)
 
+	if DayNightManager.has_signal("hora_cambiada"):
+		DayNightManager.hora_cambiada.connect(_on_hora_cambiada)
 
-func _cache_nodes() -> void:
-	if panel_path != NodePath():
-		_panel = get_node_or_null(panel_path) as Control
+	if PlayerStats.has_signal("stats_updated"):
+		PlayerStats.stats_updated.connect(_refresh_info)
 
-	if info_label_path != NodePath():
-		_info_label = get_node_or_null(info_label_path) as Label
-
-	if close_button_path != NodePath():
-		_close_button = get_node_or_null(close_button_path) as Button
-
-	# Fallbacks por nombre, por si no tienes paths exportados asignados.
-	if _panel == null:
-		_panel = find_child("Panel", true, false) as Control
-
-	if _info_label == null:
-		_info_label = find_child("InfoLabel", true, false) as Label
-
-	if _close_button == null:
-		_close_button = find_child("CloseButton", true, false) as Button
-
-
-func _connect_buttons() -> void:
-	if _close_button and not _close_button.pressed.is_connected(_on_close_pressed):
-		_close_button.pressed.connect(_on_close_pressed)
+	_refresh_info()
+	_recenter_panel()
 
 
 # ================================================================
-# INPUT
+# API PÚBLICA
 # ================================================================
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("debug_toggle_menu"):
-		get_viewport().set_input_as_handled()
-
-		if not _can_toggle_menu():
-			return
-
-		_toggle_menu()
+func toggle_debug_menu() -> void:
+	_toggle_menu()
 
 
+func toggle() -> void:
+	_toggle_menu()
+
+
+func close_debug_menu() -> void:
+	if is_open:
+		_close_menu()
+
+
+func close() -> void:
+	close_debug_menu()
+
+
+func open_debug_menu() -> void:
+	if not is_open:
+		_open_menu()
+
+
+# ================================================================
+# OPEN / CLOSE
+# ================================================================
 func _can_toggle_menu() -> bool:
 	return (
 		StateManager.is_gameplay()
@@ -86,29 +92,27 @@ func _can_toggle_menu() -> bool:
 	)
 
 
-# ================================================================
-# OPEN / CLOSE
-# ================================================================
 func _toggle_menu() -> void:
+	if not _can_toggle_menu():
+		return
+
 	if is_open:
-		_close_debug_menu()
+		_close_menu()
 	else:
-		_open_debug_menu()
+		_open_menu()
 
 
-func _open_debug_menu() -> void:
+func _open_menu() -> void:
 	if is_open:
+		return
+
+	if not StateManager.push_state(StateManager.State.DEBUG_MENU, "open_debug_menu"):
 		return
 
 	is_open = true
 	visible = true
 
-	if not StateManager.is_debug_menu():
-		if not StateManager.push_state(StateManager.State.DEBUG_MENU, "open_debug_menu"):
-			is_open = false
-			visible = false
-			return
-
+	_mouse_mode_before_open = Input.mouse_mode
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 	PlayerManager.lock_player("debug_menu", true)
@@ -118,7 +122,7 @@ func _open_debug_menu() -> void:
 	_recenter_panel()
 
 
-func _close_debug_menu() -> void:
+func _close_menu() -> void:
 	if not is_open:
 		return
 
@@ -130,177 +134,271 @@ func _close_debug_menu() -> void:
 
 	if StateManager.is_debug_menu():
 		StateManager.pop_state("close_debug_menu")
+	else:
+		Input.mouse_mode = _mouse_mode_before_open
+
+
+func _process(_delta: float) -> void:
+	if is_open:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+# ================================================================
+# UI
+# ================================================================
+func _build_ui() -> void:
+	_root_control = Control.new()
+	_root_control.name = "RootControl"
+	_root_control.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_root_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_root_control)
+
+	_panel = PanelContainer.new()
+	_panel.name = "DebugPanel"
+	_panel.custom_minimum_size = Vector2(640, 420)
+	_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	_root_control.add_child(_panel)
+
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 18)
+	margin.add_theme_constant_override("margin_top", 18)
+	margin.add_theme_constant_override("margin_right", 18)
+	margin.add_theme_constant_override("margin_bottom", 18)
+	_panel.add_child(margin)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	margin.add_child(vbox)
+
+	var title := Label.new()
+	title.text = "DEBUG MENU"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 22)
+	vbox.add_child(title)
+
+	_info_label = Label.new()
+	_info_label.text = "Cargando..."
+	_info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_info_label.add_theme_font_size_override("font_size", 18)
+	vbox.add_child(_info_label)
+
+	var sep1 := HSeparator.new()
+	vbox.add_child(sep1)
+
+	# ------------------------------------------------------------
+	# FILA HORAS
+	# ------------------------------------------------------------
+	var row_hours := HBoxContainer.new()
+	row_hours.add_theme_constant_override("separation", 8)
+	vbox.add_child(row_hours)
+
+	_btn_plus_1 = Button.new()
+	_btn_plus_1.text = "+1h"
+	_btn_plus_1.custom_minimum_size = Vector2(110, 42)
+	row_hours.add_child(_btn_plus_1)
+
+	_btn_plus_6 = Button.new()
+	_btn_plus_6.text = "+6h"
+	_btn_plus_6.custom_minimum_size = Vector2(110, 42)
+	row_hours.add_child(_btn_plus_6)
+
+	_btn_plus_12 = Button.new()
+	_btn_plus_12.text = "+12h"
+	_btn_plus_12.custom_minimum_size = Vector2(110, 42)
+	row_hours.add_child(_btn_plus_12)
+
+	_btn_plus_24 = Button.new()
+	_btn_plus_24.text = "+24h"
+	_btn_plus_24.custom_minimum_size = Vector2(110, 42)
+	row_hours.add_child(_btn_plus_24)
+
+	# ------------------------------------------------------------
+	# FILA SET HORA
+	# ------------------------------------------------------------
+	var row_set_hour := HBoxContainer.new()
+	row_set_hour.add_theme_constant_override("separation", 8)
+	vbox.add_child(row_set_hour)
+
+	var set_hour_label := Label.new()
+	set_hour_label.text = "Ir a hora:"
+	set_hour_label.add_theme_font_size_override("font_size", 16)
+	row_set_hour.add_child(set_hour_label)
+
+	_hour_spin = SpinBox.new()
+	_hour_spin.min_value = 0
+	_hour_spin.max_value = 23
+	_hour_spin.step = 1
+	_hour_spin.rounded = true
+	_hour_spin.custom_minimum_size = Vector2(140, 42)
+	row_set_hour.add_child(_hour_spin)
+
+	_btn_set_hour = Button.new()
+	_btn_set_hour.text = "Set hora"
+	_btn_set_hour.custom_minimum_size = Vector2(140, 42)
+	row_set_hour.add_child(_btn_set_hour)
+
+	var sep2 := HSeparator.new()
+	vbox.add_child(sep2)
+
+	# ------------------------------------------------------------
+	# FILA DINERO
+	# ------------------------------------------------------------
+	var row_money := HBoxContainer.new()
+	row_money.add_theme_constant_override("separation", 8)
+	vbox.add_child(row_money)
+
+	var money_label := Label.new()
+	money_label.text = "Añadir dinero:"
+	money_label.add_theme_font_size_override("font_size", 16)
+	row_money.add_child(money_label)
+
+	_money_spin = SpinBox.new()
+	_money_spin.min_value = 1
+	_money_spin.max_value = 9999
+	_money_spin.step = 1
+	_money_spin.value = 10
+	_money_spin.rounded = true
+	_money_spin.custom_minimum_size = Vector2(140, 42)
+	row_money.add_child(_money_spin)
+
+	_btn_add_money = Button.new()
+	_btn_add_money.text = "Añadir"
+	_btn_add_money.custom_minimum_size = Vector2(110, 42)
+	row_money.add_child(_btn_add_money)
+
+	var sep3 := HSeparator.new()
+	vbox.add_child(sep3)
+
+	# ------------------------------------------------------------
+	# FILA SAVE / LOAD
+	# ------------------------------------------------------------
+	var row_save := HBoxContainer.new()
+	row_save.add_theme_constant_override("separation", 8)
+	vbox.add_child(row_save)
+
+	_btn_save_1 = Button.new()
+	_btn_save_1.text = "Guardar S1"
+	_btn_save_1.custom_minimum_size = Vector2(160, 42)
+	row_save.add_child(_btn_save_1)
+
+	_btn_load_1 = Button.new()
+	_btn_load_1.text = "Cargar S1"
+	_btn_load_1.custom_minimum_size = Vector2(160, 42)
+	row_save.add_child(_btn_load_1)
+
+	var spacer := Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row_save.add_child(spacer)
+
+	_btn_close = Button.new()
+	_btn_close.text = "Cerrar"
+	_btn_close.custom_minimum_size = Vector2(140, 42)
+	row_save.add_child(_btn_close)
+
+	# ------------------------------------------------------------
+	# CONEXIONES
+	# ------------------------------------------------------------
+	_btn_plus_1.pressed.connect(_on_plus_1_pressed)
+	_btn_plus_6.pressed.connect(_on_plus_6_pressed)
+	_btn_plus_12.pressed.connect(_on_plus_12_pressed)
+	_btn_plus_24.pressed.connect(_on_plus_24_pressed)
+	_btn_set_hour.pressed.connect(_on_set_hour_pressed)
+	_btn_save_1.pressed.connect(_on_save_1_pressed)
+	_btn_load_1.pressed.connect(_on_load_1_pressed)
+	_btn_close.pressed.connect(_on_close_pressed)
+	_btn_add_money.pressed.connect(_on_add_money_pressed)
+
+
+func _recenter_panel() -> void:
+	if not is_instance_valid(_panel):
+		return
+
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+	var panel_size: Vector2 = _panel.custom_minimum_size
+
+	_panel.position = (viewport_size - panel_size) * 0.5
+
+
+# ================================================================
+# ACCIONES
+# ================================================================
+func _on_plus_1_pressed() -> void:
+	DayNightManager.advance_hours(1.0)
+	_refresh_info()
+
+
+func _on_plus_6_pressed() -> void:
+	DayNightManager.advance_hours(6.0)
+	_refresh_info()
+
+
+func _on_plus_12_pressed() -> void:
+	DayNightManager.advance_hours(12.0)
+	_refresh_info()
+
+
+func _on_plus_24_pressed() -> void:
+	DayNightManager.advance_hours(24.0)
+	_refresh_info()
+
+
+func _on_set_hour_pressed() -> void:
+	var target_hour: float = float(int(_hour_spin.value))
+	DayNightManager.set_hora(target_hour)
+	_refresh_info()
+
+
+func _on_save_1_pressed() -> void:
+	if SaveManager:
+		SaveManager.save_game(1)
+	_refresh_info()
+
+
+func _on_load_1_pressed() -> void:
+	if SaveManager:
+		SaveManager.load_game(1)
+	_refresh_info()
+
+
+func _on_add_money_pressed() -> void:
+	PlayerStats.añadir_dinero(float(_money_spin.value))
+	_refresh_info()
 
 
 func _on_close_pressed() -> void:
-	_close_debug_menu()
+	_close_menu()
 
 
-# ================================================================
-# PROCESS
-# ================================================================
-func _process(_delta: float) -> void:
-	if not is_open:
-		return
-
-	# Por si algún sistema intenta ocultarlo.
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
-	_refresh_info()
+func _on_hora_cambiada(_hora: float) -> void:
+	if visible:
+		_refresh_info()
 
 
 # ================================================================
 # INFO
 # ================================================================
 func _refresh_info() -> void:
-	if _info_label == null:
+	if not is_instance_valid(_info_label):
 		return
 
-	var lines: Array[String] = []
+	var dia: int = 1
+	var hora: float = 8.0
 
-	lines.append("DEBUG MENU")
-	lines.append("--------------------")
+	if DayNightManager and DayNightManager.has_method("get_current_day"):
+		dia = DayNightManager.get_current_day()
 
-	if StateManager:
-		lines.append("State: %s" % StateManager.current_name())
+	if DayNightManager and DayNightManager.has_method("get_hour_float"):
+		hora = DayNightManager.get_hour_float()
 
-	if DayNightManager:
-		if DayNightManager.has_method("get_day_time_string"):
-			lines.append("Time: %s" % DayNightManager.get_day_time_string())
-		else:
-			lines.append("Hour: %.2f" % DayNightManager.hora_actual)
+	_hour_spin.value = int(floor(hora))
 
-	if PlayerStats:
-		lines.append("Money: %s" % str(PlayerStats.get("dinero")))
-		lines.append("Health: %s" % str(PlayerStats.get("salud")))
-		lines.append("Stamina: %s" % str(PlayerStats.get("stamina")))
-		lines.append("Sleep: %s" % str(PlayerStats.get("sueno")))
-		lines.append("Hunger: %s" % str(PlayerStats.get("hambre")))
-		lines.append("Hygiene: %s" % str(PlayerStats.get("higiene")))
-		lines.append("Fear: %s" % str(PlayerStats.get("miedo")))
-		lines.append("Stress: %s" % str(PlayerStats.get("estres")))
-		lines.append("Alcohol: %s" % str(PlayerStats.get("alcohol")))
-		lines.append("Laudano: %s" % str(PlayerStats.get("laudano")))
-		lines.append("Disease: %s" % str(PlayerStats.get("enfermedad")))
+	var medicina_text := "No"
+	if PlayerStats.medicina_activa:
+		medicina_text = "Sí"
 
-	var player := PlayerManager.get_player() if PlayerManager.has_method("get_player") else null
-	if is_instance_valid(player):
-		lines.append("Player pos: %s" % str(player.global_position))
-
-	_info_label.text = "\n".join(lines)
-
-
-func _recenter_panel() -> void:
-	if _panel == null:
-		return
-
-	await get_tree().process_frame
-
-	var viewport_size := get_viewport().get_visible_rect().size
-	_panel.position = (viewport_size - _panel.size) * 0.5
-
-
-# ================================================================
-# DEBUG BUTTONS — TIEMPO
-# Puedes conectar botones a estos métodos si los tienes en escena.
-# ================================================================
-func _on_add_1_hour_pressed() -> void:
-	if DayNightManager:
-		DayNightManager.advance_hours(1.0)
-	_refresh_info()
-
-
-func _on_add_3_hours_pressed() -> void:
-	if DayNightManager:
-		DayNightManager.advance_hours(3.0)
-	_refresh_info()
-
-
-func _on_add_6_hours_pressed() -> void:
-	if DayNightManager:
-		DayNightManager.advance_hours(6.0)
-	_refresh_info()
-
-
-func _on_set_morning_pressed() -> void:
-	if DayNightManager:
-		DayNightManager.set_hora(8.0)
-	_refresh_info()
-
-
-func _on_set_noon_pressed() -> void:
-	if DayNightManager:
-		DayNightManager.set_hora(12.0)
-	_refresh_info()
-
-
-func _on_set_evening_pressed() -> void:
-	if DayNightManager:
-		DayNightManager.set_hora(18.0)
-	_refresh_info()
-
-
-func _on_set_night_pressed() -> void:
-	if DayNightManager:
-		DayNightManager.set_hora(22.0)
-	_refresh_info()
-
-
-# ================================================================
-# DEBUG BUTTONS — PLAYER STATS
-# Puedes conectar botones a estos métodos si los tienes en escena.
-# ================================================================
-func _on_heal_pressed() -> void:
-	if PlayerStats and PlayerStats.has_method("apply_healing"):
-		PlayerStats.apply_healing(10.0, "debug")
-	_refresh_info()
-
-
-func _on_damage_pressed() -> void:
-	if PlayerStats and PlayerStats.has_method("apply_damage"):
-		PlayerStats.apply_damage(10.0, "debug")
-	_refresh_info()
-
-
-func _on_add_money_pressed() -> void:
-	if PlayerStats and PlayerStats.has_method("añadir_dinero"):
-		PlayerStats.añadir_dinero(10.0)
-	_refresh_info()
-
-
-func _on_remove_money_pressed() -> void:
-	if PlayerStats and PlayerStats.has_method("gastar_dinero"):
-		PlayerStats.gastar_dinero(10.0)
-	_refresh_info()
-
-
-func _on_add_alcohol_pressed() -> void:
-	if PlayerStats and PlayerStats.has_method("apply_stat_delta"):
-		PlayerStats.apply_stat_delta("alcohol", 25.0, "debug")
-	_refresh_info()
-
-
-func _on_clear_alcohol_pressed() -> void:
-	if PlayerStats:
-		PlayerStats.set("alcohol", 0.0)
-		if PlayerStats.has_signal("stats_updated"):
-			PlayerStats.stats_updated.emit()
-	_refresh_info()
-
-
-func _on_add_laudano_pressed() -> void:
-	if PlayerStats and PlayerStats.has_method("apply_stat_delta"):
-		PlayerStats.apply_stat_delta("laudano", 25.0, "debug")
-	_refresh_info()
-
-
-func _on_clear_laudano_pressed() -> void:
-	if PlayerStats:
-		PlayerStats.set("laudano", 0.0)
-		if PlayerStats.has_signal("stats_updated"):
-			PlayerStats.stats_updated.emit()
-	_refresh_info()
-
-
-func _on_refresh_pressed() -> void:
-	_refresh_info()
+	_info_label.text = \
+		"Día: %02d | Hora: %02d:00\n" % [dia, int(floor(hora))] + \
+		"Dinero: %.2f\n" % PlayerStats.dinero + \
+		"Hambre: %.1f | Sueño: %.1f | Higiene: %.1f\n" % [PlayerStats.hambre, PlayerStats.sueno, PlayerStats.higiene] + \
+		"Salud: %.1f | Estrés: %.1f | Miedo: %.1f\n" % [PlayerStats.salud, PlayerStats.estres, PlayerStats.miedo] + \
+		"Medicina activa: %s" % medicina_text

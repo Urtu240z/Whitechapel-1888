@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://b5d8o54cdutgp" path="res://Scripts/_Archive/prueba_mecanicas.gd" id="1_wk82u"]
 [ext_resource type="PackedScene" uid="uid://b1nbpmgfq3kvk" path="res://Scenes/Core/UI_Stats.tscn" id="2_m4vru"]
 [ext_resource type="PackedScene" uid="uid://devl1udsex47w" path="res://Scenes/Core/Pickup.tscn" id="3_ju50u"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="5_ivb1e"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="6_dmtjg"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="7_rr82g"]
 
 [sub_resource type="Gradient" id="Gradient_ju50u"]
 colors = PackedColorArray(0.38170326, 0.38170323, 0.38170323, 1, 1, 1, 1, 1)
@@ -19,6 +22,10 @@ gradient = SubResource("Gradient_vj6ek")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m4vru"]
 size = Vector2(45803, 1277.0002)
+
+[sub_resource type="Resource" id="Resource_06klg"]
+script = ExtResource("7_rr82g")
+duration = 0.0
 
 [node name="Node2D" type="Node2D" unique_id=1896704466]
 script = ExtResource("1_wk82u")
@@ -375,3 +382,36 @@ position = Vector2(3045.9998, -1413.9999)
 scale = Vector2(5, 5)
 pickup_type = "health-ducha"
 disappear_on_pickup = false
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=76463748]
+top_level = true
+position = Vector2(-11448, -805)
+zoom = Vector2(0.3, 0.3)
+limit_left = -16000
+limit_top = -5000
+limit_right = 28000
+limit_bottom = 550
+editor_draw_limits = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D" unique_id=1995504391]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("5_ivb1e")
+interpolation_mode = 1
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="ExteriorPhantomCamera2D" type="Node2D" parent="." unique_id=2051444926 node_paths=PackedStringArray("follow_target")]
+top_level = true
+position = Vector2(-11448, -805)
+script = ExtResource("6_dmtjg")
+priority = 10
+follow_mode = 2
+follow_target = NodePath("../Player")
+zoom = Vector2(0.3, 0.3)
+tween_resource = SubResource("Resource_06klg")
+draw_limits = true
+limit_left = -16000
+limit_top = -5000
+limit_right = 28000
+limit_bottom = 550
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"

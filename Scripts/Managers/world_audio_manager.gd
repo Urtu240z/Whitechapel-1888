@@ -396,7 +396,7 @@ func _fade_nodes_to_snapshot_volume(reason: String, nodes: Array[Node], duration
 	await _fade_nodes_to_custom_snapshot(_snapshots[clean_reason], nodes, duration, clean_reason)
 
 
-func _fade_nodes_to_custom_snapshot(snapshot: Dictionary, nodes: Array[Node], duration: float, reason: String) -> void:
+func _fade_nodes_to_custom_snapshot(snapshot: Dictionary, nodes: Array[Node], duration: float, _reason: String) -> void:
 	var tweens: Array[Tween] = []
 
 	for node in nodes:
@@ -422,7 +422,7 @@ func _fade_nodes_to_custom_snapshot(snapshot: Dictionary, nodes: Array[Node], du
 			_kill_tween(node.get_instance_id())
 
 
-func _fade_nodes_to_custom_targets(nodes: Array[Node], targets: Dictionary, duration: float, reason: String) -> void:
+func _fade_nodes_to_custom_targets(nodes: Array[Node], targets: Dictionary, duration: float, _reason: String) -> void:
 	var tweens: Array[Tween] = []
 
 	for node in nodes:

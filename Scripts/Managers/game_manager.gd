@@ -1,19 +1,18 @@
 extends Node
+
 # ================================================================
 # GAME MANAGER — Autoload
 # ================================================================
-# Responsabilidad actual:
-# - Input global de UI.
-# - Abrir/cerrar journal.
-# - Abrir menú de pausa.
-# - Crear menú debug en builds debug.
-# - Cursor personalizado.
+# Responsabilidad:
+# - Input global.
+# - Pause menu.
+# - Journal.
+# - Debug menu.
+# - Cursor global.
 #
-# No debe:
-# - Mover directamente al player.
-# - Leer nodos internos del player.
-# - Cambiar escenas directamente salvo delegar en SceneManager desde otras UIs.
-# - Decidir permisos complejos fuera de StateManager.
+# No toca internals del player directamente.
+# Para player usa PlayerManager.
+# Para estados usa StateManager.
 # ================================================================
 
 const PAUSE_MENU_SCENE := preload("res://Scenes/UI/Pause_Menu.tscn")
@@ -31,9 +30,6 @@ var _debug_menu: Node = null
 var _journal_close_in_progress: bool = false
 
 
-# ================================================================
-# READY
-# ================================================================
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_set_custom_cursor()
@@ -56,6 +52,7 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 
+	# Tu acción real de journal es "stats" según project.godot.
 	if event.is_action_pressed("stats"):
 		toggle_journal()
 		get_viewport().set_input_as_handled()
@@ -83,8 +80,15 @@ func _handle_cancel() -> void:
 	_refresh_pause_menu()
 	_refresh_journal()
 
+	if StateManager.is_debug_menu():
+		close_debug_menu()
+		return
+
 	if _is_pause_menu_open():
-		_pause_menu.close()
+		if _pause_menu.has_method("close"):
+			_pause_menu.close()
+		else:
+			_close_pause_menu()
 		return
 
 	if _is_journal_open():
@@ -111,11 +115,35 @@ func _open_pause_menu() -> void:
 	if not StateManager.push_state(StateManager.State.PAUSED, "pause"):
 		return
 
+	PlayerManager.lock_player("pause_menu", true)
 	PlayerManager.force_stop()
 	PlayerManager.stop_motion_audio()
 
 	pause_requested.emit()
-	_pause_menu.open()
+
+	if _pause_menu.has_method("open"):
+		_pause_menu.open()
+	elif _pause_menu.has_method("open_menu"):
+		_pause_menu.open_menu()
+	else:
+		_pause_menu.visible = true
+
+
+func _close_pause_menu() -> void:
+	_refresh_pause_menu()
+
+	if _pause_menu:
+		if _pause_menu.has_method("close"):
+			_pause_menu.close()
+		elif _pause_menu.has_method("close_menu"):
+			_pause_menu.close_menu()
+		else:
+			_pause_menu.visible = false
+
+	PlayerManager.unlock_player("pause_menu")
+
+	if StateManager.is_paused():
+		StateManager.pop_state("close_pause_menu")
 
 
 func _refresh_pause_menu() -> void:
@@ -131,7 +159,11 @@ func _refresh_pause_menu() -> void:
 		return
 
 	_pause_menu = PAUSE_MENU_SCENE.instantiate()
+	_pause_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	current_scene.add_child(_pause_menu)
+
+	if not _pause_menu.is_in_group("pause_menu"):
+		_pause_menu.add_to_group("pause_menu")
 
 
 func _is_pause_menu_open() -> bool:
@@ -181,6 +213,7 @@ func _open_journal() -> void:
 	if not StateManager.push_state(StateManager.State.JOURNAL, "open_journal"):
 		return
 
+	PlayerManager.lock_player("journal", true)
 	PlayerManager.force_stop()
 	PlayerManager.stop_motion_audio()
 	PlayerManager.set_animation_tree_active(false)
@@ -198,13 +231,12 @@ func _close_journal() -> void:
 
 	_journal_close_in_progress = true
 
-	# Importante: cerrar primero el journal para que deje de procesar input
-	# ANTES de volver al estado anterior.
 	await _journal.close()
 
 	if StateManager.is_journal():
 		StateManager.pop_state("close_journal")
 
+	PlayerManager.unlock_player("journal")
 	PlayerManager.set_animation_tree_active(true)
 	PlayerManager.force_stop()
 	PlayerManager.block_movement_input_until_release()
@@ -259,7 +291,12 @@ func _ensure_debug_menu() -> void:
 	if _debug_menu != null and is_instance_valid(_debug_menu):
 		return
 
+	_debug_menu = get_tree().get_first_node_in_group("debug_menu")
+	if _debug_menu != null and is_instance_valid(_debug_menu):
+		return
+
 	_debug_menu = DEBUG_MENU_SCENE.instantiate()
+	_debug_menu.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().root.add_child.call_deferred(_debug_menu)
 
 
@@ -270,19 +307,32 @@ func toggle_debug_menu() -> void:
 	_ensure_debug_menu()
 
 	if _debug_menu == null or not is_instance_valid(_debug_menu):
+		push_warning("GameManager: DebugMenu no encontrado.")
 		return
 
-	if _debug_menu.has_method("toggle"):
+	if _debug_menu.has_method("toggle_debug_menu"):
+		_debug_menu.toggle_debug_menu()
+	elif _debug_menu.has_method("toggle"):
 		_debug_menu.toggle()
-		return
+	else:
+		_debug_menu.visible = not _debug_menu.visible
 
-	_debug_menu.visible = not _debug_menu.visible
+
+func close_debug_menu() -> void:
+	if _debug_menu == null or not is_instance_valid(_debug_menu):
+		_ensure_debug_menu()
+
+	if _debug_menu and is_instance_valid(_debug_menu):
+		if _debug_menu.has_method("close_debug_menu"):
+			_debug_menu.close_debug_menu()
+		elif _debug_menu.has_method("close"):
+			_debug_menu.close()
+		else:
+			_debug_menu.visible = false
 
 
 # ================================================================
-# RATÓN — wrappers simples
-# El modo general del ratón lo decide StateManager.
-# Estas funciones quedan por comodidad para casos puntuales.
+# RATÓN — wrappers
 # ================================================================
 func hide_mouse() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
@@ -290,3 +340,18 @@ func hide_mouse() -> void:
 
 func show_mouse() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+# ================================================================
+# API
+# ================================================================
+func is_journal_open() -> bool:
+	return StateManager.is_journal()
+
+
+func is_pause_open() -> bool:
+	return StateManager.is_paused()
+
+
+func is_debug_open() -> bool:
+	return StateManager.is_debug_menu()

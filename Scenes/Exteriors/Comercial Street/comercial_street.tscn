@@ -36,7 +36,6 @@
 [ext_resource type="PackedScene" uid="uid://csx4il2s0ov4r" path="res://Scenes/Core/Scene_Portal.tscn" id="25_atgof"]
 [ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="26_145iq"]
 [ext_resource type="Texture2D" uid="uid://bgcml75mm387r" path="res://Assets/Sprites/Building/Perfume Store_n.png" id="27_okdt8"]
-[ext_resource type="Script" uid="uid://coqq022k5vd4y" path="res://Scripts/Core/scene_portal.gd" id="35_ac4hn"]
 [ext_resource type="Material" uid="uid://sufipqvuten" path="res://Data/Material/Ground_Imperfection.tres" id="42_ac4hn"]
 [ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="43_ac4hn"]
 [ext_resource type="Texture2D" uid="uid://cg0b4tyotkq46" path="res://Assets/Sprites/Ground/Ground_Cobblestone.tres" id="43_qnasi"]
@@ -783,33 +782,24 @@ texture = SubResource("GradientTexture2D_6ggpe")
 
 [node name="ScenePortal_Left" parent="OutsideGameplay/ScenePortals" unique_id=819414623 instance=ExtResource("25_atgof")]
 position = Vector2(-15915, 23)
-script = ExtResource("35_ac4hn")
-portal_id = ""
-target_scene_path = ""
-target_portal_id = ""
-require_interact = false
-interact_action = &"interact"
 fade_time = 2.0
 
 [node name="ScenePortal_Middle" parent="OutsideGameplay/ScenePortals" unique_id=1533950328 instance=ExtResource("25_atgof")]
 position = Vector2(-13633, 23)
-script = ExtResource("35_ac4hn")
 portal_id = "comercial_street_middle"
 target_scene_path = "uid://ex0se7fctlj4"
 target_portal_id = "flower_dean_street_left"
 require_interact = true
-interact_action = &"interact"
 fade_time = 2.0
+transition_title = "Flower and Dean Street"
 
 [node name="ScenePortal_Right" parent="OutsideGameplay/ScenePortals" unique_id=327744838 instance=ExtResource("25_atgof")]
 position = Vector2(26910, 23)
-script = ExtResource("35_ac4hn")
 portal_id = "comercial_street_right"
 target_scene_path = "uid://ex0se7fctlj4"
 target_portal_id = "flower_dean_street_right"
-require_interact = false
-interact_action = &"interact"
 fade_time = 2.0
+transition_title = "Flower and Dean Street"
 
 [node name="POIs" type="Node2D" parent="OutsideGameplay" unique_id=456185148]
 
