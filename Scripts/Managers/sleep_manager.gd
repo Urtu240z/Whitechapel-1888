@@ -46,6 +46,7 @@ var _cancelado: bool = false
 var _forzado: bool = false
 var _hostel_payment_required: bool = false
 var _pending_hostel_payment: float = 0.0
+var _finalizing_sleep: bool = false
 
 var _selection: Node = null
 var _screen: Node = null
@@ -128,6 +129,7 @@ func start_sleep_forced(lugar_str: String, mensaje: String = "") -> void:
 	_hora_fin = fmod(_hora_inicio + _horas_totales, 24.0)
 	_horas_dormidas = 0.0
 	_cancelado = false
+	_finalizing_sleep = false
 	_durmiendo = true
 	_forzado = true
 
@@ -330,6 +332,7 @@ func _iniciar_sueno_directo() -> void:
 	_screen.connect("salir_a_la_calle", _on_salir_a_la_calle)
 	_screen.connect("tramo_visual_terminado", _on_tramo_visual_terminado)
 	_screen.call("actualizar", DayNightManager.get_hour_float(), 0.0, true)
+	_set_screen_interaction_enabled(false)
 
 	if _forzado:
 		_screen.call("set_forzado", true)
@@ -339,6 +342,7 @@ func _iniciar_sueno_directo() -> void:
 	await SceneManager.fade_in(1.5, true, "sleep_fade_in")
 
 	_arrancar_tramo_visual(_hora_inicio, _hora_fin, _horas_totales)
+	_set_screen_interaction_enabled(true)
 
 # ================================================================
 # PANEL DE SELECCIÓN
@@ -400,6 +404,7 @@ func _on_selection_confirmado(horas: float) -> void:
 	_hora_fin = fmod(_hora_inicio + horas, 24.0)
 	_horas_dormidas = 0.0
 	_cancelado = false
+	_finalizing_sleep = false
 	_durmiendo = true
 
 	_cerrar_selection()
@@ -426,6 +431,7 @@ func _iniciar_sueno() -> void:
 	_screen.connect("salir_a_la_calle", _on_salir_a_la_calle)
 	_screen.connect("tramo_visual_terminado", _on_tramo_visual_terminado)
 	_screen.call("actualizar", DayNightManager.get_hour_float(), 0.0, true)
+	_set_screen_interaction_enabled(false)
 
 	if _forzado:
 		_screen.call("set_forzado", true)
@@ -435,6 +441,7 @@ func _iniciar_sueno() -> void:
 	await SceneManager.fade_in(1.5, true, "sleep_fade_in")
 
 	_arrancar_tramo_visual(_hora_inicio, _hora_fin, _horas_totales)
+	_set_screen_interaction_enabled(true)
 
 func _arrancar_tramo_visual(hora_inicio: float, hora_fin: float, horas_tramo: float) -> void:
 	if _screen == null:
@@ -491,7 +498,11 @@ func _al_terminar_tramo_real() -> void:
 	_finalizar_sueno()
 
 func _on_screen_cancelado() -> void:
+	if _finalizing_sleep:
+		return
+
 	_cancelado = true
+	_set_screen_interaction_enabled(false)
 	_aplicar_tramo_parcial()
 	_finalizar_sueno()
 
@@ -511,8 +522,12 @@ func _on_seguir_durmiendo() -> void:
 		_screen.call("actualizar", hora_actual, 0.0, true)
 
 	_arrancar_tramo_visual(_hora_inicio, _hora_fin, _horas_totales)
+	_set_screen_interaction_enabled(true)
 
 func _on_salir_a_la_calle() -> void:
+	if _finalizing_sleep:
+		return
+	_set_screen_interaction_enabled(false)
 	_finalizar_sueno()
 
 func _get_segment_progress_01() -> float:
@@ -559,6 +574,12 @@ func _aplicar_recuperacion_por_horas(horas: float) -> void:
 # ================================================================
 
 func _finalizar_sueno() -> void:
+	if _finalizing_sleep:
+		return
+
+	_finalizing_sleep = true
+	_set_screen_interaction_enabled(false)
+
 	_durmiendo = false
 	_forzado = false
 	_reset_segment_state()
@@ -581,6 +602,7 @@ func _finalizar_sueno() -> void:
 		await SceneManager.fade_in(1.5, true, "sleep_wake_fade_in")
 		_exit_sleep_mode("end_sleep_no_player")
 
+	_finalizing_sleep = false
 	sleep_ended.emit(_horas_dormidas, not _cancelado)
 
 func _aplicar_efectos_al_despertar() -> void:
@@ -644,6 +666,10 @@ func _limpiar_pago_hostal_pendiente() -> void:
 	_hostel_payment_required = false
 	_pending_hostel_payment = 0.0
 
+func _set_screen_interaction_enabled(value: bool) -> void:
+	if _screen != null and is_instance_valid(_screen) and _screen.has_method("set_interaction_enabled"):
+		_screen.call("set_interaction_enabled", value)
+
 func _cerrar_selection() -> void:
 	if _selection != null and is_instance_valid(_selection):
 		_selection.queue_free()
@@ -695,6 +721,7 @@ func reset() -> void:
 	_durmiendo = false
 	_forzado = false
 	_cancelado = false
+	_finalizing_sleep = false
 	_hostel_payment_required = false
 	_pending_hostel_payment = 0.0
 	_horas_totales = 0.0

@@ -8,6 +8,7 @@ signal finished(data: Dictionary)
 @onready var transition_pcam: PhantomCamera2D = $TransitionPhantomCamera2D
 @onready var transition_target: Node2D = $TransitionCameraTarget
 @onready var local_camera: Camera2D = $Camera2D
+@onready var audio_root: Node = $Audio
 
 var _acto: String = ""
 var _tipo: String = ""
@@ -15,6 +16,9 @@ var _client_skin_name: String = "NPC_ClientPoor"
 var _previous_camera: Camera2D = null
 var _can_skip_animation: bool = false
 var _animation_phase_done: bool = false
+var _transition_playing: bool = false
+
+const TRANSITION_ANIMATION: StringName = &"ClientTransition1"
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
@@ -33,8 +37,9 @@ func prepare(acto: String, tipo: String, client_skin_name: String = "NPC_ClientP
 	_acto = acto
 	_tipo = tipo
 	_client_skin_name = client_skin_name
-	_can_skip_animation = true
+	_can_skip_animation = false
 	_animation_phase_done = false
+	_transition_playing = false
 
 	_previous_camera = get_viewport().get_camera_2d()
 
@@ -47,16 +52,28 @@ func prepare(acto: String, tipo: String, client_skin_name: String = "NPC_ClientP
 
 	_apply_client_skin(_client_skin_name)
 
-	# Dejar la animación colocada en frame 0, pero sin reproducir aún
-	animation_player.play("ClientTransition1")
-	animation_player.seek(0.0, true)
-	animation_player.stop()
+	# Dejar la animación colocada en frame 0, pero sin reproducir aún.
+	# Importante: no usamos play+stop aquí para no disparar pistas de audio.
+	if animation_player.has_animation(TRANSITION_ANIMATION):
+		animation_player.assigned_animation = TRANSITION_ANIMATION
+		animation_player.seek(0.0, true)
+		animation_player.stop()
+
+	_stop_transition_audio()
 
 func play_transition() -> void:
+	if _transition_playing or _animation_phase_done:
+		return
+
 	visible = true
-	animation_player.play("ClientTransition1")
+	_transition_playing = true
+	_can_skip_animation = false
+	_stop_transition_audio()
+	animation_player.play(TRANSITION_ANIMATION)
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Durante la animación principal, F no hace nada.
+	# El input queda reservado para el minijuego cuando este se activa.
 	if not _can_skip_animation:
 		return
 
@@ -90,31 +107,29 @@ func _enter_minigame_phase() -> void:
 	if _animation_phase_done:
 		return
 
+	_transition_playing = false
+
 	_animation_phase_done = true
 	_can_skip_animation = false
 
 	minigame.z_index = 20
 	minigame.visible = true
-	minigame.start()
+	if minigame.has_method("start"):
+		minigame.start()
 
 func _skip_animation_to_minigame() -> void:
-	if _animation_phase_done:
-		return
-
-	if animation_player.current_animation == "ClientTransition1":
-		var anim_length := animation_player.current_animation_length
-		animation_player.seek(anim_length, true)
-
-	_enter_minigame_phase()
+	# Desactivado por defecto: saltar con seek puede redisparar pistas de audio.
+	return
 
 func _on_animation_finished(anim_name: StringName) -> void:
-	if anim_name != "ClientTransition1":
+	if anim_name != TRANSITION_ANIMATION:
 		return
 
 	_enter_minigame_phase()
 
 func _on_minigame_completed(satisfaction: float) -> void:
 	minigame.visible = false
+	_stop_transition_audio()
 
 	if is_instance_valid(transition_pcam):
 		transition_pcam.set_priority(0)
@@ -130,3 +145,13 @@ func _on_minigame_completed(satisfaction: float) -> void:
 	})
 
 	queue_free()
+
+func _stop_transition_audio() -> void:
+	if audio_root == null:
+		return
+
+	for child: Node in audio_root.get_children():
+		if child is AudioStreamPlayer:
+			child.stop()
+		elif child is AudioStreamPlayer2D:
+			child.stop()

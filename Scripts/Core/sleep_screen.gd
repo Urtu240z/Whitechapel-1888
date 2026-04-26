@@ -41,6 +41,8 @@ var _animando: bool = false
 var _forzado: bool = false
 var _sleep_preview: float = 0.0
 var _ui_inicializada: bool = false
+var _interaction_enabled: bool = true
+var _closing: bool = false
 
 var _sleep_anim_name: StringName = &"Sleep"
 var _sleep_anim_base_speed: float = 1.0
@@ -92,6 +94,22 @@ func set_sleep_preview(value: float) -> void:
 	_sleep_preview = clampf(value, 0.0, 100.0)
 	_actualizar_boton_despertar()
 
+func set_interaction_enabled(value: bool) -> void:
+	_interaction_enabled = value and not _closing
+	_actualizar_boton_despertar()
+
+	if btn_seguir:
+		btn_seguir.disabled = not _interaction_enabled
+	if btn_salir:
+		btn_salir.disabled = not _interaction_enabled
+
+func begin_closing() -> void:
+	_closing = true
+	set_interaction_enabled(false)
+	_activo = false
+	_animando = false
+	_pausar_animacion_fondo()
+
 func actualizar(hora: float, progreso: float, snap: bool = false) -> void:
 	_hora_actual = fposmod(hora, 24.0)
 	_progreso_actual = clampf(progreso, 0.0, 1.0)
@@ -118,7 +136,8 @@ func iniciar_tramo_visual(hora_inicio: float, hora_fin: float, progreso_inicio: 
 	_actualizar_ui(_hora_actual, _progreso_actual)
 
 	post_panel.visible = false
-	btn_cancelar.grab_focus()
+	if _interaction_enabled:
+		btn_cancelar.grab_focus()
 
 	_activo = true
 	_animando = true
@@ -138,11 +157,11 @@ func mostrar_panel_post(hora: float) -> void:
 
 	lbl_post.text = tr("SLEEP_POST_TEXTO") % _formato_hora(hora)
 	post_panel.visible = true
+	set_interaction_enabled(true)
 	btn_seguir.grab_focus()
 
 func fade_out() -> void:
-	_activo = false
-	_animando = false
+	begin_closing()
 
 	var tween := create_tween()
 	tween.set_parallel(true)
@@ -200,6 +219,15 @@ func _actualizar_ui(hora: float, progreso: float) -> void:
 	progress_bar.value = clampf(progreso, 0.0, 1.0)
 
 func _actualizar_boton_despertar() -> void:
+	if btn_cancelar == null:
+		return
+
+	if not _interaction_enabled or _closing:
+		btn_cancelar.disabled = true
+		if btn_cancelar.text == "":
+			btn_cancelar.text = tr("SLEEP_DESPERTAR")
+		return
+
 	if _forzado:
 		var puede := _sleep_preview >= 40.0
 		btn_cancelar.disabled = not puede
@@ -297,11 +325,18 @@ func _formato_hora(hora: float) -> String:
 # ================================================================
 
 func _on_cancelar_pressed() -> void:
+	if not _interaction_enabled or _closing:
+		return
 	if _forzado and _sleep_preview < 40.0:
 		return
+	begin_closing()
 	cancelado.emit()
 
 func _on_seguir_pressed() -> void:
+	if not _interaction_enabled or _closing:
+		return
+
+	set_interaction_enabled(false)
 	post_panel.visible = false
 	_activo = true
 
@@ -311,9 +346,14 @@ func _on_seguir_pressed() -> void:
 	seguir_durmiendo.emit()
 
 func _on_salir_pressed() -> void:
+	if not _interaction_enabled or _closing:
+		return
+	begin_closing()
 	salir_a_la_calle.emit()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not _interaction_enabled or _closing:
+		return
 	if event.is_action_pressed("interact"):
 		if btn_cancelar.has_focus() and not btn_cancelar.disabled:
 			_on_cancelar_pressed()

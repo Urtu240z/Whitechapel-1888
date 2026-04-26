@@ -50,6 +50,8 @@ var _zone_center: float = 0.5
 var _waiting_return: bool  = false  # true tras primer hit correcto
 var _flash_color:    Color = COLOR_ZONE
 var _flash_timer:    float = 0.0
+var _input_cooldown: float = 0.0
+var _completed: bool = false
 
 # ============================================================
 # INIT
@@ -68,6 +70,8 @@ func start() -> void:
 	_zone_center = 0.5
 	_waiting_return = false
 	_flash_timer = 0.0
+	_input_cooldown = 0.18
+	_completed = false
 	_flash_color = COLOR_ZONE
 	set_process(true)
 	queue_redraw()
@@ -88,6 +92,9 @@ func _process(delta: float) -> void:
 		_cursor_t  = 0.0
 		_direction = 1
 
+	if _input_cooldown > 0.0:
+		_input_cooldown = maxf(0.0, _input_cooldown - delta)
+
 	if _flash_timer > 0.0:
 		_flash_timer -= delta
 		if _flash_timer <= 0.0:
@@ -101,10 +108,20 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not _active:
 		return
+	if _input_cooldown > 0.0:
+		return
+	if event is InputEventKey:
+		var key_event: InputEventKey = event as InputEventKey
+		if key_event.echo:
+			return
 	if event.is_action_pressed(input_action):
 		_handle_press()
+		get_viewport().set_input_as_handled()
 
 func _handle_press() -> void:
+	if _completed:
+		return
+
 	var inside := _is_inside_zone(_cursor_t)
 
 	if not _waiting_return:
@@ -125,6 +142,10 @@ func _handle_press() -> void:
 # RESULTADO
 # ============================================================
 func _success() -> void:
+	if _completed:
+		return
+
+	_completed = true
 	_active = false
 	set_process(false)
 
@@ -133,9 +154,13 @@ func _success() -> void:
 	completed.emit(sat)
 
 func _fail() -> void:
+	if _completed:
+		return
+
 	_round += 1
 
 	if _round >= max_rounds:
+		_completed = true
 		_active = false
 		set_process(false)
 		_flash(COLOR_MISS)
