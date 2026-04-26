@@ -1,23 +1,23 @@
 [gd_scene format=3 uid="uid://cmmlvd8ng8chj"]
 
 [ext_resource type="Script" uid="uid://btivbup1ghpq8" path="res://Scripts/NPC/Service/npc_service.gd" id="1_mixur"]
-[ext_resource type="Script" uid="uid://cpqy4gc3tklod" path="res://Scripts/NPC/Service/npc_service_skin.gd" id="2_cwwe2"]
 [ext_resource type="Resource" uid="uid://dxlm5sy6n08dh" path="res://Data/NPC/npc_name_pools.tres" id="2_e67tv"]
 [ext_resource type="Texture2D" uid="uid://b1m1kv73xm1fv" path="res://Assets/Sprites/NPC/Services/HostalKeeper_Pieces.png" id="3_cki5x"]
+[ext_resource type="Script" uid="uid://co3747fqwkiil" path="res://Scripts/NPC/Common/npc_skin_component.gd" id="3_e67tv"]
 [ext_resource type="Texture2D" uid="uid://di6dvjog28xch" path="res://Assets/Sprites/NPC/Services/HostalKeeper_Pieces_n.png" id="4_ckeaq"]
 [ext_resource type="Texture2D" uid="uid://s8scfgb1j2yq" path="res://Assets/Sprites/NPC/Services/Barman_Pieces.png" id="5_dqhko"]
 [ext_resource type="Texture2D" uid="uid://dj1csacbig6yj" path="res://Assets/Sprites/NPC/Services/Barman_Pieces_n.png" id="6_j1edg"]
 [ext_resource type="Texture2D" uid="uid://blnwvyx5e87rc" path="res://Assets/Sprites/NPC/Services/PerfumeVendor_Pieces.png" id="7_8e73h"]
 [ext_resource type="Texture2D" uid="uid://j2pxlktmnb1p" path="res://Assets/Sprites/NPC/Services/PerfumeVendor_Pieces_n.png" id="8_0rrr3"]
+[ext_resource type="Script" uid="uid://caln2nu8dogpj" path="res://Scripts/NPC/Common/npc_animation_component.gd" id="15_e67tv"]
+[ext_resource type="Script" uid="uid://bsv5i6k0wkl6h" path="res://Scripts/NPC/Common/npc_audio_component.gd" id="16_e67tv"]
 [ext_resource type="PackedScene" uid="uid://qrckrvjkyeu" path="res://Scenes/Core/Name_Tag.tscn" id="19_0rrr3"]
+[ext_resource type="Script" uid="uid://b5ecgdqsqf1uv" path="res://Scripts/NPC/Common/npc_interaction_area.gd" id="19_e67tv"]
 [ext_resource type="Script" uid="uid://3n2ir7g15yw5" path="res://addons/soupik/modifications/soup_group.gd" id="31_becn0"]
 [ext_resource type="Script" uid="uid://bnso0mph1tb11" path="res://addons/soupik/modifications/soup_two_bone_ik.gd" id="32_lgleu"]
 [ext_resource type="Script" uid="uid://b4u1tvhlw4d2g" path="res://addons/soupik/modifications/soup_look_at.gd" id="33_5ryky"]
 [ext_resource type="Script" uid="uid://b5uiivwxcoics" path="res://addons/soupik/modifications/soup_stay_at.gd" id="34_sv6qw"]
 [ext_resource type="Script" uid="uid://bslv2i32ql2w" path="res://Scripts/NPC/Service/npc_service_movement.gd" id="35_ilb0r"]
-[ext_resource type="Script" uid="uid://xngirlhxnumo" path="res://Scripts/NPC/Service/npc_service_animation.gd" id="36_cki5x"]
-[ext_resource type="Script" uid="uid://k18w1hwl4dbn" path="res://Scripts/NPC/Service/npc_service_conversation.gd" id="37_ckeaq"]
-[ext_resource type="Script" uid="uid://bwigmjumtvavv" path="res://Scripts/NPC/Service/npc_service_audio.gd" id="38_5o164"]
 [ext_resource type="AudioStream" uid="uid://d7e5nakf36ad" path="res://Assets/Audio/WAVS/Man_Talk.wav" id="42_n63qp"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="43_d4jxa"]
 
@@ -1034,7 +1034,8 @@ name_pools = ExtResource("2_e67tv")
 skin_name = "NPC_HostalKeeper"
 
 [node name="CharacterContainer" type="Node2D" parent="." unique_id=58656308]
-script = ExtResource("2_cwwe2")
+script = ExtResource("3_e67tv")
+current_skin = "NPC_HostalKeeper"
 
 [node name="Skins" type="Node2D" parent="CharacterContainer" unique_id=808895510]
 
@@ -1356,13 +1357,13 @@ bone_angle = -33.018
 
 [node name="LegR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=739498891]
 position = Vector2(-44.77522, 45.260902)
-rotation = -1.0975931
-scale = Vector2(0.99985063, 0.99985063)
+rotation = -1.0975927
+scale = Vector2(0.9998505, 0.9998505)
 rest = Transform2D(0.44403812, -0.8958404, 0.8958404, 0.44403812, -44.77522, 45.260902)
 
 [node name="KneeR" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegR" unique_id=1673755140]
 position = Vector2(-130.53163, 94.41959)
-rotation = 1.1518136
+rotation = 1.1518131
 scale = Vector2(0.99985427, 0.99985427)
 rest = Transform2D(0.35090968, 0.93623465, -0.93623465, 0.35090968, -130.53163, 94.41959)
 auto_calculate_length_and_angle = false
@@ -1482,14 +1483,18 @@ position = Vector2(16, 726)
 script = ExtResource("35_ilb0r")
 
 [node name="Animation" type="Node2D" parent="." unique_id=1094347028]
-script = ExtResource("36_cki5x")
+script = ExtResource("15_e67tv")
+initial_state = "Idle_Counter"
+use_walk_state = false
+use_movement_facing = false
+use_counter_behavior = true
 
 [node name="Audio" type="Node2D" parent="." unique_id=1118474821]
-script = ExtResource("38_5o164")
+script = ExtResource("16_e67tv")
 
 [node name="StepPlayer" type="AudioStreamPlayer2D" parent="Audio" unique_id=385854536]
-max_distance = 400.0
-attenuation = 1.3660405
+max_distance = 1500.0
+attenuation = 0.35355344
 
 [node name="Talk" type="AudioStreamPlayer2D" parent="Audio" unique_id=2063694228]
 stream = ExtResource("42_n63qp")
@@ -1498,15 +1503,15 @@ max_distance = 400.0
 attenuation = 1.3195082
 
 [node name="NameTag" parent="." unique_id=1423277668 instance=ExtResource("19_0rrr3")]
-modulate = Color(1, 1, 1, 0)
+visible = false
 position = Vector2(0, -470)
-text = "NPCService"
+text = "Mr. Brown"
 
 [node name="Conversation" type="Area2D" parent="." unique_id=1100352954 groups=["npcs", "npcs_active"]]
 visible = false
 collision_layer = 16
 collision_mask = 16
-script = ExtResource("37_ckeaq")
+script = ExtResource("19_e67tv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Conversation" unique_id=1265420227]
 position = Vector2(10.5, 11)

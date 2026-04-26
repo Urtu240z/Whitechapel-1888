@@ -62,11 +62,11 @@ var current_display_name: String = ""
 # ============================================================================
 # 🔗 REFERENCIAS
 # ============================================================================
-@onready var skin: NPCClientSkin = $CharacterContainer
+@onready var skin: NPCSkinComponent = $CharacterContainer
 @onready var movement: NPCClientMovement = $Movement
-@onready var animation: NPCClientAnimation = $Animation
-@onready var conversation: NPCClientConversation = $Conversation
-@onready var audio: NPCClientAudio = $Audio
+@onready var animation: NPCAnimationComponent = $Animation
+@onready var conversation: NPCInteractionArea = $Conversation
+@onready var audio: NPCAudioComponent = $Audio
 @onready var name_tag: NameTag = $NameTag
 
 @onready var character_container: Node2D = $CharacterContainer
@@ -243,11 +243,9 @@ func _build_enum_hint(values: PackedStringArray) -> String:
 	return text
 
 func _apply_selected_skin_preview() -> void:
-	var skin_node := get_node_or_null("CharacterContainer") as NPCClientSkin
-	if skin_node == null:
-		return
-
-	skin_node.preview_skin(skin_name)
+	var skin_node := get_node_or_null("CharacterContainer") as NPCSkinComponent
+	if skin_node:
+		skin_node.preview_skin(skin_name)
 
 func _cache_body_scale_refs() -> void:
 	if _body_scale_refs_cached:
@@ -404,6 +402,7 @@ func restore_behavior_after_follow() -> void:
 # ============================================================================
 # DIALOGIC — ABRIR DIÁLOGO
 # ============================================================================
+
 func start_dialog() -> void:
 	if not get_tree().root.has_node("Dialogic"):
 		return
@@ -416,25 +415,11 @@ func start_dialog() -> void:
 	var player := _get_player()
 	if player:
 		player.disable_movement()
+
 	if movement:
 		movement.freeze()
 
 	StateManager.change_to(StateManager.State.DIALOG, "start_client_dialog")
-	Dialogic.start(dialog_timeline)
-
-	if _refused and animation:
-		var attack_player := _get_player()
-		var facing_right: bool = true
-		if attack_player:
-			facing_right = attack_player.global_position.x > global_position.x
-
-		animation.lock_facing(facing_right)
-		await get_tree().create_timer(1.0).timeout
-
-		var next_attack: String = "Kick" if _last_attack == "Slap" else "Slap"
-		_last_attack = next_attack
-		animation.play_attack(next_attack)
-		animation.attack_hit.connect(_on_attack_hit, CONNECT_ONE_SHOT)
 
 	Dialogic.timeline_ended.connect(func():
 		resolve_dialogic_result()
@@ -443,13 +428,39 @@ func start_dialog() -> void:
 		if is_instance_valid(self) and movement:
 			movement.unfreeze()
 
-		if animation:
+		if is_instance_valid(self) and animation:
 			animation.unlock_facing()
 
 		var p := _get_player()
 		if p:
 			p.enable_movement()
 	, CONNECT_ONE_SHOT)
+
+	Dialogic.start(dialog_timeline)
+
+	if _refused and animation:
+		var attack_player := _get_player()
+		var facing_right: bool = true
+
+		if attack_player:
+			facing_right = attack_player.global_position.x > global_position.x
+
+		animation.lock_facing(facing_right)
+
+		await get_tree().create_timer(1.0).timeout
+
+		if not is_instance_valid(self):
+			return
+
+		var next_attack: String = "Kick" if _last_attack == "Slap" else "Slap"
+		_last_attack = next_attack
+
+		if animation.attack_hit.is_connected(_on_attack_hit):
+			animation.attack_hit.disconnect(_on_attack_hit)
+
+		animation.attack_hit.connect(_on_attack_hit, CONNECT_ONE_SHOT)
+		animation.play_attack(next_attack)
+
 
 # ============================================================================
 # ATAQUE

@@ -49,11 +49,11 @@ var current_display_name: String = ""
 # ============================================================================
 # 🔗 REFERENCIAS
 # ============================================================================
-@onready var skin: NPCCompanionSkin = $CharacterContainer
+@onready var skin: NPCSkinComponent = $CharacterContainer
 @onready var movement: NPCCompanionMovement = $Movement
-@onready var animation: NPCCompanionAnimation = $Animation
-@onready var conversation: NPCCompanionConversation = $Conversation
-@onready var audio: NPCCompanionAudio = $Audio
+@onready var animation: NPCAnimationComponent = $Animation
+@onready var conversation: NPCInteractionArea = $Conversation
+@onready var audio: NPCAudioComponent = $Audio
 @onready var name_tag: NameTag = $NameTag
 
 @onready var character_container: Node2D = $CharacterContainer
@@ -215,7 +215,7 @@ func _build_enum_hint(values: PackedStringArray) -> String:
 	return text
 
 func _apply_selected_skin_preview() -> void:
-	var skin_node := get_node_or_null("CharacterContainer") as NPCCompanionSkin
+	var skin_node := get_node_or_null("CharacterContainer") as NPCSkinComponent
 	if skin_node:
 		skin_node.preview_skin(skin_name)
 

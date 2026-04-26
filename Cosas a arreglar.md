@@ -11,3 +11,6 @@ Lodge - Si le doy a dormir y mientras sleep screen esta en marcha pongo desperta
 			A parte de estar de pie, hace la animacion de levantarse, pero esto
 			lo podemos dejar para mas adelante cuando hagamos el sistema de ir a
 			la cama.
+
+Acto cliente - Falta pulir fades in y out sobre todo audio.
+			Cuando pulso F salta la animacion, y el audio empieza de nuevo

@@ -1,26 +1,30 @@
 [gd_scene format=3 uid="uid://bt3ubgbvk60kv"]
 
 [ext_resource type="Script" uid="uid://djqsnhaf3c38j" path="res://Scripts/NPC/Companion/npc_companion.gd" id="1_33bcd"]
-[ext_resource type="Script" uid="uid://brrk3it024uuc" path="res://Scripts/NPC/Companion/npc_companion_skin.gd" id="2_1o0oq"]
 [ext_resource type="Script" uid="uid://djtg4einflwy5" path="res://Scripts/NPC/Companion/npc_companion_movement.gd" id="2_8u2cw"]
 [ext_resource type="Resource" uid="uid://dxlm5sy6n08dh" path="res://Data/NPC/npc_name_pools.tres" id="2_sj2xk"]
-[ext_resource type="Script" uid="uid://b6e58mc72dgxx" path="res://Scripts/NPC/Companion/npc_companion_animation.gd" id="3_b11bt"]
-[ext_resource type="Script" uid="uid://pr5kxc47nl5h" path="res://Scripts/NPC/Companion/npc_companion_audio.gd" id="4_y7jbo"]
+[ext_resource type="Script" uid="uid://co3747fqwkiil" path="res://Scripts/NPC/Common/npc_skin_component.gd" id="3_6uuyf"]
 [ext_resource type="AudioStream" uid="uid://beu8sdsym1xs" path="res://Assets/Audio/Effects/Voice_Slap_4.ogg" id="20_4qwdc"]
+[ext_resource type="Script" uid="uid://caln2nu8dogpj" path="res://Scripts/NPC/Common/npc_animation_component.gd" id="20_6uuyf"]
 [ext_resource type="AudioStream" uid="uid://cw8au1tsa1iy3" path="res://Assets/Audio/Walk_Foot_1.ogg" id="21_8sc4c"]
 [ext_resource type="AudioStream" uid="uid://dxmqq4g44lc02" path="res://Assets/Audio/Effects/Voice_Kick_1.ogg" id="21_d2jue"]
+[ext_resource type="Script" uid="uid://bsv5i6k0wkl6h" path="res://Scripts/NPC/Common/npc_audio_component.gd" id="21_v8dee"]
 [ext_resource type="AudioStream" uid="uid://xism6a1scs46" path="res://Assets/Audio/Walk_Foot_4.ogg" id="22_5d1tx"]
+[ext_resource type="AudioStream" uid="uid://crmapdihu4klj" path="res://Assets/Audio/Walk_Foot_2.ogg" id="23_6uuyf"]
 [ext_resource type="Texture2D" uid="uid://coyxu8avghjoq" path="res://Assets/Sprites/NPC/Companion/2_Pieces.png" id="23_nqt6k"]
 [ext_resource type="AudioStream" uid="uid://cb1jp7368p0in" path="res://Assets/Audio/Walk_Wood_1.ogg" id="23_sj2xk"]
+[ext_resource type="AudioStream" uid="uid://dpd1hrm3tip4t" path="res://Assets/Audio/Walk_Foot_3.ogg" id="24_33bcd"]
 [ext_resource type="Texture2D" uid="uid://bwwo3kenhcluu" path="res://Assets/Sprites/NPC/Companion/2_Pieces_n.png" id="24_cj0tu"]
 [ext_resource type="AudioStream" uid="uid://ct8ro6fdw0mil" path="res://Assets/Audio/Walk_Wood_3.ogg" id="24_dfupg"]
 [ext_resource type="Texture2D" uid="uid://ryuk0ys7m66x" path="res://Assets/Sprites/NPC/Companion/4_Pieces.png" id="25_w6rva"]
 [ext_resource type="Texture2D" uid="uid://d01sytcpkhk2m" path="res://Assets/Sprites/NPC/Companion/4_Pieces_n.png" id="26_3s524"]
 [ext_resource type="Texture2D" uid="uid://ck33wdgyctnhu" path="res://Assets/Sprites/NPC/Companion/1_Pieces.png" id="27_2xpul"]
+[ext_resource type="AudioStream" uid="uid://i35241s7pi52" path="res://Assets/Audio/Walk_Wood_2.ogg" id="27_8u2cw"]
 [ext_resource type="Script" uid="uid://3n2ir7g15yw5" path="res://addons/soupik/modifications/soup_group.gd" id="27_fqelj"]
 [ext_resource type="Texture2D" uid="uid://dnhvdh2lxrfhk" path="res://Assets/Sprites/NPC/Companion/1_Pieces_n.png" id="28_blga3"]
 [ext_resource type="Script" uid="uid://bnso0mph1tb11" path="res://addons/soupik/modifications/soup_two_bone_ik.gd" id="28_pq0ts"]
 [ext_resource type="Script" uid="uid://b4u1tvhlw4d2g" path="res://addons/soupik/modifications/soup_look_at.gd" id="29_c4tmx"]
+[ext_resource type="Script" uid="uid://b5ecgdqsqf1uv" path="res://Scripts/NPC/Common/npc_interaction_area.gd" id="29_sj2xk"]
 [ext_resource type="Texture2D" uid="uid://ctqh0sstagorg" path="res://Assets/Sprites/NPC/Client/NPC_Client_Poor_1_Pieces_n.png" id="29_wn7ys"]
 [ext_resource type="Texture2D" uid="uid://c8bbbs5k60c3o" path="res://Assets/Sprites/NPC/Companion/3_Pieces.png" id="30_30tso"]
 [ext_resource type="Script" uid="uid://b5uiivwxcoics" path="res://addons/soupik/modifications/soup_stay_at.gd" id="30_k3ion"]
@@ -28,10 +32,9 @@
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="31_7vuh2"]
 [ext_resource type="Texture2D" uid="uid://bvquqsrb8fvn2" path="res://Assets/Sprites/NPC/Companion/3_Pieces_n.png" id="31_ixgjr"]
 [ext_resource type="Texture2D" uid="uid://buyjjx72arglm" path="res://Assets/Sprites/NPC/Companion/5_Pieces.png" id="32_gtm34"]
-[ext_resource type="Script" uid="uid://dofhlchs8q43g" path="res://Scripts/NPC/npc_character_shadow.gd" id="32_sj2xk"]
 [ext_resource type="Texture2D" uid="uid://dhpejbkp0kc1x" path="res://Assets/Sprites/NPC/Companion/5_Pieces_n.png" id="33_8pr7q"]
 [ext_resource type="Texture2D" uid="uid://cmiaxkdag50ib" path="res://Assets/Sprites/Player/Player_Shadow.png" id="33_44evf"]
-[ext_resource type="Script" uid="uid://krp1vqtn8kch" path="res://Scripts/NPC/Companion/npc_companion_conversation.gd" id="33_nqt6k"]
+[ext_resource type="Script" uid="uid://dj1d5vsxcxt5x" path="res://Scripts/NPC/Common/npc_shadow_component.gd" id="35_6uuyf"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_3wles"]
 diffuse_texture = ExtResource("23_nqt6k")
@@ -2427,7 +2430,8 @@ skin_name = "Mary"
 [node name="CharacterContainer" type="Node2D" parent="." unique_id=2008153722]
 z_index = 1
 texture_filter = 1
-script = ExtResource("2_1o0oq")
+script = ExtResource("3_6uuyf")
+current_skin = "Mary"
 
 [node name="Skins" type="Node2D" parent="CharacterContainer" unique_id=1019853935]
 
@@ -2872,8 +2876,8 @@ rest = Transform2D(1, 0, 0, 1, 0, 0)
 
 [node name="Head" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/Chest/Neck" unique_id=86332948]
 position = Vector2(-11, -162)
-rotation = -0.13348544
-scale = Vector2(0.99983585, 0.99983585)
+rotation = -0.13348548
+scale = Vector2(0.9998358, 0.9998358)
 rest = Transform2D(0.9999851, -0.00547044, 0.00547044, 0.9999851, -11, -162)
 auto_calculate_length_and_angle = false
 length = 53.297
@@ -2932,14 +2936,14 @@ occluder = SubResource("OccluderPolygon2D_vqiu2")
 
 [node name="LegL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip" unique_id=802244090]
 position = Vector2(55.522446, 115.97094)
-rotation = -0.36592937
-scale = Vector2(0.9998539, 0.9998539)
+rotation = -0.36592883
+scale = Vector2(0.9998538, 0.9998538)
 rest = Transform2D(0.99504066, -0.09946893, 0.09946893, 0.99504066, 31, 111)
 
 [node name="KneeL" type="Bone2D" parent="CharacterContainer/Bones/Skeleton2D/Hip/LegL" unique_id=1844206024]
 position = Vector2(-7, 125)
-rotation = 0.28082648
-scale = Vector2(0.9998509, 0.9998509)
+rotation = 0.2808258
+scale = Vector2(0.99985087, 0.99985087)
 rest = Transform2D(0.9857414, 0.16826761, -0.16826761, 0.9857414, -7, 125)
 auto_calculate_length_and_angle = false
 length = 220.0
@@ -3138,19 +3142,24 @@ position = Vector2(91, 65)
 script = ExtResource("2_8u2cw")
 
 [node name="Animation" type="Node2D" parent="." unique_id=1942192761]
-script = ExtResource("3_b11bt")
+script = ExtResource("20_6uuyf")
 
 [node name="Audio" type="Node2D" parent="." unique_id=752356135]
-script = ExtResource("4_y7jbo")
-step_sounds = {
-"dirt": [null],
+script = ExtResource("21_v8dee")
+use_surface_detection = true
+require_on_floor_for_steps = true
+surface_step_sounds = {
+"dirt": [],
 "grass": [],
-"stone": [ExtResource("21_8sc4c"), ExtResource("22_5d1tx")],
+"stone": [ExtResource("21_8sc4c"), ExtResource("23_6uuyf"), ExtResource("24_33bcd"), ExtResource("22_5d1tx")],
 "water": [],
-"wood": [ExtResource("23_sj2xk"), ExtResource("24_dfupg")]
+"wood": [ExtResource("23_sj2xk"), ExtResource("27_8u2cw"), ExtResource("24_dfupg")]
 }
+step_volume_db = -3.0
 
 [node name="StepPlayer" type="AudioStreamPlayer2D" parent="Audio" unique_id=1836634797]
+max_distance = 1500.0
+attenuation = 0.35355353
 
 [node name="Talk" type="AudioStreamPlayer2D" parent="Audio" unique_id=1423632782]
 
@@ -3178,7 +3187,7 @@ text = "Mary"
 
 [node name="Conversation" type="Area2D" parent="." unique_id=470487145 groups=["npcs", "npcs_active"]]
 visible = false
-script = ExtResource("33_nqt6k")
+script = ExtResource("29_sj2xk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Conversation" unique_id=1151533190]
 position = Vector2(-14.5, 23)
@@ -3219,4 +3228,4 @@ position = Vector2(-15, 472)
 scale = Vector2(1, 1.15)
 texture = ExtResource("33_44evf")
 offset = Vector2(0, -409.035)
-script = ExtResource("32_sj2xk")
+script = ExtResource("35_6uuyf")
