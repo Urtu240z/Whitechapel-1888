@@ -116,6 +116,45 @@ func _connect_area_signals() -> void:
 			_exit_area.body_exited.connect(_on_exit_area_exited)
 
 
+func _sync_player_area_state_after_spawn() -> void:
+	# Al teletransportar al player entre spawn interior/exterior, Godot no siempre
+	# emite body_entered para el Area2D donde ya aparece colocado.
+	# Recalculamos manualmente si está dentro del área correcta para que pueda
+	# volver a pulsar F sin tener que salir y reentrar en el área.
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+
+	var player: Node2D = PlayerManager.get_player_node2d()
+	_player_near_enter = false
+	_player_near_exit = false
+
+	if is_instance_valid(player):
+		_player_near_enter = _area_contains_body(_enter_area, player)
+		_player_near_exit = _area_contains_body(_exit_area, player)
+
+	if _inside and _player_near_exit:
+		_register_interaction()
+		return
+
+	if not _inside and _player_near_enter:
+		_set_door_glow(true)
+		_register_interaction()
+		return
+
+	InteractionManager.unregister(self)
+
+
+func _area_contains_body(area: Area2D, body: Node) -> bool:
+	if not is_instance_valid(area) or not is_instance_valid(body):
+		return false
+
+	for overlapping_body: Node in area.get_overlapping_bodies():
+		if overlapping_body == body:
+			return true
+
+	return false
+
+
 # ================================================================
 # DETECCIÓN DE ÁREAS / INTERACCIÓN
 # ================================================================
@@ -225,6 +264,7 @@ func _enter() -> void:
 	await SceneManager.fade_in(fade_half, true, "building_enter_fade_in")
 
 	_resume_inside_audio_after_enter()
+	await _sync_player_area_state_after_spawn()
 	_unlock_player_after_transition()
 
 
@@ -261,6 +301,7 @@ func _exit() -> void:
 
 	await SceneManager.fade_in(fade_half, true, "building_exit_fade_in")
 
+	await _sync_player_area_state_after_spawn()
 	_unlock_player_after_transition()
 
 
