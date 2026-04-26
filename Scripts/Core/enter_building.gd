@@ -571,6 +571,9 @@ func _set_level_inside_state(inside: bool) -> void:
 	else:
 		_freeze_world(inside)
 
+	if PlayerManager and PlayerManager.has_method("refresh_detection_from_world"):
+		PlayerManager.refresh_detection_from_world()
+
 
 func _freeze_world(freeze: bool) -> void:
 	var current_scene: Node = get_tree().current_scene

@@ -19,6 +19,7 @@ enum Priority {
 	PICKUP = 1,
 	NPC = 5,
 	PORTAL = 8,
+	HIDE_ZONE = 9,
 	BUILDING = 10,
 }
 
@@ -337,6 +338,8 @@ func _guess_label(node: Node, priority: int) -> String:
 			return "Hablar"
 		Priority.BUILDING:
 			return "Interactuar"
+		Priority.HIDE_ZONE:
+			return "Esconderse"
 		Priority.PORTAL:
 			return "Cambiar zona"
 		Priority.PICKUP:

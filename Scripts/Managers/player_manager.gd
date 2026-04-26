@@ -22,6 +22,7 @@ signal player_registered(player: MainPlayer)
 signal player_unregistered(player: MainPlayer)
 signal player_lock_changed(is_locked: bool, reasons: PackedStringArray)
 signal player_position_changed(position: Vector2)
+signal player_detection_state_changed(can_be_detected: bool)
 
 const PLAYER_SCENE: PackedScene = preload("res://Scenes/Player/Player.tscn")
 const STATE_LOCK_REASON: String = "state_manager"
@@ -31,6 +32,7 @@ const STATE_LOCK_REASON: String = "state_manager"
 var player_instance: MainPlayer = null
 
 var _locks: Dictionary = {}
+var _last_can_be_detected: bool = true
 
 
 # ================================================================
@@ -43,6 +45,7 @@ func _ready() -> void:
 		StateManager.state_changed.connect(_on_state_changed)
 
 	_refresh_state_lock()
+	_refresh_detection_state()
 
 
 # ================================================================
@@ -66,6 +69,7 @@ func register_player(player: MainPlayer) -> void:
 
 	_refresh_state_lock()
 	_apply_control_lock()
+	_refresh_detection_state()
 	player_registered.emit(player_instance)
 
 
@@ -124,6 +128,65 @@ func get_character_container() -> Node2D:
 	if not player:
 		return null
 	return player.get_node_or_null("CharacterContainer") as Node2D
+
+
+# ================================================================
+# DETECCIÓN / POLICÍA / MUNDO
+# ================================================================
+func is_player_hidden() -> bool:
+	return StateManager != null and StateManager.is_hiding()
+
+
+func is_player_inside_building() -> bool:
+	var scene := get_tree().current_scene
+	if is_instance_valid(scene) and scene.has_method("is_player_inside_building"):
+		return bool(scene.call("is_player_inside_building"))
+	return false
+
+
+func get_active_building() -> Node2D:
+	var scene := get_tree().current_scene
+	if is_instance_valid(scene) and scene.has_method("get_active_building"):
+		return scene.call("get_active_building") as Node2D
+	return null
+
+
+func can_player_be_detected(include_inside_buildings: bool = false) -> bool:
+	if not has_player():
+		return false
+
+	if is_player_locked():
+		return false
+
+	if is_player_hidden():
+		return false
+
+	if is_player_inside_building() and not include_inside_buildings:
+		return false
+
+	if StateManager == null:
+		return true
+
+	return (
+		StateManager.current() == StateManager.State.GAMEPLAY
+		or StateManager.current() == StateManager.State.HIDING
+	)
+
+
+func get_detection_position() -> Vector2:
+	var camera_target := get_camera_target()
+	if is_instance_valid(camera_target):
+		return camera_target.global_position
+	return get_player_position()
+
+
+func _refresh_detection_state() -> void:
+	var detectable := can_player_be_detected()
+	if detectable == _last_can_be_detected:
+		return
+
+	_last_can_be_detected = detectable
+	player_detection_state_changed.emit(_last_can_be_detected)
 
 
 # ================================================================
@@ -217,11 +280,17 @@ func get_lock_reasons() -> PackedStringArray:
 func refresh_control_from_state() -> void:
 	_refresh_state_lock()
 	_apply_control_lock()
+	_refresh_detection_state()
+
+
+func refresh_detection_from_world() -> void:
+	_refresh_detection_state()
 
 
 func _on_state_changed(_from_state, _to_state) -> void:
 	_refresh_state_lock()
 	_apply_control_lock()
+	_refresh_detection_state()
 
 
 func _refresh_state_lock() -> void:
@@ -245,6 +314,8 @@ func _apply_control_lock() -> void:
 			_enable_player_control(player)
 
 		player_lock_changed.emit(locked, get_lock_reasons())
+
+	_refresh_detection_state()
 
 
 func _disable_player_control(player: MainPlayer) -> void:

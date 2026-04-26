@@ -66,6 +66,9 @@ func set_player_inside_building(building: Node2D, inside: bool) -> void:
 	_set_outside_frozen(inside)
 	_set_buildings_visibility()
 
+	if PlayerManager and PlayerManager.has_method("refresh_detection_from_world"):
+		PlayerManager.refresh_detection_from_world()
+
 
 func get_active_building() -> Node2D:
 	return _active_building
