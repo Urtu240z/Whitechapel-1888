@@ -228,6 +228,10 @@ func get_facing_right() -> bool:
 	return _facing_right
 
 
+func is_inside_building() -> bool:
+	return allow_building_travel and _building_travel.is_inside_building()
+
+
 func set_facing_right(value: bool) -> void:
 	_facing_right = value
 

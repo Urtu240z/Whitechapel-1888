@@ -435,4 +435,10 @@ func _get_player() -> Node2D:
 	return get_tree().get_first_node_in_group("player") as Node2D
 
 func _on_visibility_changed() -> void:
+	# Los NPCs reparentados a Interior deben seguir simulándose aunque el Interior esté oculto.
+	# El interior está físicamente offscreen, así que no hace falta apagar su IA/física por visibilidad.
+	if movement and movement.has_method("is_inside_building") and movement.is_inside_building():
+		set_enabled(true)
+		return
+
 	set_enabled(is_visible_in_tree())

@@ -81,7 +81,9 @@ func _ready() -> void:
 		_interior.visible = false
 		_interior.modulate.a = 0.0
 
-	_set_walls_enabled(false)
+	# Interiores offscreen: las colisiones quedan activas aunque el interior esté oculto.
+	# Si se desactivan, los NPCs que entran solos caen al vacío mientras el player está fuera.
+	_set_walls_enabled(true)
 	_connect_area_signals()
 
 
@@ -248,7 +250,8 @@ func _exit() -> void:
 	_disable_interior_camera()
 	_set_inside_audio_paused(true)
 	_set_interior_visible(false)
-	_set_walls_enabled(false)
+	# Mantener colisiones interiores activas: el Interior debe estar físicamente offscreen.
+	_set_walls_enabled(true)
 	_set_exterior_visible(true)
 
 	var exterior_spawn: Vector2 = _get_exterior_spawn_position(player.global_position)
@@ -604,7 +607,8 @@ func force_inside_state(inside: bool) -> void:
 	_inside = inside
 
 	_set_interior_visible(inside)
-	_set_walls_enabled(inside)
+	# Las colisiones interiores permanecen activas siempre; el nodo Interior está offscreen.
+	_set_walls_enabled(true)
 	_set_level_inside_state(inside)
 	_set_exterior_visible(not inside)
 
@@ -781,13 +785,18 @@ func _reparent_keep_global(node: Node2D, new_parent: Node) -> void:
 	if not is_instance_valid(node) or not is_instance_valid(new_parent):
 		return
 
-	var old_global_position: Vector2 = node.global_position
+	# CRÍTICO:
+	# Al meter NPCs dentro de Interior, no basta con conservar solo global_position.
+	# Si Interior o alguno de sus padres tiene escala/rotación, el NPC hereda esa transformación
+	# y puede aparecer gigante o quedarse bloqueado con colliders.
+	# Conservamos el Transform2D global completo, igual que hacía el sistema antiguo.
+	var old_global_transform: Transform2D = node.global_transform
 	var old_parent: Node = node.get_parent()
 	if is_instance_valid(old_parent):
 		old_parent.remove_child(node)
 
 	new_parent.add_child(node)
-	node.global_position = old_global_position
+	node.global_transform = old_global_transform
 
 
 func _get_npc_fade_target(npc: CharacterBody2D) -> CanvasItem:
