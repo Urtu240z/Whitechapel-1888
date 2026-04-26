@@ -34,6 +34,8 @@ signal world_audio_duck_restored(reason: String)
 const GROUP_WORLD_MUSIC: String = "world_music"
 const GROUP_WORLD_AMBIENCE: String = "world_ambience"
 const DEFAULT_WORLD_GROUPS: PackedStringArray = [GROUP_WORLD_MUSIC, GROUP_WORLD_AMBIENCE]
+const META_INTERIOR_AUDIO: String = "_building_interior_audio"
+const META_BUILDING_ENTRANCE_PATH: String = "_building_entrance_path"
 
 const DEFAULT_SILENT_DB: float = -40.0
 const DEFAULT_DUCK_DB: float = -10.0
@@ -207,6 +209,9 @@ func get_audio_nodes_in_groups(groups: PackedStringArray) -> Array[Node]:
 			if not _is_valid_audio_node(node):
 				continue
 
+			if _should_skip_world_audio_node(node):
+				continue
+
 			var id := node.get_instance_id()
 			if seen.has(id):
 				continue
@@ -234,6 +239,19 @@ func kill_all_fades() -> void:
 	for id in _active_tweens.keys():
 		_kill_tween(int(id))
 	_active_tweens.clear()
+
+
+# ================================================================
+# API — BUILDING INTERIOR AUDIO
+# ================================================================
+func sync_building_interior_audio() -> void:
+	for node_variant in get_tree().get_nodes_in_group("building_entrance"):
+		var entrance: Node = node_variant as Node
+		if not is_instance_valid(entrance):
+			continue
+
+		if entrance.has_method("sync_inside_audio_to_current_state"):
+			entrance.call("sync_inside_audio_to_current_state")
 
 
 # ================================================================
@@ -468,6 +486,24 @@ func _kill_tween(id: int) -> void:
 # ================================================================
 # AUDIO NODE HELPERS
 # ================================================================
+func _should_skip_world_audio_node(node: Node) -> bool:
+	if not bool(node.get_meta(META_INTERIOR_AUDIO, false)):
+		return false
+
+	var entrance_path: NodePath = NodePath(str(node.get_meta(META_BUILDING_ENTRANCE_PATH, NodePath(""))))
+	if entrance_path.is_empty():
+		return true
+
+	var entrance: Node = get_node_or_null(entrance_path)
+	if not is_instance_valid(entrance):
+		return true
+
+	if not entrance.has_method("is_inside"):
+		return true
+
+	return not bool(entrance.call("is_inside"))
+
+
 func _is_valid_audio_node(node: Node) -> bool:
 	return (
 		node is AudioStreamPlayer

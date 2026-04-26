@@ -78,6 +78,7 @@ func start_service(acto: String, tipo: String, client_skin_name: String = "NPC_C
 
 	PlayerManager.lock_player(LOCK_REASON, true)
 	PlayerManager.force_stop()
+	_sync_building_interior_audio()
 
 	var result: Dictionary = {}
 
@@ -197,6 +198,7 @@ func _cleanup_service(_result: Dictionary = {}, reason: String = "cleanup") -> v
 	# Restaurar mundo mientras aún está negro.
 	_restore_world(_hidden_world)
 	_hidden_world = null
+	_sync_building_interior_audio()
 
 	# Para la transición de vuelta:
 	# - quitamos supresión del contenido
@@ -210,6 +212,7 @@ func _cleanup_service(_result: Dictionary = {}, reason: String = "cleanup") -> v
 	# Fade visual de negro a transparente.
 	# Durante este fade, los efectos vuelven a verse.
 	await SceneManager.fade_in(FADE_IN_TIME, true, "client_service_fade_in")
+	_sync_building_interior_audio()
 
 	# Limpiar fuerza visual tras terminar la transición de vuelta.
 	_effects_clear_force_visible(EFFECTS_TRANSITION_OUT_REASON)
@@ -224,6 +227,17 @@ func _cleanup_service(_result: Dictionary = {}, reason: String = "cleanup") -> v
 
 	PlayerManager.unlock_player(LOCK_REASON)
 	PlayerManager.force_stop()
+
+
+# ================================================================
+# AUDIO HELPERS
+# ================================================================
+func _sync_building_interior_audio() -> void:
+	if not is_instance_valid(WorldAudioManager):
+		return
+
+	if WorldAudioManager.has_method("sync_building_interior_audio"):
+		WorldAudioManager.sync_building_interior_audio()
 
 
 # ================================================================

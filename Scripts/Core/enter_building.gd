@@ -14,6 +14,11 @@ extends Node2D
 const PLAYER_LOCK_REASON: String = "building_transition"
 const FALLBACK_TITLE_LAYER: int = 1100
 const FALLBACK_TITLE_FONT_PATH: String = "res://Assets/Fonts/IMFellEnglish.ttf"
+const GROUP_BUILDING_ENTRANCE: String = "building_entrance"
+const GROUP_BUILDING_INTERIOR_AUDIO: String = "building_interior_audio"
+const META_INTERIOR_AUDIO: String = "_building_interior_audio"
+const META_BUILDING_ENTRANCE_PATH: String = "_building_entrance_path"
+const META_ORIGINAL_VOLUME_DB: String = "_building_interior_original_volume_db"
 
 # ================================================================
 # NODOS INTERNOS
@@ -63,6 +68,7 @@ var _fallback_title_layer: CanvasLayer = null
 # READY
 # ================================================================
 func _ready() -> void:
+	add_to_group(GROUP_BUILDING_ENTRANCE)
 	_config = get_parent()
 
 	_audio_sfx = AudioStreamPlayer2D.new()
@@ -76,6 +82,8 @@ func _ready() -> void:
 	_exit_area = _resolve_many(exit_area_path, ["../Interior/ExitArea", "../Interior/TileMapLayer/ExitArea"]) as Area2D
 	_walls = _resolve_many(walls_path, ["../Interior/Collisions/Wall", "../Interior/TileMapLayer/Wall"]) as StaticBody2D
 	_inside_audio = _resolve_many(audio_path, ["../Audio"])
+	_tag_inside_audio_nodes()
+	_sync_inside_audio_to_current_state()
 
 	if _interior:
 		_interior.visible = false
@@ -458,6 +466,34 @@ func _set_exterior_visible(value: bool) -> void:
 # ================================================================
 # AUDIO INTERIOR DEL EDIFICIO
 # ================================================================
+func sync_inside_audio_to_current_state() -> void:
+	_sync_inside_audio_to_current_state()
+
+
+func _sync_inside_audio_to_current_state() -> void:
+	if _inside:
+		if _interior_audio_started:
+			_set_inside_audio_paused(false)
+	else:
+		_set_inside_audio_paused(true)
+
+
+func _tag_inside_audio_nodes() -> void:
+	if not _inside_audio:
+		return
+
+	for child: Node in _inside_audio.get_children():
+		if not _is_audio_player_node(child):
+			continue
+
+		if not child.has_meta(META_ORIGINAL_VOLUME_DB):
+			child.set_meta(META_ORIGINAL_VOLUME_DB, float(child.get("volume_db")))
+
+		child.set_meta(META_INTERIOR_AUDIO, true)
+		child.set_meta(META_BUILDING_ENTRANCE_PATH, get_path())
+		child.add_to_group(GROUP_BUILDING_INTERIOR_AUDIO)
+
+
 func _resume_inside_audio_after_enter() -> void:
 	if not _interior_audio_started:
 		_interior_audio_started = true
@@ -475,15 +511,22 @@ func _start_inside_audio() -> void:
 
 	for child: Node in _inside_audio.get_children():
 		if child is AudioStreamPlayer:
-			var asp := child as AudioStreamPlayer
+			var asp: AudioStreamPlayer = child as AudioStreamPlayer
+			var target_db: float = _get_audio_original_volume_db(asp, 0.0)
 			asp.volume_db = -40.0
-			asp.play()
-			tween.tween_property(asp, "volume_db", 0.0, fade_time)
+			asp.stream_paused = false
+			if not asp.playing:
+				asp.play()
+			tween.tween_property(asp, "volume_db", target_db, fade_time)
+
 		elif child is AudioStreamPlayer2D:
-			var asp2d := child as AudioStreamPlayer2D
+			var asp2d: AudioStreamPlayer2D = child as AudioStreamPlayer2D
+			var target_2d_db: float = _get_audio_original_volume_db(asp2d, 0.0)
 			asp2d.volume_db = -40.0
-			asp2d.play()
-			tween.tween_property(asp2d, "volume_db", 0.0, fade_time)
+			asp2d.stream_paused = false
+			if not asp2d.playing:
+				asp2d.play()
+			tween.tween_property(asp2d, "volume_db", target_2d_db, fade_time)
 
 
 func _set_inside_audio_paused(paused: bool) -> void:
@@ -499,32 +542,48 @@ func _set_inside_audio_paused(paused: bool) -> void:
 
 func _set_audio_player_paused(player: AudioStreamPlayer, paused: bool) -> void:
 	if paused:
-		if not player.has_meta("_original_volume_db"):
-			player.set_meta("_original_volume_db", player.volume_db)
+		_cache_audio_original_volume(player)
 		player.volume_db = -80.0
 		player.stream_paused = true
 		return
 
 	player.stream_paused = false
-	if player.has_meta("_original_volume_db"):
-		player.volume_db = float(player.get_meta("_original_volume_db"))
-	else:
-		player.volume_db = 0.0
+	player.volume_db = _get_audio_original_volume_db(player, 0.0)
 
 
 func _set_audio_player_2d_paused(player: AudioStreamPlayer2D, paused: bool) -> void:
 	if paused:
-		if not player.has_meta("_original_volume_db"):
-			player.set_meta("_original_volume_db", player.volume_db)
+		_cache_audio_original_volume(player)
 		player.volume_db = -80.0
 		player.stream_paused = true
 		return
 
 	player.stream_paused = false
-	if player.has_meta("_original_volume_db"):
-		player.volume_db = float(player.get_meta("_original_volume_db"))
-	else:
-		player.volume_db = 0.0
+	player.volume_db = _get_audio_original_volume_db(player, 0.0)
+
+
+func _is_audio_player_node(node: Node) -> bool:
+	return node is AudioStreamPlayer or node is AudioStreamPlayer2D
+
+
+func _cache_audio_original_volume(node: Node) -> void:
+	if not _is_audio_player_node(node):
+		return
+
+	if node.has_meta(META_ORIGINAL_VOLUME_DB):
+		return
+
+	node.set_meta(META_ORIGINAL_VOLUME_DB, float(node.get("volume_db")))
+
+
+func _get_audio_original_volume_db(node: Node, fallback: float = 0.0) -> float:
+	if not _is_audio_player_node(node):
+		return fallback
+
+	if node.has_meta(META_ORIGINAL_VOLUME_DB):
+		return float(node.get_meta(META_ORIGINAL_VOLUME_DB))
+
+	return fallback
 
 
 # ================================================================
