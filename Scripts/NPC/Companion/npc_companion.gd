@@ -73,6 +73,8 @@ var _last_preview_display_name: String = ""
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _base_shadow_position: Vector2 = Vector2.ZERO
 var _base_shadow_scale: Vector2 = Vector2.ONE
+
+const PLAYER_LOCK_DIALOG: String = "npc_companion_dialog"
 var _body_scale_refs_cached: bool = false
 
 # ============================================================================
@@ -358,8 +360,7 @@ func start_dialog() -> void:
 		return
 
 	var player := _get_player()
-	if player:
-		player.disable_movement()
+	PlayerManager.lock_player(PLAYER_LOCK_DIALOG)
 	if movement:
 		movement.freeze()
 	if animation and player:
@@ -373,9 +374,7 @@ func start_dialog() -> void:
 			movement.unfreeze()
 		if animation:
 			animation.unlock_facing()
-		var p := _get_player()
-		if p:
-			p.enable_movement()
+		PlayerManager.unlock_player(PLAYER_LOCK_DIALOG)
 	, CONNECT_ONE_SHOT)
 
 # ============================================================================

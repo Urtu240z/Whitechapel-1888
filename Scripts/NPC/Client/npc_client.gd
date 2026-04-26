@@ -81,6 +81,9 @@ var _enabled: bool = true
 var _refused: bool = false
 var _refused_timer: float = 0.0
 const REFUSED_RESET_SECS: float = 120.0
+const PLAYER_LOCK_DIALOG: String = "npc_client_dialog"
+const PLAYER_LOCK_DISTANCE_WARNING: String = "npc_client_distance_warning"
+const PLAYER_LOCK_DISTANCE_CANCEL: String = "npc_client_distance_cancel"
 var _editor_preview_queued: bool = false
 var _last_preview_skin_name: String = ""
 var _last_preview_facing_right: bool = true
@@ -412,9 +415,7 @@ func start_dialog() -> void:
 	if not StateManager.can_start_dialog():
 		return
 
-	var player := _get_player()
-	if player:
-		player.disable_movement()
+	PlayerManager.lock_player(PLAYER_LOCK_DIALOG)
 	if movement:
 		movement.freeze()
 
@@ -445,9 +446,7 @@ func start_dialog() -> void:
 		if animation:
 			animation.unlock_facing()
 
-		var p := _get_player()
-		if p:
-			p.enable_movement()
+		PlayerManager.unlock_player(PLAYER_LOCK_DIALOG)
 	, CONNECT_ONE_SHOT)
 
 # ============================================================================
@@ -538,9 +537,7 @@ func _on_player_too_far_warning() -> void:
 
 	Dialogic.VAR.set_variable("client.deal_state", "warning")
 
-	var player := _get_player()
-	if player:
-		player.disable_movement()
+	PlayerManager.lock_player(PLAYER_LOCK_DISTANCE_WARNING)
 	if movement:
 		movement.freeze()
 
@@ -554,9 +551,7 @@ func _on_player_too_far_warning() -> void:
 		if is_instance_valid(self) and movement:
 			movement.unfreeze()
 
-		var p := _get_player()
-		if p:
-			p.enable_movement()
+		PlayerManager.unlock_player(PLAYER_LOCK_DISTANCE_WARNING)
 	, CONNECT_ONE_SHOT)
 
 func _on_player_too_far_cancel() -> void:
@@ -571,9 +566,7 @@ func _on_player_too_far_cancel() -> void:
 
 	Dialogic.VAR.set_variable("client.deal_state", "cancel")
 
-	var player := _get_player()
-	if player:
-		player.disable_movement()
+	PlayerManager.lock_player(PLAYER_LOCK_DISTANCE_CANCEL)
 	if movement:
 		movement.freeze()
 
@@ -590,9 +583,7 @@ func _on_player_too_far_cancel() -> void:
 			if not has_active_deal():
 				restore_behavior_after_follow()
 
-		var p := _get_player()
-		if p:
-			p.enable_movement()
+		PlayerManager.unlock_player(PLAYER_LOCK_DISTANCE_CANCEL)
 	, CONNECT_ONE_SHOT)
 
 func complete_deal() -> void:

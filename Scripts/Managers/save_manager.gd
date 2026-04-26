@@ -644,10 +644,10 @@ func _restore_player_runtime_after_load() -> void:
 			movement.call("force_stop")
 
 	# Asegurar árbol de animación y control base.
+	# No llamamos directamente a enable_movement(): PlayerManager decide
+	# si el player puede moverse según StateManager y locks activos.
 	PlayerManager.set_animation_tree_active(true)
-	if player.has_method("enable_movement"):
-		player.call("enable_movement")
-
+	PlayerManager.clear_locks()
 	PlayerManager.force_stop()
 
 

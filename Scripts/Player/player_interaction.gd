@@ -14,6 +14,8 @@ extends Node
 
 var player: MainPlayer = null
 
+const PLAYER_LOCK_LEGACY_DIALOG: String = "legacy_npc_dialog"
+
 
 func initialize(p: MainPlayer) -> void:
 	player = p
@@ -62,7 +64,7 @@ func _start_dialog(npc) -> void:
 	player.movement.facing_right = not player_is_right
 	player.animation.update_animation()
 
-	player.disable_movement()
+	PlayerManager.lock_player(PLAYER_LOCK_LEGACY_DIALOG)
 	npc.movement.freeze()
 
 	if npc.has_method("prepare_dialogic_variables"):
@@ -73,7 +75,7 @@ func _start_dialog(npc) -> void:
 	Dialogic.start(timeline)
 	Dialogic.timeline_ended.connect(func():
 		StateManager.return_to_gameplay("end_dialog")
-		player.enable_movement()
+		PlayerManager.unlock_player(PLAYER_LOCK_LEGACY_DIALOG)
 		npc.movement.unfreeze()
 		npc.animation.unlock_facing()
 		if npc.has_method("resolve_dialogic_result"):
