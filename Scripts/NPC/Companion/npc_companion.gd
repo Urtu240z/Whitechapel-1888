@@ -50,7 +50,7 @@ var current_display_name: String = ""
 # 🔗 REFERENCIAS
 # ============================================================================
 @onready var skin: NPCSkinComponent = $CharacterContainer
-@onready var movement: NPCCompanionMovement = $Movement
+@onready var movement: NPCMovementComponent = $Movement
 @onready var animation: NPCAnimationComponent = $Animation
 @onready var conversation: NPCInteractionArea = $Conversation
 @onready var audio: NPCAudioComponent = $Audio
@@ -100,8 +100,8 @@ func _ready() -> void:
 	_apply_body_scale()
 
 	if movement:
-		movement.initialize(
-			self,
+		movement.initialize(self)
+		movement.configure_for_companion(
 			walk_speed,
 			walk_accel,
 			follow_speed,
@@ -275,6 +275,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.y = 0.0
 
+	if _enabled and movement:
+		movement.process_movement(delta)
+
 	move_and_slide()
 
 	if not _enabled:
@@ -287,8 +290,6 @@ func _physics_process(delta: float) -> void:
 		player_in_range = conversation.is_player_in_range()
 	if name_tag:
 		name_tag.set_tag_visible(player_in_range)
-	if movement:
-		movement.process_movement(delta)
 	if animation:
 		animation.update_service(delta, player, player_in_range)
 

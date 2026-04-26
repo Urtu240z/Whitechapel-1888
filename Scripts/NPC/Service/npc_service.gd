@@ -42,7 +42,7 @@ var current_display_name: String = ""
 # REFERENCIAS
 # ============================================================================
 @onready var skin: NPCSkinComponent = $CharacterContainer
-@onready var movement: NPCServiceMovement = $Movement
+@onready var movement: NPCMovementComponent = $Movement
 @onready var animation: NPCAnimationComponent = $Animation
 @onready var conversation: NPCInteractionArea = $Conversation
 @onready var audio: NPCAudioComponent = $Audio
@@ -103,6 +103,7 @@ func _ready() -> void:
 
 	if movement:
 		movement.initialize(self)
+		movement.configure_static()
 
 	if animation:
 		animation.initialize(self, initial_facing_right)
@@ -248,7 +249,12 @@ func _physics_process(delta: float) -> void:
 	if not _service_enabled:
 		return
 
-	velocity = Vector2.ZERO
+	if movement:
+		movement.process_movement(delta)
+	else:
+		velocity = Vector2.ZERO
+
+	move_and_slide()
 
 	var player := _get_player()
 	var player_in_range: bool = false

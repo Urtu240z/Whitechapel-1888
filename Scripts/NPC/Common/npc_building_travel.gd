@@ -75,8 +75,8 @@ func enter_building_for_poi(poi: SceneryPOI) -> bool:
 	_interior_exit_node = poi.get_interior_exit_node()
 	_inside_building = true
 
-	entrance.npc_enter(npc, poi.get_interior_door_pos())
-	return true
+	await entrance.npc_enter(npc, poi.get_interior_door_pos())
+	return is_instance_valid(npc)
 
 
 # ============================================================================
@@ -98,19 +98,22 @@ func exit_current_building(exterior_position: Vector2) -> bool:
 		_clear_state()
 		return false
 
-	_current_entrance.npc_exit(npc, exterior_position)
+	await _current_entrance.npc_exit(npc, exterior_position)
 	_clear_state()
-	return true
+	return is_instance_valid(npc)
 
 
 func force_exit_to_poi_door() -> bool:
 	if not _inside_building:
 		return false
 
+	var exited: bool = false
 	if is_instance_valid(_current_poi):
-		return exit_current_building(_current_poi.get_exterior_door_pos())
+		exited = await exit_current_building(_current_poi.get_exterior_door_pos())
+	else:
+		exited = await exit_current_building(npc.global_position)
 
-	return exit_current_building(npc.global_position)
+	return exited
 
 
 # ============================================================================

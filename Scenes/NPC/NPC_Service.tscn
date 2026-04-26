@@ -17,7 +17,7 @@
 [ext_resource type="Script" uid="uid://bnso0mph1tb11" path="res://addons/soupik/modifications/soup_two_bone_ik.gd" id="32_lgleu"]
 [ext_resource type="Script" uid="uid://b4u1tvhlw4d2g" path="res://addons/soupik/modifications/soup_look_at.gd" id="33_5ryky"]
 [ext_resource type="Script" uid="uid://b5uiivwxcoics" path="res://addons/soupik/modifications/soup_stay_at.gd" id="34_sv6qw"]
-[ext_resource type="Script" uid="uid://bslv2i32ql2w" path="res://Scripts/NPC/Service/npc_service_movement.gd" id="35_ilb0r"]
+[ext_resource type="Script" uid="uid://b1fbss8u1nfta" path="res://Scripts/NPC/Common/npc_movement_component.gd" id="35_ilb0r"]
 [ext_resource type="AudioStream" uid="uid://d7e5nakf36ad" path="res://Assets/Audio/WAVS/Man_Talk.wav" id="42_n63qp"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="43_d4jxa"]
 
@@ -1481,6 +1481,10 @@ position = Vector2(16, 726)
 
 [node name="Movement" type="Node2D" parent="." unique_id=1428734626]
 script = ExtResource("35_ilb0r")
+can_wander = false
+can_follow = false
+can_use_pois = false
+allow_building_travel = false
 
 [node name="Animation" type="Node2D" parent="." unique_id=1094347028]
 script = ExtResource("15_e67tv")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bt3ubgbvk60kv"]
 
 [ext_resource type="Script" uid="uid://djqsnhaf3c38j" path="res://Scripts/NPC/Companion/npc_companion.gd" id="1_33bcd"]
-[ext_resource type="Script" uid="uid://djtg4einflwy5" path="res://Scripts/NPC/Companion/npc_companion_movement.gd" id="2_8u2cw"]
+[ext_resource type="Script" path="res://Scripts/NPC/Common/npc_movement_component.gd" id="2_8u2cw"]
 [ext_resource type="Resource" uid="uid://dxlm5sy6n08dh" path="res://Data/NPC/npc_name_pools.tres" id="2_sj2xk"]
 [ext_resource type="Script" uid="uid://co3747fqwkiil" path="res://Scripts/NPC/Common/npc_skin_component.gd" id="3_6uuyf"]
 [ext_resource type="AudioStream" uid="uid://beu8sdsym1xs" path="res://Assets/Audio/Effects/Voice_Slap_4.ogg" id="20_4qwdc"]
