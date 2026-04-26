@@ -227,7 +227,7 @@ texture = SubResource("CanvasTexture_jhiha")
 
 [node name="Interior" type="Node2D" parent="." unique_id=936244711]
 visible = false
-position = Vector2(-128, -93)
+position = Vector2(0, -1000)
 
 [node name="NPCService" parent="Interior" unique_id=1649721714 instance=ExtResource("8_nqx5a")]
 z_index = 2

@@ -225,6 +225,7 @@ texture = SubResource("CanvasTexture_g7bew")
 
 [node name="Interior" type="Node2D" parent="." unique_id=1107683034]
 visible = false
+position = Vector2(0, -1000)
 
 [node name="Tilemaps" type="Node2D" parent="Interior" unique_id=500692117]
 modulate = Color(0.60933006, 0.6093301, 0.60933006, 1)
@@ -844,8 +845,6 @@ stream = ExtResource("41_kxi8e")
 volume_db = -2.0
 
 [node name="BuildingEntrance" type="Node2D" parent="." unique_id=1085524232]
-position = Vector2(63, -39)
-scale = Vector2(0.8, 0.8)
 script = ExtResource("42_ll15x")
 interior_path = NodePath("../Interior")
 exit_area_path = NodePath("../Interior/ExitArea")
@@ -854,7 +853,8 @@ audio_path = NodePath("../Audio")
 npc_fade_time = 0.5
 
 [node name="EnterArea" type="Area2D" parent="BuildingEntrance" unique_id=1774015801]
-position = Vector2(1, 347)
+position = Vector2(63.8, 238.6)
+scale = Vector2(0.8, 0.8)
 collision_layer = 2
 collision_mask = 2
 
@@ -865,8 +865,8 @@ shape = SubResource("RectangleShape2D_03e3r")
 [node name="DoorGlow" type="Sprite2D" parent="BuildingEntrance" unique_id=1088588128]
 texture_filter = 2
 material = SubResource("ShaderMaterial_55c6e")
-position = Vector2(-1.999999, 342)
-scale = Vector2(0.83561647, 0.82716054)
+position = Vector2(61.4, 234.6)
+scale = Vector2(0.6684932, 0.66172844)
 texture = SubResource("CanvasTexture_wl6ls")
 region_enabled = true
 region_rect = Rect2(1966.5, 1062.5, 146, 324)
