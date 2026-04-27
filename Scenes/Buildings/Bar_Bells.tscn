@@ -18,7 +18,6 @@
 [ext_resource type="Texture2D" uid="uid://5ba0d6ipy0es" path="res://Assets/Sprites/Interiors/Bar Bells/Guitar.png" id="10_us83r"]
 [ext_resource type="Texture2D" uid="uid://diqys7o88lo7j" path="res://Assets/Sprites/Interiors/Bar Bells/Window 2.png" id="10_vr4xg"]
 [ext_resource type="Resource" uid="uid://80g2sajkewf5" path="res://Data/Pickups/drink-ginebra.tres" id="11_12l01"]
-[ext_resource type="PackedScene" uid="uid://cogp0xes7qceu" path="res://Scenes/NPC/NPC_Ragdoll.tscn" id="11_pn1s2"]
 [ext_resource type="Texture2D" uid="uid://bgki6hpx7xdl" path="res://Assets/Sprites/Interiors/Bar Bells/Counter.png" id="12_fq600"]
 [ext_resource type="Resource" uid="uid://varywclromyc" path="res://Data/Pickups/drink-whisky.tres" id="12_og1ct"]
 [ext_resource type="Resource" uid="uid://dgstrxsdm4kem" path="res://Data/Pickups/drink-ron.tres" id="13_cng8t"]
@@ -240,19 +239,6 @@ initial_facing_right = false
 shop_items = Array[ExtResource("9_2u12w")]([SubResource("Resource_gkafe"), SubResource("Resource_gfjkd"), SubResource("Resource_0c17p"), SubResource("Resource_17x7e"), SubResource("Resource_2mo0p"), SubResource("Resource_wbshs"), SubResource("Resource_12ksu"), SubResource("Resource_4vyom"), SubResource("Resource_fgqt2"), SubResource("Resource_5uiak"), SubResource("Resource_rrirq")])
 shop_name_key = "BARMAN_SHOP_NAME"
 skin_name = "NPC_Barman"
-
-[node name="NPC" parent="Interior" unique_id=2027052352 instance=ExtResource("11_pn1s2")]
-modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
-z_index = 2
-position = Vector2(-426, 8)
-scale = Vector2(0.125, 0.125)
-
-[node name="NPC2" parent="Interior" unique_id=1787750930 instance=ExtResource("11_pn1s2")]
-modulate = Color(0.48962224, 0.48962224, 0.48962218, 1)
-z_index = 2
-position = Vector2(-242, -11)
-rotation = -3.1415925
-scale = Vector2(0.112, -0.112)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Interior" unique_id=1434301336]
 modulate = Color(0.585062, 0.585062, 0.5850621, 1)

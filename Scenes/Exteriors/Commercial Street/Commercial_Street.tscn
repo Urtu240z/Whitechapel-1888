@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://bgr8hp6ub6ebb" path="res://Scenes/Buildings/Princess_Alice.tscn" id="7_os2yf"]
 [ext_resource type="Texture2D" uid="uid://cqaib6xovfhpw" path="res://Assets/Sprites/NPC/NPC 1.png" id="7_qnasi"]
 [ext_resource type="Texture2D" uid="uid://c2q3387wamp1x" path="res://Assets/Sprites/Effects/Shadow.png" id="8_6ggpe"]
-[ext_resource type="PackedScene" uid="uid://cg3wm3f0te243" path="res://Scenes/NPC/NPC_Charger.tscn" id="9_bk7xh"]
 [ext_resource type="PackedScene" uid="uid://36qdlvetmmi" path="res://Scenes/Vehicles/Carriage.tscn" id="10_1qgay"]
 [ext_resource type="Texture2D" uid="uid://b8u1b1yp6fn43" path="res://Assets/Sprites/Building/Perfume Store.png" id="11_h2w1t"]
 [ext_resource type="PackedScene" uid="uid://b2l3pjobue80" path="res://Scenes/Buildings/Bar_Bells.tscn" id="11_nas3t"]
@@ -35,6 +34,7 @@
 [ext_resource type="Material" uid="uid://88mldvpse4do" path="res://Data/Material/Under_Fog.tres" id="23_6ggpe"]
 [ext_resource type="PackedScene" uid="uid://csx4il2s0ov4r" path="res://Scenes/Core/Scene_Portal.tscn" id="25_atgof"]
 [ext_resource type="PackedScene" uid="uid://daahtk3rtmb88" path="res://Scenes/Core/SceneryPOI.tscn" id="26_145iq"]
+[ext_resource type="PackedScene" uid="uid://d3we1wt27dnvr" path="res://Scenes/NPC/NPC_Ambient.tscn" id="26_qnasi"]
 [ext_resource type="Texture2D" uid="uid://bgcml75mm387r" path="res://Assets/Sprites/Building/Perfume Store_n.png" id="27_okdt8"]
 [ext_resource type="Material" uid="uid://sufipqvuten" path="res://Data/Material/Ground_Imperfection.tres" id="42_ac4hn"]
 [ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="43_ac4hn"]
@@ -262,7 +262,7 @@ adjustment_saturation = 0.5
 script = ExtResource("46_6ggpe")
 duration = 0.0
 
-[node name="ComercialStreet" type="Node2D" unique_id=1435527189]
+[node name="CommercialStreet" type="Node2D" unique_id=1435527189]
 script = ExtResource("1_okdt8")
 outside_freeze_paths = Array[NodePath]([NodePath("OutsideAudiovisuals"), NodePath("OutsideActors"), NodePath("OutsideGameplay")])
 buildings_root_path = NodePath("OutsideBuildings")
@@ -417,43 +417,8 @@ position = Vector2(-46.666664, 493.3334)
 texture = ExtResource("8_6ggpe")
 
 [node name="AmbientActors" type="Node2D" parent="OutsideAudiovisuals/World" unique_id=59863880]
+visible = false
 scale = Vector2(0.99999994, 0.99999994)
-
-[node name="NPC" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=1649721714 groups=["npcs_outside"] instance=ExtResource("9_bk7xh")]
-modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
-z_index = 3
-y_sort_enabled = true
-position = Vector2(-1413.0001, -87.80001)
-scale = Vector2(0.12500001, 0.12500001)
-move_speed = 110.0
-move_time_min = 5.0
-move_time_max = 15.0
-dialog_timeline = "uid://bwcu6ifl26or8"
-talk_volume_db = 12.0
-pitch_variation = 0.7
-
-[node name="NPC2" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=1205373822 groups=["npcs_outside"] instance=ExtResource("9_bk7xh")]
-modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
-z_index = 3
-position = Vector2(-1193.0001, -88.00001)
-scale = Vector2(0.12500001, 0.12500001)
-move_speed = 85.0
-move_time_min = 5.0
-move_time_max = 15.0
-dialog_timeline = "uid://bwcu6ifl26or8"
-talk_volume_db = 12.0
-pitch_variation = 1.0
-
-[node name="NPC3" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=1119784934 groups=["npcs_outside"] instance=ExtResource("9_bk7xh")]
-modulate = Color(0.31061688, 0.31061718, 0.3106171, 1)
-z_index = 3
-position = Vector2(-1075.0001, -88.20001)
-scale = Vector2(0.12500001, 0.12500001)
-move_speed = 100.0
-move_time_min = 5.0
-move_time_max = 15.0
-dialog_timeline = "uid://bwcu6ifl26or8"
-talk_volume_db = 12.0
 
 [node name="Car3" parent="OutsideAudiovisuals/World/AmbientActors" unique_id=496461941 groups=["npcs_outside"] instance=ExtResource("10_1qgay")]
 modulate = Color(0.35906908, 0.35906908, 0.35906908, 1)
@@ -678,6 +643,27 @@ scale = Vector2(0.94549656, 0.94549656)
 
 [node name="OutsideActors" type="Node2D" parent="." unique_id=776782275]
 
+[node name="Ambients" type="Node2D" parent="OutsideActors" unique_id=1314676298]
+
+[node name="NPCAmbient" parent="OutsideActors/Ambients" unique_id=1139415032 instance=ExtResource("26_qnasi")]
+position = Vector2(-7411, -365)
+dialog_timeline = "uid://bwcu6ifl26or8"
+initial_facing_right = false
+behavior_mode = 1
+body_scale = 1.19
+walk_speed = 650.0
+walk_accel = 650.0
+skin_name = "NPC_AmbientPoor2"
+
+[node name="NPCAmbient2" parent="OutsideActors/Ambients" unique_id=1901329834 instance=ExtResource("26_qnasi")]
+position = Vector2(-6272, -365)
+dialog_timeline = "uid://bwcu6ifl26or8"
+behavior_mode = 1
+body_scale = 1.1
+walk_speed = 800.0
+walk_accel = 650.0
+skin_name = "NPC_AmbientPoor3"
+
 [node name="Companions" type="Node2D" parent="OutsideActors" unique_id=815270617]
 
 [node name="NPCCompanion" parent="OutsideActors/Companions" unique_id=1093994703 instance=ExtResource("14_nsm0j")]
@@ -759,6 +745,14 @@ scale = Vector2(1.32, 1.32)
 dialog_timeline = "uid://c38evy5q65a84"
 initial_facing_right = false
 skin_name = "NPC_ClientPoor5"
+
+[node name="NPCClient7" parent="OutsideActors/Clients" unique_id=1649721714 instance=ExtResource("18_gb7vo")]
+position = Vector2(15765, -327)
+dialog_timeline = "uid://c38evy5q65a84"
+initial_facing_right = false
+behavior_mode = 1
+body_scale = 1.1
+skin_name = "NPC_ClientMedium1"
 
 [node name="OutsideGameplay" type="Node2D" parent="." unique_id=1269667702]
 

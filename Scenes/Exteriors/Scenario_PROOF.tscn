@@ -36,7 +36,6 @@
 [ext_resource type="PackedScene" uid="uid://ba2v08t1pk8cw" path="res://Scenes/Player/Player.tscn" id="33_dg1ch"]
 [ext_resource type="PackedScene" uid="uid://clflwletildwn" path="res://Scenes/UI/HUD.tscn" id="34_oi45t"]
 
-
 [sub_resource type="Resource" id="Resource_k7r8x"]
 script = ExtResource("20_gxkef")
 item = ExtResource("21_5b2gd")

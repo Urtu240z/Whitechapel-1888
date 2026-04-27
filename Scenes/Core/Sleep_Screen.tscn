@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bkq1k32cd6l03" path="res://Scripts/Core/sleep_screen.gd" id="1_xc5w1"]
 [ext_resource type="Shader" uid="uid://blllugnvcgk7d" path="res://Assets/Shaders/Vignette.gdshader" id="3_74by5"]
 [ext_resource type="Shader" uid="uid://bod8n2cax6fyy" path="res://Assets/Shaders/Clouds_Warped.gdshader" id="4_vjipn"]
-[ext_resource type="Shader" path="res://Assets/Shaders/Edge_Softness.gdshader" id="5_qs8gu"]
+[ext_resource type="Shader" uid="uid://6pm4is0s6ke5" path="res://Assets/Shaders/Edge_Softness.gdshader" id="5_qs8gu"]
 [ext_resource type="Texture2D" uid="uid://b6jse7s2dxk7w" path="res://Assets/Sprites/Background/Moon.png" id="6_34nuk"]
 [ext_resource type="Texture2D" uid="uid://b0di18ir6lv2r" path="res://addons/kenney_particle_pack/light_01.png" id="7_xm748"]
 [ext_resource type="Texture2D" uid="uid://cn5xaboe6puvp" path="res://addons/kenney_particle_pack/star_05.png" id="8_xeo53"]
